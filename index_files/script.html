@@ -1,0 +1,719 @@
+var tab;
+//affiche les copyrights dans une popup [L.87]
+function copyright(){
+	window.open("/copyright.php", "", "width=400,height=300,scrollbars=yes");
+}
+
+//validation du formulaire "acces rapide" en bas a droite de la page [L.333]
+function acces_rapide(){
+	if(document.forms['acces'].elements['profil_choix'].options[document.forms['acces'].elements['profil_choix'].selectedIndex].value != "choix"){
+		window.location = document.forms['acces'].elements['profil_choix'].options[document.forms['acces'].elements['profil_choix'].selectedIndex].value;
+	}
+}
+
+function menu_deroulant(sel) {
+	$('sous_menu').options.length = 0;
+	tab = eval("menutab_"+$("menu_pere").options[$("menu_pere").options.selectedIndex].value);
+	for(i=0; i<tab.length; i=i+2){
+		var monOption = new Option(tab[i+1], tab[i]);
+		$("sous_menu").options[$("sous_menu").options.length] = monOption;
+	}
+}
+
+function menu_deroulant_mod(sel, niveau) {
+	$('sous_menu').options.length = 0;
+	tab = eval("menutab_"+$("menu_pere").options[$("menu_pere").options.selectedIndex].value);
+	j=0;
+	for(i=0; i<tab.length; i=i+2){
+		if(!((niveau == 2)&&(sel == tab[i]))){
+			var monOption = new Option(tab[i+1], tab[i]);
+			$("sous_menu").options[$("sous_menu").options.length] = monOption;
+			if(sel == tab[i]){
+				$("sous_menu").options.selectedIndex = j;
+			}
+			j++;
+		}
+	}
+}
+
+function menu_deroulant_add(sel) {
+
+	menu_niveau = sel.split("-");
+
+	document.forms["adm_menu"].elements["sous_menu"].options.length = 0;
+
+	if(menu_niveau.length == 1){
+		tab = eval("menutab_racine");
+	}else{
+		tab = eval("menutab_"+menu_niveau[0]);
+	}
+
+	for(i=0; i<tab.length; i=i+2){
+		var monOption = new Option(tab[i+1], tab[i]);
+		document.forms["adm_menu"].elements["sous_menu"].options[document.forms["adm_menu"].elements["sous_menu"].options.length] = monOption;
+	}
+	
+	menu_niveau[1];
+	if(menu_niveau.length > 1){
+		document.forms["adm_menu"].elements["menu_pere"].options.selectedIndex = menu_niveau[0];
+	}
+	if(menu_niveau.length > 2){
+		document.forms["adm_menu"].elements["sous_menu"].options.selectedIndex = menu_niveau[1];
+	}
+}
+
+var sto_open;
+var sto_close;
+
+/*gestion du menu */
+function cache(){
+	clearTimeout(sto_open);
+	clearTimeout(sto_close);
+	$("ecole_md").style.display='none';
+	$("formations_md").style.display='none';
+	$("recherche_md").style.display='none';
+	$("vie_etudiante_md").style.display='none';
+	$("entreprises_md").style.display='none';
+	$("international_md").style.display='none';
+	$("newsletter_md").style.display='none';
+	
+	$("ecole_menu").style.color='#ffffff';
+	$("formations_menu").style.color='#ffffff';
+	$("recherche_menu").style.color='#ffffff';
+	$("vie_etudiante_menu").style.color='#ffffff';
+	$("entreprises_menu").style.color='#ffffff';
+	$("international_menu").style.color='#ffffff';
+	$("newsletter_menu").style.color='#ffffff';
+	
+}
+
+function deroulemenu_accueil(idMenu, deroul){
+	$(idMenu).style.display='block';
+	height = $(idMenu).offsetHeight;
+	$(idMenu).style.clip = 'rect(0px 200px '+deroul+'px 0px)';
+	deroul = deroul+5;
+	if(deroul-10 <= height){
+		sto_open = setTimeout("deroulemenu_accueil('"+idMenu+"', "+deroul+")", 15);
+	}
+}
+function cachederoulmenu_accueil(idMenu, deroul){
+	$(idMenu).style.clip = 'rect(0px 200px '+deroul+'px 0px)';
+	deroul = deroul-5;
+	if(deroul+10 >= 0){
+		sto_open = setTimeout("cachederoulmenu_accueil('"+idMenu+"', "+deroul+")", 15);
+	}else{
+		cache();
+	}
+}
+function cachemenu_accueil(idMenu){
+	height = $(idMenu+"_md").offsetHeight;
+	sto_close = setTimeout("cachederoulmenu_accueil('"+idMenu+"_md', "+height+")", 800);
+}
+function affiche_menu2(idMenu){
+	clearTimeout(sto_close);
+	$(idMenu+"_md").style.display='block';
+}
+function affiche_menu(idMenu){
+	clearTimeout(sto_close);
+	if(($(idMenu+"_md").style.display=='')
+	  ||($(idMenu+"_md").style.display=='none')){
+		cache();
+		deroulemenu_accueil(idMenu+"_md", 0);
+	}
+	$(idMenu+'_menu').style.color = '#003c47';
+	$('plaquette').innerHTML = $(idMenu+'_pdf').innerHTML;
+}
+
+function montre(id) {
+	var liste;
+	var menu_niveau=""
+	
+	if(id){
+		menu_niveau = id.split("-");
+	}
+	
+	liste = document.getElementsByTagName('ul');
+    for (var i=0;i<liste.length;i++) {
+       if (liste[i].className == "menucl2"){
+			liste[i].style.display='none';
+	   }
+    }
+	
+	for (i=0;i<liste.length;i++) {
+	   if (liste[i].className == "menucl3"){
+			liste[i].style.display='none';
+	   }
+	}
+	
+	if(menu_niveau.length == 1){
+		if($('smenu_'+id)){
+			$('smenu_'+id).style.display = "block";
+		}
+		liste = document.getElementsByTagName('ul');
+	}else{
+		if(menu_niveau.length >= 2){
+			if($('smenu_'+menu_niveau[0]))
+				$('smenu_'+menu_niveau[0]).style.display = "block";
+			if($('smenu_'+menu_niveau[0]+"-"+menu_niveau[1]))
+				$('smenu_'+menu_niveau[0]+"-"+menu_niveau[1]).style.display = "block";
+		}
+	}
+}
+
+
+function afficheForm(nomForm){
+	$("titreForm").style.display = "none";
+	$("referenceForm").style.display = "none";
+	$("photoForm").style.display = "none";
+	$(nomForm).style.display = "block";
+}
+
+function derouleAnnuaire(idList, imgPath){
+	if($(idList).style.display == "block"){
+		$(idList).style.display = "none";
+		$("img_"+idList).src = imgPath+"plus.gif";
+	}else{
+		$(idList).style.display = "block";
+		$("img_"+idList).src = imgPath+"moins.gif";
+	}	
+}
+
+
+/*
+* méthode d'ajout et suppression de theme dans les informations
+* double select
+*/
+
+function ajoutlist_theme(leTheme, valueTheme, action){
+	if (leTheme != "") {
+		maList1 = document.forms['modifier_information'].elements['listeTheme1[]'];
+		maList2 = document.forms['modifier_information'].elements['listeTheme2[]'];
+		if(action == "ajout"){
+			for(i=0; i < maList2.length; i++){
+				if(maList2.options[i].text == leTheme){
+					alert('Le thÃ¨me existe dÃ©jÃ.');
+					document.forms['modifier_information'].elements['theme_ajout'].value ="";
+					return false;
+				}
+			}
+			for(i=0; i < maList1.length; i++){
+				if(maList1.options[i].text == leTheme){
+					alert('Le thÃ¨me existe dÃ©jà dans la premiÃ¨re liste.');
+					document.forms['modifier_information'].elements['theme_ajout'].value ="";
+					return false;
+				}
+			}
+		}
+		monOption = new Option(leTheme, valueTheme);
+		maList2.options[maList2.options.length] = monOption;
+		if(action == "ajout"){
+			document.forms['modifier_information'].elements['theme_ajout'].value ="";
+		}else{
+			maList1.options[maList1.options.selectedIndex] = null;
+		}
+	}else{
+		alert("Aucun thÃ¨me à ajouter.");
+	}
+}
+
+function supprimelist_theme(){
+	maList1 = document.forms['modifier_information'].elements['listeTheme1[]'];
+	maList2 = document.forms['modifier_information'].elements['listeTheme2[]'];
+
+	monOption = new Option(maList2.options[maList2.options.selectedIndex].text, maList2.options[maList2.options.selectedIndex].value);
+	maList1.options[maList1.options.length] = monOption;
+	maList2.options[maList2.options.selectedIndex] = null;
+}
+
+/*
+* méthode d'ajout et suppression de theme dans les informations
+* double select
+*/
+
+function ajoutlist_motcle(leMotCle, valueMotCle, action){
+	if (leMotCle != "") {
+		maList1 = document.forms['modifier_information'].elements['listeMotCle1[]'];
+		maList2 = document.forms['modifier_information'].elements['listeMotCle2[]'];
+		if(action == "ajout"){
+			for(i=0; i < maList2.length; i++){
+				if(maList2.options[i].text == leMotCle){
+					alert('Le clÃ© existe dÃ©jÃ.');
+					document.forms['modifier_information'].elements['motcle_ajout'].value ="";
+					return false;
+				}
+			}
+			for(i=0; i < maList1.length; i++){
+				if(maList1.options[i].text == leMotCle){
+					alert('Le mot clÃ© existe dÃ©jà dans la premiÃ¨re liste.');
+					document.forms['modifier_information'].elements['motcle_ajout'].value ="";
+					return false;
+				}
+			}
+		}
+		monOption = new Option(leMotCle, valueMotCle);
+		maList2.options[maList2.options.length] = monOption;
+		if(action == "ajout"){
+			document.forms['modifier_information'].elements['motcle_ajout'].value ="";
+		}else{
+			maList1.options[maList1.options.selectedIndex] = null;
+		}
+	}else{
+		alert("Aucun mot clÃ© à ajouter.");
+	}
+}
+
+function supprimelist_motcle(){
+	maList1 = document.forms['modifier_information'].elements['listeMotCle1[]'];
+	maList2 = document.forms['modifier_information'].elements['listeMotCle2[]'];
+
+	monOption = new Option(maList2.options[maList2.options.selectedIndex].text, maList2.options[maList2.options.selectedIndex].value);
+	maList1.options[maList1.options.length] = monOption;
+	maList2.options[maList2.options.selectedIndex] = null;
+}
+
+/*
+* Selectionne les éléments de la liste2 pour les envoyer dans le formulaire
+*
+*/
+function selectListActualite(){
+	maList2 = document.forms['modifier_information'].elements['listeTheme2[]'];
+	for(i=0; i < maList2.length; i++){
+		maList2.options[i].selected = true;
+	}
+	return true;
+}
+
+/*
+* Selectionne les éléments de la liste2 pour les envoyer dans le formulaire
+*
+*/
+function selectListRevuePresse(){
+	selectListActualite();
+	maList2 = document.forms['modifier_information'].elements['listeMotCle2[]'];
+	for(i=0; i < maList2.length; i++){
+		maList2.options[i].selected = true;
+	}
+	return true;
+}
+
+
+/*
+* FONCTION INFOBULLE pour le calendrier
+*/
+function infoBulleCalendrier(lidActu) {
+	if($('titreactu_'+lidActu).style.display != "block") {
+		tabTmp = document.getElementsByTagName("*");
+		for (i=0; i<tabTmp.length; i++) {
+			if (tabTmp[i].className == "layer_infoCalendrier") {
+					tabTmp[i].style.display = "none";
+			}
+		}
+		$('titreactu_'+lidActu).style.display = "block";
+	}else{
+		$('titreactu_'+lidActu).style.display = "none";
+	}
+}
+
+function afficheDetailRevuePresse(lidRevuePresse){
+	tabTmp = document.getElementsByTagName("*");
+	for (i=0; i<tabTmp.length; i++) {
+		if (tabTmp[i].className == "detail_revuepresse") {
+				tabTmp[i].style.display = "none";
+		}
+	}
+	$('detail_revuepresse_'+lidRevuePresse).style.display = "block";
+}
+
+
+/**
+* Cache ou affiche des paragraphes HTML
+*/
+var posX=0;
+var posY=0;
+document.onmousemove=getMousePos;
+function getMousePos(e) {
+  if (document.all) {
+  	posX=event.x+document.body.scrollLeft;
+  	posY=event.y+document.body.scrollTop;
+  } else {
+  	posX=e.pageX;
+  	posY=e.pageY; 
+  }
+}
+function affiche_plusinfo(idElement){
+	var windowHeight = 0;
+		
+	if (typeof(window.innerHeight) == 'number') {
+		windowHeight = window.innerHeight;
+	}
+	else {
+		if (document.documentElement && document.documentElement.clientHeight) {
+			windowHeight = document.documentElement.clientHeight;
+		}
+		else {
+			if (document.body && document.body.clientHeight) {
+				windowHeight = document.body.clientHeight;
+			}
+		}
+	}
+	hauteur_window = 0;
+	if ((document.documentElement) && (document.documentElement.scrollTop)){
+		hauteur_window = document.documentElement.scrollTop;
+	}else if (document.body){
+		hauteur_window = document.body.scrollTop;
+	}else{
+		hauteur_window = window.pageYOffset;	
+		
+	}
+	hauteur_window += 0;
+	
+	$('info_page').innerHTML = $(idElement).innerHTML;
+	$('info_page').style.display = 'block';
+	$('info_page').style.top = hauteur_window+'px';
+}
+
+
+function affiche_div(idDiv){
+	if($(idDiv).style.display == 'block'){
+		$(idDiv).style.display='none';
+	}else{
+		$(idDiv).style.display='block';
+	}
+}
+
+var time_deroul;
+var cptEvenement=0;
+var topPosition;
+
+function init_evenement(){
+	setTimeout('deroul_evenement(90, 0)', 0);
+	$('evenements_defil1').innerHTML = $('evenement_0').innerHTML;
+	$('evenements_defil2').innerHTML = $('evenement_1').innerHTML;
+}
+
+function deroul_evenement(topPosition, cptEvement){
+	if(topPosition == -120){
+		if(cptEvenement == 4){
+			cptEvenement = 0;
+		}else{
+			cptEvenement++;
+		}
+		topPosition = 27;
+	}
+	if(topPosition == -115){
+		if(cptEvenement == 4){
+			$('evenements_defil1').innerHTML = $('evenement_0').innerHTML;
+		}else{
+			$('evenements_defil1').innerHTML = $('evenement_'+(cptEvenement+1)).innerHTML;
+		}
+	}
+	if(topPosition == 27){
+		topPosition -= 1;
+		stop_deroulevenement(cptEvenement);
+		time_deroul= setTimeout('deroul_evenement('+topPosition+', '+cptEvement+')', 2500);
+		$('evenements_defil1').innerHTML = $('evenement_'+cptEvenement).innerHTML;
+		if(cptEvenement == 4){
+			$('evenements_defil2').innerHTML = $('evenement_0').innerHTML;
+		}else{
+			$('evenements_defil2').innerHTML = $('evenement_'+(cptEvenement+1)).innerHTML;
+		}
+		$('evenements_defil1').style.top = topPosition+'px';
+		$('evenements_defil2').style.top = (topPosition+50)+'px';
+	}else{
+		$('evenements_defil1').style.top = topPosition+'px';
+		$('evenements_defil2').style.top = (topPosition+50)+'px';
+
+		topPosition -= 1;
+		time_deroul= setTimeout('deroul_evenement('+topPosition+', '+cptEvement+')', 10);
+	}
+}
+	
+function stop_deroulevenement(){
+	clearTimeout(time_deroul);
+}
+
+function bibli_acceselec(idDiv){
+	tabContactPersonne = document.getElementsByTagName('div');
+	for (i=0; i<tabContactPersonne.length; i++) {
+		if(tabContactPersonne[i].className == 'acces_elect_bibli'){
+				tabContactPersonne[i].style.display='none'; 
+		}
+	}
+	
+	if($(idDiv).style.display == 'block'){
+		$(idDiv).style.display='none';
+	}else{
+		$(idDiv).style.display='block';
+	}
+}
+
+/**
+* affiche les coordonnées d'un personne
+*
+*/
+var fp;
+function fiche_personne(idRefTravail){
+	if(fp){
+		fp.close();
+	}	
+	fp = window.open("/annuaire/fiche_personne.php?personne="+idRefTravail, "", "width=515,height=350");
+	fp.focus();
+}
+
+function editMenu(idMenu){
+	if($('edit_menu_'+idMenu).style.display == 'block'){
+		htmlMenu = $('edit_menu_'+idMenu).innerHTML;
+		if(htmlMenu.substr(0, 6) != '<div s'){
+			$('edit_menu_'+idMenu).style.display = 'none';
+			$('editMenu_img'+idMenu).src = '/themes/charte2006/images/plus.gif';
+		}else{
+			params = 'idMenu='+idMenu;
+			var myAjax = new Ajax.Request('/'+_RUBRIQUE+'/adm/index.php?pageadm=ajax/moveMenu', {method:'post', postBody:params, onSuccess:successMoveMenu, onFailure:failureEditMenu});
+		}
+	}else{
+		tabDiv = document.getElementsByTagName('div');
+		for (i=0; i<tabDiv.length; i++) {
+			if(tabDiv[i].className == 'optionMenu'){
+				tabDiv[i].style.display='none'; 
+			}
+		}
+		tabImg = document.getElementsByTagName('img');
+		for (i=0; i<tabImg.length; i++) {
+			if(tabImg[i].className == 'editMenuImg'){
+				tabImg[i].src = '/themes/charte2006/images/plus.gif';
+			}
+		}
+		$('editMenu_img'+idMenu).src='/themes/charte2006/images/moins.gif';
+		$('edit_menu_'+idMenu).style.display = 'block';
+	}
+}
+
+function rollImgEditMenu(idMenu){
+	if($('edit_menu_'+idMenu).style.display != 'block'){
+		$('editMenu_img'+idMenu).src = '/themes/charte2006/images/plus_over.gif';
+	}
+}
+function rollImgEditMenu2(idMenu){
+	if($('edit_menu_'+idMenu).style.display != 'block'){
+		$('editMenu_img'+idMenu).src = '/themes/charte2006/images/plus.gif';
+	}
+}
+
+function editInPlace(idMenu, idParent){
+	el = $('menuel_'+idMenu);
+	el.innerHTML = '<a href="javascript:aj_modif_menu('+idMenu+', '+idParent+')"><img class="valideEditMenu" src="/themes/charte2006/images/tic.gif" alt="valider" /></a><input onkeyup="keyEditMenu(event, '+idMenu+', '+idParent+')" type="text" value="'+el.getElementsByTagName('a')[0].innerHTML+'" name="nouveauMenu_'+idMenu+'" id="nouveauMenu_'+idMenu+'" />';
+
+}
+
+function keyEditMenu(evenement, idMenu, idParent)
+{
+	var touche = window.event ? evenement.keyCode : evenement.which;
+	if(touche == 13){
+		aj_modif_menu(idMenu, idParent);
+	}
+}
+
+function aj_modif_menu(idMenu, idParent){
+	params='idMenu='+idMenu+'&menuTxt='+$('nouveauMenu_'+idMenu).value+'&idParent='+idParent;
+	var myAjax = new Ajax.Request('/'+_RUBRIQUE+'/adm/index.php?pageadm=ajax/updateMenu', {method:'post', postBody:params, onSuccess:successEditMenu, onFailure:failureEditMenu});
+}
+
+function successEditMenu(t, obj){
+	$('menu2').innerHTML = t.responseText;
+	montre(0);
+}
+function successDelMenu(t, obj){
+	$('menu2').innerHTML = t.responseText;
+	montre(0);
+	hideOverlay();
+}
+
+function failureEditMenu(){
+	alert('Erreur dans l\'édition du menu');
+}
+
+function aj_del_menu(idMenu){
+	params='idMenu='+idMenu;
+	var myAjax = new Ajax.Request('/'+_RUBRIQUE+'/adm/index.php?pageadm=ajax/deleteMenu', {method:'post', postBody:params, onSuccess:successDelMenu, onFailure:failureEditMenu});
+}
+
+function delInPlace(idMenu){
+	el = $('menuel_'+idMenu);
+	objBody = document.getElementsByTagName("body").item(0);
+	
+	overlayDiv = document.createElement('div');
+	overlayDiv.setAttribute('id', 'overlayText');
+	overlayDiv.innerHTML = 'Confirmer la suppression de la page :<br />"'+el.getElementsByTagName('a')[0].innerHTML+'"<br /> <ul><li><a href="javascript:aj_del_menu('+idMenu+');">oui</a></li><li><a  href="javascript:hideOverlay()">non</a></li></ul>';	
+	
+	var overlay = document.createElement('div');
+	overlay.setAttribute('id', 'overlay');
+	overlay.style.height = (getPageSize()[1] + 'px');
+	overlay.style.display = 'block';
+	
+	var arrayPageSize = getPageSize();
+	var arrayPageScroll = getPageScroll();
+	var lightboxTop = arrayPageScroll[1] + ((arrayPageSize[3] - 35 - 100) / 2);
+	var lightboxLeft = ((arrayPageSize[0] - 20 - 300) / 2);
+	
+	overlayDiv.style.top = (lightboxTop < 0) ? "0px" : lightboxTop + "px";
+	overlayDiv.style.left = (lightboxLeft < 0) ? "0px" : lightboxLeft + "px";
+	
+	objBody.insertBefore(overlay, objBody.firstChild);
+	objBody.insertBefore(overlayDiv, overlay.nextSibling);
+}
+
+function hideOverlay(){
+	$('overlay').style.display = 'none';
+	$('overlayText').style.display = 'none';
+}
+
+function optionInPlace(idMenu, option){
+	params='idMenu='+idMenu+'&option='+option;
+	var myAjax = new Ajax.Request('/'+_RUBRIQUE+'/adm/index.php?pageadm=ajax/optionMenu', {method:'post', postBody:params, onSuccess:successDelMenu, onFailure:failureEditMenu});
+}
+
+function moveMenu(idMenu, idParent){
+	nbMenu = $('menu2').getElementsByTagName('div').length;
+	
+	$('edit_menu_'+idMenu).style.width = '29px';
+	$('edit_menu_'+idMenu).style.height = '35px';
+	
+	$('edit_menu_'+idMenu).innerHTML = '';
+	if(($('edit_menu_'+idMenu).getAttribute('position') > '1')&&($('menuel_'+idMenu).parentNode.className != 'menucl3' )){
+		$('edit_menu_'+idMenu).innerHTML += '<div style="position: relative;"><a title="déplace l\'élément dans la page située au-dessus" href="javascript:aj_moveMenu('+idMenu+', '+idParent+', \'d\')"><img style="position: absolute; display:block; top: 12px; left: 22px;"  src="/themes/charte2006/images/admin/deplacer_d.gif" alt="" /></a>';
+	}	
+	if($('menuel_'+idMenu).parentNode.className != 'menucl1' ){
+		$('edit_menu_'+idMenu).innerHTML += '<a title="déplace l\'élément au niveau -1" href="javascript:aj_moveMenu('+idMenu+', '+idParent+', \'g\')"><img style="position: absolute; display:block; top: 12px; left: 0px;" src="/themes/charte2006/images/admin/deplacer_g.gif" alt="" /></a>';
+	}
+	if($('edit_menu_'+idMenu).getAttribute('position') > '1'){
+		$('edit_menu_'+idMenu).innerHTML += '<a href="javascript:aj_moveMenu('+idMenu+', '+idParent+', \'h\')"><img style="position: absolute; display:block; top: 0px; left: 12px;" src="/themes/charte2006/images/admin/deplacer_h.gif" alt="" /></a>';
+	}
+	if($('edit_menu_'+idMenu).getAttribute('position') < ($('menuel_'+idMenu).parentNode.getAttribute('maxelement'))){
+		$('edit_menu_'+idMenu).innerHTML += '<a href="javascript:aj_moveMenu('+idMenu+', '+idParent+', \'b\')"><img style="position: absolute; display:block; top: 24px; left: 12px;" src="/themes/charte2006/images/admin/deplacer_b.gif" alt="" /></a></div>';
+	}
+}
+
+function aj_moveMenu(idMenu, idParent, position){
+	$('menuel_'+idMenu).innerHTML = '<span style="font-size: 0.7em;">Loading...</span>';
+	idNewParent = 0;
+	if(position == 'd'){
+		tempStr = $('menuel_'+idMenu).previousSibling.previousSibling.getAttribute('id');
+		idNewParent = tempStr.substring(7, tempStr.length);
+	}
+	if(position == 'g'){
+		tempStr = $('menuel_'+idMenu).parentNode.parentNode.parentNode.parentNode.getAttribute('id');
+		
+		if(tempStr == 'menu2'){
+			idNewParent = tempStr;
+		}else{
+			idNewParent = tempStr.substring(7, tempStr.length);
+		}
+	}
+	params='idMenu='+idMenu+'&idParent='+idParent+'&idNewParent='+idNewParent+'&position='+position;
+	var myAjax = new Ajax.Request('/'+_RUBRIQUE+'/adm/index.php?pageadm=ajax/moveMenu', {method:'post', postBody:params, onSuccess:successMoveMenu, onFailure:failureEditMenu});
+}
+
+function successMoveMenu(t){
+	$('menu2').innerHTML = t.responseText;
+	montre($('montreMenu').getAttribute('position')); // déroule le bon menu
+}
+
+var souris_y;
+var souris_x;
+document.onmousemove = position;
+function position(evt) {
+    if( !evt ) evt = window.event;
+    souris_y = evt.clientY + (document.documentElement.scrollTop || document.body.scrollTop);
+	souris_x = evt.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft);
+}
+
+function afficheDivMouse(idElement){
+	document.getElementById(idElement).style.position = "absolute";
+	document.getElementById(idElement).style.top = (souris_y+10)+'px';
+	document.getElementById(idElement).style.left = (souris_x+10)+'px';
+	document.getElementById(idElement).style.display = "block";
+}
+
+var to_recherche = 0;
+var to_bool = false;
+function listRecherchePage(){
+		if(!to_bool){
+			to_recherche = setTimeout('aj_listRecherche()', 350);
+			to_bool = true;
+		}else{
+			clearTimeout(to_recherche);
+			to_recherche = setTimeout('aj_listRecherche()', 350);
+			to_bool = true;
+		}
+}
+function aj_listRecherche(){
+	params = 'debut='+$('url_pageperso').value;
+	var myAjax = new Ajax.Request('/recherche_ajax.php', {method:'post', postBody:params, onSuccess:successRecherche, onFailure:failureRecherche});
+	to_bool = false;
+}
+function successRecherche(t){
+	$('listPagePerso').innerHTML = 'Résultat de la recherche :<br />'+t.responseText;
+}
+function failureRecherche(t){
+	alert('Erreur lors de la recherche');
+}
+
+function photoAccueil(login){
+	params = 'login='+login;
+	$('photoPerso').innerHTML = '<img class="photoAccueil" src="/themes/charte2006/images/admin/ajax-loader.gif" alt="chargement" /><br />Chargement...';
+	$('photoPerso').style.display = 'block';
+	$('photoPerso').style.textAlign = 'center';
+	var myAjax = new Ajax.Request('/photo_ajax.php', {method:'post', postBody:params, onSuccess:successPhotoPerso, onFailure:failurePhotoPerso});
+}
+
+function successPhotoPerso(t){
+	if(t.responseText == 'http://portail.enst-bretagne.fr/images/annuaire/personne/'){
+		$('photoPerso').style.display = 'none';
+	}else{
+		$('photoPerso').style.border = '0px';
+		$('photoPerso').style.paddingTop = '0px';
+		$('photoPerso').innerHTML = '<img src="/themes/charte2006/templates/identite.jpg.php?img='+t.responseText+'" alt="" />';
+	}
+}
+
+function failurePhotoPerso(){
+	$('photoPerso').innerHTML = 'erreur lors du chargement de la photo';
+}
+
+function afficheAide(idAide){
+	if($(idAide).style.display == "block"){
+		$(idAide).style.display = "none";
+	}else{
+		$(idAide).style.left = (souris_x+10)+'px';
+		$(idAide).style.top = (souris_y+10)+'px';
+		$(idAide).style.display = "block";
+	}
+}
+
+function surligne(parent, htmlEl){
+	listElement = $(parent).getElementsByTagName(htmlEl);
+	for(i=0; i<listElement.length; i++){
+		if(i%2 == 0){
+			listElement[i].style.backgroundColor = '#eceded';
+		}else{
+			listElement[i].style.backgroundColor = '#d1d2d4';
+		}
+	}
+}
+
+function reorganiser(){
+	listNum = document.forms['numero_page'].elements['menu'];
+	html_ret = '';
+	tabVal = Array();
+	for(i=0; i<listNum.length; i++){
+		html_ret += '<li>'+$('menuele_'+listNum[i].value).innerHTML+'</li>';
+	}
+	$('numerotationMenu').innerHTML = html_ret;
+}
+
+function afficheForm(nomForm){
+	document.getElementById("titreForm").style.display = "none";
+	document.getElementById("referenceForm").style.display = "none";
+	document.getElementById("photoForm").style.display = "none";
+	document.getElementById(nomForm).style.display = "block";
+}
