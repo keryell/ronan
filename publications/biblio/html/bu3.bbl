@@ -1,0 +1,173 @@
+\csname @ifundefined\endcsname{entetebiblio}{}{\entetebiblio}
+\begin{thebibliography}{10}
+\ProvideTextCommand{\guillemotleft}{OT1}{  \leavevmode\raise .27ex\hbox{$\scriptscriptstyle\ll$}}
+\ProvideTextCommand{\guillemotright}{OT1}{  \leavevmode\raise .27ex\hbox{$\scriptscriptstyle\gg$}}
+\newcommand{\enquote}[1]{\guillemotleft#1\guillemotright}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+\providecommand{\selectlanguage}[1]{\relax}
+\input{babelbst.tex}
+\newcommand{\Capitalize}[1]{\uppercase{#1}}
+\newcommand{\capitalize}[1]{\expandafter\Capitalize#1}
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem{IFREMER2006:ordinateurs}
+Ronan \textsc{Keryell}.
+\newblock \enquote{Architecture des machines parallèles modernes.}
+\newblock \emph{\capitalize\bblin{}} \emph{Journée de rencontre des
+  utilisateurs du pôle de calcul intensif pour la mer}. IFREMER, \octname{}
+  2006.
+\newblock
+  \LienPDF{http://enstb.org/~keryell/publications/exposes/2006/IFREMER}.
+
+\bibitem{EVD97}
+Ronan \textsc{Keryell}.
+\newblock \enquote{Apport des Instructions Multimédia --- Quelques Techniques
+  de Compilation\indexbib{ processeur!multimédia!compilation}.}
+\newblock \emph{\capitalize\bblin{}} \emph{Séminaire Environnements Virtuels
+  Distribués'97}, \decname{} 1997.
+\newblock
+  \LienPDF{http://enstb.org/~keryell/publications/exposes/1997/EVD1997}.
+
+\bibitem{LaVillette:calculateurs}
+Ronan \textsc{Keryell}.
+\newblock \enquote{Les Supercalculateurs\indexbib{
+  supercalculateur!architecture}\indexbib{ supercalculateur!utilisation}.}
+\newblock \emph{\capitalize\bblin{}} \emph{Les Entretiens de la Villette --- 8
+  --- La Vitesse}, \marname{} 1997.
+
+\bibitem{CEA_CUIC_parallelisme}
+Ronan \textsc{Keryell}.
+\newblock \enquote{Architecture Globale des Ordinateurs : du S\'equentiel au
+  Parall\'elisme.}
+\newblock \emph{\capitalize\bblin{}} \emph{Technologie, Architecture et
+  Logiciel de Base : Situation et \'Evolution des Calculateurs Num\'eriques}.
+  Club des Utilisateurs de l'Informatique du CEA (CUIC) --- Comit\'e Simulation
+  et T\'eraflops --- Direction de l'Informatique du CEA (SG/DI), CEA, CEA-CE
+  Saclay, 91191 Gif-sur-Yvette C\'edex, 13 avril 1995.
+
+\bibitem{synthese_POMP}
+Ronan \textsc{Keryell}.
+\newblock \enquote{D'un Petit Ordinateur Massivement Parall\`ele : Synth\`ese
+  du Projet {POMP}.}
+\newblock \emph{Techniques et Sciences Informatiques}, \textbf{12}(6),
+  \bblpages{} 715--743, 1993.
+\newblock \urlprefix\url{http://www.cri.ensmp.fr/classement/doc/A-244.ps}.
+
+\bibitem{activity_counter}
+Ronan \textsc{Keryell} \bbland{} Nicolas \textsc{Paris}.
+\newblock {\selectlanguage{english}\enquote{Activity Counter : New Optimization
+  for the Dynamic Scheduling of SIMD Control Flow\indexbib{contr\^ole de
+  flot!SIMD@\SIMD!compteur d'activit\'e}\indexbib{ compteur!activit\'e (d')}.}}
+\newblock \emph{\capitalize\bblin{}} \emph{1993 International Conference on
+  Parallel Processing --- Volume II : Software}, \bblpages{} II--184--II--187.
+  Saint Charles, Ohio, USA, \augname{} 1993.
+\newblock \urlprefix\url{http://www.cri.ensmp.fr/classement/doc/A-249.pdf}.
+
+\bibitem{techreport:activity_counter}
+Ronan \textsc{Keryell} \bbland{} Nicolas \textsc{Paris}.
+\newblock \emph{Activity Counter: a New Optimization for SIMD Control Flow
+  (extended version)}.
+\newblock \bbltechreport{} A-265-CRI, Centre de Recherche en Informatique,
+  \'Ecole Nationale Sup\'erieure des Mines de Paris, France, 1993.
+\newblock \urlprefix\url{http://www.cri.ensmp.fr/classement/doc/A-265.pdf}.
+
+\bibitem{MATISSES}
+Ronan \textsc{Keryell}.
+\newblock \enquote{MATISSES : une Machine \`a Transputer Incluant la
+  Synchronisation Scalaire\indexbib{ordinateur!MIMD@\MIMD!MATISSES@{\sf
+  MATISSES}}\indexbib{ordinateur!partitionnable}\indexbib{r\'eseau!
+  synchronisation (de)!floue}\indexbib{r\'eseau!diffusion (de)
+  }\indexbib{\Transputer!T9000@{\sf T9000}}.}
+\newblock \emph{\capitalize\bblin{}} \emph{RenPar5 --- 5\emes\ Rencontres sur
+  le Parall\'elisme}, \bblpages{} 253--256. Laboratoire Informatique de Brest
+  --- France, \mayname{} 1993.
+
+\bibitem{these:keryell}
+Ronan \textsc{Keryell}.
+\newblock \emph{{POMP} : d'un Petit Ordinateur Massivement Parall\`ele {SIMD}
+  \`a Base de Processeurs {RISC} --- Concepts, Etude et R\'ealisation}.
+\newblock \nouvellethese, Laboratoire d'Informatique de l'Ecole Normale
+  Sup\'erieure --- Universit\'e Paris XI, \octname{} 1992.
+\newblock \LienPDF{http://enstb.org/~keryell/publications/these}.
+
+\bibitem{controle_SIMD}
+Ronan \textsc{Keryell}.
+\newblock \enquote{Le Contr\^ole de Flot dans les Machines
+  SIMD\indexbib{ordinateur!SIMD@\SIMD!POMP@{\sf POMP}}\indexbib{contr\^ole de
+  flot!SIMD}\indexbib{compteur
+  d'activit\'e}\indexbib{masquage}\indexbib{instruction!
+  conditionn\'ee}\indexbib{POMP@{\sf POMP}}\indexbib{entrelacement! blocs
+  alternatifs!terminaux}\indexbib{contr\^ole!de l'\'ecriture en
+  m\'emoire}\indexbib{d\'ebranchement!conditionnel!non retard\'e}.}
+\newblock \emph{\capitalize\bblin{}} \emph{RenPar4 --- 4\emes\ rencontres de
+  Parall\'elisme}, \bblpages{} 100--103. Universit\'e des Sciences et
+  Technologies de Lille --- Villeneuve d'Ascq, France, \marname{} 1992.
+
+\bibitem{POMP_PARLE}
+Philippe \textsc{Hoogvorst}, Ronan \textsc{Keryell}, Philippe \textsc{Matherat}
+  \bbland{} Nicolas \textsc{Paris}.
+\newblock \enquote{{POMP} or How to Design a Massively Parallel Machine with
+  Small Developments.}
+\newblock \emph{\capitalize\bblin{}} \emph{PARLE '91 Parallel Architectures and
+  Languages Europe}, \bblvolume{} 505(I), \bblpages{} 83--100. Lecture Notes in
+  Computer Science, Springer-Verlag, \junname{} 1991.
+\newblock
+  \LienPDF{http://www.springerlink.com/content/51k7x4l06115t2t2/fulltext.pdf}.
+
+\bibitem{POMP_LIENS}
+Philippe \textsc{Hoogvorst}, Ronan \textsc{Keryell}, Philippe \textsc{Matherat}
+  \bbland{} Nicolas \textsc{Paris}.
+\newblock \emph{{POMP} or How to Design a Massively Parallel Machine with Small
+  Developments}.
+\newblock \bbltechreport{} 91-5, Laboratoire d'Informatique de l'\'Ecole
+  Normale Sup\'erieure, \aprname{} 1991.
+\newblock
+  \urlprefix\url{http://enstb.org/~keryell/publications/conf/1991/PARLE/liens-91-5.US.ps}.
+
+\bibitem{POMP_luminy}
+Ronan \textsc{Keryell}, Philippe \textsc{Matherat} \bbland{} Nicolas
+  \textsc{Paris}.
+\newblock \enquote{{POMP} : un Petit Ordinateur Massivement Parall\`ele
+  {SIMD}\indexbib{ordinateur!SIMD@\SIMD!POMP@{\sf POMP}}\indexbib{POMP@ {\sf
+  POMP}}.}
+\newblock \emph{\capitalize\bblin{}} \emph{\ord{3}{s}\ Rencontres sur les
+  Algorithmes \& Architectures Massivement Parall\`eles}, \bblpages{} 21--22.
+  CIRM Luminy, France, \octname{} 1990.
+
+\bibitem{POMP_PaM}
+Ronan \textsc{Keryell}, Philippe \textsc{Matherat} \bbland{} Nicolas
+  \textsc{Paris}.
+\newblock \enquote{{POMP} : a Massively Parallel Small
+  Computer\indexbib{ordinateur! SIMD@\SIMD!POMP@{\sf POMP}}\indexbib{POMP@{\sf
+  POMP}}.}
+\newblock \emph{\capitalize\bblin{}} \emph{International Workshop on Algorithms
+  and Parallel VLSI Architectures}, \bblvolume{} Part A, \bblpage{} 181. Abbaye
+  des Pr\'emontr\'es --- Pont-\`a-Mousson, France, \junname{} 1990.
+
+\bibitem{POMP_Grenoble}
+Ronan \textsc{Keryell}, Philippe \textsc{Matherat} \bbland{} Nicolas
+  \textsc{Paris}.
+\newblock \enquote{Rapport d'Avancement de {POMP}\indexbib{ordinateur!
+  SIMD@\SIMD!POMP@{\sf POMP}}\indexbib{POMP@{\sf POMP}}.}
+\newblock \emph{\capitalize\bblin{}} \emph{Premi\`eres Journ\'ees du PRC
+  Architecture de Machines Nouvelles}, \bblpages{} 53--57. INPG/IMAG, Grenoble,
+  France, \novname{} 1989.
+
+\bibitem{magistere:keryell}
+Ronan \textsc{Keryell}.
+\newblock \emph{{POMP2} : D'un Petit Ordinateur Massivement
+  Parall\`ele\indexbib{machine!POMP}}.
+\newblock Rapport de magist\`ere, LIENS --- Ecole Normale Sup\'erieure,
+  \octname{} 1989.
+
+\bibitem{DEA_Keryell}
+Ronan \textsc{Keryell}.
+\newblock \emph{{POMP} : Vid\'eo \& Entr\'ees-Sorties}.
+\newblock Dipl\^ome d'\'etude approfondie, Paris XI, \sepname{} 1988.
+
+\end{thebibliography}

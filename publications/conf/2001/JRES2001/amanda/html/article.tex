@@ -1,0 +1,1581 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage{french,frbib}
+\let\fsc\textsc
+%\usepackage{frbib}
+\usepackage{bbold2e}
+\usepackage{perso2e,LienPDF}
+
+\usepackage[francais]{babel}
+\let\ifFTR=\iftrue
+\NoAutoSpaceBeforeFDP
+
+%%\makeatletter
+%% Test if TeX4ht is used...
+\newif\iftexforht
+{\catcode`\:11\gdef\TempoRaire{\ifx\load:cfg\Undef\texforhtfalse\else\texforhttrue\fi}}
+\TempoRaire
+
+\usepackage[dvips]{graphicx}
+\usepackage{alltt,fancybox}
+\usepackage{amsmath}
+\usepackage[dvips,colorlinks=true,pdfauthor=Ronan.Keryell@enst-bretagne.fr]{hyperref}
+\usepackage{abbrev_reactive}
+
+\newif\iflong
+%% Choisit la version longue ou courte de l'article :
+%\longfalse
+\longtrue
+
+
+%% Récupère le numéro de version RCS :
+\def\getVersion Revision: #1 {\def\Version{#1}}
+\def\getDollars$#1${\getVersion#1}
+\getDollars$Revision: 1.5 $
+
+%% Faute de mieux de portable :
+\newcommand\MesEuros{ euros\xspace}
+
+%% Pour échapper à la correction orthographique :
+\newcommand{\English}[1]{\emph{#1}}
+\newcommand{\NoSpell}[1]{#1}
+
+\newcommand{\figlarge}[1]{\includegraphics[width=\textwidth]{#1}}
+
+\renewcommand{\floatpagefraction}{1}
+\renewcommand{\textfraction}{0}
+\renewcommand{\topfraction}{1}
+\renewcommand{\bottomfraction}{1}
+
+\setcounter{tocdepth}{10}     % Dans la table des matières
+\setcounter{secnumdepth}{10}  % Avec un numéro.
+
+\sloppy
+
+% On autorise la création d'un index :
+\makeindex
+
+\let\TailleExemple=\scriptsize
+\newenvironment{exemple}{\VerbatimEnvironment\bgroup\TailleExemple\begin{Verbatim}}{\end{Verbatim}\egroup}
+
+
+\begin{document}
+
+%\catcode`\:=12
+%\show\cite
+
+\author{Ronan \textsc{Keryell}}
+
+%%\date{}
+\iflong
+\begin{center}
+  \textbf{{\large Utilisation du logiciel de sauvegarde libre \Aamanda}\iflong
+    \\---\\\small version étendue\\
+    {\small ENSTBr/INFO/RR/2001-009}\fi}
+  \\
+  Ronan \textsc{Keryell}\\
+  \today
+\end{center}
+%\title{Utilisation du logiciel de sauvegarde libre \Aamanda
+%  \\---\\\small version étendue}
+\else
+\title{Utilisation du logiciel de sauvegarde libre \Aamanda}
+\maketitle
+\fi
+
+
+\begin{abstract}
+  Cet article présente le système de sauvegardes automatiques libre
+  \Aamanda basé sur une architecture distribuée client-serveur. Il est
+  capable de maximiser l'usage des dérouleurs de bande grâce à une
+  planification dynamique des sauvegardes respectant une liste de
+  contraintes imposées (occupation réseau, priorité entre partitions,
+  intervalles de sauvegarde, nombre de cassettes,...). Les formats
+  internes utilisés sont des standards très basiques qui permettent une
+  restauration simple en cas de situation critique.
+  
+  Le système exposé est déployé au sein de deux laboratoires de recherche
+  en informatique à l'\Aensmp et à l'\Aenstbr pour effectuer les
+  sauvegardes de toutes les machines, qu'elles soient génériques, serveurs
+  ou dédiées à un projet de recherche sur les réseaux actifs.
+\end{abstract}
+
+
+\section{Introduction}
+\label{sec:introduction}
+
+Avec le développement intensif de l'informatique et de la numérisation des
+contenus, la majorité des données, des connaissances et du savoir faire
+des entreprises est sous forme numérique et on estime que la majorité des
+entreprises qui perdent leurs données n'existent plus dans les 2 ans qui
+suivent.
+
+Il est donc primordial d'avoir une politique de sauvegarde à la hauteur de
+la richesse contenue dans ces données : cyniquement, une donnée non
+sauvegardée n'a pas de valeur. Heureusement les principes de base d'une
+bonne sauvegarde sont classiques \cite{preston99-unix_backup_recov} :
+\begin{itemize}
+\item vérifier régulièrement les média pour être sûr qu'il y a bien, sur
+  les bandes, ce qu'on pense y avoir mis ;
+\item stocker les médias de sauvegardes le plus loin possible de ce qui
+  doit être sauvegardé. C'est possible avec les développements des réseaux
+  à haut débit mais peut être plus prosaïquement mis en \oe{}uvre en
+  transportant par exemple des cassettes dans une voiture ;
+\item répartir les médias de sauvegardes en différents lieux pour ne pas
+  être à la merci de la perte d'un site de stockage ;
+\item faire le maximum de sauvegardes dans le temps ;
+\item sauvegarder le maximum de données, car parfois des données sont
+  stockées par erreur à des endroits non prévus ou de manière malicieuse
+  (logiciel de piratage,...) et il peut être nécessaire de les récupérer.
+\end{itemize}
+
+Parallèlement aux sauvegardes qui effectuent en général un recyclage
+régulier des média de sauvegardes, l'archivage n'est pas à négliger. Ce
+dernier va conserver les média beaucoup plus longtemps mais avec en
+général une période d'échantillonnage beaucoup plus longue pour des
+raisons de coût. L'idée est de pouvoir parer la perte d'un fichier effacé
+par exemple par erreur et dont on s'aperçoit de l'absence seulement
+beaucoup plus tard. C'est utile aussi dans les cas d'enquêtes judiciaires
+ou d'assurance, etc.
+
+Malheureusement, derrière toutes ces bonnes intentions il y a la dure
+réalité de la vraie vie : ce n'est pas simple d'organiser de bonnes
+sauvegardes dès qu'on a un réseau et plus d'un disque sur une machine
+unique à sauvegarder.  Par chance il existe de nombreux logiciels
+commerciaux permettant de simplifier la tâche en centralisant la
+configuration.
+
+Mais souvent le coût du logiciel est lié au nombre de machines
+sauvegardées par le système sur le réseau et dans le cas de sites avec peu
+de moyens financiers cela a pour corollaire de revoir à la baisse le
+nombre de machines sauvegardées, empêchant de tout sauvegarder ou de
+limiter la distribution des disques sur les machines qui pourrait être
+bénéfique.
+
+Heureusement une alternative existe avec les logiciels libres qui
+permettent de sauvegarder un nombre arbitraire de machines et de disques à
+coût logiciel nul. L'intérêt supplémentaire des logiciels libres dans ce
+cas sensible est la certitude de pouvoir extraire les données du média
+(sans être néanmoins à l'abri de l'usure du support ou de bugs) car les
+sources qui ont écrit les données sont disponibles.
+
+Dans la suite de cet article sera présenté un tel logiciel, \Aamanda
+(\S~\ref{sec:logic-de-sauv}), suivi par la description de l'usage qui en
+est fait au Centre de Recherche en Informatique (\Acri) de l'École
+Nationale Supérieure des Mines de Paris (\Aensmp) en
+section~\ref{sec:exemple-de-sauv}.
+
+
+\section{Logiciel de sauvegarde libre \Aamanda}
+\label{sec:logic-de-sauv}
+
+Le logiciel \Aamanda (\English{the Advanced Maryland Automatic Network
+  Disk Archiver}) est né au début des années 1990 des constatations
+précédentes afin de fournir une solution satisfaisante à la problématique
+des sauvegardes \cite{WWW-amanda}.
+
+
+\subsection{Concepts}
+\label{sec:concepts}
+
+
+\subsubsection{Architecture client-serveur}
+\label{sec:arch-client-serv}
+
+Le principe est classique, basé sur une architecture client-serveur sur un
+réseau \cite{jackson99-amanda} :
+\begin{itemize}
+\item une machine maître contrôle typiquement un dérouleur de bande et va
+  superviser un ensemble de clients dont les disques doivent être
+  sauvegardés ;
+\item des machines clientes envoient à la demande du maître la taille ou
+  le contenu de ce qu'elles doivent sauvegarder.
+\end{itemize}
+Pour des raisons de portabilité, ce sont les outils classiques natifs ou
+libres de sauvegardes de bas niveau des disques des clients qui sont
+utilisés, \Aamanda se chargeant de jouer le chef d'orchestre en organisant
+tous les transferts de flux.
+
+En particulier le mélange de sauvegardes complètes (de « niveau 0 ») et de
+sauvegardes incrémentales (on ne sauvegarde pour une partition que les
+données qui ont changé depuis la dernière sauvegarde de niveau inférieur)
+est géré par \Aamanda.
+
+
+\subsubsection{Disques tampons (\English{holding disks})}
+\label{sec:disques-de-garde}
+
+Le problème lorsqu'on fait une sauvegarde en réseau est qu'on n'a pas un
+débit constant compatible avec la vitesse d'écriture sur bande. Si des
+données arrivent trop tard, le dérouleur est obligé de s'arrêter. Pour
+reprendre son enregistrement, il se repositionne en général sur la fin de
+l'enregistrement précédent qu'il a dépassé dans son élan. Si cette
+opération a lieu souvent, le débit pratique du dérouleur va être
+extrêmement faible par rapport au débit théorique.
+
+Pour cette raison, la sauvegarde est effectuée en passant par un disque ou
+plusieurs disques locaux au dérouleur de bande et ce n'est que lorsque ces
+disques, dénommés \English{holding disks} (disques tampons) dans \Aamanda,
+sont suffisamment remplis que l'écriture a lieu sur bande. Ce mécanisme
+n'est pas indispensable mais le temps gagné vaut l'investissement en
+disque local. Leur prix ne fait que baisser de toute manière. Comme il y a
+en général beaucoup de sauvegardes incrémentales contenant souvent peu de
+données, le gain est important même avec un petit disque tampon.
+
+L'intérêt supplémentaire de ce système est que plusieurs instances de
+sauvegardes sur les clients via le réseau vont être lancées en parallèle
+pour maximiser l'usage du réseau.
+
+En cas de problème lors de l'écriture sur la bande (pas la bonne bande,
+écriture qui ne marche plus ou plus simplement la bande n'est pas assez
+grande pour contenir tout ce qui doit être sauvegardé) la sauvegarde
+continue en mode dégradé (avec seulement des sauvegardes incrémentales des
+partitions et par ordre de priorité décroissante) jusqu'à remplir ces
+disques tampons.
+
+Ensuite, ces informations seront écrites par l'administrateur sur une
+autre cassette grâce à la commande \texttt{amflush}.
+
+
+\subsubsection{Planification automatique des tâches}
+\label{sec:planification}
+
+Tout ceci semble compliqué à paramétrer. En fait, une caractéristique
+unique d'\Aamanda parmi les logiciels de sauvegarde est que l'organisation
+de ces phases est laissée à un planificateur qui établit le travail à
+faire en fonction d'un cahier des charges donné par l'administrateur.
+
+Le cahier des charges repose sur plusieurs concepts :
+\begin{description}
+\item[le cycle de sauvegarde (\English{cycle dump})] définit le nombre de
+  jours maximal entre les sauvegardes complètes des partitions ;
+\item[le nombre de cassettes] qui seront utilisées pour faire les
+  sauvegardes ;
+\item[le débit réseau] qui est autorisé ;
+\item[le nombre de sauvegardeurs] maximal à faire tourner sur chaque
+  client ;
+\item[les priorités] entre les différentes partitions.
+\end{description}
+
+\Aamanda garde des statistiques sur les performances des sauvegardes
+passées pour optimiser au mieux l'usage de la bande passante et magnétique
+en choisissant pour chaque partition si ce sera une sauvegarde complète ou
+incrémentale d'un certain niveau qui sera effectuée.
+
+L'intérêt d'une telle approche est qu'on n'est plus dans la planification
+statique d'antan : le lundi soir sauvegarde complète de
+\texttt{/usr/local} et incrémentale de \texttt{/users}, le vendredi soir
+sauvegarde complète de \texttt{/users} et incrémentale de
+\texttt{/usr/local},... qui peut mener à des impossibilités par exemple
+pour faire loger de front des sauvegardes complètes de partitions qui
+auraient subit le même jour des modifications importantes.
+
+Tout ceci est automatisé par \Aamanda mais on peut changer le comportement
+par défaut pour gérer des cas particuliers comme :
+\begin{itemize}
+\item forcer une sauvegarde complète de certaines partitions par exemple
+  pour stockage des cassettes ailleurs dans un lieu sécurisé ;
+\item ne faire que des sauvegardes incrémentale si par exemple on a une
+  sauvegarde complète par ailleurs ou qu'on peut récupérer le contenu
+  original en réinstallant le système (le médium du système d'exploitation
+  faisant office de niveau 0) ;
+\item ne faire que des sauvegardes complètes sur certaines partitions car
+  c'est trop critique de faire des sauvegardes incrémentales ou le contenu
+  varie trop de toute manière (base de données en production).
+\end{itemize}
+
+On comprend aisément l'utilité du nombre de cassettes : si on fait une
+sauvegarde par jour, cela représente directement le nombre de jours que
+l'on peut récupérer dans le passé.
+
+Le cycle de sauvegarde est plus subtil :
+\begin{itemize}
+\item si on le choisit très faible, les restaurations seront plus simples
+  à faire, mais les bandes seront de taille conséquente car des
+  sauvegardes complètes seront souvent effectuées, mettant la pression
+  aussi sur le réseau ;
+\item si on choisit un cycle important, on aura beaucoup de sauvegardes
+  incrémentales et une restauration d'une partition qui en serait au
+  malheureux niveau 9 nécessiterait la bagatelle de 10 lectures de
+  cassettes des niveaux 0 à 9. Et si par exemple la cassette de niveau 0
+  est corrompue, il faudra relire en plus les 10 cassettes précédentes et
+  on aura un « trou » d'une journée assez éloigné dans le temps et le
+  propriétaire des données aura plus de mal à se souvenir du travail à
+  refaire. L'intérêt néanmoins est de sauvegarder moins de données via le
+  réseau et d'utiliser une dérouleur de bande de plus faible capacité,
+  moins cher, avec des cassettes aussi moins chères.
+\end{itemize}
+Tout est donc dans le compromis. De toute manière, le cycle de sauvegarde
+est une limite supérieure et \Aamanda choisira toujours s'il reste de la
+place sur bande de mettre plus de sauvegardes complètes que prévues pour
+raccourcir le cycle des sauvegardes complètes.
+
+Le corollaire par rapport à un système moins intelligent est que, puisque
+\Aamanda exploite au maximum la bande, \Aamanda use aussi au maximum les
+dérouleurs de bande car chaque cassette est remplie à fond alors qu'avec
+une planification statique on est obligé de faire des hypothèses
+pessimistes sur ce qui peut loger et donc en général sous-remplir la
+bande...
+
+Les cassettes sont recyclées automatiquement par \Aamanda mais un système
+de vérification du nom de la cassette lui interdit d'effacer une cassette
+qui doit encore être gardée pour garantir le délai de stockage des
+sauvegardes demandé. Les cassettes peuvent aussi être marquées comme non
+recyclables (simplement) par \Aamanda.
+
+Le nommage et marquage des cassettes avant usage par \Aamanda est fait via
+\texttt{amlabel}.
+
+Cela signifie qu'on ne peut pas mettre n'importe quelle cassette. Les
+messages de fin de sauvegarde envoyés par \Aamanda indiquent (outre tout
+ce qui a été fait, voir \S~\ref{sec:courrier-de-fin}) le nom de la
+cassette à utiliser pour la prochaine fois. Mais comme on peut oublier, on
+a intérêt à lancer un \texttt{amcheck} quelques heures avant le lancement
+de la sauvegarde qui vérifiera que la bonne cassette est en place, ainsi
+que l'état des clients, des droits,...  Cela laissera le temps de mener
+quelques mesures correctives éventuelles.
+
+
+\subsubsection{Compression des données}
+\label{sec:compr-des-donn}
+
+Les dérouleurs de bande modernes possèdent un module de compression des
+données afin d'augmenter la capacité apparente des bandes.
+
+Mais \Aamanda est aussi capable de comprimer les données au niveau de
+chaque client, ce qui a plusieurs avantages :
+\begin{itemize}
+\item la compression logicielle est souvent meilleure en terme de taux de
+  compression (\texttt{gzip}, \texttt{bzip2},...) que celle effectuée par
+  le dérouleur mais est aussi plus lente ;
+\item seules les données comprimées passent sur le réseau et donc
+  la pression est moindre ;
+\item lors de la planification \Aamanda connaît le taux de compression
+  effectif pour chaque partition et peut mieux remplir les bandes avec
+  moins de risque de débordement.
+\end{itemize}
+
+Comme la compression est parallélisée sur tous les clients le débit reste
+conséquent. Néanmoins, si on a certaines machines pas très puissantes, on
+peut marquer les partitions de celles-ci comme devant être comprimées par
+le dérouleur et non \Aamanda.
+
+\iflong
+Un point subtil est que si on demande la compression matérielle du
+dérouleur de bande, elle sera aussi appliquée aux partitions déjà
+comprimées logiciellement. Or il est peu probable que la compression
+matérielle supplémentaire arrive à en comprimer quelque chose mais il
+restera le surcoût des entêtes de compression. Du coup la capacité
+apparente de la bande diminuera un peu...
+\fi
+
+
+\subsubsection{Formats de sauvegarde}
+\label{sec:form-de-sauv}
+
+\Aamanda utilise les outils disponibles sur les clients pour faire des
+images de sauvegarde et ces images sont mises par le serveur dans un
+format très simple (\S~\ref{sec:recup-part-de}).
+
+Mais il faut choisir pour chaque partition quel va être l'outil utilisé,
+typiquement \Agnu \texttt{tar} ou un outil plus proche du système de
+fichier, \texttt{dump}. Rapidement, les avantages et inconvénients de
+chaque approche :
+\begin{description}
+\item[\texttt{dump} :] ~
+  \begin{itemize}
+  \item[$-$] spécifique à un système de fichiers, voire à un système
+    d'exploitation. Gênant pour faire des sauvegardes portables et
+    éternelles ;
+  \item[$+$] mode de restauration interactive ;
+  \item[$+$] ne change pas les dates des fichiers ;
+  \end{itemize}
+\item[\texttt{tar} :] ~
+  \begin{itemize}
+  \item[$+$] format portable, documenté, logiciel libre. On pourra relire
+    (si les bandes ne sont pas endommagées et qu'il reste un lecteur en
+    état de marche...) les sauvegardes sur une autre machine ;
+  \item[$+$] pas de conflit sur le fichier de gestion incrémentale des
+    sauvegardes. Permet facilement de mélanger plusieurs instances
+    d'\Aamanda (archivage + sauvegardes) ;
+  \item[$-$] modifie la date d'accès des fichiers. On peut néanmoins
+    contourner le problème en créant avant une sauvegarde un « instantané
+    » (\English{snapshot}) de la partition si le système le permet (ce qui
+    a d'autres avantages en donnant une vue stable et cohérente du système
+    de fichiers pendant toute la durée de la sauvegarde), comme par
+    exemple \texttt{fssnap} sous \Asolaris ou remonter la partition en
+    lecture seule ailleurs si le système le permet.
+  \end{itemize}
+\end{description}
+
+
+\subsubsection{Changeur de bandes}
+\label{sec:changeur-de-bandes}
+
+\Aamanda ne peut contrôler qu'un dérouleur de bande mais celui-ci peut
+avoir un système de chargement automatique.
+
+L'intérêt primordial est l'automatisation complète de la sauvegarde et la
+possibilité de remplir plusieurs bandes par sauvegarde.
+
+Mais cela a d'autres effets de bord qui se traduisent par une quasi
+disparition des problèmes d'écriture et donc de l'emploi de la commande
+\texttt{amflush}. En effet, si \Aamanda n'a exceptionnellement plus de
+place pour écrire sur la bande (une ou des partitions ont été fortement
+modifiées au cours de la sauvegarde) ou qu'il y a un problème en écriture
+la bande est déchargée et la suivante est utilisée.
+
+L'inconvénient néanmoins d'un changeur de bande est que si la pièce qui le
+contient brûle, toutes les cassettes dedans disparaissent alors que si on
+n'en a pas, comme on se déplace pour changer les cassettes on peut plus
+naturellement les entreposer dans des lieux distants et différents.
+
+\Aamanda vient avec 4 systèmes de contrôle de changement de bandes, dont
+un spécial puisqu'il se contente de demander à un humain de changer
+la bande quand c'est nécessaire...
+
+
+\subsubsection{Configuration}
+\label{sec:configuration-1}
+
+Dans la pure tradition unixienne, tout est fait avec des fichiers textes.
+
+La configuration est tellement simple qu'il n'y a pas d'interface
+graphique de configuration ou de contrôle. Le rajout d'un disque de
+machine à sauvegarder se traduit par une ligne à rajouter dans un fichier
+\texttt{disklist} central (voir la
+section~\ref{sec:liste-des-partitions}).
+
+
+\subsection{Suivi des opérations}
+\label{sec:suivi-des-operations}
+
+
+\subsubsection{Courriers de fin de sauvegarde}
+\label{sec:courrier-de-fin}
+
+Après chaque sauvegarde les administrateurs reçoivent un résumé complet
+des opérations tel que :
+\begin{itemize}
+\item le nom de la configuration, de la cassette utilisée et de celle qui
+  sera utilisée la prochaine fois :
+
+\begin{exemple}
+From: bin@cri.ensmp.fr
+Subject: chailly99_jour AMANDA MAIL REPORT FOR September 26, 2001
+To: sauvegardes-amanda-chailly99@cri.ensmp.fr
+Date: Thu, 27 Sep 2001 00:52:35 +0200 (MEST)
+
+These dumps were to tape CHAILLY99-J-25@25-05-2000.
+Tonight's dumps should go onto 1 tape: CHAILLY99-J-26@13-11-2000.
+\end{exemple}
+\item des statistiques sur ce qui a été fait :
+
+\begin{exemple}
+STATISTICS:
+                          Total       Full      Daily
+                        --------   --------   --------
+Dump Time (hrs:min)        1:43       0:22       0:05   (0:10 start, 1:05 idle)
+Output Size (meg)        4386.2     3673.8      712.4
+Original Size (meg)     10687.6     9067.6     1620.0
+Avg Compressed Size (%)    35.2       33.7       42.5
+Tape Used (%)              21.9       18.4        3.6   (level:#disks ...)
+Filesystems Dumped           48          7         41   (1:39 2:2)
+Avg Dump Rate (k/s)       725.3      783.6      524.3
+Avg Tp Write Rate (k/s)  2769.1     2906.6     2226.1
+\end{exemple}
+  48 partitions ont été sauvegardées dont 7 complètement et 41 en
+  incrémental, la compression logicielle par classe (après compression
+  logicielle il reste ici 35,2\,\% de la taille d'origine), on voit qu'on
+  passe surtout du temps à attendre les données (1h05) ce qui s'explique
+  par la limite demandée dans l'occupation réseau par rapport à ce que
+  permet le dérouleur de bande ;
+\item des informations sur la planification du point de vue client et du
+  point de vue serveur
+  \iflong :
+
+\begin{exemple}
+NOTES:
+  planner: Incremental of orgenoy:c0t0d0s4 bumped to level 2.
+  planner: Incremental of chailly99:c1t3d0s0 bumped to level 2.
+  taper: tape CHAILLY99-J-25@25-05-2000 kb 4493024 fm 48 [OK]
+\end{exemple}
+\else ;
+\fi
+\item et enfin les mêmes informations en détail partition par partition :
+
+\begin{exemple}
+DUMP SUMMARY:
+                                      DUMPER STATS                  TAPER STATS
+HOSTNAME  DISK           L  ORIG-KB   OUT-KB COMP%  MMM:SS   KB/s  MMM:SS   KB/s
+-------------------------- -------------------------------------- --------------
+abisko    c0t0d0s4       1     6079      928  15.3    0:06  158.6    0:01 1064.4
+abisko    c0t0d0s5       0  2946207  1216800  41.3   23:30  863.3    6:53 2944.7
+blonville c0t0d0s6       1     5760     5760   --     0:22  261.5    0:04 1533.4
+\end{exemple}
+\iflong
+\begin{exemple}
+chailly99 c0t0d0s0       1      191       32  16.8    0:03    9.3    0:01   86.8
+chailly99 c0t0d0s3       1      543       64  11.8    0:04   18.0    0:01  117.0
+chailly99 c0t0d0s5       1       95       32  33.7    0:24    1.3    0:02   29.8
+chailly99 c0t0d0s6       1    53567    10080  18.8    0:41  245.2    0:09 1187.4
+chailly99 c0t1d0s3       1   538015   247904  46.1    4:43  876.2    1:28 2823.3
+chailly99 c0t1d0s4       1       63       32  50.8    0:02   13.6    0:01   78.7
+chailly99 c1t0d0s5       1       95       32  33.7    0:01   27.3    0:01   78.1
+chailly99 c1t0d0s6       1       95       32  33.7    0:01   28.4    0:01   76.2
+chailly99 c1t0d0s7       1       95       32  33.7    0:01   22.7    0:01   78.6
+chailly99 c1t1d0s0       0   573791   222432  38.8    4:50  767.2    1:20 2796.5
+chailly99 c1t1d0s3       1       95       32  33.7    0:01   28.2    0:01   78.7
+chailly99 c1t1d0s4       1       95       32  33.7    0:01   26.6    0:01   78.7
+chailly99 c1t1d0s5       1       95       32  33.7    0:02   20.7    0:01   78.6
+chailly99 c1t1d0s6       1      351       32   9.1    0:05    7.1    0:05   11.8
+chailly99 c1t3d0s0       2      703       64   9.1    2:19    0.5    0:02   46.3
+chailly99 c1t3d0s1       1      319       32  10.0    1:22    0.4    0:06   11.1
+chailly99 c1t3d0s3       1      159       32  20.1    0:02   18.3    0:01   78.8
+chailly99 c1t3d0s4       1   438047   254848  58.2    4:54  867.9    1:30 2826.8
+chailly99 c1t3d0s5       1     7103     1504  21.2    0:42   36.2    0:06  265.7
+chailly99 c1t3d0s6       1   292831   114912  39.2    2:15  849.2    0:45 2531.4
+chailly99 c1t3d0s7       1      159       32  20.1    0:02   16.6    0:01   78.7
+champeaux c0t0d0s4       1     9151     1344  14.7    0:07  203.5    0:07  186.6
+champeaux c0t0d0s5       1    17695     6304  35.6    0:17  368.0    0:04 1653.2
+\end{exemple}
+\fi
+\begin{exemple}
+[...]
+thomery   c0t0d0s4       1     5952     5952   --     0:09  680.7    0:03 1861.9
+thomery   c0t0d0s5       1     3072     3072   --     0:10  302.4    0:01 2562.6
+viroflay  c0t0d0s6       1     5856     5856   --     0:20  299.3    0:04 1558.7
+vulaines  c0t0d0s4       1    14816    14816   --     0:12 1194.2    0:05 2858.4
+vulaines  c0t0d0s5       0   951744   951744   --     6:32 2427.7    5:25 2928.0
+
+(brought to you by Amanda version 2.4.1p1)
+\end{exemple}
+on peut remarquer qu'un mélange de sauvegardes complètes (niveau 0) et
+incrémentales (niveaux 1 et 2) ont été utilisées et que les dernières
+machines n'utilisent pas la compression logicielle.
+\end{itemize}
+
+
+\subsubsection{Commandes d'information}
+\label{sec:comm-dinf}
+
+La commande \texttt{amstatus} donne de l'information similaire sur une
+sauvegarde en cours ou sur une sauvegarde passée. Cela permet d'ajuster
+les paramètres si on a besoin d'accélérer les sauvegardes en jouant par
+exemple sur certains paramètres :
+\begin{itemize}
+\item autoriser plus de bande passante réseau ;
+\item rajouter des disques tampons ;
+\item lancer plus de sauvegardeurs par client en parallèle en précisant
+  les partitions qui ne sont pas sur le même disque pour éviter de perdre
+  du temps à bouger les têtes.
+\end{itemize}
+
+\begin{figure}
+  \includegraphics[angle=-90,width=\textwidth]{images/20010928.ps}
+  \caption{Exemple de rendu du fonctionnement avec \texttt{amplot}.}
+  \label{fig:amplot}
+\end{figure}
+
+Cette information peut être représentée de manière graphique grâce à la
+commande \texttt{amplot} qui utilise \texttt{gnuplot} pour afficher les
+données comme sur la figure~\ref{fig:amplot}.
+
+
+\subsubsection{Vérification des sauvegardes}
+\label{sec:verif-des-sauv}
+
+Rien ne sert de faire des sauvegardes si on ne peut pas relire les
+informations. Il faut donc vérifier le fonctionnement correct du système
+régulièrement.
+
+\Aamanda fournit l'outil \texttt{amverify} qui vérifie s'il peut bien
+comprendre les archives de la bande si elles ont été faites par un outil libre
+(typiquement \texttt{tar}) mais pas si elle ont été faite avec un outil
+propriétaire d'un client qui n'est pas disponible sur le serveur. Dans ce
+dernier cas, seule une vérification de lecture est effectuée.
+
+Une vérification plus rapide mais moins précise est de lancer une
+restauration d'une partition qui n'existe pas : dans ce cas
+\texttt{amrestore} va lire tous les entêtes \Aamanda de la bande jusqu'à
+la fin et les afficher.
+
+Les dérouleurs de bande ont la réputation de pouvoir relire plus
+facilement les données qu'ils ont écrites que celles écrites par d'autres
+appareils. Ce qui peut être fâcheux en cas de panne définitive du
+dérouleur de bande : on aura perdu le rare appareil capable de relire les
+sauvegardes... Afin d'éviter ce cas pathologique il faut faire les
+vérifications de lecture avec un autre dérouleur, même si c'est impossible
+à automatiser si on ne dispose pas d'un automate à double dérouleur.
+
+L'effet de bord ennuyeux de ces vérifications systématiques est que l'on
+double l'utilisation du dérouleur et donc qu'on diminue sa durée de vie,
+déjà pas très élevée mais de toute manière c'est le genre de matériel
+qu'il faut avoir en double pour assurer une bonne continuité de service.
+
+
+\subsection{Restauration de données}
+\label{sec:rest-de-donn}
+
+
+\subsubsection{Fonctionnement standard}
+\label{sec:fonct-stand}
+
+
+\paragraph{En utilisant les index}
+\label{sec:en-utilisant-les}
+
+Si les index sont utilisés, la commande de restauration à utiliser sur le
+client en tant que \texttt{root} est \texttt{amrecover} qui a une syntaxe
+à la \texttt{ftp} :
+
+\begin{exemple}
+orgenoy-root > amrecover chailly99_jour -s chailly99 -t chailly99
+AMRECOVER Version 2.4.1p1. Contacting server on chailly99 ...
+220 chailly99 AMANDA index server (2.4.1p1) ready.
+200 Access OK
+Setting restore date to today (2001-10-02)
+200 Working date set to 2001-10-02.
+200 Config set to chailly99_jour.
+200 Dump host set to orgenoy.
+$CWD '/export/interne' is on disk 'c0t0d0s7' mounted at '/export/interne'.
+200 Disk set to c0t0d0s7.
+/export/interne
+amrecover> ls
+2001-10-01 .
+2001-09-27 lost+found/
+2001-10-01 save_system/
+amrecover> cd save_system/
+/export/interne/save_system
+amrecover> ls
+2001-10-01 .
+2001-10-01 jumpstart/
+2001-09-27 modeles/
+2001-09-27 root/
+amrecover> add jumpstart/
+Added dir /save_system/jumpstart at date 2001-10-01
+Added dir /save_system/jumpstart at date 2001-09-27
+amrecover> extract
+
+Extracting files using tape drive /dev/null on host chailly99.
+The following tapes are needed: CHAILLY99-J-26@13-11-2000
+                                CHAILLY99-J-27@30-05-2000
+
+Restoring files into directory /export/interne
+Continue? [Y/n]: 
+\end{exemple}%$
+le système demandant d'insérer à tour de rôle les cassettes pour les
+niveaux incrémentaux si nécessaire.
+
+Les index sont très orientés date et cela pose problème en cas de
+restauration d'un fichier qui a par exemple été perdu à une date inconnue.
+Une solution est de faire une recherche dicotomique en faisant plusieurs
+réglages de date à partir de la dernière date.
+
+Mais comme les fichiers sont dans un format très simple on peut faire un
+script de recherche directement dans les index triés par date
+décroissante.
+
+
+\paragraph{Sans utiliser les index}
+\label{sec:sans-utiliser-les}
+
+Une autre solution est de récupérer directement le contenu de la partition
+et de l'envoyer dans l'outil de restauration adéquat :
+\begin{itemize}
+\item on commence par chercher la bande qui nous intéresse en interrogeant
+  la base de donnée sur le serveur avec
+
+\begin{exemple}
+su bin -c 'amadmin chailly99_jour find champeaux'
+Scanning /home/chailly99/bibendum5/amanda/work/chailly99_jour...
+
+date       host      disk     lv tape or file              file status
+2001-08-08 champeaux c0t0d0s4  1 CHAILLY99-J-28@17-07-2000   15 OK
+2001-08-09 champeaux c0t0d0s4  1 CHAILLY99-J-29@31-05-2000   26 OK
+[...]
+\end{exemple}
+\iflong
+\begin{exemple}
+2001-09-25 champeaux c0t0d0s4  0 CHAILLY99-J-24@24-05-2000   29 OK
+2001-09-26 champeaux c0t0d0s4  1 CHAILLY99-J-25@25-05-2000    1 OK
+2001-09-27 champeaux c0t0d0s4  1 CHAILLY99-J-26@13-11-2000   14 OK
+2001-10-01 champeaux c0t0d0s4  1 CHAILLY99-J-27@30-05-2000   10 OK
+2001-08-08 champeaux c0t0d0s5  1 CHAILLY99-J-28@17-07-2000   12 OK
+[...]
+2001-09-24 champeaux c0t0d0s5  0 CHAILLY99-J-23@10-07-2000   47 OK
+2001-09-25 champeaux c0t0d0s5  1 CHAILLY99-J-24@24-05-2000   37 OK
+2001-09-26 champeaux c0t0d0s5  1 CHAILLY99-J-25@25-05-2000   12 OK
+\end{exemple}
+\fi
+\begin{exemple}
+2001-09-27 champeaux c0t0d0s5  1 CHAILLY99-J-26@13-11-2000   27 OK
+2001-10-01 champeaux c0t0d0s5  1 CHAILLY99-J-27@30-05-2000   31 OK
+\end{exemple}
+\item on insère la bonne bande et on récupère depuis la machine
+\texttt{champeaux} par exemple avec :
+
+\begin{exemple}
+ssh chailly99 amrestore -p /dev/rmt/0hn champeaux c0t0d0s5 | ufsrestore -ivf -
+\end{exemple}
+\end{itemize}
+
+
+\subsubsection{Récupération à partir de rien}
+\label{sec:recup-part-de}
+
+En cas de catastrophe, il est bien pratique de redémarrer sur un support
+qui aura pour effet de réinstaller le système d'exploitation suivi par la
+récupération des disques de données.
+
+Mais ce n'est pas prévu dans \Aamanda, étant donné que cela implique
+d'être très proche du système d'exploitation.
+
+Néanmoins, si on a correctement organisé son système, on doit avoir au
+moins 2 serveurs d'installations (pour pouvoir les réinstaller
+mutuellement l'un par rapport à l'autre) et lancer une installation réseau
+automatique qui fera tourner un système d'exploitation minimal pour
+permettre de recharger depuis le serveur \Aamanda le contenu des disques.
+En ce qui concerne le disque système il ne faut pas oublier de réinstaller
+les méta-données d'amorçage (typiquement les blocs d'amorçage sur le
+disque système principal) si on veut pouvoir redémarrer ensuite.
+
+Si on n'a pas de procédure d'installation en réseau, on utilisera un
+\Acdrom ou une disquette de secours contenant les outils nécessaires au
+formatage et à la restauration des disques.
+
+Si la machine serveuse \Aamanda n'est plus utilisable, rien n'empêche
+d'utiliser son dérouleur ou un autre sur une autre machine. Si on a accès
+aux fichiers de configuration, d'information, voire même d'index depuis
+cette machine, la restauration sera luxueuse. D'où l'intérêt de répliquer
+automatiquement ces fichiers via le réseau.
+
+Sinon, il faudra travailler à la main. Le format des bandes \Aamanda est
+simple. Le premier fichier donne le nom de la bande, comme :
+
+\begin{exemple}
+AMANDA: TAPESTART DATE 20010808 TAPE CRI-21@20-09-1999
+\end{exemple}
+et les autres fichiers commencent par un entête de 32~Ko décrivant son
+origine et comment en extraire l'information, comme par exemple :
+
+\begin{exemple}
+AMANDA: FILE 20010808 deauville c0t2d0s4 lev 1 comp N program /usr/sbin/ufsdump
+To restore, position tape at start of file and run:
+        dd if=<tape> bs=32k skip=1 | /usr/sbin/ufsrestore -f... -
+\end{exemple}
+ou
+\begin{exemple}
+AMANDA: FILE 20010809 orgenoy c0t0d0s4 lev 1 comp .gz program /usr/sbin/ufsdump
+To restore, position tape at start of file and run:
+        dd if=<tape> bs=32k skip=1 | /usr/local/bin/gzip -dc | usr/sbin/ufsrestore -f... -
+\end{exemple}
+On peut avoir facilement le contenu d'une bande par exemple avec :
+\begin{exemple}
+mt -f /dev/rmt/0hn rewind
+while dd bs=32k count=1 if=/dev/rmt/0hn; do echo; done;
+\end{exemple}
+
+
+\subsection{Sauvegardes sans clients Unix}
+\label{sec:sauv-sans-clients}
+
+
+\subsubsection{Sauvegardes de serveurs de fichiers}
+\label{sec:sauv-de-serv}
+
+Certains systèmes possèdent des disques mais n'ont pas ou ne peuvent pas
+avoir de client \Aamanda parce qu'ils ne sont pas programmables, tels que
+les serveurs disques propriétaires.
+
+Dans ce cas il suffit d'exporter ces disques via un protocole quelconque
+vers une machine cliente \Aamanda qui effectuera la sauvegarde. Pour
+limiter le trafic réseau, il peut être plus intéressant de faire cette
+opération sur le serveur \Aamanda lui-même.
+
+
+\subsubsection{Sauvegardes de clients Windows}
+\label{sec:sauv-de-clients}
+
+Le cas des machines Windows est une spécialisation du cas précédent
+puisque c'est le protocole \Asmb avec \Asamba qui est utilisé.
+
+\Aamanda utilise ce système lorsqu'on met dans la liste des disques à
+sauvegarder le nom de la machine cliente \Aamanda qui fait tourner \Asamba
+et comme disque le nom de partage à la Windows du style
+\texttt{//\emph{mon-pc}/C\$}.
+
+L'authentification est gérée en associant le mot de passe en clair (donc
+attention aux droits du fichier...) à la partition dans le fichier
+\texttt{/etc/amandapass} de la machine faisant tourner \Asamba.
+
+Une alternative existera néanmoins puisque des clients \Aamanda natifs
+sont en cours de développement, tel que
+\LienPDF{http://sourceforge.net/projects/amanda-win32}.
+
+
+\subsection{Installation}
+\label{sec:installation}
+
+\Aamanda utilise ses propres protocoles au dessus d'\Audp et \Atcp pour
+fonctionner à partir du super démon de type \texttt{inetd}. Il n'y a que
+ce système à configurer.
+
+\iflong
+Les services utilisés sont (au sens \texttt{/etc/services},
+\texttt{\emph{port}/\emph{protocole}}) sont :
+\begin{itemize}
+\item sur le client à sauvegarder :
+
+\begin{exemple}
+amanda  10080/udp 
+\end{exemple}
+\item sur le serveur gérant le dérouleur de bande, si on utilise
+  \texttt{amrecover} et les index :
+
+\begin{exemple}
+amanda  10080/udp 
+amandaidx  10082/tcp 
+amidxtape  10083/tcp 
+\end{exemple}
+\end{itemize}
+et les serveur utilisés, déclarés par exemple dans
+\texttt{/etc/inetd.conf}, sont :
+\begin{itemize}
+\item pour le client :
+
+\begin{exemple}
+amanda dgram udp wait bin /usr/local/libexec/amandad amandad
+\end{exemple}
+\item pour le serveur éventuellement :
+
+\begin{exemple}
+amandaidx stream tcp nowait bin /usr/local/libexec/amindexd amindexd
+amidxtape stream tcp nowait bin /usr/local/libexec/amidxtaped amidxtaped
+\end{exemple}
+\end{itemize}
+\fi
+
+
+\subsection{Archivage}
+\label{sec:archivage}
+
+En soi \Aamanda n'est pas prévu pour faire de l'archivage mais il suffit
+de faire des sauvegardes avec un cycle de cassettes (quasi) infini ou de
+marquer les cassettes comme non réutilisables pour que le tour soit joué.
+
+Le problème survient néanmoins lorsque plusieurs instances d'\Aamanda
+interviennent sur les mêmes partitions (typiquement des sauvegardes du
+lundi au jeudi et de l'archivage le vendredi), il ne faut pas que les
+outils de bas niveau utilisés pour faire les sauvegardes interfèrent.
+
+Or c'est le cas par exemple de \texttt{dump} qui utilise un unique fichier
+\texttt{/etc/dumpdates} pour enregistrer les dates des dernières
+sauvegardes par niveau incrémental afin de savoir ce qui doit être
+incrémentalement sauvegardé depuis la sauvegarde précédente.
+
+Du coup, s'il y a une sauvegarde et un archivage, les dates des
+sauvegardes vont se mélanger dans le fichier \texttt{/etc/dumpdates}. Les
+sauvegardes incrémentales seront faites par rapport aux plus récentes des
+sauvegardes, qu'elles soient de la sauvegarde classique ou de
+l'archivage. La restauration d'une sauvegarde classique ne posera pas de
+problème car on aura les cassettes des 2 lots de disponible.
+
+Par contre une restauration d'archivage pourra aussi demander des
+cassettes de sauvegarde classique qui auront pu être recyclées. En
+fonction des aléas de planification on peut avoir de l'archivage troué...
+
+Pour éviter ces problèmes il faut soit utiliser des programmes de
+sauvegarde de bas niveau qui n'ont pas de conflit de base de données soit
+les enrober pour qu'il n'y en ait plus, par exemple du plus simple au plus
+compliqué :
+%% Add a \clearpage to suppress a bug with TeX4ht :
+\iftexforht\clearpage\fi
+\begin{itemize}
+\item utiliser un programme qui prend le nom du fichier de date en
+  paramètre ou en modifier un pour qu'il le fasse ;
+\item mettre un système de \texttt{crontab} sur les clients pour mettre en
+  place la bonne instance du fichier \texttt{/etc/dumpdates}. C'est
+  faisable simplement si on utilise \Acfengine en utilisant des classes de
+  type jour ou en utilisant la future \emph{dumper} \textsc{api} ;
+\item cloner la hiérarchie des fichiers nécessaires sauf
+\texttt{/etc/dumpdates} à faire tourner \texttt{dump} par exemple en
+utilisant l'auto-monteur et les \emph{loopback file system} (au sens
+\Asolaris) et faire un \texttt{chroot} dessus avant appel à \texttt{dump}
+;
+\item modifier dynamiquement le nom du fichier de date ouvert ou créé par
+  \texttt{dump} en surchargeant les appels systèmes \texttt{open},
+  \texttt{creat} et \texttt{stat} en préchargeant le cache d'édition
+  dynamique (style \texttt{crle} de \Asolaris) ou à coup de
+  \verb|LD_PRELOAD| ou de \verb|LD_LOADFLTR|.
+\end{itemize}
+
+
+\subsection{Évolutions futures}
+\label{sec:evolutions-futures}
+
+Un certain nombre d'axes de développement sont indiqués sur
+\LienPDF{http://www.amanda.org/ongoing.html}. On peut citer :
+\begin{itemize}
+\item nouvelle infrastructure générique pour gérer la sécurité ;
+\item améliorer l'interface avec le programme de sauvegarde de bas niveau
+  pour permettre facilement le rajout d'action avant et après son appel,
+  typiquement pour gérer des vues instantanées de base de données ou de
+  systèmes de fichiers (créations de \English{snapshot} ou « instantanés
+  ») ;
+\item généraliser le concept de bande à des \Acdrom, disques, copies à
+  distance,...
+\item pouvoir sauvegarder des partitions dont la taille est supérieure à
+  la bande ;
+\item améliorer encore plus le format des bandes pour faciliter la
+  récupération en situation catastrophique.
+\end{itemize}
+
+
+\section{Exemple des sauvegardes du CRI}
+\label{sec:exemple-de-sauv}
+
+\Aamanda est utilisé par plusieurs centres de l'École des Mines de Paris
+mais c'est l'installation du \Acri qui sera décrite.
+
+Les hypothèses architecturales de l'organisation du système sont basées
+sur le parallélisme pour exploiter au maximum les ressources, que ce soit
+processeurs ou disques. Chaque disque de chaque machine est donc utilisé
+pour stocker soit des répertoires utilisateurs, soit des répertoires de
+projets, soit des répertoires systèmes.
+
+L'intérêt est que le coût matériel est minimisé
+\cite{Grosch_law_revisited} et que le système est plus tolérant aux pannes
+(si une partie du réseau casse ou une machine tombe en panne et qu'il n'y
+a pas de redondance, on ne perd que l'accès aux ressources sur ces
+machine). Malheureusement, la gestion système peut être très complexe par
+rapport à une approche centripète à base de clients légers style terminaux
+X11. C'est là qu'un système de sauvegardes distribuées automatique tel
+qu'\Aamanda sauve la donne, surtout s'il est intégré dans une
+infrastructure globale d'automatisation de l'administration système.
+
+D'un point de vue paranoïaque, les données peuvent se trouver partout
+comme dans :
+\begin{itemize}
+\item \texttt{/var/tmp} pour des fichiers temporaires ou des sauvegardes de
+fichiers édités par \texttt{vi} ;
+\item \texttt{/var/spool/calendar} pour les calendriers de \Acde ;
+\item \texttt{/var/spool/cron} pour les \texttt{crontabs} et autres
+  travaux \texttt{at} ;
+\item des fichiers de configuration dans \texttt{/etc} tels que des clés
+  d'authentification à la \texttt{ssh} qui, si elles étaient perdues,
+  demanderaient leur reconstruction et leur rediffusion confidentielle à
+  toutes les machines en relation.
+\end{itemize}
+Comme ces fichiers évoluent peu, le mécanisme de sauvegarde incrémentale
+comprime beaucoup l'information sauvegardée et c'est peu coûteux en bande
+(on peut rappeler un mot de \textsc{Zhuangzi}, taoïste du 4ème siècle
+avant notre ère, dans \emph{Le monde des hommes}, chapitre 4 : «
+\emph{Tout le monde connaît l'utilité de l'utile mais rares sont ceux qui
+  savent l'utilité de l'inutile} »).
+
+Vue la simplicité de la configuration d'\Aamanda, le choix de sauvegarder
+toutes les partitions (sauf le \English{swap}...) a été fait, avec des
+sauvegardes journalières du lundi soir au jeudi soir (les configurations
+de type \texttt{jour} dans la suite) et de l'archivage le vendredi soir
+(configurations de type \texttt{longtemps}).
+
+Le réseau du \Acri est partagé en 2 entités :
+%% En fait dans la suite les calculs portent sur des partitions qui sont
+%% ou ont été sauvegardées...
+\begin{itemize}
+\item une zone « démilitarisée » qui rassemble les serveurs \Awww et
+  possède son dérouleur Exabyte 8mm Mammoth de 20~Go sur la machine
+  \texttt{veneux}. Chaque nuit sont sauvegardées
+  %% grep '^stats: 0' /var/adm/amanda/veneux_jour/curinfo/*/*/info | wc
+  38 partitions occupées par
+    %% grep '^stats: 0' /var/adm/amanda/veneux_jour/curinfo/*/*/info | awk ' { taille += $3 } END { print taille }'
+  67~Go ;
+\item une zone réseau recherche avec 2 dérouleurs sur 2 serveurs :
+  \begin{itemize}
+  \item un vieil Exabyte 8mm de 7Go sur la machine \texttt{deauville} qui
+    sauvegarde le serveur du mastère \textsc{iar2m} et les anciennes
+    machines, donc, de fait, de moins en moins de partitions. Chaque nuit
+    sont sauvegardées
+    %% grep '^stats: 0' /var/adm/amanda/jour/curinfo/*/*/info | wc
+    123 partitions représentant
+    %% grep '^stats: 0' /var/adm/amanda/jour/curinfo/*/*/info | awk ' { taille += $3 } END { print taille }'
+    75~Go utilisés ;
+  \item un autre Exabyte 8mm Mammoth de 20~Go sur la machine
+    \texttt{chailly99} sauvegarde les machines plus récentes, à savoir
+    %% grep '^stats: 0' /var/adm/amanda/chailly99_jour/curinfo/*/*/info | wc
+    85 partitions représentant
+    %% grep '^stats: 0' /var/adm/amanda/chailly99_jour/curinfo/*/*/info | awk ' { taille += $3 } END { print taille }'
+    aussi 75~Go.
+  \end{itemize}
+\end{itemize}
+
+Les réseaux étant indépendants et chacun « commuté », les seules
+limitations de débit sont celles du lien Ethernet de chaque serveur
+\Aamanda. C'est donc ce qui fixera le débit de sauvegarde raisonnablement
+utilisable.
+
+
+\subsection{Mode opératoire ou « de la vie et de la mort des cassettes »}
+\label{sec:mode-operatoire}
+
+%% Le fabuleux destin des cassettes de sauvegarde
+
+Chaque jour, il suffit de mettre en place dans chaque dérouleur les
+cassettes demandées par les comptes-rendus de la nuit précédente ou des
+courriers de vérification d'\texttt{amcheck}.
+
+Il y a 2 jeux de cassettes par dérouleur : celles de sauvegarde (qui sont
+recyclées) et celles d'archivage (qui ne le sont pas). L'approche la plus
+sécurisée serait de toujours utiliser des cassettes neuves mais en août
+2001 les prix des supports allaient de 1,5 à 2,4\MesEuros/Go en fonction
+de la technologie utilisée ce qui dans notre cas donnerait tout de même
+par jour un coût entre 70 et 113\MesEuros (entre 352 et 564\MesEuros par
+semaine).
+
+Dans la mesure où le minimum est d'injecter une cassette par dérouleur et
+par semaine pour l'archivage du vendredi, une solution moins luxueuse a
+été choisie :
+\begin{itemize}
+\item le vendredi on prend pour l'archivage la cassette qui sera demandée
+  la prochaine fois par la sauvegarde journalière, donc juste avant son
+  recyclage, et on fait un \texttt{amlabel} dessus pour la mettre dans le
+  lot des cassettes de type \texttt{longtemps} en incluant la date du jour
+  dans le nom de la cassette, du style
+  \texttt{CHAILLY99-LONG-24@13-10-2000} afin d'être capable dans le futur
+  de savoir à quoi cela correspond même si on a perdu toute trace des
+  fichiers d'\Aamanda ;
+\item le lundi on donne une cassette neuve à la sauvegarde journalière en
+  incluant aussi avec \texttt{amlabel} la date du jour dans le nom de la
+  cassette (\texttt{CHAILLY99-J-06@26-04-2000}) afin de savoir exactement
+  quand a été introduite la cassette et suivre sa vie.
+\end{itemize}
+L'idée est donc qu'on va renouveler petit à petit le stock de sauvegarde
+pour avoir des cassettes en relativement bon état au coût d'une cassette
+par semaine, soit pour le \Acri entre 70 et 113\MesEuros par semaine.
+
+Mais qu'est-ce qui nous garantit que toutes les cassettes journalières
+seront bien remplacées et qu'on ne sera pas dans un cas où par malchance
+c'est toujours la même cassette du \English{tape cycle} qu'on remplace ?
+
+En considérant que les $n$ cassettes journalières sont utilisées à tour de
+rôle et qu'une est changée toutes les 4 sauvegardes le lundi puisqu'il y
+en a 4 par semaine il suffit de choisir $n$ tel que 4 soit un élément
+générateur du groupe
+\iftexforht\Picture*\fi{}$\strut\bbold{Z}/n\bbold{Z}$\iftexforht\EndPicture\fi,
+c'est à dire que 4 et $n$ soient premiers entre eux. En outre il peut y
+avoir des sauvegardes qui n'ont pas marché par exemple à cause d'une
+erreur d'écriture. Dans ce cas on a besoin de la cassette suivante ou
+d'une cassette neuve pour faire un \texttt{amflush}. Dans les 2 cas cela
+entraîne un décalage dans le cycle et donc éventuellement un doublement de
+la vie de certaines cassettes.
+
+Au \Acri nous avons choisi $n=31$ ce qui fait un cycle de sauvegardes de 7
+semaines et 3 jours en tenant compte des jours ouvrables.
+
+
+\subsection{Installation}
+\label{sec:installation-CRI}
+
+L'installation est automatique sur toute les machines clientes ou
+serveuses grâce au système \Acfengine utilisé
+\cite{keryell01-JRES-cfengine,WWW-cfengine}. L'installation est gérée par
+le fichier \texttt{/usr/local/share/cfengine/cf/amanda.cf}
+\iflong
+\else
+dont voici un extrait
+\fi
+:
+\iflong
+
+\begin{exemple}
+# To install amanda backup software on clients and servers.
+
+#   $Header: /users/lit/keryell/TeX/conf/JRES2001/amanda/article.tex,v 1.5 2001/11/16 09:23:44 keryell Exp $
+
+\end{exemple}
+\fi
+\begin{exemple}
+classes:
+   # Define the amanda servers:
+   amanda_servers_CRI = ( deauville_ensmp_fr dns_cri_ensmp_fr veneux_ensmp_fr )
+   amanda_servers_LIT = ( rodomouls_enst_bretagne_fr )
+   amanda_servers = ( amanda_servers_CRI amanda_servers_LIT )
+\end{exemple}
+\iflong
+\begin{exemple}
+
+
+links:
+   # Amanda data bases can be huge,
+   # so we may need to redirect to larger disks: 
+   amanda_servers.deauville_ensmp_fr::
+      /var/adm/amanda ->! /home/deauville/bassine3/var/amanda
+
+   # Just a shortcut for lazy computer scientists :-)
+   any::
+      /etc/amanda ->! /usr/local/etc/amanda
+
+
+files:
+   solaris::
+      # Disks should be readable by the sys group,
+      # but there is a glitch on IDE disks :
+      /devices/pci@1f,0/pci@1,1/ide@3 mode=g+r recurse=1 action=fixall
+
+
+\end{exemple}
+\fi
+\begin{exemple}
+editfiles:
+   any::
+      # Add the amanda backup software on client side:
+      {
+         /etc/services
+         AppendIfNoSuchLine "# For the amanda backup client:"
+         AppendIfNoSuchLine "amanda 10080/udp"
+         DefineClasses "RestartInetd"
+      }
+
+      {
+         /etc/inetd.conf
+         AppendIfNoSuchLine "# For the amanda backup client service:"
+         AppendIfNoSuchLine "amanda dgram udp wait bin /usr/local/libexec/amandad amandad"
+         DefineClasses "RestartInetd"
+      }
+\end{exemple}
+\iflong
+\begin{exemple}
+
+   amanda_servers::
+      # Add the amanda backup software on the server side:
+      {
+         /etc/services
+         AppendIfNoSuchLine "# For the amanda backup server:"
+         AppendIfNoSuchLine "amandaidx  10082/tcp"
+         AppendIfNoSuchLine "amidxtape  10083/tcp"
+         DefineClasses "RestartInetd"
+      }
+
+      {
+         /etc/inetd.conf
+         AppendIfNoSuchLine "# For the amanda backup server, the access to the catalogues:"
+         AppendIfNoSuchLine "amandaidx stream tcp nowait bin /usr/local/libexec/amindexd amindexd"
+         AppendIfNoSuchLine "# For the amanda backup server, the remote access to the tape for restoration:"
+         AppendIfNoSuchLine "amidxtape stream tcp nowait bin /usr/local/libexec/amidxtaped amidxtaped"
+         DefineClasses "RestartInetd"
+      }
+
+   amanda_servers.solaris::
+      # Allow crontab for bin user that runs amanda:
+      {
+         /etc/cron.d/cron.deny
+         CommentLinesMatching "bin"
+         DefineClasses "RestartCron"
+      }
+
+
+\end{exemple}
+\fi
+\begin{exemple}
+control:
+   # Define the amanda configuration names for each server:
+   deauville_ensmp_fr::
+      daily_backup_name = ( 'jour')
+      weekly_backup_name = ( 'longtemps')
+
+   dns_cri_ensmp_fr::
+      daily_backup_name = ( 'chailly99_jour')
+      weekly_backup_name = ( 'chailly99_longtemps')
+
+   veneux_ensmp_fr::
+      daily_backup_name = ( 'veneux_jour')
+      weekly_backup_name = ( 'veneux_longtemps')
+
+   rodomouls_enst_bretagne_fr::
+      daily_backup_name = ( 'LIT_jour')
+      weekly_backup_name = ( 'LIT_longtemps')
+
+
+editfiles:
+   # Add in the bin crontab the various amanda invocations:
+   amanda_servers.solaris::
+      {
+         /var/spool/cron/crontabs/bin
+         AutoCreate
+         AppendIfNoSuchLine "# Verify amanda is OK for the next backup:"
+         AppendIfNoSuchLine "# for the daily backup $(daily_backup_name):"
+         AppendIfNoSuchLine "00 11 * * 1 /usr/local/sbin/amcheck -m $(daily_backup_name)"
+         AppendIfNoSuchLine "00 17 * * 2-4 /usr/local/sbin/amcheck -m $(daily_backup_name)"
+         AppendIfNoSuchLine "# for the friday weekly backup $(weekly_backup_name):"
+         AppendIfNoSuchLine "00 11 * * 5 /usr/local/sbin/amcheck -m $(weekly_backup_name)"
+         # Launch the backup followed by a media verification:
+         AppendIfNoSuchLine "# for the daily backup $(daily_backup_name):"
+         AppendIfNoSuchLine "10 23 * * 1-4 /usr/local/sbin/amdump $(daily_backup_name); mt -f /dev/rmt/0hn rew;
+            /usr/local/sbin/amrestore /dev/rmt/0hn juste-pour-verifier; mt -f /dev/rmt/0hn rew"
+         AppendIfNoSuchLine "# for the friday weekly backup $(weekly_backup_name):"
+         AppendIfNoSuchLine "10 23 * * 5 /usr/local/sbin/amdump $(weekly_backup_name); mt -f /dev/rmt/0hn rew;
+            /usr/local/sbin/amrestore /dev/rmt/0hn juste-pour-verifier; mt -f /dev/rmt/0hn rew"
+         DefineClasses "RestartCron"
+      }
+\end{exemple}%$
+
+On peut remarquer que l'appel à la sauvegarde \texttt{amdump} d'\Aamanda
+est suivi d'une restauration des disques d'une machine fantaisiste
+\texttt{juste-pour-verifier} pour forcer une lecture des débuts de chaque
+enregistrement de partition et donc effectuer une vérification grossière
+de l'écriture effectuée sur la bande : la liste des partitions présentes
+sera renvoyée par \texttt{cron} aux administrateurs.
+
+
+\subsection{Configuration}
+\label{sec:configuration}
+
+Dans \texttt{/usr/local/etc/amanda/\emph{configuration}} se trouvent les
+quelques fichiers nécessaires à la configuration d'\Aamanda.
+
+Notons que comme tout se trouve dans \texttt{/usr/local}, même après
+réinstallation du système, il suffit de remonter \texttt{/usr/local} et la
+partition contenant la base de données d'\Aamanda pour avoir un système de
+sauvegarde et restauration pleinement fonctionnel.
+
+
+\subsubsection{Paramêtres d'une configuration}
+
+
+\paragraph{Sauvegarde journalière}
+\label{sec:sauv-journ}
+
+Le fichier \verb|/usr/local/etc/amanda/chailly99_jour/amanda.conf|
+contient par exemple :
+\begin{itemize}
+\item des paramètres génériques
+\iflong
+:
+
+\begin{exemple}
+# your organization name for reports
+org "chailly99_jour"
+# the mailing list for operators at your site
+mailto "sauvegardes-amanda-chailly99@cri.ensmp.fr"
+# the user to run dumps under
+dumpuser "bin"
+\end{exemple}
+\else
+;
+\fi
+\item la pression qu'on autorise dans le réseau
+\iflong
+:
+
+\begin{exemple}
+# maximum dumpers that will run in parallel
+inparallel 8
+# maximum net bandwidth for Amanda, in KB per sec
+netusage  850
+\end{exemple}
+\else
+;
+\fi
+\item les contraintes que l'on impose au planificateur
+\iflong
+:
+
+\begin{exemple}
+# the number of days in the normal dump cycle
+mincycle 7 days
+# the maximum amanda will be allowed to stretch it
+maxcycle 10 days
+# the number of tapes in rotation
+tapecycle 31 days
+\end{exemple}
+\else
+;
+\fi
+\item des valeurs standard pour régler l'algorithme de planification qui
+  n'ont pas à être changées outre mesure
+\iflong
+:
+
+\begin{exemple}
+# minimum savings (threshold) to bump level 1 -> 2
+bumpsize 100 MB
+# minimum days at each level
+bumpdays     2
+# threshold = bumpsize * (level-1)**bumpmult
+bumpmult     2
+\end{exemple}
+\else
+;
+\fi
+\item le dérouleur à utiliser
+\iflong
+:
+
+\begin{exemple}
+# the tape device
+tapedev "/dev/rmt/0hn"
+ # what kind of tape it is (seetapetypes  below)
+tapetype EXB-Mammoth
+\end{exemple}
+\else
+;
+\fi
+\item le nom des cassettes, typiquement
+\texttt{CHAILLY99-J-\emph{numéro}@\emph{jour}-\emph{mois}-\emph{année}}
+\iflong
+:
+
+\begin{exemple}
+# label constraint regex: all tapes must match
+labelstr
+"^CHAILLY99-J-[0-9][0-9]*[@]*[0-9][0-9]*-[0-9][0-9]*-[0-9][0-9][0-9][0-9]*$"
+\end{exemple}%$
+\else
+;
+\fi
+\item où ranger les informations nécessaires au bon fonctionnement
+\iflong
+:
+
+\begin{exemple}
+# where the holding disk is
+diskdir "/home/chailly99/bibendum5/amanda/work/chailly99_jour"
+# how much space can we use on it
+disksize 10000 MB
+# database filename
+infofile "/var/adm/amanda/chailly99_jour/curinfo"
+# log directory
+logdir  "/var/adm/amanda/chailly99_jour"
+# index directory
+indexdir "/var/adm/amanda/chailly99_jour/index"
+\end{exemple}
+\else
+;
+\fi
+\item une liste de description de dérouleurs utilisables
+\iflong
+:
+
+\begin{exemple}
+# tapetypes
+#
+# Define the type of tape you use here, and use it in "tapetype" above.
+define tapetype EXB-Mammoth {
+    comment "Exabyte Mammoth drive on local machine"
+    length 20000 mbytes
+    filemark 48 kbytes
+    speed 3 mbytes
+}
+\end{exemple}
+\else
+;
+\fi
+\item une liste de type de sauvegardes utilisables
+\iflong
+:
+
+\begin{exemple}
+# dumptypes
+define dumptype comp-user {
+    comment "Non-root partitions on reasonably fast machines"
+    options compress-fast
+    index
+    priority medium
+}
+define dumptype comp-root {
+    comment "Root partitions"
+    options compress-fast
+    index
+    priority low
+}
+\end{exemple}
+\else
+.
+\fi
+\end{itemize}
+
+
+\paragraph{Archivage hebdomadaire}
+\label{sec:arch-hebd}
+
+Il s'agit du même fichier que précédemment si ce n'est quelques
+différences :
+
+\begin{exemple}
+org "chailly99_longtemps"
+mincycle 5 days
+maxcycle 40 days
+tapecycle 9999 days
+labelstr "^CHAILLY99-LONG-[0-9][0-9]@[0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9][-]*[0-9]*$"
+infofile "/var/adm/amanda/chailly99_longtemps/curinfo"
+logdir  "/var/adm/amanda/chailly99_longtemps"
+indexdir "/var/adm/amanda/chailly99_longtemps/index"
+\end{exemple}%$
+La différence principale réside dans le nombre élevé de jours (en fait à
+comprendre comme sauvegardes) dans le cycle des bandes. La sauvegarde
+étant hebdomadaire, une cassette de sauvegarde ne sera pas recyclée avant
+9999 semaines, soit près de 192~ans.
+
+
+\subsubsection{Liste des partitions à sauvegarder}
+\label{sec:liste-des-partitions}
+
+Chaque partition à sauvegarder n'a qu'à être rajoutée dans le fichier
+\texttt{/usr/local/etc/amanda/\emph{configuration}/disklist}. En fait,
+comme il y a une configuration pour la sauvegarde et une autre pour
+l'archivage, une partition est rajoutée dans les 2 fichiers respectifs.
+
+Par exemple, dans le fichier
+\verb|/usr/local/etc/amanda/chailly99_jour/disklist| on aura des lignes du
+style :
+
+\begin{exemple}
+# Esmans
+# Disque interne
+esmans c0t0d0s0 comp-root
+esmans c0t0d0s6 comp-root
+# /var
+esmans c0t0d0s4 comp-root
+# Interne
+esmans c0t0d0s5 comp-user
+# Chailly99
+# Disque interne
+# /
+chailly99 c0t0d0s0 comp-root
+# /usr
+chailly99 c0t0d0s5 comp-root
+# /var
+chailly99 c0t0d0s6 comp-root
+# Interne1
+chailly99 c0t0d0s3 comp-user
+\end{exemple}
+\iflong
+\begin{exemple}
+# Interne2
+chailly99 c0t1d0s3 comp-user
+# Interne3
+chailly99 c0t1d0s4 comp-user
+# Verre1
+chailly99 c1t0d0s5 comp-user
+# Verre2
+chailly99 c1t0d0s6 comp-user
+# Verre3
+chailly99 c1t0d0s7 comp-user
+# Bibendum1
+chailly99 c1t1d0s0 comp-user
+# Bibendum2
+chailly99 c1t1d0s3 comp-user
+# Bibendum3
+chailly99 c1t1d0s4 comp-user
+# Bibendum4 
+chailly99 c1t1d0s5 comp-user
+# Bibendum5
+chailly99 c1t1d0s6 holding-disk
+# Citerne1
+chailly99 c1t3d0s0 comp-user
+# Citerne2
+chailly99 c1t3d0s1 comp-user
+# Citerne3
+chailly99 c1t3d0s3 comp-user
+# Citerne4
+chailly99 c1t3d0s4 comp-user
+# Citerne5
+chailly99 c1t3d0s5 comp-user
+# Citerne6
+chailly99 c1t3d0s6 comp-user
+# Citerne7
+chailly99 c1t3d0s7 comp-user
+\end{exemple}
+\fi
+On n'utilise ici que 2 types de partitions, le type comprimé
+logiciellement pour partition utilisateur et le même pour partition
+système, moins prioritaire en cas de problème de place sur la bande.
+
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Les sauvegardes sont indispensables pour préserver les données en cas de
+désastre dans ce monde de plus en plus informatisé où les données
+représentent les richesses des entreprises, des administrations et des
+laboratoires scientifiques.  L'archivage n'est pas non plus à négliger
+puisqu'il permet de remonter beaucoup plus loin dans le temps afin de
+faire des enquêtes ou de récupérer des fichiers perdus longtemps dans le
+passé.
+
+Les données ont la valeur qu'on est prêt à dépenser pour les sauvegarder
+de manière raisonnée. Le coût en dérouleur de bande et en cassettes de
+sauvegarde est important (surtout si on fait de l'archivage \emph{ad
+  æternam}) mais on peut faire des économies en utilisant le logiciel
+libre et gratuit \Aamanda qui répond sans problème aux besoins des petites
+et moyennes entités en automatisant à outrance ces opérations de
+sauvegarde en réseau.
+
+La peur qui hante tout utilisateur candidat au logiciel libre est de
+savoir s'il y aura du support. \Aamanda existe depuis une dizaine d'années
+et a clairement la masse critique suffisante pour se développer et
+s'auto-entretenir : \Aamanda est utilisé par une communauté importante et
+active qui assure une aide de pairs grâce à 2 listes de distribution de
+courriels, une pour les utilisateurs et une pour les développeurs.
+
+L'avantage clé d'un logiciel de sauvegardes libre est de ne pas être
+prisonnier d'un système d'exploitation et d'un éditeur de logiciel qui
+peut disparaître du jour au lendemain sans possibilité de récupérer les
+données à moyen ou long terme (licences expirées, plus d'ordinateur avec
+le bon système d'exploitation,...).
+
+Il est donc encore plus pertinent, dans le sens des récentes mesures
+gouvernementales éclairées sur les logiciels et formats libres et autres
+standards ouverts (voir l'article~3 de \cite{PRMX01-logiciels-libres}),
+d'utiliser du libre dans la sauvegarde des données. On pourra bien sûr
+relire les données dans le futur, mais surtout les faire migrer à chaque
+nouvelle génération de supports vers de nouveaux média avant que les
+précédents ne s'effacent. La bonne nouvelle est qu'à chaque fois les
+capacités augmentent et qu'on peut remplacer de nombreux supports vieux
+par moins de supports récents.
+
+D'un point de vue plus philosophique, sauvegardes et archivages en général
+et en réseau en particulier posent des problèmes juridico-techniques :
+\begin{itemize}
+\item toutes ces cassettes peuvent contenir des logiciels que l'on n'a pas
+  le droit de copier au delà de \emph{la} copie de sauvegarde ;
+\item les copies transitent sur l'ordinateur ayant le dérouleur de bande
+  alors que ce n'est pas forcément autorisé par une licence bridant un
+  logiciel sur un ordinateur ;
+\item comment respecter réellement les lois de la \textsc{cnil} par
+exemple sur les données d'authentification et de traçage, s'il faut les
+effacer au bout d'un certain temps (1 an) des sauvegardes ? C'est
+difficile au milieu de plein d'autres données sans tout effacer le support
+et donc rendre caduque l'archivage, c'est encore plus dur sur les supports
+écrivables une seule fois.
+\end{itemize}
+
+
+\section*{Coordonnées de l'auteur}
+\label{sec:coord-de-laut}
+
+Les exemples complets sont disponibles depuis la page \Awww de l'auteur de
+cet article et on peut y récupérer la version d'origine étendue de cet
+article en \LaTeX{} avant sa traduction via \TeX4ht en \Ahtml et sa
+digestion par Word à
+\LienPDF{http://www.cri.ensmp.fr/~keryell/publications/conf/2001/JRES2001/amanda/}.
+
+\noindent Laboratoire Informatique et Télécommunications\\
+École Nationale Supérieure des Télécommunications de Bretagne\\
+BP832, 29285 BREST CEDEX, FRANCE.\\
+Tél. : (+33|0) 2.29.00.14.15, fax. : (+33|0) 2.29.00.12.82.\\
+\LienPDF{mailto:Ronan.Keryell@enst-bretagne.fr}\\
+\LienPDF{http://www-info.enst-bretagne.fr/~keryell}
+
+
+\bibliography{biblio,systeme}
+\bibliographystyle{alphaperso}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

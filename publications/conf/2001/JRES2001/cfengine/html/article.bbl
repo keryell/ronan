@@ -1,0 +1,35 @@
+\csname @ifundefined\endcsname{entetebiblio}{}{\entetebiblio}
+\begin{thebibliography}{Bur01d}
+
+\bibitem[Bur01a]{WWW-cfengine}
+Mark \fsc\bgroup Burgess\egroup{}.
+\newblock << Cfengine : A configuration engine >>, 2001.
+\newblock \\\LienPDF{http://www.cfengine.org}.
+
+\bibitem[Bur01b]{WWW-cfengine-reference}
+Mark \fsc\bgroup Burgess\egroup{}.
+\newblock << Cfengine Reference >>, 2001.
+\newblock \\\LienPDF{http://www.cfengine.org/docs/cfengine-Reference.html}.
+
+\bibitem[Bur01c]{WWW-cfengine-tutorial}
+Mark \fsc\bgroup Burgess\egroup{}.
+\newblock << Cfengine Tutorial : Automated System Administration >>, 2001.
+\newblock \\\LienPDF{http://www.cfengine.org/docs/cfengine-Tutorial.html}.
+
+\bibitem[Bur01d]{cfengine-recent2001}
+Mark \fsc\bgroup Burgess\egroup{}.
+\newblock << Recent Developments in Cfengine >>.
+\newblock \\\LienPDF{http://www.iu.hio.no/~mark/papers/UnixNLBurgess.ps}, 2001.
+
+\bibitem[Ker01]{keryell01-JRES-cfengine-etendu}
+Ronan \fsc\bgroup Keryell\egroup{}.
+\newblock << Utilisation du logiciel d'administration automatique Cfengine ---
+  version étendue >>.
+\newblock \technicalreportname{} ENSTBr/INFO/RR/2001-011, Laboratoire
+  Informatique \& Télécommunications, École Nationale Supérieure des
+  Télécommunications de Bretagne, France, \octname{} 2001.
+\newblock
+  \LienPDF{http://www.cri.ensmp.fr/~keryell/publications/conf/2001/JRES2001/cf%
+engine}.
+
+\end{thebibliography}

@@ -1,0 +1,3167 @@
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  
+  "http://www.w3.org/TR/html4/loose.dtd">  
+<html > 
+<head><title>article.html</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+<meta name="generator" content="TeX4ht (http://www.cis.ohio-state.edu/~gurari/TeX4ht/mn.html)"> 
+<!--html--> 
+<meta name="src" content="article.tex"> 
+<meta name="date" content="2001-11-14 15:32:00"> 
+<link rel="stylesheet" type="text/css" href="article.css"> 
+</head><body 
+>
+<div class="center" 
+>
+ <span 
+class="ecbx-1200">Utilisation du logiciel d'administration automatique</span>
+<a 
+  name="dx1-2"></a><span 
+class="ecbx-1200">Cfengine</span><br>
+<span 
+class="ecbx-1000">&#8212;</span><br>
+<span 
+class="ecbx-0900">version </span><span 
+class="ecbx-0900">&eacute;tendue</span><br>
+<span 
+class="ecbx-0900">ENSTBr/INFO/RR/2001-011</span><br>
+Ronan <span 
+class="eccc-1000">K<small 
+class="small-caps">E</small><small 
+class="small-caps">R</small><small 
+class="small-caps">Y</small><small 
+class="small-caps">E</small><small 
+class="small-caps">L</small><small 
+class="small-caps">L</small></span><br>
+14 novembre 2001</div>
+   <table width="100%" 
+class="abstract"><tr><td 
+>
+<div class="center" 
+>
+<span 
+class="ecbx-0900">R</span><span 
+class="ecbx-0900">&eacute;sum</span><span 
+class="ecbx-0900">&eacute;</span></div>
+         
+     <!--l. 88--><p class="noindent"><span 
+class="ecrm-0900">Cet       article       pr</span><span 
+class="ecrm-0900">&eacute;sente       le       syst</span><span 
+class="ecrm-0900">&egrave;me       d'automatisation</span>
+     <span 
+class="ecrm-0900">des t</span><span 
+class="ecrm-0900">&acirc;ches d'administration syst</span><span 
+class="ecrm-0900">&egrave;me</span> <a 
+  name="dx1-3"></a><span 
+class="ecrm-0900">Cfengine avec comme illustration la</span>
+     <span 
+class="ecrm-0900">mise en place d'un environnement logiciel permettant une automatisation</span>
+     <span 
+class="ecrm-0900">de l'installation et de la maintenance d'un syst</span><span 
+class="ecrm-0900">&egrave;me d'exploitation de type</span>
+     <a 
+  name="dx1-4"></a><span 
+class="eccc-0900"><small 
+class="small-caps">U</small><small 
+class="small-caps">N</small><small 
+class="small-caps">I</small><small 
+class="small-caps">X</small> </span><span 
+class="ecrm-0900">d'un r</span><span 
+class="ecrm-0900">&eacute;seau d'ordinateurs.</span> <a 
+  name="dx1-5"></a><span 
+class="ecrm-0900">Cfengine est utilis</span><span 
+class="ecrm-0900">&eacute; pour la mise en place</span>
+     <span 
+class="ecrm-0900">et la correction de l'</span><span 
+class="ecrm-0900">&eacute;tat du syst</span><span 
+class="ecrm-0900">&egrave;me </span><span 
+class="ecrm-0900">&agrave; partir d'un langage d</span><span 
+class="ecrm-0900">&eacute;claratif.</span>
+     <!--l. 96--><p class="indent">    <span 
+class="ecrm-0900">Le syst</span><span 
+class="ecrm-0900">&egrave;me expos</span><span 
+class="ecrm-0900">&eacute; est d</span><span 
+class="ecrm-0900">&eacute;ploy</span><span 
+class="ecrm-0900">&eacute; au sein de deux laboratoires de recherche</span>
+     <span 
+class="ecrm-0900">en  informatique  </span><span 
+class="ecrm-0900">&agrave;  l'</span><a 
+  name="dx1-6"></a><span 
+class="eccc-0900"><small 
+class="small-caps">E</small><small 
+class="small-caps">N</small><small 
+class="small-caps">S</small><small 
+class="small-caps">M</small><small 
+class="small-caps">P</small>  </span><span 
+class="ecrm-0900">et  </span><span 
+class="ecrm-0900">&agrave;  l'</span><a 
+  name="dx1-7"></a><span 
+class="eccc-0900"><small 
+class="small-caps">E</small><small 
+class="small-caps">N</small><small 
+class="small-caps">S</small><small 
+class="small-caps">T</small><small 
+class="small-caps">B</small></span><span 
+class="ecrm-0900">r  pour  la  gestion  de  machines</span>
+     <span 
+class="ecrm-0900">g</span><span 
+class="ecrm-0900">&eacute;n</span><span 
+class="ecrm-0900">&eacute;riques ou de machines d</span><span 
+class="ecrm-0900">&eacute;di</span><span 
+class="ecrm-0900">&eacute;es </span><span 
+class="ecrm-0900">&agrave; un projet de recherche sur les r</span><span 
+class="ecrm-0900">&eacute;seaux</span>
+     <span 
+class="ecrm-0900">actifs.</span>
+</td></tr></table>
+<a name="section.1"></a>
+   <h3 class="sectionHead"><span class="titlemark">1</span> <a 
+  name="x1-10001"></a>Introduction</h3>
+<!--l. 106--><p class="noindent">L'installation automatique des ordinateurs est un probl&egrave;me r&eacute;current et
+naturel pour les informaticiens car, par essence, l'informatique est la science de
+l'automatisation et il ne s'agit l&agrave; que de l'appliquer &agrave; elle-m&ecirc;me&nbsp;: &#171; <span 
+class="ecti-1000">boot-straper </span>&#187;
+l'outil lui-m&ecirc;me en allant jusqu'&agrave; automatiser le d&eacute;ploiement du syst&egrave;me
+d'automatisation. Quoi de plus frustrant en effet que d'installer une machine quand
+on sait le faire et que cela devient chronophage avec le nombre de machines &agrave;
+installer<span class="frenchb-thinspace"> </span>?...
+<!--l. 114--><p class="indent">   Le Centre de Recherche en Informatique de l'<a 
+  name="dx1-1001"></a><span 
+class="eccc-1000"><small 
+class="small-caps">E</small><small 
+class="small-caps">N</small><small 
+class="small-caps">S</small><small 
+class="small-caps">M</small><small 
+class="small-caps">P</small> </span>et le Laboratoire
+Informatique et T&eacute;l&eacute;communication de l'<a 
+  name="dx1-1002"></a><span 
+class="eccc-1000"><small 
+class="small-caps">E</small><small 
+class="small-caps">N</small><small 
+class="small-caps">S</small><small 
+class="small-caps">T</small><small 
+class="small-caps">B</small></span>r sont sp&eacute;cialis&eacute;s en parall&eacute;lisation,
+compilation, optimisation de programme et en distribution. Il est donc logique que
+ces technologies soient appliqu&eacute;es &agrave; l'outil informatique lui-m&ecirc;me, c'est &agrave; dire &agrave;
+l'organisation syst&egrave;me, aussi bien des machines des chercheurs, des &eacute;l&egrave;ves, des
+ordinateurs parall&egrave;les ou des projets de recherches plus sp&eacute;cifiques comme les
+r&eacute;seaux actifs, ou encore des machines personnelles, utilis&eacute;es pour le t&eacute;l&eacute;travail
+ou autre, avec le d&eacute;ploiement d'acc&egrave;s personnels rapides &agrave; Internet tel que
+<a 
+  name="dx1-1003"></a><span 
+class="eccc-1000"><small 
+class="small-caps">A</small><small 
+class="small-caps">D</small><small 
+class="small-caps">S</small><small 
+class="small-caps">L</small></span>.
+<!--l. 125--><p class="indent">   Il existe de nombreuses m&eacute;thodes d'installation automatique pour diff&eacute;rents
+syst&egrave;mes d'exploitations mais, afin de r&eacute;duire les efforts de d&eacute;veloppement, nous
+proposons une m&eacute;thode en deux phases&nbsp;:
+                                                                  
+
+                                                                  
+     <ul class="itemize1">
+     <li class="itemize">utiliser la m&eacute;thode d'installation sp&eacute;cifique &agrave; un syst&egrave;me d'exploitation de
+     mani&egrave;re minimale pour avoir un syst&egrave;me tout juste fonctionnel<span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize">utiliser une m&eacute;thode g&eacute;n&eacute;rique portable pour terminer l'installation et
+     maintenir le syst&egrave;me dans un &eacute;tat fonctionnel, c'est &agrave; dire automatiser
+     l'administration syst&egrave;me.</li></ul>
+<!--l. 138--><p class="noindent">L'id&eacute;e est qu'on va factoriser les efforts dans la partie g&eacute;n&eacute;rique de l'installation. Cette
+partie peut &ecirc;tre r&eacute;alis&eacute;e avec n'importe quel langage permettant d'interagir avec le
+syst&egrave;me (typiquement des <span 
+class="ecti-1000">shell-script</span>) mais nous utiliserons ici un langage d&eacute;claratif
+permettant de classifier les machines en se rapprochant d'une m&eacute;thodologie objet&nbsp;:
+<a 
+  name="dx1-1004"></a><span 
+class="eccc-1000"><small 
+class="small-caps">G</small><small 
+class="small-caps">N</small><small 
+class="small-caps">U</small></span>/<a 
+  name="dx1-1005"></a>Cfengine.
+<!--l. 145--><p class="indent">   Dans cette &eacute;tude on &eacute;carte donc les syst&egrave;mes qui n'ont pas (encore) de syst&egrave;mes
+d'installation automatique, ne seraient-ce que basiques.
+<!--l. 148--><p class="indent">   La suite de l'article pr&eacute;sente le syst&egrave;me <a 
+  name="dx1-1006"></a>Cfengine (§&nbsp;<a 
+href="#x1-20002">2<!--tex4ht:ref: sec:cfengine--></a>) suivi d'un r&eacute;sum&eacute; de la
+mani&egrave;re dont il est utilis&eacute; au <a 
+  name="dx1-1007"></a><span 
+class="eccc-1000"><small 
+class="small-caps">L</small><small 
+class="small-caps">I</small><small 
+class="small-caps">T</small> </span>(§&nbsp;<a 
+href="#x1-240003">3<!--tex4ht:ref: sec:mise_en_place--></a>). Quelqu'un int&eacute;ress&eacute; par les potentialit&eacute;s de ce
+type de syst&egrave;me pourra regarder directement l'exemple donn&eacute; dans cette derni&egrave;re
+partie afin de se donner une id&eacute;e.
+<a name="section.2"></a>
+   <h3 class="sectionHead"><span class="titlemark">2</span> <a 
+  name="x1-20002"></a>Le logiciel Cfengine</h3>
+<a 
+  name="dx1-2001"></a>
+<!--l. 158--><p class="noindent">Cfengine est un logiciel d&eacute;velopp&eacute; depuis 1993 principalement par Mark <span 
+class="eccc-1000">B<small 
+class="small-caps">U</small><small 
+class="small-caps">R</small><small 
+class="small-caps">G</small><small 
+class="small-caps">E</small><small 
+class="small-caps">S</small><small 
+class="small-caps">S</small></span>
+<span class="cite">[<a 
+href="#XWWW-cfengine">Bur01a</a>,&nbsp;<a 
+href="#Xcfengine-recent2001">Bur01d</a>]</span> dans le cadre d'un projet de recherche concernant l'administration
+syst&egrave;me distribu&eacute;e et automatis&eacute;e. Son usage actuel est estim&eacute; &agrave; une centaine de
+milliers de n&#0339;uds dans le monde Unix et Windows.
+<!--l. 164--><p class="indent">   Le concept de base en est la gestion de la configuration des machines &agrave; base d'une
+politique &eacute;tablie sous formes de r&egrave;gles permettant de centraliser un comportement
+d'assez haut niveau plut&ocirc;t que d'avoir &agrave; d&eacute;finir les t&acirc;ches en d&eacute;tail pour tous les cas
+possibles de machines.
+<!--l. 169--><p class="indent">   L'int&eacute;r&ecirc;t du mod&egrave;le est de d&eacute;finir des actions &agrave; effectuer en fonction des
+&eacute;tats du syst&egrave;me (tel service ne marche pas, un disque est plein) plut&ocirc;t que
+d'avoir &agrave; d&eacute;finir toutes les transitions possibles entre les &eacute;tats (que faire pour
+passer de l'&eacute;tat (service ne marche pas, r&eacute;pertoire plein) &agrave; l'&eacute;tat (service en
+marche, disque avec de la place libre), ce qui voudrait dire pr&eacute;voir le produit
+cart&eacute;sien des &eacute;tats. Cela permet d'appr&eacute;hender les &eacute;volutions futures de son
+architecture d'administration et de son parc de machines avec une complexit&eacute;
+contr&ocirc;lable.
+<!--l. 178--><p class="indent">   L'initiateur de ce projet aime le comparer &agrave; un syst&egrave;me immunitaire o&ugrave; le syst&egrave;me
+r&eacute;agit par une s&eacute;rie d'actions lorsqu'il rencontre telle ou telle situation anormale et
+progressivement le syst&egrave;me doit revenir vers l'&eacute;tat stable pleinement fonctionnel, si
+possible.
+<a name="subsection.2.1"></a>
+   <h4 class="subsectionHead"><span class="titlemark">2.1</span> <a 
+  name="x1-30002.1"></a>Composants constituant Cfengine</h4>
+<a 
+  name="dx1-3001"></a>
+<!--l. 187--><p class="noindent">Cfengine est en fait constitu&eacute; principalement de plusieurs composants
+<span class="cite">[<a 
+href="#XWWW-cfengine-tutorial">Bur01c</a>,&nbsp;<a 
+href="#XWWW-cfengine-reference">Bur01b</a>]</span>&nbsp;:
+     <ul class="itemize1">
+                                                                  
+
+                                                                  
+     <li class="itemize">le syst&egrave;me de base&nbsp;:
+       </li>
+       <li class="itemize">l'ensemble des fichiers de configuration d&eacute;finissant le comportement &agrave;
+       adopter,                                                                  typiquement
+       localis&eacute;s dans le r&eacute;pertoire <span 
+class="ectt-1000">/usr/local/share/cfengine </span>refl&eacute;t&eacute; par la
+       valeur de la variable d'environnement <span 
+class="ectt-1000">CFINPUTS</span>. La configuration y est
+       stock&eacute;e dans le fichier <span 
+class="ectt-1000">cfengine.conf</span><span class="frenchb-thinspace"> </span>;
+       </li>
+       <li class="itemize">l'ex&eacute;cutant  de  <a 
+  name="dx1-3002"></a>Cfengine  <span 
+class="ectt-1000">cfagent  </span>doit  &ecirc;tre  lanc&eacute;  r&eacute;guli&egrave;rement  pour
+       effectuer le travail<span class="frenchb-thinspace"> </span>;</li></ul>
+     </li>
+     <li class="itemize">des syst&egrave;mes optionnels&nbsp;:
+       <ul class="itemize2">
+       <li class="itemize">un  serveur  s&eacute;curis&eacute;  de  configurations  <span 
+class="ectt-1000">cfservd  </span>permettant  &agrave;  des
+       <span 
+class="ectt-1000">cfagent</span>s distants de r&eacute;cup&eacute;rer leur configuration s'ils ne peuvent pas y
+       acc&eacute;der par d'autres moyens. Il permet aussi des ex&eacute;cutions &agrave; distance
+       de <span 
+class="ectt-1000">cfagent</span>s<span class="frenchb-thinspace"> </span>;
+       </li>
+       <li class="itemize">un  d&eacute;mon  centralisant  l'&eacute;tat  global  du  syst&egrave;me  afin  de  faire  des
+       statistiques sur le fonctionnement du syst&egrave;me<span class="frenchb-thinspace"> </span>;
+       </li>
+       <li class="itemize">un outil de repr&eacute;sentation graphique de l'&eacute;tat du syst&egrave;me.</li></ul>
+     </li></ul>
+<!--l. 211--><p class="indent">Les noms des ex&eacute;cutables dans la liste pr&eacute;c&eacute;dente concernent la version 2 de <a 
+  name="dx1-3003"></a>Cfengine
+et non l'ancienne version.
+<!--l. 214--><p class="indent">   Il existe un mode <span 
+class="ectt-1000">cfengine.el </span>pour <a 
+  name="dx1-3004"></a><span 
+class="eccc-1000"><small 
+class="small-caps">E</small><small 
+class="small-caps">M</small><small 
+class="small-caps">A</small><small 
+class="small-caps">C</small><small 
+class="small-caps">S</small> </span>qui permet de rajouter des couleurs
+et g&eacute;rer l'indentation des fichiers de configuration pour faciliter encore plus la t&acirc;che
+de l'administratrice(-eur).
+<a name="subsection.2.2"></a>
+   <h4 class="subsectionHead"><span class="titlemark">2.2</span> <a 
+  name="x1-40002.2"></a>Classes et environnement</h4>
+<!--l. 222--><p class="noindent">La configuration d'une machine va d&eacute;pendre de nombreux aspects&nbsp;:
+     <ul class="itemize1">
+     <li class="itemize">son r&ocirc;le dans l'entreprise<span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize">sa localisation g&eacute;ographique<span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize">le r&eacute;seau qui la contient<span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize">sa structure mat&eacute;rielle&nbsp;:
+       <ul class="itemize2">
+       <li class="itemize">architecture<span class="frenchb-thinspace"> </span>;
+       </li>
+       <li class="itemize">syst&egrave;me d'exploitation<span class="frenchb-thinspace"> </span>;
+       </li>
+       <li class="itemize">disques disponibles<span class="frenchb-thinspace"> </span>;
+       </li>
+       <li class="itemize">type de r&eacute;seau local<span class="frenchb-thinspace"> </span>;
+       </li>
+       <li class="itemize">&eacute;cran disponible<span class="frenchb-thinspace"> </span>;
+                                                                  
+
+                                                                  
+       </li>
+       <li class="itemize">...</li></ul>
+     </li></ul>
+<!--l. 238--><p class="indent">   Il est clair que le nombre de possibilit&eacute;s est &eacute;norme et la mani&egrave;re de g&eacute;rer cette
+complexit&eacute; dans <a 
+  name="dx1-4001"></a>Cfengine est de raisonner par classes de machines suivant diff&eacute;rents
+crit&egrave;res plus ou moins orthogonaux.
+<a name="subsubsection.2.2.1"></a>
+   <h5 class="subsubsectionHead"><span class="titlemark">2.2.1 </span> <a 
+  name="x1-50002.2.1"></a>Classes &#171; mat&eacute;rielles &#187;</h5>
+<!--l. 246--><p class="noindent">Comme <a 
+  name="dx1-5001"></a>Cfengine tourne sur chaque machine qui doit &ecirc;tre administr&eacute;e de cette
+mani&egrave;re, la classification d'une machine est faite au moment de l'ex&eacute;cution de
+<span 
+class="ectt-1000">cfagent </span>et une liste d'attributs qui vont d&eacute;clarer l'appartenance &agrave; autant de classes.
+Par exemple pour la machine <span 
+class="ectt-1000">rodomouls.enst-bretagne.fr </span>diff&eacute;rentes classes
+seront automatiquement d&eacute;finies&nbsp;:
+     <ul class="itemize1">
+     <li class="itemize">l'identit&eacute;               de               la               machine               d&eacute;finit
+     des classes de noms (<span class="obeylines-h"><span 
+class="ectt-1000">rodomouls_enst_bretagne_fr</span></span>, <span class="obeylines-h"><span 
+class="ectt-1000">enst_bretagne_fr</span></span>,
+     <span 
+class="ectt-1000">rodomouls</span>), d'adresses (<span class="obeylines-h"><span 
+class="ectt-1000">192_44_75_24</span></span>), r&eacute;seau (<span class="obeylines-h"><span 
+class="ectt-1000">192_44_75</span></span>)<span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize">le  syst&egrave;me  d'exploitation  et  l'architecture  mat&eacute;rielle  d&eacute;finissent  des
+     classes&nbsp;: <span 
+class="ectt-1000">solaris</span>, <span class="obeylines-h"><span 
+class="ectt-1000">32_bit</span></span>, <span class="obeylines-h"><span 
+class="ectt-1000">sunos_5_8</span></span>, <span class="obeylines-h"><span 
+class="ectt-1000">sunos_sun4u</span></span>, <span class="obeylines-h"><span 
+class="ectt-1000">sunos_sun4u_5_8</span></span>,
+     <span class="obeylines-h"><span 
+class="ectt-1000">sunos_sun4u_5_8_Generic_108528_09</span></span>, <span class="obeylines-h"><span 
+class="ectt-1000">solaris2_8</span></span> d'une part et <span class="obeylines-h"><span 
+class="ectt-1000">sparc</span></span>,
+     <span class="obeylines-h"><span 
+class="ectt-1000">sun4u</span></span> d'autre part<span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize">le temps et la date d&eacute;finissent des classes temporelle (<span 
+class="ectt-1000">Thursday</span>, <span 
+class="ectt-1000">Hr17</span>,
+     <span 
+class="ectt-1000">Min46</span>,  <span class="obeylines-h"><span 
+class="ectt-1000">Min45_50</span></span>,  <span 
+class="ectt-1000">Day20</span>,  <span 
+class="ectt-1000">September</span>,  <span 
+class="ectt-1000">Yr2001</span>).  L'id&eacute;e  est  de  pouvoir
+     &eacute;ventuellement changer de comportement au cours du temps<span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize">une classe <span 
+class="ectt-1000">any </span>&agrave; laquelle toute machine appartient.</li></ul>
+<a name="subsubsection.2.2.2"></a>
+   <h5 class="subsubsectionHead"><span class="titlemark">2.2.2 </span> <a 
+  name="x1-60002.2.2"></a>Classes utilisateur</h5>
+<!--l. 273--><p class="noindent">&Eacute;videmment les classes pr&eacute;c&eacute;dentes sont de bas niveau et il est indispensable de
+d&eacute;finir de nouvelles classes &agrave; partir de ces derni&egrave;res ou de d&eacute;finition de <span 
+class="ecti-1000">netgroup</span> <a 
+  name="dx1-6001"></a><span 
+class="eccc-1000"><small 
+class="small-caps">U</small><small 
+class="small-caps">N</small><small 
+class="small-caps">I</small><small 
+class="small-caps">X</small></span>
+pour avoir une configuration propre et g&eacute;rable.
+<a name="paragraph.2.2.2.1"></a>
+<!--l. 279--><p class="noindent"><span class="paragraphHead"><a 
+  name="x1-70002.2.2.1"></a><span 
+class="ecbx-1000">Alg</span><span 
+class="ecbx-1000">&egrave;bre bool</span><span 
+class="ecbx-1000">&eacute;enne sur les classes</span></span>
+   Partout o&ugrave; une classe peut &ecirc;tre utilis&eacute;e on peut en fait utiliser une expression
+bool&eacute;enne de classes avec les op&eacute;rateurs classiques et les parenth&egrave;ses.
+<a name="paragraph.2.2.2.2"></a>
+<!--l. 286--><p class="noindent"><span class="paragraphHead"><a 
+  name="x1-80002.2.2.2"></a><span 
+class="ecbx-1000">D</span><span 
+class="ecbx-1000">&eacute;claration explicite</span></span>
+   La mani&egrave;re la plus simple est de d&eacute;finir l'appartenance &agrave; des classes en dur dans
+une action de <span 
+class="ectt-1000">control</span>&nbsp;:
+
+<!--l. 293--><p class="noindent"><span 
+class="ectt-0800--87">addclasses</span>&nbsp;<span 
+class="ectt-0800--87">=</span>&nbsp;<span 
+class="ectt-0800--87">(</span>&nbsp;<span 
+class="ectt-0800--87">mon-labo</span>&nbsp;<span 
+class="ectt-0800--87">France</span>&nbsp;<span 
+class="ectt-0800--87">)</span>
+<!--l. 294--><p class="indent">   L'int&eacute;r&ecirc;t peut &ecirc;tre aussi qu'on pourra sortir exceptionnellement d'une classe via
+une option de ligne de commande (§&nbsp;<a 
+href="#x1-90002.2.2.3">2.2.2.3<!--tex4ht:ref: sec:controle-des-classes--></a>).
+<!--l. 298--><p class="indent">   Une mani&egrave;re moins triviale de d&eacute;finir l'appartenance &agrave; une classe est d'utiliser
+l'action <span 
+class="ectt-1000">classes </span>ou son synonyme <span 
+class="ectt-1000">groups </span>qui permet de d&eacute;finir des classes &agrave; partir
+                                                                  
+
+                                                                  
+d'op&eacute;rations d'union et d'intersection sur d'autres classes ou des <span 
+class="ectt-1000">netgroup</span> <a 
+  name="dx1-8001"></a><span 
+class="eccc-1000"><small 
+class="small-caps">U</small><small 
+class="small-caps">N</small><small 
+class="small-caps">I</small><small 
+class="small-caps">X</small></span>
+comme dans&nbsp;:
+
+<!--l. 308--><p class="noindent"><span 
+class="ectt-0800--87">classes:</span>
+<!--l. 308--><p class="noindent">&nbsp;&nbsp;<span 
+class="ectt-0800--87">apache_hosts</span>&nbsp;<span 
+class="ectt-0800--87">=</span>&nbsp;<span 
+class="ectt-0800--87">(</span>&nbsp;<span 
+class="ectt-0800--87">+@n_web</span>&nbsp;<span 
+class="ectt-0800--87">www.enstb.org</span>&nbsp;<span 
+class="ectt-0800--87">-gavotte.enst-bretagne.fr)</span>
+<!--l. 308--><p class="noindent">&nbsp;&nbsp;<span 
+class="ectt-0800--87">cri_sun</span>&nbsp;<span 
+class="ectt-0800--87">=</span>&nbsp;<span 
+class="ectt-0800--87">(</span>&nbsp;<span 
+class="ectt-0800--87">+@n_cri_sun</span>&nbsp;<span 
+class="ectt-0800--87">)</span>
+<!--l. 308--><p class="noindent">&nbsp;&nbsp;<span 
+class="ectt-0800--87">sun_sans_serveur_WWW</span>&nbsp;<span 
+class="ectt-0800--87">=</span>&nbsp;<span 
+class="ectt-0800--87">(</span>&nbsp;<span 
+class="ectt-0800--87">+@n_cri_sun</span>&nbsp;<span 
+class="ectt-0800--87">-@n_web</span>&nbsp;<span 
+class="ectt-0800--87">)</span>
+<!--l. 309--><p class="indent">   L'int&eacute;r&ecirc;t de r&eacute;cup&eacute;rer les <span 
+class="ectt-1000">netgroup </span>est d'&eacute;viter la redondance dans la
+classification, dans la mesure o&ugrave; on est d&eacute;j&agrave; oblig&eacute; de faire la part des choses pour
+g&eacute;rer les droits d'exportation <a 
+  name="dx1-8002"></a><span 
+class="eccc-1000"><small 
+class="small-caps">N</small><small 
+class="small-caps">F</small><small 
+class="small-caps">S</small></span>, etc.
+<a name="paragraph.2.2.2.3"></a>
+<!--l. 314--><p class="noindent"><span class="paragraphHead"><a 
+  name="x1-90002.2.2.3"></a><span 
+class="ecbx-1000">Contr</span><span 
+class="ecbx-1000">&ocirc;le des classes par ligne de commande</span></span>
+   On peut d&eacute;finir explicitement l'appartenance &agrave; une classe en lan&ccedil;ant <span 
+class="ectt-1000">cfagent</span>
+avec une option <span 
+class="ectt-1000">-D </span>ou au contraire en soustrayant l'appartenance &agrave; une classe avec
+l'option <span 
+class="ectt-1000">-N</span>.
+<!--l. 321--><p class="indent">   L'int&eacute;r&ecirc;t est de pouvoir changer le comportement de <a 
+  name="dx1-9001"></a>Cfengine ponctuellement,
+comme par exemple l'incantation que nous utilisons lors de la fin de l'installation
+automatique d'<a 
+  name="dx1-9002"></a><span 
+class="eccc-1000"><small 
+class="small-caps">U</small><small 
+class="small-caps">N</small><small 
+class="small-caps">I</small><small 
+class="small-caps">X</small></span>
+
+<!--l. 326--><p class="noindent"><span 
+class="ectt-0800--87">cfagent</span>&nbsp;<span 
+class="ectt-0800--87">-DInstallationTime</span>
+<!--l. 327--><p class="indent">   qui permet de sp&eacute;cialiser le comportement des r&egrave;gles pour tenir compte du fait
+qu'on est en pleine installation du syst&egrave;me et que certaines choses sont superflues
+alors que d'autres sont &agrave; faire en plus.
+<a name="paragraph.2.2.2.4"></a>
+<!--l. 332--><p class="noindent"><span class="paragraphHead"><a 
+  name="x1-100002.2.2.4"></a><span 
+class="ecbx-1000">Appartenance </span><span 
+class="ecbx-1000">&agrave; une classe par succ</span><span 
+class="ecbx-1000">&egrave;s d'une commande</span></span>
+   Un autre moyen d'appartenir ou pas &agrave; une classe est de tester le r&eacute;sultat d'une ou
+plusieurs commande telle que&nbsp;:
+
+<!--l. 341--><p class="noindent"><span 
+class="ectt-0800--87">classes:</span>
+<!--l. 341--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">have_cc</span>&nbsp;<span 
+class="ectt-0800--87">=</span>&nbsp;<span 
+class="ectt-0800--87">(</span>&nbsp;<span 
+class="ectt-0800--87">&#34;/bin/test</span>&nbsp;<span 
+class="ectt-0800--87">-x</span>&nbsp;<span 
+class="ectt-0800--87">/usr/ucb/cc&#34;</span>
+<!--l. 341--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">&#34;/bin/test</span>&nbsp;<span 
+class="ectt-0800--87">-x</span>&nbsp;<span 
+class="ectt-0800--87">/local/gnu/cc&#34;</span>&nbsp;<span 
+class="ectt-0800--87">)</span>
+<!--l. 342--><p class="indent">   La classe <span class="obeylines-h"><span 
+class="ectt-1000">have_cc</span></span> sera vraie si au moins un des <span 
+class="ectt-1000">test </span>a renvoy&eacute; vrai.
+<a name="paragraph.2.2.2.5"></a>
+<!--l. 346--><p class="noindent"><span class="paragraphHead"><a 
+  name="x1-110002.2.2.5"></a><span 
+class="ecbx-1000">Classes de retour d'action</span></span>
+   Afin d'avoir des comportements mettant en &#0339;uvre la causalit&eacute;, une action peut
+d&eacute;finir un ensemble de classes si elle est ex&eacute;cut&eacute;e, permettant ainsi l'ex&eacute;cution
+d'autres classes par la suite.
+<!--l. 353--><p class="indent">   Pour ce faire il suffit de rajouter la liste des classes &agrave; d&eacute;finir dans une action avec&nbsp;:
+<div class="alltt">
+
+<!--l. 356--><p class="noindent"><div class="obeylines-v">
+<br>&nbsp;&nbsp;<span 
+class="ectt-0800--87">define=</span><span 
+class="ecit-0800--87">liste-de-classes</span>
+</div>
+</div> Ce concept est le moteur principal de <a 
+  name="dx1-11001"></a>Cfengine.
+                                                                  
+
+                                                                  
+<a name="paragraph.2.2.2.6"></a>
+<!--l. 362--><p class="noindent"><span class="paragraphHead"><a 
+  name="x1-120002.2.2.6"></a><span 
+class="ecbx-1000">Classes d</span><span 
+class="ecbx-1000">&eacute;finies par des modules</span></span>
+   L'ex&eacute;cution d'un module peut d&eacute;finir des classes parmi celles indiqu&eacute;es dans
+l'<span 
+class="ectt-1000">actionsequence </span>(§&nbsp;<a 
+href="#x1-230002.5">2.5<!--tex4ht:ref: sec:sequence--></a>) en envoyant sur la sortie standard autant de lignes de type&nbsp;:
+<div class="alltt">
+
+<!--l. 369--><p class="noindent"><div class="obeylines-v">
+<br><span 
+class="ectt-0800--87">+</span><span 
+class="ecit-0800--87">ma-classe</span>
+</div>
+</div> que n&eacute;cessaire.
+<a name="subsection.2.3"></a>
+<!--l. 375--><p class="noindent">
+   <h4 class="subsectionHead"><span class="titlemark">2.3</span> <a 
+  name="x1-130002.3"></a>Variables</h4>
+<!--l. 378--><p class="noindent">Comme tout langage, <a 
+  name="dx1-13001"></a>Cfengine comporte la notion de <a 
+href="http://www.cfengine.org/docs/cfengine-Tutorial.html#Variable%20substitution" >variables</a>, certaines pr&eacute;d&eacute;finies
+par le syst&egrave;me et &eacute;videmment celles d&eacute;finies par l'utilisateur.
+<!--l. 383--><p class="indent">   Les variables s'utilisent avec la syntaxe <span 
+class="ectt-1000">$(</span><span 
+class="ecit-1000">variable </span><span 
+class="ectt-1000">)</span>.
+<a name="subsubsection.2.3.1"></a>
+   <h5 class="subsubsectionHead"><span class="titlemark">2.3.1 </span> <a 
+  name="x1-140002.3.1"></a>Variables pr&eacute;d&eacute;finies</h5>
+<!--l. 389--><p class="noindent">On peut ranger les variables pr&eacute;d&eacute;finies en diff&eacute;rentes cat&eacute;gories dont voici les plus
+importantes&nbsp;:
+     <ul class="itemize1">
+     <li class="itemize">des &eacute;l&eacute;ments de nommage de la machine&nbsp;:
+         <dl class="description"><dt class="description">
+      <span 
+class="ectt-1000">host</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">le nom de la machine<span class="frenchb-thinspace"> </span>;
+         </dd><dt class="description">
+      <span 
+class="ectt-1000">fqhost</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">son nom compl&egrave;tement qualifi&eacute; au sens du <a 
+  name="dx1-14001"></a><span 
+class="eccc-1000"><small 
+class="small-caps">D</small><small 
+class="small-caps">N</small><small 
+class="small-caps">S</small></span><span class="frenchb-thinspace"> </span>;
+         </dd><dt class="description">
+      <span 
+class="ectt-1000">ipaddress</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">son adresse <a 
+  name="dx1-14002"></a><span 
+class="eccc-1000"><small 
+class="small-caps">I</small><small 
+class="small-caps">P</small> </span>num&eacute;rique<span class="frenchb-thinspace"> </span>;
+         </dd><dt class="description">
+      <span 
+class="ectt-1000">domain</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">son domaine<span class="frenchb-thinspace"> </span>;
+         </dd><dt class="description">
+      <span 
+class="ectt-1000">faculty </span><span 
+class="ecbx-1000">ou </span><span 
+class="ectt-1000">site</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">contiennent  indiff&eacute;remment  le  nom  de  l'entit&eacute;  de
+         l'entreprise d&eacute;fini dans une action de <span 
+class="ectt-1000">control</span><span class="frenchb-thinspace"> </span>;</dd></dl>
+     </li>
+     <li class="itemize">des indications temporelles&nbsp;:
+         <dl class="description"><dt class="description">
+      <span 
+class="ectt-1000">date</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">la date courante<span class="frenchb-thinspace"> </span>;
+         </dd><dt class="description">
+      <span 
+class="ectt-1000">year</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">l'ann&eacute;e courante<span class="frenchb-thinspace"> </span>;
+         </dd><dt class="description">
+      <span 
+class="ectt-1000">timezone</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">le  fuseau  horaire  tel  qu'il  a  &eacute;t&eacute;  d&eacute;fini  dans  une  action  de
+         <span 
+class="ectt-1000">control</span><span class="frenchb-thinspace"> </span>;</dd></dl>
+     </li>
+     <li class="itemize">l'adresse &eacute;lectronique de l'administrateur syst&egrave;me <span 
+class="ectt-1000">sysadm</span><span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize">la liste des classes&nbsp;:
+                                                                  
+
+                                                                  
+         <dl class="description"><dt class="description">
+      <span 
+class="ectt-1000">AllClasses</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">contient                toutes                les                classes
+         auquel appartient l'instance de <a 
+  name="dx1-14003"></a>Cfengine &agrave; un instant donn&eacute;e sous la
+         forme <span 
+class="ectt-1000">CFALLCLASSES=</span><span 
+class="ecit-1000">class1 </span><span 
+class="ectt-1000">:</span><span 
+class="ecit-1000">class2... </span>. Cela permet de l'exporter
+         simplement &agrave; des <span 
+class="ecti-1000">shell-scripts </span>par exemple<span class="frenchb-thinspace"> </span>;
+         </dd><dt class="description">
+      <span 
+class="ectt-1000">class</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">contient la liste des classes pr&eacute;d&eacute;finies<span class="frenchb-thinspace"> </span>;</dd></dl>
+     </li>
+     <li class="itemize">des variables syntaxiques contenant des constantes textuelles de type caract&egrave;re
+     pour se simplifier la vie dans la d&eacute;finition de cha&icirc;nes de caract&egrave;res&nbsp;:
+       <ul class="itemize2">
+       <li class="itemize">de caract&egrave;res de contr&ocirc;le <span 
+class="ectt-1000">cr</span>, <span 
+class="ectt-1000">lf</span>, <span 
+class="ectt-1000">n </span>(nouvelle ligne), <span 
+class="ectt-1000">tab</span><span class="frenchb-thinspace"> </span>;
+       </li>
+       <li class="itemize">des guillemets avec <span 
+class="ectt-1000">quote </span>et <span 
+class="ectt-1000">dblquote</span><span class="frenchb-thinspace"> </span>;
+       </li>
+       <li class="itemize">et d'autres comme <span 
+class="ectt-1000">spc </span>et <span 
+class="ectt-1000">dollar</span>.</li></ul>
+     </li></ul>
+<a name="subsubsection.2.3.2"></a>
+   <h5 class="subsubsectionHead"><span class="titlemark">2.3.2 </span> <a 
+  name="x1-150002.3.2"></a>Variables utilisateur</h5>
+<!--l. 433--><p class="noindent">Elle sont d&eacute;clar&eacute;es dans une section de <span 
+class="ectt-1000">control </span>avec la syntaxe suivante&nbsp;:
+<div class="alltt">
+
+<!--l. 436--><p class="noindent"><div class="obeylines-v">
+<br><span 
+class="ecit-0800--87">variable</span>&nbsp;<span 
+class="ectt-0800--87">=</span>&nbsp;<span 
+class="ectt-0800--87">(</span>&nbsp;<span 
+class="ecit-0800--87">contenu</span>&nbsp;<span 
+class="ectt-0800--87">)</span>
+</div>
+</div> le <span 
+class="ecit-1000">contenu </span>pouvant &ecirc;tre ou non entre guillemets quelconques.
+<!--l. 442--><p class="indent">   Un autre moyen de d&eacute;clarer des variables est qu'un module (§&nbsp;<a 
+href="#x1-230002.5">2.5<!--tex4ht:ref: sec:sequence--></a>) renvoie des
+cha&icirc;nes de type&nbsp;: <div class="alltt">
+
+<!--l. 445--><p class="noindent"><div class="obeylines-v">
+<br><span 
+class="ectt-0800--87">=</span><span 
+class="ecit-0800--87">variable</span><span 
+class="ectt-0800--87">=</span><span 
+class="ecit-0800--87">valeur</span>
+</div>
+</div>
+<a name="subsection.2.4"></a>
+   <h4 class="subsectionHead"><span class="titlemark">2.4</span> <a 
+  name="x1-160002.4"></a>Actions</h4>
+<!--l. 453--><p class="noindent">On peut d&eacute;couper les t&acirc;ches de <a 
+  name="dx1-16001"></a>Cfengine en sous-t&acirc;ches qui vont &ecirc;tre rang&eacute;es par
+action th&eacute;matique. Une section d'actions a la structure g&eacute;n&eacute;rique&nbsp;: <div class="alltt">
+
+<!--l. 457--><p class="noindent"><div class="obeylines-v">
+<br><span 
+class="ecit-0800--87">th</span><span 
+class="ecit-0800--87">&egrave;me</span><span 
+class="ectt-0800--87">:</span>
+<br>&nbsp;&nbsp;<span 
+class="ecit-0800--87">classe</span><span 
+class="ectt-0800--87">::</span>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ecit-0800--87">action1</span>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ecit-0800--87">action2</span>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">...</span>
+</div>
+</div> pour d&eacute;clarer des actions <span 
+class="ecit-1000">action1 </span>et <span 
+class="ecit-1000">action2 </span>d&eacute;finies dans le th&egrave;me d'action <span 
+class="ecit-1000">th</span><span 
+class="ecit-1000">&egrave;me</span>
+si la machine appartient &agrave; la classe <span 
+class="ecit-1000">classe </span>.
+<!--l. 469--><p class="indent">   Par exemple
+
+                                                                  
+
+                                                                  
+<!--l. 476--><p class="noindent"><span 
+class="ectt-0800--87">links:</span>
+<!--l. 476--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">solaris.apache_hosts::</span>
+<!--l. 476--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">To</span>&nbsp;<span 
+class="ectt-0800--87">have</span>&nbsp;<span 
+class="ectt-0800--87">apache</span>&nbsp;<span 
+class="ectt-0800--87">starting</span>&nbsp;<span 
+class="ectt-0800--87">at</span>&nbsp;<span 
+class="ectt-0800--87">boot</span>&nbsp;<span 
+class="ectt-0800--87">time:</span>
+<!--l. 476--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/etc/rc2.d/K15apachectl</span>&nbsp;<span 
+class="ectt-0800--87">-&gt;</span>&nbsp;<span 
+class="ectt-0800--87">/etc/init.d/apachectl</span>
+<!--l. 476--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/etc/rc3.d/S85apachectl</span>&nbsp;<span 
+class="ectt-0800--87">-&gt;</span>&nbsp;<span 
+class="ectt-0800--87">/etc/init.d/apachectl</span>
+<!--l. 477--><p class="indent">   d&eacute;finit 2 actions de type &#171; cr&eacute;er un lien s'il n'existe pas &#187; si on est sous <a 
+  name="dx1-16002"></a><span 
+class="eccc-1000">S<small 
+class="small-caps">O</small><small 
+class="small-caps">L</small><small 
+class="small-caps">A</small><small 
+class="small-caps">R</small><small 
+class="small-caps">I</small><small 
+class="small-caps">S</small></span>
+et qu'on est une machine qui doit faire tourner <a 
+  name="dx1-16003"></a><span 
+class="eccc-1000">A<small 
+class="small-caps">P</small><small 
+class="small-caps">A</small><small 
+class="small-caps">C</small><small 
+class="small-caps">H</small><small 
+class="small-caps">E</small> </span>qui ont pour effet de
+cr&eacute;er les liens sous <span 
+class="ectt-1000">/etc/rc2.d </span>et sous <span 
+class="ectt-1000">/etc/rc3.d </span>pour faire d&eacute;marrer
+automatiquement le serveur <a 
+  name="dx1-16004"></a><span 
+class="eccc-1000"><small 
+class="small-caps">W</small><small 
+class="small-caps">W</small><small 
+class="small-caps">W</small> </span>lorsque le syst&egrave;me exporte ses ressources &agrave;
+l'ext&eacute;rieur.
+<!--l. 483--><p class="indent">   Il y a beaucoup de types d'actions et chaque type a de nombreux param&egrave;tres et il
+ne saurait &ecirc;tre question de les d&eacute;tailler tous ici <span class="cite">[<a 
+href="#XWWW-cfengine-reference">Bur01b</a>]</span>. Seuls les principaux seront
+montr&eacute;s avec quelques exemples afin d'en d&eacute;voiler l'esprit.
+<!--l. 488--><p class="indent">   En g&eacute;n&eacute;rale une action peut &ecirc;tre configur&eacute;e pour corriger un probl&egrave;me, d&eacute;finir une
+classe le cas &eacute;ch&eacute;ant, ou tout simplement renvoyer un avertissement ou une erreur si
+telle ou telle condition n'est pas v&eacute;rifi&eacute;e.
+<a name="subsubsection.2.4.1"></a>
+   <h5 class="subsubsectionHead"><span class="titlemark">2.4.1 </span> <a 
+  name="x1-170002.4.1"></a>Actions de contr&ocirc;le</h5>
+<!--l. 497--><p class="noindent">Il ne s'agit pas l&agrave; &agrave; proprement parler d'actions concr&egrave;tes mais du contr&ocirc;le du
+comportement global de <a 
+  name="dx1-17001"></a>Cfengine.
+<!--l. 500--><p class="indent">   L'action <span 
+class="ectt-1000">import </span>est la plus simple et permet d'inclure d'autres fichiers de
+configuration pour mieux structurer la configuration&nbsp;:
+
+<!--l. 506--><p class="noindent"><span 
+class="ectt-0800--87">import:</span>
+<!--l. 506--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/main.cf</span>
+<!--l. 506--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/accounting.cf</span>
+<!--l. 508--><p class="indent">   L'action <span 
+class="ectt-1000">control </span>est l'auberge espagnole de <a 
+  name="dx1-17002"></a>Cfengine avec les d&eacute;clarations de
+variables, des d&eacute;clarations de classes, des motifs d'exclusion, etc.
+
+<!--l. 520--><p class="noindent"><span 
+class="ectt-0800--87">control:</span>
+<!--l. 520--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">cf_directory</span>&nbsp;<span 
+class="ectt-0800--87">=</span>&nbsp;<span 
+class="ectt-0800--87">(</span>&nbsp;<span 
+class="ectt-0800--87">/usr/local/share/cfengine/cf</span>&nbsp;<span 
+class="ectt-0800--87">)</span>
+<!--l. 520--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">LIT::</span>
+<!--l. 520--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">site</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">=</span>&nbsp;<span 
+class="ectt-0800--87">(</span>&nbsp;<span 
+class="ectt-0800--87">LIT</span>&nbsp;<span 
+class="ectt-0800--87">)</span>
+<!--l. 520--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">domain</span>&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">=</span>&nbsp;<span 
+class="ectt-0800--87">(</span>&nbsp;<span 
+class="ectt-0800--87">enst-bretagne.fr</span>&nbsp;<span 
+class="ectt-0800--87">)</span>
+<!--l. 520--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">sysadm</span>&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">=</span>&nbsp;<span 
+class="ectt-0800--87">(</span>&nbsp;<span 
+class="ectt-0800--87">Ronan.Keryell@enst-bretagne.fr</span>&nbsp;<span 
+class="ectt-0800--87">)</span>
+<!--l. 520--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">any::</span>
+<!--l. 520--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">timezone</span>&nbsp;&nbsp;<span 
+class="ectt-0800--87">=</span>&nbsp;<span 
+class="ectt-0800--87">(</span>&nbsp;<span 
+class="ectt-0800--87">MET</span>&nbsp;<span 
+class="ectt-0800--87">)</span>
+<a name="subsubsection.2.4.2"></a>
+   <h5 class="subsubsectionHead"><span class="titlemark">2.4.2 </span> <a 
+  name="x1-180002.4.2"></a>Th&egrave;me contr&ocirc;lant les fichiers</h5>
+<!--l. 526--><p class="noindent">Comme sous <a 
+  name="dx1-18001"></a><span 
+class="eccc-1000"><small 
+class="small-caps">U</small><small 
+class="small-caps">N</small><small 
+class="small-caps">I</small><small 
+class="small-caps">X</small> </span>tout est fichier, il est normal que la majorit&eacute; des actions de
+<a 
+  name="dx1-18002"></a>Cfengine soit tourn&eacute;e vers les fichiers.
+<!--l. 529--><p class="indent">   Une premi&egrave;re action est de v&eacute;rifier et corriger la pr&eacute;sence et les droits de fichiers
+et &eacute;ventuellement de les cr&eacute;er avec <span 
+class="ectt-1000">files</span>&nbsp;:
+
+<!--l. 539--><p class="noindent"><span 
+class="ectt-0800--87">files:</span>
+<!--l. 539--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">solaris::</span>
+<!--l. 539--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Create</span>&nbsp;<span 
+class="ectt-0800--87">this</span>&nbsp;<span 
+class="ectt-0800--87">file</span>&nbsp;<span 
+class="ectt-0800--87">to</span>&nbsp;<span 
+class="ectt-0800--87">log</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">login</span>&nbsp;<span 
+class="ectt-0800--87">failures:</span>
+<!--l. 539--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/var/adm/loginlog</span>&nbsp;<span 
+class="ectt-0800--87">mode=600</span>&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">group=sys</span>&nbsp;<span 
+class="ectt-0800--87">action=touch</span>
+<!--l. 539--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">any::</span>
+                                                                  
+
+                                                                  
+<!--l. 539--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">home</span>&nbsp;<span 
+class="ectt-0800--87">mode=o-w</span>&nbsp;<span 
+class="ectt-0800--87">r=inf</span>&nbsp;<span 
+class="ectt-0800--87">act=fixall</span>
+<!--l. 539--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">home/public_html</span>&nbsp;<span 
+class="ectt-0800--87">mode=a+r</span>&nbsp;<span 
+class="ectt-0800--87">fixall</span>
+<!--l. 541--><p class="indent">   Un cas particulier d'action sur les r&eacute;pertoires est g&eacute;r&eacute; par <span 
+class="ectt-1000">directories </span>comme
+dans&nbsp;:
+
+<!--l. 555--><p class="noindent"><span 
+class="ectt-0800--87">directories:</span>
+<!--l. 555--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Create</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">local</span>&nbsp;<span 
+class="ectt-0800--87">mount</span>&nbsp;<span 
+class="ectt-0800--87">points</span>&nbsp;<span 
+class="ectt-0800--87">per</span>&nbsp;<span 
+class="ectt-0800--87">machines:</span>
+<!--l. 555--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">LIT.rodomouls::</span>
+<!--l. 555--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/export/burette</span>
+<!--l. 555--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/export/dinette</span>
+<!--l. 555--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/export/pipette</span>
+<!--l. 555--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">LIT.gavotte::</span>
+<!--l. 555--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/export/interne</span>
+<!--l. 555--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/export/calice1</span>
+<!--l. 555--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/export/calice2</span>
+<!--l. 555--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/export/calice3</span>
+<!--l. 557--><p class="indent">   Une t&acirc;che fastidieuse lors de l'installation de syst&egrave;mes est qu'il faut souvent
+aller faire des corrections dans de nombreux fichiers pour se trouver dans la
+configuration voulu. C'est automatis&eacute; avec les actions du th&egrave;me <span 
+class="ectt-1000">editfiles </span>comme
+suit&nbsp;:
+
+<!--l. 596--><p class="noindent"><span 
+class="ectt-0800--87">editfiles:</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">solaris::</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">{</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Log</span>&nbsp;<span 
+class="ectt-0800--87">all</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">login</span>&nbsp;<span 
+class="ectt-0800--87">failures:</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/etc/default/login</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AppendIfNoSuchLine</span>&nbsp;<span 
+class="ectt-0800--87">&#34;SYSLOG_FAILED_LOGINS=0&#34;</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">}</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">{</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Add</span>&nbsp;<span 
+class="ectt-0800--87">accounting</span>&nbsp;<span 
+class="ectt-0800--87">jobs</span>&nbsp;<span 
+class="ectt-0800--87">to</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">adm</span>&nbsp;<span 
+class="ectt-0800--87">crontab:</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/var/spool/cron/crontabs/adm</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AutoCreate</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AppendIfNoSuchLine</span>&nbsp;<span 
+class="ectt-0800--87">&#34;#</span>&nbsp;<span 
+class="ectt-0800--87">Accounting</span>&nbsp;<span 
+class="ectt-0800--87">stuff:&#34;</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AppendIfNoSuchLine</span>&nbsp;<span 
+class="ectt-0800--87">&#34;0</span>&nbsp;<span 
+class="ectt-0800--87">*</span>&nbsp;<span 
+class="ectt-0800--87">*</span>&nbsp;<span 
+class="ectt-0800--87">*</span>&nbsp;<span 
+class="ectt-0800--87">*</span>&nbsp;<span 
+class="ectt-0800--87">/usr/lib/acct/ckpacct&#34;</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AppendIfNoSuchLine</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">&#34;30</span>&nbsp;<span 
+class="ectt-0800--87">2</span>&nbsp;<span 
+class="ectt-0800--87">*</span>&nbsp;<span 
+class="ectt-0800--87">*</span>&nbsp;<span 
+class="ectt-0800--87">*</span>&nbsp;<span 
+class="ectt-0800--87">/usr/lib/acct/runacct</span>&nbsp;<span 
+class="ectt-0800--87">2&gt;</span>&nbsp;<span 
+class="ectt-0800--87">/var/adm/acct/nite/fd2log&#34;</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AppendIfNoSuchLine</span>&nbsp;<span 
+class="ectt-0800--87">&#34;30</span>&nbsp;<span 
+class="ectt-0800--87">7</span>&nbsp;<span 
+class="ectt-0800--87">1</span>&nbsp;<span 
+class="ectt-0800--87">*</span>&nbsp;<span 
+class="ectt-0800--87">*</span>&nbsp;<span 
+class="ectt-0800--87">/usr/lib/acct/monacct&#34;</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">DefineClasses</span>&nbsp;<span 
+class="ectt-0800--87">&#34;StartAccounting&#34;</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">DefineClasses</span>&nbsp;<span 
+class="ectt-0800--87">&#34;RestartCron&#34;</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">}</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">To</span>&nbsp;<span 
+class="ectt-0800--87">mount</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">file</span>&nbsp;<span 
+class="ectt-0800--87">systems</span>&nbsp;<span 
+class="ectt-0800--87">with</span>&nbsp;<span 
+class="ectt-0800--87">logging</span>&nbsp;<span 
+class="ectt-0800--87">enabled</span>&nbsp;<span 
+class="ectt-0800--87">to</span>&nbsp;<span 
+class="ectt-0800--87">eradicate</span>&nbsp;<span 
+class="ectt-0800--87">fsck.</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">{</span>&nbsp;<span 
+class="ectt-0800--87">/etc/vfstab</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">To</span>&nbsp;<span 
+class="ectt-0800--87">use</span>&nbsp;<span 
+class="ectt-0800--87">logging</span>&nbsp;<span 
+class="ectt-0800--87">ufs</span>&nbsp;<span 
+class="ectt-0800--87">file</span>&nbsp;<span 
+class="ectt-0800--87">systems:</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">ReplaceAll</span>&nbsp;<span 
+class="ectt-0800--87">'^(/dev/.*[</span>&nbsp;<span 
+class="ectt-0800--87">$(tab)]ufs[</span>&nbsp;<span 
+class="ectt-0800--87">$(tab)].*)-$'</span>&nbsp;<span 
+class="ectt-0800--87">With</span>&nbsp;<span 
+class="ectt-0800--87">'\1logging'</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">}</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">solaris.LIT::</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Use</span>&nbsp;<span 
+class="ectt-0800--87">DNS</span>&nbsp;<span 
+class="ectt-0800--87">and</span>&nbsp;<span 
+class="ectt-0800--87">files</span>&nbsp;<span 
+class="ectt-0800--87">:</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">{</span>&nbsp;<span 
+class="ectt-0800--87">/etc/nsswitch.conf</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">SetCommentStart</span>&nbsp;<span 
+class="ectt-0800--87">'#'</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">CommentLinesStarting</span>&nbsp;<span 
+class="ectt-0800--87">'hosts:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">nis</span>&nbsp;<span 
+class="ectt-0800--87">[NOTFOUND=return]</span>&nbsp;<span 
+class="ectt-0800--87">files'</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">CommentLinesStarting</span>&nbsp;<span 
+class="ectt-0800--87">'hosts:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">files'</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">CommentLinesStarting</span>&nbsp;<span 
+class="ectt-0800--87">'hosts:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">files</span>&nbsp;<span 
+class="ectt-0800--87">dns'</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AppendIfNoSuchLine</span>&nbsp;<span 
+class="ectt-0800--87">'#</span>&nbsp;<span 
+class="ectt-0800--87">Put</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">DNS</span>&nbsp;<span 
+class="ectt-0800--87">in</span>&nbsp;<span 
+class="ectt-0800--87">first</span>&nbsp;<span 
+class="ectt-0800--87">place</span>&nbsp;<span 
+class="ectt-0800--87">to</span>&nbsp;<span 
+class="ectt-0800--87">have</span>&nbsp;<span 
+class="ectt-0800--87">FQHN.</span>&nbsp;<span 
+class="ectt-0800--87">RK.'</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AppendIfNoSuchLine</span>&nbsp;<span 
+class="ectt-0800--87">'hosts:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dns</span>&nbsp;<span 
+class="ectt-0800--87">files'</span>
+<!--l. 596--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">}</span>
+<!--l. 597--><p class="indent">   Les directives d'&eacute;dition sont nombreuses et plut&ocirc;t sp&eacute;cialis&eacute;es dans les &eacute;ditions
+incr&eacute;mentales les plus couramment utilis&eacute;es en administration syst&egrave;me.
+<!--l. 601--><p class="indent">   Le contenu d'un fichier ou d'une arborescence plus ou moins compl&egrave;te peuvent
+aussi &ecirc;tre r&eacute;cup&eacute;r&eacute;s depuis une autre arborescence ou un serveur <span 
+class="ectt-1000">cfservd</span>
+distant&nbsp;:
+
+<!--l. 613--><p class="noindent"><span 
+class="ectt-0800--87">copy:</span>
+<!--l. 613--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">UserDiskServer::</span>
+                                                                  
+
+                                                                  
+<!--l. 613--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/local/masterfiles/.cshrc</span>&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=home/.cshrc</span>&nbsp;<span 
+class="ectt-0800--87">mode=0600</span>
+<!--l. 613--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">solaris.OpenSSH::</span>
+<!--l. 613--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/OpenSSH/etc/openssh/ssh_config</span>
+<!--l. 613--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/openssh/ssh_config</span>
+<!--l. 613--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 613--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">define=InstallSsh</span>
+<!--l. 614--><p class="indent">   qui copiera r&eacute;guli&egrave;rement des <span 
+class="ectt-1000">.cshrc </span>chez tous les utilisateurs sur les machines
+faisant office de serveurs de disques et installera un morceau de la base de
+donn&eacute;es anti-<span 
+class="ecti-1000">spam </span>de <span 
+class="ectt-1000">sendmail </span>sur toutes les machines depuis un r&eacute;pertoire de
+r&eacute;f&eacute;rence.
+<!--l. 619--><p class="indent">   Les liens symboliques ou durs peuvent &ecirc;tre cr&eacute;&eacute;s s'ils n'existent pas avec l'action
+<span 
+class="ectt-1000">links</span>&nbsp;:
+
+<!--l. 626--><p class="noindent"><span 
+class="ectt-0800--87">links:</span>
+<!--l. 626--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Add</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">entry</span>&nbsp;<span 
+class="ectt-0800--87">to</span>&nbsp;<span 
+class="ectt-0800--87">launch</span>&nbsp;<span 
+class="ectt-0800--87">pppd</span>&nbsp;<span 
+class="ectt-0800--87">at</span>&nbsp;<span 
+class="ectt-0800--87">boot</span>&nbsp;<span 
+class="ectt-0800--87">time:</span>
+<!--l. 626--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">solaris.pppd_hosts::</span>
+<!--l. 626--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/etc/rc3.d/S90pppd</span>&nbsp;<span 
+class="ectt-0800--87">-&gt;!</span>&nbsp;<span 
+class="ectt-0800--87">/etc/init.d/pppd</span>
+<!--l. 627--><p class="indent">   ou encore, de mani&egrave;re plus int&eacute;ressante, on peut faire des liens vers tous les
+fichiers de plusieurs arborescences, par exemple pour fournir &agrave; l'utilisateur un simple
+<span 
+class="ectt-1000">/usr/local/bin </span>qui serait une union de nombreux r&eacute;pertoires.
+<!--l. 632--><p class="indent">   M&ecirc;me grands, les disques ne le sont jamais assez et il peut &ecirc;tre n&eacute;cessaire de faire
+du m&eacute;nage avec la primitive <span 
+class="ectt-1000">tidy </span>de mani&egrave;re plus ou moins profonde&nbsp;:
+
+<!--l. 645--><p class="noindent"><span 
+class="ectt-0800--87">tidy:</span>
+<!--l. 645--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AllHomeServers::</span>
+<!--l. 645--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">home</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">pattern=core</span>&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">R=inf</span>&nbsp;<span 
+class="ectt-0800--87">age=0</span>
+<!--l. 645--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">home</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">pattern=*~</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">R=inf</span>&nbsp;<span 
+class="ectt-0800--87">age=7</span>
+<!--l. 645--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">home</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">pattern=#*</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">R=inf</span>&nbsp;<span 
+class="ectt-0800--87">age=30</span>
+<!--l. 645--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">any::</span>
+<!--l. 645--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/tmp/</span>&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">pat=*</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">R=inf</span>&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">age=1</span>
+<!--l. 645--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">pat=core</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">R=2</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">age=0</span>
+<!--l. 645--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/etc</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">pat=hosts.equiv</span>&nbsp;&nbsp;<span 
+class="ectt-0800--87">r=0</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">age=0</span>
+<!--l. 647--><p class="indent">   Certains fichiers peuvent &ecirc;tre dangereux mais on ne veut pas les effacer pour
+autant. L'action <span 
+class="ectt-1000">disable </span>permet de changer de nom au fichier voire de g&eacute;rer la
+notion de versions&nbsp;:
+
+<!--l. 656--><p class="noindent"><span 
+class="ectt-0800--87">disable:</span>
+<!--l. 656--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">any::</span>
+<!--l. 656--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">etc/hosts.equiv</span>
+<!--l. 656--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">WWW.(Sunday|Wednesday)::</span>
+<!--l. 656--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/usr/local/httpd/logs/access_log</span>&nbsp;&nbsp;<span 
+class="ectt-0800--87">rotate=10</span>
+<!--l. 658--><p class="indent">   Certains fichiers ou r&eacute;pertoires doivent &eacute;chapper aux copies ou aux nettoyages.
+Cela est pr&eacute;cis&eacute; avec l'action <span 
+class="ectt-1000">ignore</span>&nbsp;:
+
+<!--l. 668--><p class="noindent"><span 
+class="ectt-0800--87">ignore:</span>
+<!--l. 668--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">any::</span>
+<!--l. 668--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Prevent</span>&nbsp;<span 
+class="ectt-0800--87">tidying</span>&nbsp;<span 
+class="ectt-0800--87">.X11</span>&nbsp;<span 
+class="ectt-0800--87">directories</span>&nbsp;<span 
+class="ectt-0800--87">in</span>&nbsp;<span 
+class="ectt-0800--87">/tmp</span>
+<!--l. 668--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">.X11</span>
+<!--l. 668--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Don't</span>&nbsp;<span 
+class="ectt-0800--87">tidy</span>&nbsp;<span 
+class="ectt-0800--87">emacs</span>&nbsp;<span 
+class="ectt-0800--87">locks</span>
+<!--l. 668--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">!*</span>
+<!--l. 668--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/local/lib/gnu/emacs/lock/</span>
+<a name="subsubsection.2.4.3"></a>
+   <h5 class="subsubsectionHead"><span class="titlemark">2.4.3 </span> <a 
+  name="x1-190002.4.3"></a>Th&egrave;mes contr&ocirc;lant les processus</h5>
+                                                                  
+
+                                                                  
+<!--l. 674--><p class="noindent">Les actions de type <span 
+class="ectt-1000">shellcommands </span>permettent d'ex&eacute;cuter des commandes depuis
+<a 
+  name="dx1-19001"></a>Cfengine&nbsp;:
+
+<!--l. 683--><p class="noindent"><span 
+class="ectt-0800--87">shellcommands:</span>
+<!--l. 683--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AllBinaryServers.sun4.Saturday::</span>
+<!--l. 683--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">&#34;/usr/etc/catman</span>&nbsp;<span 
+class="ectt-0800--87">-w</span>&nbsp;<span 
+class="ectt-0800--87">-M</span>&nbsp;<span 
+class="ectt-0800--87">/usr/local/man&#34;</span>
+<!--l. 683--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">&#34;/usr/etc/catman</span>&nbsp;<span 
+class="ectt-0800--87">-w</span>&nbsp;<span 
+class="ectt-0800--87">-M</span>&nbsp;<span 
+class="ectt-0800--87">/usr/local/X11R5/man&#34;</span>
+<!--l. 683--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">solaris.LaunchExportfs::</span>
+<!--l. 683--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">&#34;/usr/sbin/shareall&#34;</span>
+<!--l. 685--><p class="indent">   Mais un contr&ocirc;le des processus en train de tourner est faisable gr&acirc;ce aux actions
+<span 
+class="ectt-1000">processes</span>&nbsp;:
+
+<!--l. 698--><p class="noindent"><span 
+class="ectt-0800--87">processes:</span>
+<!--l. 698--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">At</span>&nbsp;<span 
+class="ectt-0800--87">least</span>&nbsp;<span 
+class="ectt-0800--87">one</span>&nbsp;<span 
+class="ectt-0800--87">httpd</span>&nbsp;<span 
+class="ectt-0800--87">process</span>&nbsp;<span 
+class="ectt-0800--87">should</span>&nbsp;<span 
+class="ectt-0800--87">run,</span>
+<!--l. 698--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">except</span>&nbsp;<span 
+class="ectt-0800--87">during</span>&nbsp;<span 
+class="ectt-0800--87">installation</span>&nbsp;<span 
+class="ectt-0800--87">of</span>&nbsp;<span 
+class="ectt-0800--87">course...</span>
+<!--l. 698--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">solaris.apache_hosts.!InstallationTime::</span>
+<!--l. 698--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">&#34;/usr/local/apache/bin/httpd&#34;</span>
+<!--l. 698--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">matches=&gt;0</span>
+<!--l. 698--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">restart</span>&nbsp;<span 
+class="ectt-0800--87">&#34;/etc/init.d/apachectl</span>&nbsp;<span 
+class="ectt-0800--87">start&#34;</span>
+<!--l. 698--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">RestartSyslogd::</span>
+<!--l. 698--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Tell</span>&nbsp;<span 
+class="ectt-0800--87">syslogd</span>&nbsp;<span 
+class="ectt-0800--87">to</span>&nbsp;<span 
+class="ectt-0800--87">read</span>&nbsp;<span 
+class="ectt-0800--87">again</span>&nbsp;<span 
+class="ectt-0800--87">its</span>&nbsp;<span 
+class="ectt-0800--87">configuration:</span>
+<!--l. 698--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">&#34;/usr/sbin/syslogd&#34;</span>&nbsp;<span 
+class="ectt-0800--87">signal=hup</span>
+<a name="subsubsection.2.4.4"></a>
+   <h5 class="subsubsectionHead"><span class="titlemark">2.4.4 </span> <a 
+  name="x1-200002.4.4"></a>Th&egrave;mes de type macro</h5>
+<!--l. 704--><p class="noindent">Les th&egrave;mes de type macro permettent de d&eacute;clarer des objets qui sont utilisables par
+d'autres actions&nbsp;:
+     <ul class="itemize1">
+     <li class="itemize">les  th&egrave;mes  <span 
+class="ectt-1000">classes  </span>et  <span 
+class="ectt-1000">groups  </span>qui  sont  synomymes  et  permettent  de
+     d&eacute;clarer de nouvelles classes et sont discut&eacute;s en §&nbsp;<a 
+href="#x1-80002.2.2.2">2.2.2.2<!--tex4ht:ref: sec:decl-expl--></a><span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize"><span 
+class="ectt-1000">acl </span>permet la d&eacute;claration d'<a 
+  name="dx1-20001"></a><span 
+class="eccc-1000"><small 
+class="small-caps">A</small><small 
+class="small-caps">C</small><small 
+class="small-caps">L</small> </span>(<span 
+class="ecti-1000">Access Control List</span>) de mani&egrave;re portable
+     et de les r&eacute;utiliser dans les actions comme droits d'acc&egrave;s plus pr&eacute;cis<span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize"><span 
+class="ectt-1000">filters </span>va d&eacute;clarer des contraintes, r&eacute;utilisables ailleurs pour modulariser
+     le code, telles que des contraintes sur le temps, des tailles, des expressions
+     r&eacute;guli&egrave;res  sur  les  noms,  des  modes  et  des  droits  d'acc&egrave;s,  des  aspects
+     concernant des processus.</li></ul>
+<a name="subsubsection.2.4.5"></a>
+   <h5 class="subsubsectionHead"><span class="titlemark">2.4.5 </span> <a 
+  name="x1-210002.4.5"></a>Th&egrave;mes de configuration r&eacute;seau</h5>
+<!--l. 723--><p class="noindent">La configuration r&eacute;seau d'une machine est contr&ocirc;l&eacute;e par un certain nombre
+d'actions.
+<!--l. 727--><p class="indent">   L'action <span 
+class="ectt-1000">broadcast </span>sp&eacute;cifie si les adresses de diffusion se terminent par des &#171; 0 &#187;
+ou des &#171; 1 &#187; binaires.
+<!--l. 730--><p class="indent">   L'action <span 
+class="ectt-1000">interfaces </span>permet de sp&eacute;cifier par interface r&eacute;seau le masque et le type
+de diffusion de mani&egrave;re plus sp&eacute;cifique que dans l'action de <span 
+class="ectt-1000">control</span>.
+<!--l. 734--><p class="indent">   L'action <span 
+class="ectt-1000">defaultroute </span>permet de v&eacute;rifier que la route par d&eacute;faut est correcte.
+<a 
+  name="dx1-21001"></a>Cfengine n'est pas capable de la corriger, seul un avertissement signalera le
+probl&egrave;me.
+<!--l. 738--><p class="indent">   Enfin l'action <span 
+class="ectt-1000">resolve </span>permet de configurer automatiquement l'usage du
+<a 
+  name="dx1-21002"></a><span 
+class="eccc-1000"><small 
+class="small-caps">D</small><small 
+class="small-caps">N</small><small 
+class="small-caps">S</small></span>.
+                                                                  
+
+                                                                  
+<a name="subsubsection.2.4.6"></a>
+   <h5 class="subsubsectionHead"><span class="titlemark">2.4.6 </span> <a 
+  name="x1-220002.4.6"></a>Th&egrave;mes de configuration des disques</h5>
+<!--l. 745--><p class="noindent">Dans un syst&egrave;me d'exploitation la persistance des donn&eacute;es est assur&eacute;e par des disques
+durs et il est primordial qu'ils soient bien g&eacute;r&eacute;s. De ce fait <a 
+  name="dx1-22001"></a>Cfengine propose de
+nombreuses actions pour aider leur gestion.
+<!--l. 749--><p class="indent">   Les synonymes <span 
+class="ectt-1000">disks </span>et <span 
+class="ectt-1000">required </span>permettent de d&eacute;clencher des actions s'il n'y a
+plus assez de place ou que des points de montage ont disparu.
+<!--l. 753--><p class="indent">   Ensuite il y a plusieurs classes qui n'ont de sens que si on utilise l'organisation des
+montages de disques de l'universit&eacute; de l'auteur de <a 
+  name="dx1-22002"></a>Cfengine, ce qui est discutable.
+<span 
+class="ectt-1000">mountables </span>d&eacute;clare les ressources disques r&eacute;seau utilisables, <span 
+class="ectt-1000">binservers </span>et
+<span 
+class="ectt-1000">homeservers </span>permettent de choisir parmi ces disques lesquels seront mont&eacute;s comme
+disque contenant respectivement des binaires et des r&eacute;pertoires d'utilisateurs.
+<span 
+class="ectt-1000">mailserver </span>sp&eacute;cifie le disque r&eacute;seau &agrave; utiliser pour lire le courrier. <span 
+class="ectt-1000">unmount </span>permet
+d'effectuer des d&eacute;montages.
+<!--l. 763--><p class="indent">   En g&eacute;n&eacute;ral une solution &agrave; base d'automonteur remplacera avantageusement ce
+syst&egrave;me.
+<!--l. 766--><p class="indent">   On peut cependant faire des montages explicites g&eacute;n&eacute;raux en utilisant les actions
+<span 
+class="ectt-1000">miscmounts</span>&nbsp;:
+
+<!--l. 773--><p class="noindent"><span 
+class="ectt-0800--87">miscmounts:</span>
+<!--l. 773--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">physics::</span>
+<!--l. 773--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">libraryserver:/$(site)/libraryserver/data2</span>
+<!--l. 773--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/$(site)/libraryserver/data2</span>&nbsp;<span 
+class="ectt-0800--87">mode=ro</span>
+<a name="subsection.2.5"></a>
+   <h4 class="subsectionHead"><span class="titlemark">2.5</span> <a 
+  name="x1-230002.5"></a>S&eacute;quence d'actions</h4>
+<!--l. 779--><p class="noindent">Pour que le d&eacute;coupage en action garde une certaine causalit&eacute;, il est n&eacute;cessaire
+d'ordonner les actions suivant une sertaine s&eacute;quence. Par exemple une fois qu'on a
+modifi&eacute; le fichier de configuration d'un d&eacute;mon il peut &ecirc;tre n&eacute;cessaire de notifier ce
+dernier avec un signal quelconque ou de le relancer. Il est clair que l'inverse
+emp&ecirc;chera la prise en compte de la nouvelle configuration.
+<!--l. 786--><p class="indent">   Cet ordonnancement est capital dans <a 
+  name="dx1-23001"></a>Cfengine et est sp&eacute;cifi&eacute; via la primitive de
+<span 
+class="ectt-1000">control actionsequence </span>comme par exemple&nbsp;:
+
+<!--l. 808--><p class="noindent"><span 
+class="ectt-0800--87">control:</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;<span 
+class="ectt-0800--87">any::</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">actionsequence</span>&nbsp;<span 
+class="ectt-0800--87">=</span>&nbsp;<span 
+class="ectt-0800--87">(</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">netconfig</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">resolve</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">checktimezone</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">directories</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">files</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">copy</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">editfiles</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">links</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">tidy</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">module:mytests.class1.class2.class3</span>&nbsp;<span 
+class="ectt-0800--87">arg1</span>&nbsp;<span 
+class="ectt-0800--87">arg2</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">shellcommands</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">processes</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">At</span>&nbsp;<span 
+class="ectt-0800--87">least</span>&nbsp;<span 
+class="ectt-0800--87">for</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">Minitel</span>&nbsp;<span 
+class="ectt-0800--87">access</span>&nbsp;<span 
+class="ectt-0800--87">installation:</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">copy.minitel</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">editfiles.minitel</span>
+<!--l. 808--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">)</span>
+                                                                  
+
+                                                                  
+<!--l. 809--><p class="indent">   On peut voir que certaines actions doivent &ecirc;tre r&eacute;p&eacute;t&eacute;es (comme ici <span 
+class="ectt-1000">copy</span>) pour
+atteindre l'effet voulu &agrave; cause des d&eacute;pendances. On peut d&eacute;finir des classes
+suppl&eacute;mentaires &agrave; la vol&eacute;e. En particulier <span 
+class="ectt-1000">editfiles.minitel </span>signifie que l'on va
+r&eacute;ex&eacute;cuter toutes les actions du th&egrave;me <span 
+class="ectt-1000">editfiles </span>mais en appartenant en plus &agrave; la
+classe <span 
+class="ectt-1000">minitel</span>.
+<!--l. 816--><p class="indent">   On peut &eacute;tendre les actions disponibles avec la notion de <span 
+class="ectt-1000">module</span>. Dans l'exemple
+pr&eacute;c&eacute;dent on a rajout&eacute; l'ex&eacute;cution d'un programme externe qui aura 2 arguments et
+pourra d&eacute;finir les 3 classes indiqu&eacute;es. Le module h&eacute;rite des variables d'environnement
+de <span 
+class="ectt-1000">cfagent</span>.
+<a name="section.3"></a>
+   <h3 class="sectionHead"><span class="titlemark">3</span> <a 
+  name="x1-240003"></a>Mise en &#0339;uvre</h3>
+<a name="subsection.3.1"></a>
+   <h4 class="subsectionHead"><span class="titlemark">3.1</span> <a 
+  name="x1-250003.1"></a>Hypoth&egrave;ses</h4>
+<!--l. 829--><p class="noindent">Les hypoth&egrave;ses de travail pour une telle architecture sont&nbsp;:
+     <ul class="itemize1">
+     <li class="itemize">la  simplicit&eacute;  afin  d'avoir  un  syst&egrave;me  utilisable  par  un  maximum  de
+     personnes, &eacute;ventuellement sans comp&eacute;tence syst&egrave;me sans faire peur outre
+     mesure<span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize">la portabilit&eacute; d'un point de vue&nbsp;:
+       <ul class="itemize2">
+       <li class="itemize">du  syst&egrave;me  d'exploitation  utilis&eacute;  (<a 
+  name="dx1-25001"></a><span 
+class="eccc-1000">S<small 
+class="small-caps">O</small><small 
+class="small-caps">L</small><small 
+class="small-caps">A</small><small 
+class="small-caps">R</small><small 
+class="small-caps">I</small><small 
+class="small-caps">S</small></span>,  <a 
+  name="dx1-25002"></a><span 
+class="eccc-1000"><small 
+class="small-caps">G</small><small 
+class="small-caps">N</small><small 
+class="small-caps">U</small></span>/<a 
+  name="dx1-25003"></a><span 
+class="eccc-1000">L<small 
+class="small-caps">I</small><small 
+class="small-caps">N</small><small 
+class="small-caps">U</small><small 
+class="small-caps">X</small></span>/<a 
+  name="dx1-25004"></a><span 
+class="eccc-1000">D<small 
+class="small-caps">E</small><small 
+class="small-caps">B</small><small 
+class="small-caps">I</small><small 
+class="small-caps">A</small><small 
+class="small-caps">N</small></span>,
+       <a 
+  name="dx1-25005"></a><span 
+class="eccc-1000"><small 
+class="small-caps">G</small><small 
+class="small-caps">N</small><small 
+class="small-caps">U</small></span>/<a 
+  name="dx1-25006"></a><span 
+class="eccc-1000">L<small 
+class="small-caps">I</small><small 
+class="small-caps">N</small><small 
+class="small-caps">U</small><small 
+class="small-caps">X</small></span>/<a 
+  name="dx1-25007"></a><span 
+class="eccc-1000">R<small 
+class="small-caps">E</small><small 
+class="small-caps">D</small>H<small 
+class="small-caps">A</small><small 
+class="small-caps">T</small></span>,...) et du mod&egrave;le d'ordinateur (<a 
+  name="dx1-25008"></a><span 
+class="eccc-1000">S<small 
+class="small-caps">U</small><small 
+class="small-caps">N</small></span>, <a 
+  name="dx1-25009"></a><span 
+class="eccc-1000"><small 
+class="small-caps">P</small><small 
+class="small-caps">C</small></span>,...)<span class="frenchb-thinspace"> </span>;
+       </li>
+       <li class="itemize">localisation et entit&eacute; administrative, laboratoire, entreprise, maison<span class="frenchb-thinspace"> </span>;
+       </li>
+       <li class="itemize">utilisation  de  machines&nbsp;:  que  ce  soit  en  r&eacute;seau  ou  pas,  une  machine
+       utilisateur ou plut&ocirc;t de type serveur, sp&eacute;cialis&eacute;e comme des n&#0339;uds d'une
+       machine parall&egrave;le, embarqu&eacute;e comme pour un pare-feu ou un n&#0339;ud de
+       r&eacute;seau actif, des serveurs <a 
+  name="dx1-25010"></a><span 
+class="eccc-1000"><small 
+class="small-caps">W</small><small 
+class="small-caps">W</small><small 
+class="small-caps">W</small> </span>stock&eacute;s chez un h&eacute;bergeur et sur lesquels
+       il est difficile d'intervenir physiquement,...</li></ul>
+     </li>
+     <li class="itemize">un r&eacute;f&eacute;rentiel centralis&eacute; pour avoir une vision coh&eacute;rente du syst&egrave;me et faciliter
+     l'installation du syst&egrave;me au d&eacute;part ou en cas de gros d&eacute;g&acirc;t. La mise &agrave; jour &agrave;
+     plusieurs de ce r&eacute;f&eacute;rentiel permet de partager et mettre en commun les
+     exp&eacute;riences des administrateurs<span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize">la tol&eacute;rance aux pannes en ayant un nombre arbitraire d'instances du syst&egrave;me
+     d'installation disponible<span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize">on suppose une confiance mutuelle entre les administrateurs des diff&eacute;rents sites
+     (car il est clair qu'il est facile pour un site mal-intentionn&eacute; de rajouter des trous
+     de s&eacute;curit&eacute;, de d&eacute;truire le syst&egrave;me,...). Cela peut se concevoir par exemple si les
+     sites travaillent sur des projets communs ou partages des membres (c'est par
+     exemple le cas de l'auteur de cet article actuellement mis &agrave; disponibilit&eacute; par
+                                                                  
+
+                                                                  
+     l'<a 
+  name="dx1-25011"></a><span 
+class="eccc-1000"><small 
+class="small-caps">E</small><small 
+class="small-caps">N</small><small 
+class="small-caps">S</small><small 
+class="small-caps">M</small><small 
+class="small-caps">P</small> </span>&agrave; l'<a 
+  name="dx1-25012"></a><span 
+class="eccc-1000"><small 
+class="small-caps">E</small><small 
+class="small-caps">N</small><small 
+class="small-caps">S</small><small 
+class="small-caps">T</small><small 
+class="small-caps">B</small></span>r) et que l'int&eacute;r&ecirc;t &agrave; factoriser les efforts est sup&eacute;rieur aux
+     risques encourus.</li></ul>
+<!--l. 864--><p class="noindent">D'autres hypoth&egrave;ses ne sont pas directement li&eacute;es &agrave; l'infrastructure d'installation
+pr&eacute;sent&eacute;e mais &agrave; l'utilisation du syst&egrave;me qui est faite et donc permet de mieux
+comprendre les exemples qui sont donn&eacute;s dans la suite&nbsp;:
+     <ul class="itemize1">
+     <li class="itemize">avoir un espace de nommage unique quelle que soit la machine dans un
+     domaine administratif&nbsp;: un chercheur ou un &eacute;l&egrave;ve doit pouvoir acc&eacute;der &agrave;
+     son compte et travailler depuis n'importe quelle machine quelle que soit
+     la localisation physique du compte<span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize">exploiter toutes les ressources mat&eacute;rielles disponibles, en particulier les
+     disques durs, pour am&eacute;liorer les capacit&eacute;s et augmenter la tol&eacute;rance aux
+     pannes<span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize">supprimer le maximum de points uniques de panne possibles par exemple
+     en ayant plusieurs routeurs de courrier &eacute;lectronique, quitte &agrave; utiliser de la
+     place disque et des machines en plus pour le faire<span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize">distribuer le plus possible les services sur les diff&eacute;rentes machines pour une
+     meilleure tol&eacute;rance aux pannes m&ecirc;me pour des services n'existant qu'&agrave; un
+     exemplaire&nbsp;: si une machine tombe en panne, seul le compte d'un ou de
+     quelques utilisateurs sont indisponibles jusqu'au transfert ou restauration
+     sur une autre machine par exemple<span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize">pr&eacute;f&eacute;rer des approches logicielles pour assurer la tol&eacute;rance aux pannes
+     (ne pas utiliser par exemple de <a 
+  name="dx1-25013"></a><span 
+class="eccc-1000"><small 
+class="small-caps">R</small><small 
+class="small-caps">A</small><small 
+class="small-caps">I</small><small 
+class="small-caps">D</small> </span>mat&eacute;riel si on peut mettre plusieurs
+     machines pour faire un serveur <a 
+  name="dx1-25014"></a><span 
+class="eccc-1000"><small 
+class="small-caps">N</small><small 
+class="small-caps">F</small><small 
+class="small-caps">S</small> </span>redondant) car cela permet de tirer
+     profit du seul mat&eacute;riel existant<span class="frenchb-thinspace"> </span>;
+     </li>
+     <li class="itemize">utiliser un syst&egrave;me de sauvegarde en r&eacute;seau pour sauvegarder chaque nuit
+     toutes les informations sensibles (en utilisant ici le logiciel libre <a 
+  name="dx1-25015"></a><span 
+class="eccc-1000"><small 
+class="small-caps">A</small><small 
+class="small-caps">M</small><small 
+class="small-caps">A</small><small 
+class="small-caps">N</small><small 
+class="small-caps">D</small><small 
+class="small-caps">A</small></span>
+     pour &eacute;viter entre autre de payer des licences par machine sauvegard&eacute;es).</li></ul>
+<!--l. 893--><p class="noindent">Toutes ces derni&egrave;res hypoth&egrave;ses ont pouss&eacute; la mise en place de l'automatisation du
+syst&egrave;me.
+<!--l. 896--><p class="indent">   Le syst&egrave;me d'installation est utilis&eacute; pour le d&eacute;ploiement automatique d'un r&eacute;seau
+actif pour la distribution de vid&eacute;o et de contenu multim&eacute;dia &agrave; l'<a 
+  name="dx1-25016"></a><span 
+class="eccc-1000"><small 
+class="small-caps">E</small><small 
+class="small-caps">N</small><small 
+class="small-caps">S</small><small 
+class="small-caps">T</small><small 
+class="small-caps">B</small></span>r dans
+le cadre du projet <a 
+  name="dx1-25017"></a><span 
+class="eccc-1000">R</span><small class="small-caps"><span 
+class="eccc-1000">&Eacute;</span></small><span 
+class="eccc-1000">A<small 
+class="small-caps">C</small><small 
+class="small-caps">T</small><small 
+class="small-caps">I</small>VE</span>. Chaque routeur est en fait un ordinateur
+sous <a 
+  name="dx1-25018"></a><span 
+class="eccc-1000"><small 
+class="small-caps">G</small><small 
+class="small-caps">N</small><small 
+class="small-caps">U</small></span>/<a 
+  name="dx1-25019"></a><span 
+class="eccc-1000">L<small 
+class="small-caps">I</small><small 
+class="small-caps">N</small><small 
+class="small-caps">U</small><small 
+class="small-caps">X</small> </span>qui, outre le r&ocirc;le de routeur <a 
+  name="dx1-25020"></a><span 
+class="eccc-1000"><small 
+class="small-caps">I</small><small 
+class="small-caps">P</small> </span>classique, sert de cache, de
+stockage et de serveur de contenu r&eacute;parti sur tous les disques des n&#0339;uds
+du r&eacute;seau, chacun &agrave; chaque &eacute;tage de chaque b&acirc;timent de la r&eacute;sidence des
+&eacute;l&egrave;ves de l'<a 
+  name="dx1-25021"></a><span 
+class="eccc-1000"><small 
+class="small-caps">E</small><small 
+class="small-caps">N</small><small 
+class="small-caps">S</small><small 
+class="small-caps">T</small><small 
+class="small-caps">B</small></span>r. L'installation automatique est faite par vague &agrave; partir
+d'une r&eacute;f&eacute;rence accessible au premier n&#0339;ud du r&eacute;seau. Une fois ce premier
+n&#0339;ud install&eacute; automatiquement avec sur celui-ci un serveur d'installation, ses
+voisins vont &ecirc;tre install&eacute;s &agrave; partir de celui-ci. Ces derniers serviront &agrave; installer
+eux-m&ecirc;mes leurs voisins et ainsi de suite jusqu'&agrave; avoir un r&eacute;seau fonctionnel
+complet.
+                                                                  
+
+                                                                  
+<a name="subsection.3.2"></a>
+   <h4 class="subsectionHead"><span class="titlemark">3.2</span> <a 
+  name="x1-260003.2"></a>Architecture</h4>
+<a name="subsubsection.3.2.1"></a>
+   <h5 class="subsubsectionHead"><span class="titlemark">3.2.1 </span> <a 
+  name="x1-270003.2.1"></a>Structure du r&eacute;f&eacute;rentiel</h5>
+<!--l. 918--><p class="noindent">Afin de suivre l'&eacute;volution du syst&egrave;me, tous les fichiers sont g&eacute;r&eacute;s par le syst&egrave;me de
+gestion de version <a 
+  name="dx1-27001"></a><span 
+class="eccc-1000"><small 
+class="small-caps">R</small><small 
+class="small-caps">C</small><small 
+class="small-caps">S</small></span>, tr&egrave;s simple &agrave; utiliser par exemple sous <a 
+  name="dx1-27002"></a><span 
+class="eccc-1000"><small 
+class="small-caps">E</small><small 
+class="small-caps">M</small><small 
+class="small-caps">A</small><small 
+class="small-caps">C</small><small 
+class="small-caps">S</small></span>. L'int&eacute;r&ecirc;t
+suppl&eacute;mentaire est qu'en utilisant l'ent&ecirc;te <a 
+  name="dx1-27003"></a><span 
+class="eccc-1000"><small 
+class="small-caps">R</small><small 
+class="small-caps">C</small><small 
+class="small-caps">S</small></span>, on sait o&ugrave; se trouve le fichier d'origine
+&agrave; modifier, car il n'est pas toujours simple de traquer l'origine d'un fichier install&eacute;
+automatiquement dans <span 
+class="ectt-1000">/etc </span>par exemple.
+<!--l. 925--><p class="indent">   Toute la configuration du syst&egrave;me se trouve dans 2 r&eacute;pertoires de r&eacute;f&eacute;rence dans
+<span 
+class="ectt-1000">/usr/local/share</span>&nbsp;:
+     <dl class="description"><dt class="description">
+<span 
+class="ectt-1000">cfengine</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">contient la configuration de base de <a 
+  name="dx1-27004"></a>Cfengine
+         <dl class="description"><dt class="description">
+      <span 
+class="ectt-1000">cfengine.conf</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">il s'agit du fichier de configuration de <a 
+  name="dx1-27005"></a>Cfengine qui se
+         contente en fait d'inclure tous les fichiers du r&eacute;pertoire suivant<span class="frenchb-thinspace"> </span>;
+         </dd><dt class="description">
+      <span 
+class="ectt-1000">cfengine/cf</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">pour plus de clart&eacute; les diff&eacute;rents fichiers de configurations
+         sont dans ce sous-r&eacute;pertoire, rang&eacute;s par fonction ou th&egrave;me plut&ocirc;t
+         que d'&ecirc;tre dans quelques fichiers monolithiques comme le sont les
+         exemples fournis avec la distribution de <a 
+  name="dx1-27006"></a>Cfengine<span class="frenchb-thinspace"> </span>;</dd></dl>
+     </dd><dt class="description">
+<span 
+class="ectt-1000">conf</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">contient tous les fichiers de r&eacute;f&eacute;rence n&eacute;cessaire &agrave; configurer correctement le
+     syst&egrave;me, tels que description des imprimantes, fichiers r&eacute;seaux, tables g&eacute;rant le
+     courrier, etc. La philosophie choisie a &eacute;t&eacute; de ranger les choses par ordre
+     d'application importante, puis par site, par syst&egrave;me d'exploitation et enfin par
+     r&eacute;pertoire de destination des fichiers &agrave; installer. Ce qui donne de mani&egrave;re non
+     exhaustive&nbsp;:
+         <dl class="description"><dt class="description">
+      <span 
+class="ectt-1000">CRI</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">r&eacute;pertoire contenant les fichiers g&eacute;n&eacute;raux sp&eacute;cifiques au <a 
+  name="dx1-27007"></a><span 
+class="eccc-1000"><small 
+class="small-caps">C</small><small 
+class="small-caps">R</small><small 
+class="small-caps">I</small></span><span class="frenchb-thinspace"> </span>;
+         </dd><dt class="description">
+      <span 
+class="ectt-1000">etc</span> </dt><dd 
+class="description">r&eacute;pertoire contenant ce qui va g&eacute;n&eacute;riquement dans <span 
+class="ectt-1000">/etc</span><span class="frenchb-thinspace"> </span>;
+         </dd><dt class="description">
+      <span 
+class="ectt-1000">linux</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">hi&eacute;rarchie sp&eacute;cifique &agrave; l'installation de <a 
+  name="dx1-27008"></a><span 
+class="eccc-1000">L<small 
+class="small-caps">I</small><small 
+class="small-caps">N</small><small 
+class="small-caps">U</small><small 
+class="small-caps">X</small></span>, autre que les
+         configurations d'application importante
+             <dl class="description"><dt class="description">
+          <span 
+class="ectt-1000">etc</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">hi&eacute;rarchie <span 
+class="ectt-1000">/etc </span>sp&eacute;cifique &agrave; <a 
+  name="dx1-27009"></a><span 
+class="eccc-1000">L<small 
+class="small-caps">I</small><small 
+class="small-caps">N</small><small 
+class="small-caps">U</small><small 
+class="small-caps">X</small></span><span class="frenchb-thinspace"> </span>;
+             </dd><dt class="description">
+          <span 
+class="ectt-1000">fai</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">rassemble les fichiers impliqu&eacute;s dans la proc&eacute;dure d'installation
+             automatique <a 
+  name="dx1-27010"></a><span 
+class="eccc-1000"><small 
+class="small-caps">F</small><small 
+class="small-caps">A</small><small 
+class="small-caps">I</small> </span>de <a 
+  name="dx1-27011"></a><span 
+class="eccc-1000">D<small 
+class="small-caps">E</small><small 
+class="small-caps">B</small><small 
+class="small-caps">I</small><small 
+class="small-caps">A</small><small 
+class="small-caps">N</small></span><span class="frenchb-thinspace"> </span>;</dd></dl>
+         </dd><dt class="description">
+      <span 
+class="ectt-1000">LIT</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">r&eacute;pertoire contenant les fichiers g&eacute;n&eacute;raux sp&eacute;cifiques au <a 
+  name="dx1-27012"></a><span 
+class="eccc-1000"><small 
+class="small-caps">L</small><small 
+class="small-caps">I</small><small 
+class="small-caps">T</small></span><span class="frenchb-thinspace"> </span>;
+         </dd><dt class="description">
+      <span 
+class="ectt-1000">log</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">contient les informations sur les transferts multi-site du r&eacute;f&eacute;rentiel de
+                                                                  
+
+                                                                  
+         configuration ou d'autres hi&eacute;rarchies. Outre le fait d'am&eacute;liorer la
+         tra&ccedil;abilit&eacute; de mani&egrave;re &eacute;vidente, cela permet aux administrateurs des
+         diff&eacute;rents sites de se tenir au courant des choses modifi&eacute;es par les
+         administrateurs distants ou encore d'informer les utilisateurs ou autres
+         administrateurs d'un site local des modifications apport&eacute;es &agrave; leur syst&egrave;me,
+         les nouveaux logiciels disponibles,...
+         <!--l. 969--><p class="noindent">Ce r&eacute;pertoire est class&eacute; par relations inter-site. Par exemple&nbsp;:
+             <dl class="description"><dt class="description">
+          <span 
+class="ectt-1000">CRI-LIT</span> </dt><dd 
+class="description">contient la liste des fichiers mis &agrave; jour depuis le <a 
+  name="dx1-27013"></a><span 
+class="eccc-1000"><small 
+class="small-caps">C</small><small 
+class="small-caps">R</small><small 
+class="small-caps">I</small> </span>vers
+             le <a 
+  name="dx1-27014"></a><span 
+class="eccc-1000"><small 
+class="small-caps">L</small><small 
+class="small-caps">I</small><small 
+class="small-caps">T</small></span>. ainsi le fichier <span class="obeylines-h"><span 
+class="ectt-1000">2001.07.20-usr-local-src</span></span> contiendra
+             les  fichiers  synchronis&eacute;s  dans  la  partition  <span 
+class="ectt-1000">/usr/local/src  </span>le
+             <span 
+class="ectt-1000">20/7/2001 </span>et <span class="obeylines-h"><span 
+class="ectt-1000">2001.07.26-usr-local</span></span> ceux synchronis&eacute;s dans la
+             partition <span 
+class="ectt-1000">/usr/local </span>le <span 
+class="ectt-1000">26/7/2001</span><span class="frenchb-thinspace"> </span>;
+             </dd><dt class="description">
+          <span 
+class="ectt-1000">LIT-CRI</span> </dt><dd 
+class="description">contient les m&ecirc;mes fichiers en ce qui concerne la mise &agrave; jour
+             depuis le <a 
+  name="dx1-27015"></a><span 
+class="eccc-1000"><small 
+class="small-caps">L</small><small 
+class="small-caps">I</small><small 
+class="small-caps">T</small> </span>vers le <a 
+  name="dx1-27016"></a><span 
+class="eccc-1000"><small 
+class="small-caps">C</small><small 
+class="small-caps">R</small><small 
+class="small-caps">I</small></span><span class="frenchb-thinspace"> </span>;</dd></dl>
+         </dd><dt class="description">
+      <span 
+class="ectt-1000">mail</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">ce qui est n&eacute;cessaire au bon fonctionnement du courrier &eacute;lectronique, &agrave;
+         savoir une partie commune et quelques d&eacute;finitions plus sp&eacute;cifiques qu'on va
+         trouver dans les r&eacute;pertoires <span 
+class="ectt-1000">generic</span>, <span 
+class="ectt-1000">CRI </span>et <span 
+class="ectt-1000">LIT</span><span class="frenchb-thinspace"> </span>;
+         </dd><dt class="description">
+      <span 
+class="ectt-1000">ppp</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">fichiers sp&eacute;cifique &agrave; un acc&egrave;s <span 
+class="eccc-1000"><small 
+class="small-caps">P</small><small 
+class="small-caps">P</small><small 
+class="small-caps">P</small></span><span class="frenchb-thinspace"> </span>;
+         </dd><dt class="description">
+      <span 
+class="ectt-1000">ssh</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">fichiers sp&eacute;cifiques &agrave; l'installation de <span 
+class="ectt-1000">ssh</span><span class="frenchb-thinspace"> </span>;
+         </dd><dt class="description">
+      <span 
+class="ectt-1000">SunOS5</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">fichiers sp&eacute;cifiques &agrave; l'installation des machines sous <a 
+  name="dx1-27017"></a><span 
+class="eccc-1000">S<small 
+class="small-caps">O</small><small 
+class="small-caps">L</small><small 
+class="small-caps">A</small><small 
+class="small-caps">R</small><small 
+class="small-caps">I</small><small 
+class="small-caps">S</small> </span>hormis
+         les configurations d'application importante<span class="frenchb-thinspace"> </span>;
+             <dl class="description"><dt class="description">
+          <span 
+class="ectt-1000">etc</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">hi&eacute;rarchie <span 
+class="ectt-1000">/etc </span>sp&eacute;cifique &agrave; <a 
+  name="dx1-27018"></a><span 
+class="eccc-1000">S<small 
+class="small-caps">O</small><small 
+class="small-caps">L</small><small 
+class="small-caps">A</small><small 
+class="small-caps">R</small><small 
+class="small-caps">I</small><small 
+class="small-caps">S</small></span><span class="frenchb-thinspace"> </span>;
+             </dd><dt class="description">
+          <span 
+class="ectt-1000">jumpstart</span>&nbsp;<span 
+class="ecbx-1000">:</span> </dt><dd 
+class="description">rassemble  les  fichiers  impliqu&eacute;s  dans  la  proc&eacute;dure
+             d'installation automatique de <a 
+  name="dx1-27019"></a><span 
+class="eccc-1000">S<small 
+class="small-caps">O</small><small 
+class="small-caps">L</small><small 
+class="small-caps">A</small><small 
+class="small-caps">R</small><small 
+class="small-caps">I</small><small 
+class="small-caps">S</small></span>. Les fichiers contenant les
+             images du syst&egrave;me lui-m&ecirc;me sont ailleurs, hors de la hi&eacute;rarchie
+             <span 
+class="ectt-1000">/usr/local/share </span>pour des raisons de place.</dd></dl>
+         </dd></dl>
+     </dd></dl>
+<!--l. 1001--><p class="indent">   La synchronisation des r&eacute;f&eacute;rentiels est actuellement lanc&eacute;e &agrave; la main de
+mani&egrave;re r&eacute;guli&egrave;re d'abord en mode seulement verbeux &eacute;tant donn&eacute; les risques
+inh&eacute;rents en cas d'impond&eacute;rable. Cela permet de suivre de pr&egrave;s l'&eacute;volution des
+fichiers install&eacute;s sur les diff&eacute;rents site et de d&eacute;tecter les erreurs grossi&egrave;res, des
+r&eacute;pertoires temporaires oubli&eacute;s lors d'une compilation qu'il faudrait nettoyer...
+Une fois que les diff&eacute;rences sont inspect&eacute;es, la synchronisation r&eacute;elle est
+lanc&eacute;e.
+<a name="subsubsection.3.2.2"></a>
+   <h5 class="subsubsectionHead"><span class="titlemark">3.2.2 </span> <a 
+  name="x1-280003.2.2"></a>Extrait de la configuration Cfengine</h5>
+                                                                  
+
+                                                                  
+<!--l. 1013--><p class="noindent">Contrairement &agrave; la m&eacute;thode utilis&eacute;e par l'auteur de <a 
+  name="dx1-28001"></a>Cfengine le fichier de
+configuration a &eacute;t&eacute; de le hi&eacute;rarchiser par th&egrave;mes fonctionnels plut&ocirc;t que par
+architectures de machines.
+
+<!--l. 1047--><p class="noindent"><span 
+class="ectt-0800--87">control:</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Where</span>&nbsp;<span 
+class="ectt-0800--87">all</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">configuration</span>&nbsp;<span 
+class="ectt-0800--87">files</span>&nbsp;<span 
+class="ectt-0800--87">for</span>&nbsp;<span 
+class="ectt-0800--87">cfengine</span>&nbsp;<span 
+class="ectt-0800--87">are:</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Will</span>&nbsp;<span 
+class="ectt-0800--87">be</span>&nbsp;<span 
+class="ectt-0800--87">/usr/local/share/cfengine/cf</span>&nbsp;<span 
+class="ectt-0800--87">soon</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">cf_directory</span>&nbsp;<span 
+class="ectt-0800--87">=</span>&nbsp;<span 
+class="ectt-0800--87">(</span>&nbsp;<span 
+class="ectt-0800--87">/usr/local/share/cfengine/cf</span>&nbsp;<span 
+class="ectt-0800--87">)</span>
+<!--l. 1047--><p class="noindent"><span 
+class="ectt-0800--87">import:</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Split</span>&nbsp;<span 
+class="ectt-0800--87">things</span>&nbsp;<span 
+class="ectt-0800--87">up</span>&nbsp;<span 
+class="ectt-0800--87">to</span>&nbsp;<span 
+class="ectt-0800--87">keep</span>&nbsp;<span 
+class="ectt-0800--87">things</span>&nbsp;<span 
+class="ectt-0800--87">tidy:</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">The</span>&nbsp;<span 
+class="ectt-0800--87">main</span>&nbsp;<span 
+class="ectt-0800--87">file...</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/main.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">and</span>&nbsp;<span 
+class="ectt-0800--87">all</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">other</span>&nbsp;<span 
+class="ectt-0800--87">files</span>&nbsp;<span 
+class="ectt-0800--87">sorted</span>&nbsp;<span 
+class="ectt-0800--87">by</span>&nbsp;<span 
+class="ectt-0800--87">function:</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/accounting.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/accounts.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/apache.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/automount.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/cfengine.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/cron.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/exportfs.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/holidays.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/localmounts.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/logging.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/minitel_access.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/naming.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/network.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/ntp.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/patch.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/ppp_access.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/printing.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/sendmail.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/solaris.cf</span>
+<!--l. 1047--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(cf_directory)/ssh.cf</span>
+<!--l. 1049--><p class="indent">   Alors qu'au <a 
+  name="dx1-28002"></a><span 
+class="eccc-1000"><small 
+class="small-caps">C</small><small 
+class="small-caps">R</small><small 
+class="small-caps">I</small> </span>on utilise encore les <a 
+  name="dx1-28003"></a><span 
+class="eccc-1000"><small 
+class="small-caps">N</small><small 
+class="small-caps">I</small><small 
+class="small-caps">S</small></span>, pour des raisons de tol&eacute;rance aux pannes
+au <a 
+  name="dx1-28004"></a><span 
+class="eccc-1000"><small 
+class="small-caps">L</small><small 
+class="small-caps">I</small><small 
+class="small-caps">T</small></span>, on n'utilise plus de syst&egrave;me de nommage global si ce n'est le <a 
+  name="dx1-28005"></a><span 
+class="eccc-1000"><small 
+class="small-caps">D</small><small 
+class="small-caps">N</small><small 
+class="small-caps">S</small></span>, ou plut&ocirc;t
+on utilise <a 
+  name="dx1-28006"></a>Cfengine pour propager les fichiers de nommage via <span 
+class="ectt-1000">naming.cf </span>et faire
+notre propre syst&egrave;me de nommage robuste&nbsp;:
+
+<!--l. 1101--><p class="noindent">&nbsp;<span 
+class="ectt-0800--87">editfiles:</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">solaris.CRI::</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Use</span>&nbsp;<span 
+class="ectt-0800--87">DNS</span>&nbsp;<span 
+class="ectt-0800--87">and</span>&nbsp;<span 
+class="ectt-0800--87">NIS</span>&nbsp;<span 
+class="ectt-0800--87">:</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">{</span>&nbsp;<span 
+class="ectt-0800--87">/etc/nsswitch.conf</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">SetCommentStart</span>&nbsp;<span 
+class="ectt-0800--87">'#'</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">CommentLinesStarting</span>&nbsp;<span 
+class="ectt-0800--87">'hosts:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">nis</span>&nbsp;<span 
+class="ectt-0800--87">[NOTFOUND=return]</span>&nbsp;<span 
+class="ectt-0800--87">files'</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">CommentLinesStarting</span>&nbsp;<span 
+class="ectt-0800--87">'hosts:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">files'</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">CommentLinesStarting</span>&nbsp;<span 
+class="ectt-0800--87">'hosts:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">files</span>&nbsp;<span 
+class="ectt-0800--87">dns'</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AppendIfNoSuchLine</span>&nbsp;<span 
+class="ectt-0800--87">'#</span>&nbsp;<span 
+class="ectt-0800--87">Put</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">DNS</span>&nbsp;<span 
+class="ectt-0800--87">in</span>&nbsp;<span 
+class="ectt-0800--87">first</span>&nbsp;<span 
+class="ectt-0800--87">place</span>&nbsp;<span 
+class="ectt-0800--87">to</span>&nbsp;<span 
+class="ectt-0800--87">have</span>&nbsp;<span 
+class="ectt-0800--87">FQHN.</span>&nbsp;<span 
+class="ectt-0800--87">RK.'</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AppendIfNoSuchLine</span>&nbsp;<span 
+class="ectt-0800--87">'hosts:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dns</span>&nbsp;<span 
+class="ectt-0800--87">nis</span>&nbsp;<span 
+class="ectt-0800--87">files'</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">}</span>
+<!--l. 1101--><p class="noindent">
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">solaris.LIT::</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Use</span>&nbsp;<span 
+class="ectt-0800--87">DNS</span>&nbsp;<span 
+class="ectt-0800--87">and</span>&nbsp;<span 
+class="ectt-0800--87">files</span>&nbsp;<span 
+class="ectt-0800--87">:</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">{</span>&nbsp;<span 
+class="ectt-0800--87">/etc/nsswitch.conf</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">SetCommentStart</span>&nbsp;<span 
+class="ectt-0800--87">'#'</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">CommentLinesStarting</span>&nbsp;<span 
+class="ectt-0800--87">'hosts:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">nis</span>&nbsp;<span 
+class="ectt-0800--87">[NOTFOUND=return]</span>&nbsp;<span 
+class="ectt-0800--87">files'</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">CommentLinesStarting</span>&nbsp;<span 
+class="ectt-0800--87">'hosts:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">files'</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">CommentLinesStarting</span>&nbsp;<span 
+class="ectt-0800--87">'hosts:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">files</span>&nbsp;<span 
+class="ectt-0800--87">dns'</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AppendIfNoSuchLine</span>&nbsp;<span 
+class="ectt-0800--87">'#</span>&nbsp;<span 
+class="ectt-0800--87">Put</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">DNS</span>&nbsp;<span 
+class="ectt-0800--87">in</span>&nbsp;<span 
+class="ectt-0800--87">first</span>&nbsp;<span 
+class="ectt-0800--87">place</span>&nbsp;<span 
+class="ectt-0800--87">to</span>&nbsp;<span 
+class="ectt-0800--87">have</span>&nbsp;<span 
+class="ectt-0800--87">FQHN.</span>&nbsp;<span 
+class="ectt-0800--87">RK.'</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AppendIfNoSuchLine</span>&nbsp;<span 
+class="ectt-0800--87">'hosts:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dns</span>&nbsp;<span 
+class="ectt-0800--87">files'</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">}</span>
+<!--l. 1101--><p class="noindent">
+<!--l. 1101--><p class="noindent"><span 
+class="ectt-0800--87">copy:</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">solaris::</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Set</span>&nbsp;<span 
+class="ectt-0800--87">up</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">host</span>&nbsp;<span 
+class="ectt-0800--87">file</span>&nbsp;<span 
+class="ectt-0800--87">:</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/$(site)/etc/hosts</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/inet/hosts</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+                                                                  
+
+                                                                  
+<!--l. 1101--><p class="noindent">
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Set</span>&nbsp;<span 
+class="ectt-0800--87">up</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">netgroup</span>&nbsp;<span 
+class="ectt-0800--87">file</span>&nbsp;<span 
+class="ectt-0800--87">:</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/$(site)/etc/netgroup</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/netgroup</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1101--><p class="noindent">
+<!--l. 1101--><p class="noindent"><span 
+class="ectt-0800--87">resolve:</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Declare</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">DNS</span>&nbsp;<span 
+class="ectt-0800--87">servers</span>&nbsp;<span 
+class="ectt-0800--87">to</span>&nbsp;<span 
+class="ectt-0800--87">use</span>&nbsp;<span 
+class="ectt-0800--87">:</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">CRI::</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">193.48.171.40</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">193.48.171.215</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">193.48.180.100</span>
+<!--l. 1101--><p class="noindent">
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">LIT::</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">192.44.75.10</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">192.108.115.2</span>
+<!--l. 1101--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">192.44.77.1</span>
+<!--l. 1103--><p class="indent">   Du coup, les fichiers d&eacute;clarants les comptes doivent &ecirc;tre propag&eacute;s, ce qui est
+simplement fait avec <span 
+class="ectt-1000">accounts.cf</span>&nbsp;:
+
+<!--l. 1141--><p class="noindent"><span 
+class="ectt-0800--87">editfiles:</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">solaris::</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Authorized</span>&nbsp;<span 
+class="ectt-0800--87">root</span>&nbsp;<span 
+class="ectt-0800--87">to</span>&nbsp;<span 
+class="ectt-0800--87">remote</span>&nbsp;<span 
+class="ectt-0800--87">login</span>&nbsp;<span 
+class="ectt-0800--87">as</span>&nbsp;<span 
+class="ectt-0800--87">root.</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Useful</span>&nbsp;<span 
+class="ectt-0800--87">only</span>&nbsp;<span 
+class="ectt-0800--87">for</span>&nbsp;<span 
+class="ectt-0800--87">desesperated</span>&nbsp;<span 
+class="ectt-0800--87">case...</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">That</span>&nbsp;<span 
+class="ectt-0800--87">means</span>&nbsp;<span 
+class="ectt-0800--87">that</span>&nbsp;<span 
+class="ectt-0800--87">in</span>&nbsp;<span 
+class="ectt-0800--87">normal</span>&nbsp;<span 
+class="ectt-0800--87">circumstance,</span>&nbsp;<span 
+class="ectt-0800--87">this</span>&nbsp;<span 
+class="ectt-0800--87">should</span>&nbsp;<span 
+class="ectt-0800--87">never</span>&nbsp;<span 
+class="ectt-0800--87">be</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">used</span>&nbsp;<span 
+class="ectt-0800--87">except</span>&nbsp;<span 
+class="ectt-0800--87">with</span>&nbsp;<span 
+class="ectt-0800--87">ciphered</span>&nbsp;<span 
+class="ectt-0800--87">methods</span>&nbsp;<span 
+class="ectt-0800--87">(ssh...).</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">{</span>&nbsp;<span 
+class="ectt-0800--87">/etc/default/login</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">CommentLinesStarting</span>&nbsp;<span 
+class="ectt-0800--87">&#34;CONSOLE=/dev/console&#34;</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">}</span>
+<!--l. 1141--><p class="noindent">
+<!--l. 1141--><p class="noindent"><span 
+class="ectt-0800--87">copy:</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">any::</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/$(site)/etc/passwd</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/passwd</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1141--><p class="noindent">
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/$(site)/etc/shadow</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/shadow</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1141--><p class="noindent">
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/$(site)/etc/group</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/group</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1141--><p class="noindent">
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Authorized</span>&nbsp;<span 
+class="ectt-0800--87">log</span>&nbsp;<span 
+class="ectt-0800--87">in</span>&nbsp;<span 
+class="ectt-0800--87">without</span>&nbsp;<span 
+class="ectt-0800--87">password</span>&nbsp;<span 
+class="ectt-0800--87">from</span>&nbsp;<span 
+class="ectt-0800--87">machines</span>&nbsp;<span 
+class="ectt-0800--87">of</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">group:</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/$(site)/etc/hosts.equiv</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/hosts.equiv</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1141--><p class="noindent">
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Root</span>&nbsp;<span 
+class="ectt-0800--87">can</span>&nbsp;<span 
+class="ectt-0800--87">log</span>&nbsp;<span 
+class="ectt-0800--87">in</span>&nbsp;<span 
+class="ectt-0800--87">from</span>&nbsp;<span 
+class="ectt-0800--87">administration</span>&nbsp;<span 
+class="ectt-0800--87">machines:</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/$(site)/rhosts</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/.rhosts</span>
+<!--l. 1141--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1147--><p class="indent">   Il en est de m&ecirc;me pour toutes les ressources g&eacute;r&eacute;es par le syst&egrave;me de nommage,
+comme les tables d'automontage, etc.
+<!--l. 1150--><p class="indent">   Le cas de <span 
+class="ectt-1000">sendmail </span>est int&eacute;ressant car son installation personnalis&eacute;e est r&eacute;put&eacute;e
+compliqu&eacute;e mais est automatis&eacute;e par le <span 
+class="ectt-1000">sendmail.cf</span>&nbsp;:
+
+<!--l. 1167--><p class="noindent"><span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Sendmail</span>&nbsp;<span 
+class="ectt-0800--87">installation</span>&nbsp;<span 
+class="ectt-0800--87">and</span>&nbsp;<span 
+class="ectt-0800--87">configuration.</span>
+<!--l. 1167--><p class="noindent"><span 
+class="ectt-0800--87">groups:</span>
+<!--l. 1167--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">mail_servers</span>&nbsp;<span 
+class="ectt-0800--87">=</span>&nbsp;<span 
+class="ectt-0800--87">(</span>&nbsp;<span 
+class="ectt-0800--87">gavotte.enstb.org</span>&nbsp;<span 
+class="ectt-0800--87">smtp-cri.ensmp.fr</span>&nbsp;<span 
+class="ectt-0800--87">)</span>
+<!--l. 1167--><p class="noindent">
+<!--l. 1167--><p class="noindent"><span 
+class="ectt-0800--87">copy:</span>
+<!--l. 1167--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">any::</span>
+<!--l. 1167--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Install</span>&nbsp;<span 
+class="ectt-0800--87">directly</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">files</span>&nbsp;<span 
+class="ectt-0800--87">from</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">server</span>&nbsp;<span 
+class="ectt-0800--87">since</span>
+<!--l. 1167--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">sendmail</span>&nbsp;<span 
+class="ectt-0800--87">is</span>&nbsp;<span 
+class="ectt-0800--87">launched</span>&nbsp;<span 
+class="ectt-0800--87">before</span>&nbsp;<span 
+class="ectt-0800--87">automount.</span>
+<!--l. 1167--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">This</span>&nbsp;<span 
+class="ectt-0800--87">adds</span>&nbsp;<span 
+class="ectt-0800--87">also</span>&nbsp;<span 
+class="ectt-0800--87">better</span>&nbsp;<span 
+class="ectt-0800--87">fault</span>&nbsp;<span 
+class="ectt-0800--87">tolerance.</span>
+                                                                  
+
+                                                                  
+<!--l. 1167--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/usr/local/sbin/sendmail</span>
+<!--l. 1167--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/usr/lib/sendmail</span>
+<!--l. 1167--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1167--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">define=RelaunchSendmail</span>
+
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/usr/local/sbin/editmap</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/usr/sbin/editmap</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/usr/local/sbin/makemap</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/usr/sbin/makemap</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/usr/local/sbin/mailstats</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/usr/sbin/mailstats</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/usr/local/sbin/praliases</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/usr/sbin/praliases</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/mail/generic/helpfile</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/mail/helpfile</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">group=root</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/mail/generic/cf/cf/submit.cf</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/mail/submit.cf</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">group=root</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">The</span>&nbsp;<span 
+class="ectt-0800--87">anti-spam</span>&nbsp;<span 
+class="ectt-0800--87">database:</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/mail/$(site)/access.dir</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/mail/access.dir</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">group=root</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/mail/$(site)/access.pag</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/mail/access.pag</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">group=root</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent"><span 
+class="ectt-0800--87">mail_servers::</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/mail/$(site)/local-host-names</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/mail/local-host-names</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">define=RelaunchSendmail</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/mail/$(site)/server-$(os).cf</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/mail/sendmail.cf</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">define=RelaunchSendmail</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Specific</span>&nbsp;<span 
+class="ectt-0800--87">database</span>&nbsp;<span 
+class="ectt-0800--87">to</span>&nbsp;<span 
+class="ectt-0800--87">a</span>&nbsp;<span 
+class="ectt-0800--87">full-fledged</span>&nbsp;<span 
+class="ectt-0800--87">mail</span>&nbsp;<span 
+class="ectt-0800--87">router:</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/mail/$(site)/domaintable.dir</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/mail/domaintable.dir</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">group=root</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/mail/$(site)/domaintable.pag</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/mail/domaintable.pag</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">group=root</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/mail/$(site)/genericstable.dir</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/mail/genericstable.dir</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">group=root</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/mail/$(site)/genericstable.pag</span>
+                                                                  
+
+                                                                  
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/mail/genericstable.pag</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">group=root</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/mail/$(site)/mailertable.dir</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/mail/mailertable.dir</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">group=root</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/mail/$(site)/mailertable.pag</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/mail/mailertable.pag</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">group=root</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/mail/$(site)/virtusertable.dir</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/mail/virtusertable.dir</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">group=root</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/mail/$(site)/virtusertable.pag</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/mail/virtusertable.pag</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">group=root</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent"><span 
+class="ectt-0800--87">!mail_servers::</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">$(shared_conf)/mail/$(site)/leaf-$(os).cf</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">dest=/etc/mail/sendmail.cf</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">type=byte</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">define=RelaunchSendmail</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent"><span 
+class="ectt-0800--87">files:</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">solaris::</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">The</span>&nbsp;<span 
+class="ectt-0800--87">statistics</span>&nbsp;<span 
+class="ectt-0800--87">file</span>&nbsp;<span 
+class="ectt-0800--87">for</span>&nbsp;<span 
+class="ectt-0800--87">sendmail:</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/etc/mail/statistics</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">mode=644</span>&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">group=bin</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">action=touch</span>
+<!--l. 1281--><p class="noindent">
+<!--l. 1281--><p class="noindent"><span 
+class="ectt-0800--87">links:</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">solaris::</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Links</span>&nbsp;<span 
+class="ectt-0800--87">for</span>&nbsp;<span 
+class="ectt-0800--87">sendmail</span>&nbsp;<span 
+class="ectt-0800--87">pseudo-commands:</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/usr/bin/hoststat</span>&nbsp;<span 
+class="ectt-0800--87">-&gt;!</span>&nbsp;<span 
+class="ectt-0800--87">/usr/lib/sendmail</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/usr/bin/mailq</span>&nbsp;<span 
+class="ectt-0800--87">-&gt;!</span>&nbsp;<span 
+class="ectt-0800--87">/usr/lib/sendmail</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/usr/bin/newaliases</span>&nbsp;<span 
+class="ectt-0800--87">-&gt;!</span>&nbsp;<span 
+class="ectt-0800--87">/usr/lib/sendmail</span>
+<!--l. 1281--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/usr/bin/purgestat</span>&nbsp;<span 
+class="ectt-0800--87">-&gt;!</span>&nbsp;<span 
+class="ectt-0800--87">/usr/lib/sendmail</span>
+<!--l. 1281--><p class="noindent">
+
+<!--l. 1310--><p class="noindent"><span 
+class="ectt-0800--87">directories:</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Set</span>&nbsp;<span 
+class="ectt-0800--87">sendmail</span>&nbsp;<span 
+class="ectt-0800--87">mode</span>&nbsp;<span 
+class="ectt-0800--87">and</span>&nbsp;<span 
+class="ectt-0800--87">owner</span>&nbsp;<span 
+class="ectt-0800--87">properly</span>&nbsp;<span 
+class="ectt-0800--87">for</span>&nbsp;<span 
+class="ectt-0800--87">security:</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">any::</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/</span>&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">mode=go-w</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/etc</span>&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">mode=go-w</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/etc/mail</span>&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">mode=go-w</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/usr</span>&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">mode=go-w</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/var</span>&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">mode=go-w</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/var/spool</span>&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">mode=go-w</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/var/spool/mqueue</span>&nbsp;<span 
+class="ectt-0800--87">owner=root</span>&nbsp;<span 
+class="ectt-0800--87">mode=go-w</span>
+<!--l. 1310--><p class="noindent">
+<!--l. 1310--><p class="noindent"><span 
+class="ectt-0800--87">shellcommands:</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">RelaunchSendmail.solaris::</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">&#34;/etc/init.d/sendmail</span>&nbsp;<span 
+class="ectt-0800--87">stop&#34;</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">&#34;/etc/init.d/sendmail</span>&nbsp;<span 
+class="ectt-0800--87">start&#34;</span>
+<!--l. 1310--><p class="noindent">
+<!--l. 1310--><p class="noindent"><span 
+class="ectt-0800--87">processes:</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">solaris::</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Start</span>&nbsp;<span 
+class="ectt-0800--87">it</span>&nbsp;<span 
+class="ectt-0800--87">anyway.</span>&nbsp;<span 
+class="ectt-0800--87">More</span>&nbsp;<span 
+class="ectt-0800--87">than</span>&nbsp;<span 
+class="ectt-0800--87">0</span>&nbsp;<span 
+class="ectt-0800--87">instance</span>&nbsp;<span 
+class="ectt-0800--87">should</span>&nbsp;<span 
+class="ectt-0800--87">run:</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">&#34;sendmail&#34;</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">matches=&gt;0</span>
+<!--l. 1310--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">restart</span>&nbsp;<span 
+class="ectt-0800--87">&#34;/etc/init.d/sendmail</span>&nbsp;<span 
+class="ectt-0800--87">start&#34;</span>
+<!--l. 1311--><p class="indent">   Cette configuration multi-site g&egrave;re &agrave; la fois les machines serveurs et clientes.
+<!--l. 1319--><p class="indent">   Enfin, pour amorcer le syst&egrave;me, on profite du premier appel de <span 
+class="ectt-1000">cfagent </span>pour
+                                                                  
+
+                                                                  
+installer confortablement son ex&eacute;cution r&eacute;guli&egrave;re avec <span 
+class="ectt-1000">cfengine.cf</span>&nbsp;:
+
+<!--l. 1338--><p class="noindent">&nbsp;&nbsp;<span 
+class="ectt-0800--87">editfiles:</span>
+<!--l. 1338--><p class="noindent">&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">solaris::</span>
+<!--l. 1338--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">{</span>
+<!--l. 1338--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Add</span>&nbsp;<span 
+class="ectt-0800--87">accounting</span>&nbsp;<span 
+class="ectt-0800--87">jobs</span>&nbsp;<span 
+class="ectt-0800--87">to</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">root</span>&nbsp;<span 
+class="ectt-0800--87">crontab:</span>
+<!--l. 1338--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">/var/spool/cron/crontabs/root</span>
+<!--l. 1338--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AutoCreate</span>
+<!--l. 1338--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AppendIfNoSuchLine</span>&nbsp;<span 
+class="ectt-0800--87">&#34;#</span>&nbsp;<span 
+class="ectt-0800--87">cfengine</span>&nbsp;<span 
+class="ectt-0800--87">incantation</span>&nbsp;<span 
+class="ectt-0800--87">stuff.&#34;</span>
+<!--l. 1338--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AppendIfNoSuchLine</span>&nbsp;<span 
+class="ectt-0800--87">&#34;#</span>&nbsp;<span 
+class="ectt-0800--87">Send</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">result</span>&nbsp;<span 
+class="ectt-0800--87">as</span>&nbsp;<span 
+class="ectt-0800--87">a</span>&nbsp;<span 
+class="ectt-0800--87">mail</span>&nbsp;<span 
+class="ectt-0800--87">to</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">cfengine</span>&nbsp;<span 
+class="ectt-0800--87">local</span>&nbsp;<span 
+class="ectt-0800--87">administrator:&#34;</span>
+<!--l. 1338--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">AppendIfNoSuchLine</span>&nbsp;<span 
+class="ectt-0800--87">&#34;19</span>&nbsp;<span 
+class="ectt-0800--87">*</span>&nbsp;<span 
+class="ectt-0800--87">*</span>&nbsp;<span 
+class="ectt-0800--87">*</span>&nbsp;<span 
+class="ectt-0800--87">*</span>&nbsp;<span 
+class="ectt-0800--87">/usr/local/sbin/cfagent</span>&nbsp;<span 
+class="ectt-0800--87">\</span>
+<!--l. 1338--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">-f</span>&nbsp;<span 
+class="ectt-0800--87">/usr/local/share/cfengine/cfengine.conf</span>&nbsp;<span 
+class="ectt-0800--87">2&gt;&amp;1</span>&nbsp;<span 
+class="ectt-0800--87">\</span>
+<!--l. 1338--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">|</span>&nbsp;<span 
+class="ectt-0800--87">/usr/bin/mailx</span>&nbsp;<span 
+class="ectt-0800--87">-s</span>&nbsp;<span 
+class="ectt-0800--87">'Cfengine</span>&nbsp;<span 
+class="ectt-0800--87">report'</span>&nbsp;<span 
+class="ectt-0800--87">\</span>
+<!--l. 1338--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">&#8216;/usr/local/sbin/cfagent</span>&nbsp;<span 
+class="ectt-0800--87">-a</span>&nbsp;&nbsp;<span 
+class="ectt-0800--87">\</span>
+<!--l. 1338--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">-f</span>&nbsp;<span 
+class="ectt-0800--87">/usr/local/share/cfengine/cfengine.conf&#8216;&#34;</span>
+<!--l. 1338--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">DefineClasses</span>&nbsp;<span 
+class="ectt-0800--87">&#34;RestartCron&#34;</span>
+<!--l. 1338--><p class="noindent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span 
+class="ectt-0800--87">}</span>
+<a name="subsubsection.3.2.3"></a>
+   <h5 class="subsubsectionHead"><span class="titlemark">3.2.3 </span> <a 
+  name="x1-290003.2.3"></a>Inclusion dans le Solaris JumpStart</h5>
+<a 
+  name="dx1-29001"></a>
+<!--l. 1344--><p class="noindent">Cfengine est &agrave; mettre en place &agrave; la fin de l'installation automatique du syst&egrave;me
+d'exploitation, JumpStart pour <a 
+  name="dx1-29002"></a><span 
+class="eccc-1000">S<small 
+class="small-caps">O</small><small 
+class="small-caps">L</small><small 
+class="small-caps">A</small><small 
+class="small-caps">R</small><small 
+class="small-caps">I</small><small 
+class="small-caps">S</small></span>, <a 
+  name="dx1-29003"></a><span 
+class="eccc-1000"><small 
+class="small-caps">F</small><small 
+class="small-caps">A</small><small 
+class="small-caps">I</small> </span>pour <a 
+  name="dx1-29004"></a><span 
+class="eccc-1000">D<small 
+class="small-caps">E</small><small 
+class="small-caps">B</small><small 
+class="small-caps">I</small><small 
+class="small-caps">A</small><small 
+class="small-caps">N</small></span>,...
+<!--l. 1347--><p class="indent">   Dans le cas de JumpStart, l'appel est fait dans le script de terminaison de
+l'installation&nbsp;:
+
+<!--l. 1366--><p class="noindent"><span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Run</span>&nbsp;<span 
+class="ectt-0800--87">in</span>&nbsp;<span 
+class="ectt-0800--87">verbose</span>&nbsp;<span 
+class="ectt-0800--87">mode:</span>
+<!--l. 1366--><p class="noindent"><span 
+class="ectt-0800--87">set</span>&nbsp;<span 
+class="ectt-0800--87">-v</span>&nbsp;<span 
+class="ectt-0800--87">-x</span>
+<!--l. 1366--><p class="noindent"><span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">At</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">end</span>&nbsp;<span 
+class="ectt-0800--87">of</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">install,</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">future</span>&nbsp;<span 
+class="ectt-0800--87">/</span>&nbsp;<span 
+class="ectt-0800--87">is</span>&nbsp;<span 
+class="ectt-0800--87">indeed</span>&nbsp;<span 
+class="ectt-0800--87">in</span>&nbsp;<span 
+class="ectt-0800--87">/a,</span>
+<!--l. 1366--><p class="noindent"><span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">and</span>&nbsp;<span 
+class="ectt-0800--87">/</span>&nbsp;<span 
+class="ectt-0800--87">is</span>&nbsp;<span 
+class="ectt-0800--87">only</span>&nbsp;<span 
+class="ectt-0800--87">temporary</span>&nbsp;<span 
+class="ectt-0800--87">during</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">installation.</span>
+<!--l. 1366--><p class="noindent"><span 
+class="ectt-0800--87">UsrLocal=/usr/local</span>
+<!--l. 1366--><p class="noindent"><span 
+class="ectt-0800--87">TempUsrLocal=/a$UsrLocal</span>
+<!--l. 1366--><p class="noindent"><span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Since</span>&nbsp;<span 
+class="ectt-0800--87">there</span>&nbsp;<span 
+class="ectt-0800--87">is</span>&nbsp;<span 
+class="ectt-0800--87">no</span>&nbsp;<span 
+class="ectt-0800--87">running</span>&nbsp;<span 
+class="ectt-0800--87">automount</span>&nbsp;<span 
+class="ectt-0800--87">yet,</span>&nbsp;<span 
+class="ectt-0800--87">no</span>&nbsp;<span 
+class="ectt-0800--87">NIS,</span>&nbsp;<span 
+class="ectt-0800--87">no</span>&nbsp;<span 
+class="ectt-0800--87">DNS,...:</span>
+<!--l. 1366--><p class="noindent"><span 
+class="ectt-0800--87">/bin/mkdir</span>&nbsp;<span 
+class="ectt-0800--87">-p</span>&nbsp;<span 
+class="ectt-0800--87">$TempUsrLocal</span>
+<!--l. 1366--><p class="noindent"><span 
+class="ectt-0800--87">/usr/sbin/mount</span>&nbsp;<span 
+class="ectt-0800--87">-F</span>&nbsp;<span 
+class="ectt-0800--87">nfs</span>&nbsp;<span 
+class="ectt-0800--87">192.44.75.87:/export/calice1/local</span>&nbsp;<span 
+class="ectt-0800--87">$TempUsrLocal</span>
+<!--l. 1366--><p class="noindent"><span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Disable</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">autoshutdown:</span>
+<!--l. 1366--><p class="noindent"><span 
+class="ectt-0800--87">/usr/bin/touch</span>&nbsp;<span 
+class="ectt-0800--87">/a/noautoshutdown</span>
+<!--l. 1366--><p class="noindent"><span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Make</span>&nbsp;<span 
+class="ectt-0800--87">cfengine</span>&nbsp;<span 
+class="ectt-0800--87">believe</span>&nbsp;<span 
+class="ectt-0800--87">it</span>&nbsp;<span 
+class="ectt-0800--87">is</span>&nbsp;<span 
+class="ectt-0800--87">really</span>&nbsp;<span 
+class="ectt-0800--87">in</span>&nbsp;<span 
+class="ectt-0800--87">/</span>&nbsp;<span 
+class="ectt-0800--87">intead</span>&nbsp;<span 
+class="ectt-0800--87">of</span>&nbsp;<span 
+class="ectt-0800--87">/a:</span>
+<!--l. 1366--><p class="noindent"><span 
+class="ectt-0800--87">/usr/sbin/chroot</span>&nbsp;<span 
+class="ectt-0800--87">/a</span>&nbsp;<span 
+class="ectt-0800--87">$UsrLocal/sbin/cfagent</span>&nbsp;<span 
+class="ectt-0800--87">-v</span>&nbsp;<span 
+class="ectt-0800--87">-DInstallationTime</span>&nbsp;<span 
+class="ectt-0800--87">-f</span>&nbsp;<span 
+class="ectt-0800--87">$UsrLocal/share/cfengine/cfengine.conf</span>
+<!--l. 1366--><p class="noindent"><span 
+class="ectt-0800--87">#</span>&nbsp;<span 
+class="ectt-0800--87">Clean</span>&nbsp;<span 
+class="ectt-0800--87">up</span>&nbsp;<span 
+class="ectt-0800--87">the</span>&nbsp;<span 
+class="ectt-0800--87">mounting</span>&nbsp;<span 
+class="ectt-0800--87">point</span>&nbsp;<span 
+class="ectt-0800--87">since</span>&nbsp;<span 
+class="ectt-0800--87">it</span>&nbsp;<span 
+class="ectt-0800--87">will</span>&nbsp;<span 
+class="ectt-0800--87">be</span>&nbsp;<span 
+class="ectt-0800--87">recreated</span>&nbsp;<span 
+class="ectt-0800--87">by</span>&nbsp;<span 
+class="ectt-0800--87">autofs</span>&nbsp;<span 
+class="ectt-0800--87">anyway:</span>
+<!--l. 1366--><p class="noindent"><span 
+class="ectt-0800--87">/usr/sbin/umount</span>&nbsp;<span 
+class="ectt-0800--87">$TempUsrLocal</span>
+<!--l. 1366--><p class="noindent"><span 
+class="ectt-0800--87">rmdir</span>&nbsp;<span 
+class="ectt-0800--87">$TempUsrLocal</span>
+<!--l. 1368--><p class="indent">   C'est l'ex&eacute;cution finale de <span 
+class="ectt-1000">cfagent </span>qui va personnaliser l'installation du syst&egrave;me
+et le rendre pleinement fonctionnel en mettant en place une ex&eacute;cution r&eacute;guli&egrave;re de
+<span 
+class="ectt-1000">cfagent</span>, l'agent ex&eacute;cutant de <a 
+  name="dx1-29005"></a>Cfengine.
+<a name="section.4"></a>
+   <h3 class="sectionHead"><span class="titlemark">4</span> <a 
+  name="x1-300004"></a>Conclusion</h3>
+<a 
+  name="dx1-30001"></a>
+<!--l. 1377--><p class="noindent">Cfengine est un outil d'assez haut niveau d'automatisation des t&acirc;ches d'administration
+syst&egrave;me qui permet de concevoir des organisations syst&egrave;mes complexes multi-sites,
+multi-architectures avec plusieurs syst&egrave;mes d'exploitation diff&eacute;rents tout en gardant
+un contr&ocirc;le g&eacute;rable de la complexit&eacute; ce qui explique qu'il soit utilis&eacute; par de nombreux
+sites dans le monde.
+<!--l. 1384--><p class="indent">   Actuellement le logiciel est en pleine &eacute;volution avec la version 2 qui va vers la
+                                                                  
+
+                                                                  
+maturit&eacute;, m&ecirc;me si le portage sous <a 
+  name="dx1-30002"></a><span 
+class="eccc-1000"><small 
+class="small-caps">N</small><small 
+class="small-caps">T</small> </span>n'a pas r&eacute;cemment &eacute;volu&eacute;. On peut n&eacute;anmoins
+regretter quelques lourdeurs de syntaxe et le fait finalement que <a 
+  name="dx1-30003"></a>Cfengine ne soit pas
+inclut dans un vrai langage de programmation classique. Cela pourrait automatiser
+encore plus l'administration avec la possibilit&eacute; de g&eacute;n&eacute;rer au vol des r&egrave;gles <a 
+  name="dx1-30004"></a>Cfengine.
+C'est un axe de recherche actuellement regard&eacute; au <a 
+  name="dx1-30005"></a><span 
+class="eccc-1000"><small 
+class="small-caps">L</small><small 
+class="small-caps">I</small><small 
+class="small-caps">T</small> </span>avec le projet <span 
+class="eccc-1000"><small 
+class="small-caps">P</small><small 
+class="small-caps">C</small><small 
+class="small-caps">F</small></span>engine qui
+consiste &agrave; avoir les concepts d'un <a 
+  name="dx1-30006"></a>Cfengine d'ordre sup&eacute;rieur (pour pouvoir
+manipuler directement les concepts de <a 
+  name="dx1-30007"></a>Cfengine) directement dans le langage
+<a 
+  name="dx1-30008"></a><span 
+class="eccc-1000"><small 
+class="small-caps">P</small><small 
+class="small-caps">E</small><small 
+class="small-caps">R</small><small 
+class="small-caps">L</small></span>.
+<!--l. 1395--><p class="indent">   Il reste encore &agrave; faire de notre c&ocirc;t&eacute; la mutualisation des efforts pour la mise
+au point de l'infrastructure g&eacute;n&eacute;rique et automatiser la sp&eacute;cialisation de
+l'infrastructure pour une int&eacute;gration dans un nouveau contexte et site. On aurait
+ainsi l'&eacute;quivalent des <span 
+class="ecti-1000">patterns </span>et <span 
+class="ecti-1000">frameworks </span>du monde du g&eacute;nie logiciel qu'il suffirait
+d'instancier pour avoir une configuration syst&egrave;me compl&egrave;te correspondant &agrave; ses
+besoins.
+<!--l. 1403--><p class="indent">   Des sites ne voulant pas tout partager dans ce pot commun pourraient rajouter
+des r&egrave;gles d'exclusion dans <span 
+class="ectt-1000">rsync </span>(du style <span 
+class="ectt-1000">&#8211;exclude conf/**/CEA-DAM/** </span>si par
+exemple le <span 
+class="eccc-1000"><small 
+class="small-caps">C</small><small 
+class="small-caps">E</small><small 
+class="small-caps">A</small></span>/<span 
+class="eccc-1000"><small 
+class="small-caps">D</small><small 
+class="small-caps">A</small><small 
+class="small-caps">M</small> </span>voulait utiliser un tel syst&egrave;me...)
+<!--l. 1408--><p class="indent">   Les exemples complets sont disponibles depuis la page <a 
+  name="dx1-30009"></a><span 
+class="eccc-1000"><small 
+class="small-caps">W</small><small 
+class="small-caps">W</small><small 
+class="small-caps">W</small> </span>de l'auteur de cet
+article et dans son cours d'administration syst&egrave;me. De m&ecirc;me, on peut y r&eacute;cup&eacute;rer la
+version d'origine &eacute;tendue de cet article en <span class="LATEX">L<span class="A">A</span><span class="TEX">T<span 
+class="E">E</span>X</span></span> avant sa traduction via <span class="TEX">T<span 
+class="E">E</span>X</span>4ht
+en <a 
+  name="dx1-30010"></a><span 
+class="eccc-1000"><small 
+class="small-caps">H</small><small 
+class="small-caps">T</small><small 
+class="small-caps">M</small><small 
+class="small-caps">L</small> </span>et sa digestion par Word.
+   <h3 class="likesectionHead"><a 
+  name="x1-310004"></a>Coordonn&eacute;es de l'auteur</h3>
+<!--l. 1417--><p class="noindent">Laboratoire Informatique et T&eacute;l&eacute;communications
+<br class="newline">&Eacute;cole Nationale Sup&eacute;rieure des T&eacute;l&eacute;communications de Bretagne
+<br class="newline">BP832, 29285 BREST CEDEX, FRANCE.
+<br class="newline">T&eacute;l.&nbsp;: (+33|0) 2.29.00.14.15, fax.&nbsp;: (+33|0) 2.29.00.12.82.
+<br class="newline"><span 
+class="ectt-1000">Ronan.Keryell@enst-bretagne.fr</span>, <a 
+href="http://www-info.enst-bretagne.fr/~keryell" ><span 
+class="ectt-0900">http://www-info.enst-bretagne.fr/~keryell</span></a>
+   <h3 class="likesectionHead"><a 
+  name="x1-320004"></a>R&eacute;f&eacute;rences</h3>
+<!--l. 2--><p class="noindent">
+        <div class="thebibliography"><p class="bibitem"><span class="biblabel">
+ <a name="cite.WWW-cfengine">[Bur01a]</a><span class="bibsp">&nbsp;&nbsp;&nbsp;</span></span><a 
+  name="XWWW-cfengine"></a>Mark <span 
+class="eccc-1000">B<small 
+class="small-caps">U</small><small 
+class="small-caps">R</small><small 
+class="small-caps">G</small><small 
+class="small-caps">E</small><small 
+class="small-caps">S</small><small 
+class="small-caps">S</small></span>. &#171; Cfengine&nbsp;: A configuration engine &#187;, 2001.
+        <br class="newline"><a 
+href="http://www.cfengine.org" ><span 
+class="ectt-0900">http://www.cfengine.org</span></a>.
+        </p><p class="bibitem"><span class="biblabel">
+ <a name="cite.WWW-cfengine-reference">[Bur01b]</a><span class="bibsp">&nbsp;&nbsp;&nbsp;</span></span><a 
+  name="XWWW-cfengine-reference"></a>Mark <span 
+class="eccc-1000">B<small 
+class="small-caps">U</small><small 
+class="small-caps">R</small><small 
+class="small-caps">G</small><small 
+class="small-caps">E</small><small 
+class="small-caps">S</small><small 
+class="small-caps">S</small></span>. &#171; Cfengine Reference &#187;, 2001.
+        <br class="newline"><a 
+href="http://www.cfengine.org/docs/cfengine-Reference.html" ><span 
+class="ectt-0900">http://www.cfengine.org/docs/cfengine-Reference.html</span></a>.
+        </p><p class="bibitem"><span class="biblabel">
+ <a name="cite.WWW-cfengine-tutorial">[Bur01c]</a><span class="bibsp">&nbsp;&nbsp;&nbsp;</span></span><a 
+  name="XWWW-cfengine-tutorial"></a>Mark   <span 
+class="eccc-1000">B<small 
+class="small-caps">U</small><small 
+class="small-caps">R</small><small 
+class="small-caps">G</small><small 
+class="small-caps">E</small><small 
+class="small-caps">S</small><small 
+class="small-caps">S</small></span>.       &#171;   Cfengine   Tutorial&nbsp;:   Automated   System
+        Administration &#187;, 2001.
+        <br class="newline"><a 
+href="http://www.cfengine.org/docs/cfengine-Tutorial.html" ><span 
+class="ectt-0900">http://www.cfengine.org/docs/cfengine-Tutorial.html</span></a>.
+        </p><p class="bibitem"><span class="biblabel">
+ <a name="cite.cfengine-recent2001">[Bur01d]</a><span class="bibsp">&nbsp;&nbsp;&nbsp;</span></span><a 
+  name="Xcfengine-recent2001"></a>Mark <span 
+class="eccc-1000">B<small 
+class="small-caps">U</small><small 
+class="small-caps">R</small><small 
+class="small-caps">G</small><small 
+class="small-caps">E</small><small 
+class="small-caps">S</small><small 
+class="small-caps">S</small></span>. &#171; Recent Developments in Cfengine &#187;.
+        <br class="newline"><a 
+href="http://www.iu.hio.no/~mark/papers/UnixNLBurgess.ps" ><span 
+class="ectt-0900">http://www.iu.hio.no/~mark/papers/UnixNLBurgess.ps</span></a>, 2001.
+                                                                  
+
+                                                                  
+        </p><p class="bibitem"><span class="biblabel">
+ <a name="cite.keryell01-JRES-cfengine-etendu">[Ker01]</a>  <span class="bibsp">&nbsp;&nbsp;&nbsp;</span></span><a 
+  name="Xkeryell01-JRES-cfengine-etendu"></a>Ronan   <span 
+class="eccc-1000">K<small 
+class="small-caps">E</small><small 
+class="small-caps">R</small><small 
+class="small-caps">Y</small><small 
+class="small-caps">E</small><small 
+class="small-caps">L</small><small 
+class="small-caps">L</small></span>.      &#171;   Utilisation   du   logiciel   d'administration
+        automatique    Cfengine    &#8212;    version    &eacute;tendue    &#187;.         Rapport
+        Technique  ENSTBr/INFO/RR/2001-011,  Laboratoire  Informatique
+        &amp;     T&eacute;l&eacute;communications,     &Eacute;cole     Nationale     Sup&eacute;rieure     des
+        T&eacute;l&eacute;communications    de    Bretagne,    France,    octobre    2001.
+        <a 
+href="http://www.cri.ensmp.fr/~keryell/publications/conf/2001/JRES2001/cfengine" ><span 
+class="ectt-0900">http://www.cri.ensmp.fr/~keryell/publications/conf/2001/JRES2001/cfengine</span></a>.
+        </p></div>
+    
+</body></html> 
+
+                                                                  
+
+

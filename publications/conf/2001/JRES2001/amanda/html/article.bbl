@@ -1,0 +1,51 @@
+\csname @ifundefined\endcsname{entetebiblio}{}{\entetebiblio}
+\begin{thebibliography}{PRM01}
+
+\bibitem[AMA]{WWW-amanda}
+<< \textsc{amanda} : The Advanced Maryland Automatic Network Disk Archiver >>.
+\newblock \LienPDF{http://www.amanda.org}.
+
+\bibitem[Bur01]{WWW-cfengine}
+Mark \fsc\bgroup Burgess\egroup{}.
+\newblock << Cfengine : A configuration engine >>, 2001.
+\newblock \\\LienPDF{http://www.cfengine.org}.
+
+\bibitem[ED85]{Grosch_law_revisited}
+Phillip \fsc\bgroup Ein-Dor\egroup{}.
+\newblock << Grosch's Law Re-Revisited: CPU Power and the Cost of
+  Computation\indexbib{ordinateur!prix et performances}\indexbib{loi! de
+  Grosch@de \fsc{Grosch}}\indexbib{Grosch (loi de)@\fsc{Grosch} (loi
+  de)}\indexbib{prix de ordinateurs et performances} >>.
+\newblock {\em Communications of the ACM}, 28(2):142--151, \febname{} 1985.
+
+\bibitem[JO99]{jackson99-amanda}
+John~R. \fsc\bgroup Jackson\egroup{} \andname{} Alexandre \fsc\bgroup
+  Oliva\egroup{}.
+\newblock << {\em Unix Backup \& Recovery} >>, \chaptername{} Using Amanda.
+\newblock O'Reilly and Associates, \novname{} 1999.
+\newblock \LienPDF{http://www.backupcentral.com/amanda.html}.
+
+\bibitem[Ker01]{keryell01-JRES-cfengine}
+Ronan \fsc\bgroup Keryell\egroup{}.
+\newblock << Utilisation du logiciel d'administration automatique Cfengine >>.
+\newblock \Inname{} {\em Actes de la conf\'erence \textsc{jres}2001}, Lyon,
+  France, \decname{} 2001.
+\newblock
+  \LienPDF{http://www.cri.ensmp.fr/~keryell/publications/conf/2001/JRES2001/cf%
+engine}.
+
+\bibitem[Pre99]{preston99-unix_backup_recov}
+W.~Curtis \fsc\bgroup Preston\egroup{}.
+\newblock {\em Unix Backup \& Recovery}.
+\newblock O'Reilly and Associates, \novname{} 1999.
+\newblock \LienPDF{http://www.backupcentral.com/thebook.html}.
+
+\bibitem[PRM01]{PRMX01-logiciels-libres}
+<< Décret no 2001-737 du 22 août 2001 portant création de l'Agence pour les
+  technologies de l'information et de la communication dans l'administration
+  >>, \augname{} 2001.
+\newblock
+  \LienPDF{http://www.legifrance.gouv.fr/citoyen/jorf_nor.ow?numjo=PRMX0105055%
+D}.
+
+\end{thebibliography}

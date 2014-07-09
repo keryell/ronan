@@ -1,0 +1,199 @@
+\csname @ifundefined\endcsname{entetebiblio}{}{\entetebiblio}
+\begin{thebibliography}{10}
+\ProvideTextCommand{\guillemotleft}{OT1}{  \leavevmode\raise .27ex\hbox{$\scriptscriptstyle\ll$}}
+\ProvideTextCommand{\guillemotright}{OT1}{  \leavevmode\raise .27ex\hbox{$\scriptscriptstyle\gg$}}
+\newcommand{\enquote}[1]{\guillemotleft#1\guillemotright}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+\providecommand{\selectlanguage}[1]{\relax}
+\input{babelbst.tex}
+\newcommand{\Capitalize}[1]{\uppercase{#1}}
+\newcommand{\capitalize}[1]{\expandafter\Capitalize#1}
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem{CESAR2008:archi_securisees}
+Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
+\newblock {\selectlanguage{french}\enquote{Un panorama des architectures
+  informatiques sécurisées et de confiance.}}
+\newblock \emph{\capitalize\bblin{}} \emph{CE\&SAR'2008 (Computer \&
+  Electronics Security Applications Rendez-vous)}, \decname{} 2008.
+\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2008/CESAR}.
+
+\bibitem{Lavoisier2008:systemes_repartis_en_action:8}
+Christophe \textsc{C{\'e}rin}, Jean-Christophe \textsc{Dubacq}, Thomas
+  \textsc{H{\'e}rault}, Ronan \textsc{Keryell}, Jean-Louis \textsc{Pazat},
+  Jean-Louis \textsc{Roch} \bbland{} S{\'e}bastien \textsc{Varette}.
+\newblock \emph{Syst{\`e}mes r{\'e}partis en action : de l'embarqué aux
+  systèmes à large échelle : S{\'e}curit{\'e} dans les grilles de calcul},
+  \bblchapter{}~8, \bblpages{} 153--186.
+\newblock Informatique et syst{\`e}mes d'information. Hermes Science
+  Publications / Lavoisier, Paris, traité ic2 \bbledition{}, \novname{} 2008.
+
+\bibitem{TSI2008:CryptoPage}
+Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
+\newblock {\selectlanguage{french}\enquote{CryptoPage : une architecture
+  efficace combinant chiffrement, intégrité mémoire et protection contre les
+  fuites d'informations.}}
+\newblock \emph{Techniques et Sciences Informatiques}, \textbf{27}(6),
+  \bblpages{} 779--814, 2008.
+
+\bibitem{TR:TSI2008:CryptoPage}
+Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
+\newblock {\selectlanguage{french}\emph{CryptoPage : une architecture efficace
+  combinant chiffrement, intégrité mémoire et protection contre les fuites
+  d'informations (version étendue)}}.
+\newblock \bbltechreport{}, \textsc{ENST} Bretagne, \augname{} 2008.
+\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2008/TSI}.
+
+\bibitem{SGS2008:SAFESCALE}
+Sebastien \textsc{Varrette}, Jean-Louis \textsc{Roch}, Guillaume \textsc{Duc}
+  \bbland{} Ronan \textsc{Keryell}.
+\newblock {\selectlanguage{english}\enquote{Building Secure Resources to Ensure
+  Safe Computations in Distributed and Potentially Corrupted Environments.}}
+\newblock \emph{\capitalize\bblin{}} \emph{Workshop on Secure, trusted,
+  manageable and controllable Grid Services (SGS'2008)}, \augname{} 2008.
+\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2008/SGS}.
+
+\bibitem{JoCV2008:CryptoPage}
+Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
+\newblock \enquote{Improving virus protection with an efficient secure
+  architecture with memory encryption, integrity and information leakage
+  protection.}
+\newblock \emph{Journal in Computer Virology}, \sepname{} 2007.
+\newblock \LienPDF{http://dx.doi.org/10.1007/s11416-007-0062-0}.
+
+\bibitem{SympA:2008:CryptoPage_verif}
+Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
+\newblock {\selectlanguage{french}\enquote{Support architectural pour
+  identification de programmes chiffrés dans une architecture sécurisée sans
+  système d'exploitation de confiance.}}
+\newblock \emph{\capitalize\bblin{}} \emph{Symposium en Architecture de
+  Machines (\textsc{SympA}'2008)}, \febname{} 2008.
+\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2008/SympA}.
+
+\bibitem{SSTIC2007:CryptoPage}
+Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
+\newblock \enquote{CryptoPage : un processeur sécurisé avec chiffrement,
+  intégrité mémoire et protection contre les fuites d'informations.}
+\newblock \emph{\capitalize\bblin{}} \emph{Symposium sur la Sécurité des
+  Technologies de l'Information et des Communications (SSTIC 2007)}, \mayname{}
+  2007.
+\newblock \LienPDF{http://actes.sstic.org/SSTIC07/CryptoPage}.
+
+\bibitem{ACSAC-2006:CryptoPage}
+Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
+\newblock \enquote{CryptoPage: an Efficient Secure Architecture with Memory
+  Encryption, Integrity and Information Leakage Protection.}
+\newblock \emph{\capitalize\bblin{}} \emph{Proceedings of the 22th Annual
+  Computer Security Applications Conference (\textsc{Acsac}'06)}, \bblpages{}
+  483--492. IEEE Computer Society, \decname{} 2006.
+\newblock
+  \LienPDF{https://info.enstb.org/projets/cryptopage/documents/2006/ACSAC}.
+
+\bibitem{SympA:2006:CryptoPage/HIDE}
+Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
+\newblock \enquote{\textsc{CryptoPage}/\textsc{Hide}~: une architecture
+  efficace combinant chiffrement, intégrité mémoire et protection contre les
+  fuites d'informations.}
+\newblock \emph{\capitalize\bblin{}} \emph{Symposium en Architecture de
+  Machines (\textsc{SympA}'2006)}, \bblpages{} 178--188, \octname{} 2006.
+
+\bibitem{ENSTB:2006:SAFESCALE}
+Sebastien \textsc{Varrette}, Guillaume \textsc{Duc}, Ronan \textsc{Keryell},
+  Jean-Louis \textsc{Roch} \bbland{} Franck \textsc{Leprevost}.
+\newblock {\selectlanguage{english}\emph{Building Secure Resources to Ensure
+  Safe Computations in Distributed and Potentially Corrupted Environments}}.
+\newblock \bbltechreport{}, \textsc{ENST} Bretagne, \junname{} 2006.
+\newblock
+  \LienPDF{http://enstb.org/~keryell/publications/rapports/2006/SAFESCALE}.
+
+\bibitem{ENSTB:2006:secure_process_CryptoPage}
+Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
+\newblock \emph{The concept of secure processes for \textsc{Linux} on the
+  \textsc{CryptoPage}/$x$86 secure architecture}.
+\newblock \bbltechreport{}, \textsc{ENST} Bretagne, \janname{} 2006.
+\newblock
+  \LienPDF{https://info.enstb.org/projets/cryptopage/documents/2006/TechReports/techreport_200601.pdf}.
+
+\bibitem{TSI2005:CryptoPage}
+Guillaume \textsc{Duc}, Ronan \textsc{Keryell} \bbland{} Cédric
+  \textsc{Lauradoux}.
+\newblock \enquote{CryptoPage : support matériel pour cryptoprocessus.}
+\newblock \emph{Techniques et Sciences Informatiques}, \textbf{24/6},
+  \bblpages{} 667--701, 2005.
+\newblock \LienPDF{http://enstb.org/~keryell/publications/articles/2005/TSI}.
+
+\bibitem{SympA2005:CryptoPage}
+Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
+\newblock \enquote{Portage de l'architecture sécurisée {\textsc{CryptoPage}}
+  sur un microprocesseur x86.}
+\newblock \emph{\capitalize\bblin{}} \emph{Symposium en Architecture de
+  Machines (SympA'2005)}, \bblpages{} 61--72. Le Croisic, presqu'île de
+  Guérande, France, \aprname{} 2005.
+\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2005/SympA}.
+
+\bibitem{ENSTB:2004:Linux_CryptoPage}
+Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
+\newblock \emph{Portage d'un système {GNU}/\textsc{Linux} sur l'architecture
+  sécurisée \textsc{CryptoPage}/x86}.
+\newblock \bbltechreport{}, \textsc{ENST} Bretagne, \decname{} 2004.
+\newblock
+  \LienPDF{http://info.enstb.org/projets/cryptopage/documents/techreport_200412.pdf}.
+
+\bibitem{rapport-TSI2004:CryptoPage}
+Guillaume \textsc{Duc}, Ronan \textsc{Keryell} \bbland{} Cédric
+  \textsc{Lauradoux}.
+\newblock \emph{CryptoPage : support matériel pour cryptoprocessus -- version
+  étendue}.
+\newblock \bbltechreport{} ENSTBr/INFO/RR/2004-?, Laboratoire Informatique \&
+  Télécommunications, École Nationale Supérieure des Télécommunications de
+  Bretagne, France, \augname{} 2004.
+\newblock \LienPDF{http://enstb.org/~keryell/publications/rapports/2004/TSI}.
+
+\bibitem{rapport:spec_OpenSmartCard}
+Sylvain \textsc{Guilley}, Philippe \textsc{Hoogvorst}, Ronan \textsc{Keryell},
+  Jean \textsc{{Leroux les Jardins}}, Philippe \textsc{Matherat}, Yves
+  \textsc{Mathieu}, Renaud \textsc{Pacalet} \bbland{} Jean \textsc{Provost}.
+\newblock \emph{Spécifications de la carte à puce libre OpenSmartCard}.
+\newblock \bbltechreport{}, GET, \junname{} 2004.
+\newblock
+  \LienPDF{http://www-elec.enst.fr/recherche/opensmartcard/opensmartcard_specs.pdf}.
+
+\bibitem{SympAAA2003-cryptopage}
+Cédric \textsc{Lauradoux} \bbland{} Ronan \textsc{Keryell}.
+\newblock \enquote{CryptoPage-2 : un processeur sécurisé contre le rejeu.}
+\newblock \emph{\capitalize\bblin{}} \emph{Symposium en Architecture et
+  Adéquation Algorithme Architecture (SympAAA'2003)}, \bblpages{} 314--321. La
+  Colle sur Loup, France, \octname{} 2003.
+\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2003/SympAAA}.
+
+\bibitem{EUROSEC2001-cryptopage}
+Ronan \textsc{Keryell}.
+\newblock \enquote{CryptoPage-1 : vers la fin du piratage informatique ?
+  (version courte).}
+\newblock \emph{\capitalize\bblin{}} \emph{EUROSEC'2001}. Paris, \marname{}
+  2001.
+\newblock
+  \LienPDF{http://www.cri.ensmp.fr/~keryell/publications/ENSTBr_INFO_2001-001}.
+
+\bibitem{SympA6-cryptopage}
+Ronan \textsc{Keryell}.
+\newblock \enquote{CryptoPage-1 : vers la fin du piratage informatique ?}
+\newblock \emph{\capitalize\bblin{}} \emph{Symposium d'Architecture (SympA'6)},
+  \bblpages{} 35--44. Besançon, France, \junname{} 2000.
+\newblock
+  \LienPDF{http://enstb.org/~keryell/publications/ENSTBr_INFO_2000-001}.
+
+\bibitem{brevet-cryptopage-2000}
+Ronan \textsc{Keryell}.
+\newblock \emph{Microprocesseur sécurisé}.
+\newblock Demande de brevet français 00 07891, École Nationale Supérieure des
+  Télécommunications de Bretagne, \junname{} 2000.
+\newblock
+  \LienPDF{http://enstb.org/~keryell/publications/brevets/2000/CryptoPage-1}.
+
+\end{thebibliography}

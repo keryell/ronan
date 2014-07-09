@@ -1,0 +1,39 @@
+\expandafter\ifx\csname doTocEntry\endcsname\relax \expandafter\endinput\fi 
+\doTocEntry\tocsection{1}{\csname a:TocLink\endcsname{1}{x1-10001}{QQ2-1-1}{Introduction}}{1}\relax 
+\doTocEntry\tocsection{2}{\csname a:TocLink\endcsname{1}{x1-20002}{QQ2-1-2}{Logiciel de sauvegarde libre \protect\textsc \relax  {amanda}\protect\xspace \relax  }}{2}\relax 
+\doTocEntry\tocsubsection{2.1}{\csname a:TocLink\endcsname{1}{x1-30002.1}{QQ2-1-3}{Concepts}}{2}\relax 
+\doTocEntry\tocsubsubsection{2.1.1}{\csname a:TocLink\endcsname{1}{x1-40002.1.1}{QQ2-1-4}{Architecture client-serveur}}{2}\relax 
+\doTocEntry\tocsubsubsection{2.1.2}{\csname a:TocLink\endcsname{1}{x1-50002.1.2}{QQ2-1-5}{Disques tampons (\protect\emph \relax  {holding disks})}}{3}\relax 
+\doTocEntry\tocsubsubsection{2.1.3}{\csname a:TocLink\endcsname{1}{x1-60002.1.3}{QQ2-1-6}{Planification automatique des t\let \prOteCt \relax \Protect \csname acp:c\endcsname {2}aches}}{3}\relax 
+\doTocEntry\tocsubsubsection{2.1.4}{\csname a:TocLink\endcsname{1}{x1-70002.1.4}{QQ2-1-7}{Compression des donn\let \prOteCt \relax \Protect \csname acp:c\endcsname {1}ees}}{5}\relax 
+\doTocEntry\tocsubsubsection{2.1.5}{\csname a:TocLink\endcsname{1}{x1-80002.1.5}{QQ2-1-8}{Formats de sauvegarde}}{6}\relax 
+\doTocEntry\tocsubsubsection{2.1.6}{\csname a:TocLink\endcsname{1}{x1-90002.1.6}{QQ2-1-9}{Changeur de bandes}}{6}\relax 
+\doTocEntry\tocsubsubsection{2.1.7}{\csname a:TocLink\endcsname{1}{x1-100002.1.7}{QQ2-1-10}{Configuration}}{7}\relax 
+\doTocEntry\tocsubsection{2.2}{\csname a:TocLink\endcsname{1}{x1-110002.2}{QQ2-1-11}{Suivi des op\let \prOteCt \relax \Protect \csname acp:c\endcsname {1}erations}}{7}\relax 
+\doTocEntry\tocsubsubsection{2.2.1}{\csname a:TocLink\endcsname{1}{x1-120002.2.1}{QQ2-1-12}{Courriers de fin de sauvegarde}}{7}\relax 
+\doTocEntry\tocsubsubsection{2.2.2}{\csname a:TocLink\endcsname{1}{x1-130002.2.2}{QQ2-1-13}{Commandes d'information}}{9}\relax 
+\doTocEntry\toclof{1}{\csname a:TocLink\endcsname{1}{x1-130001}{}{\ignorespaces Exemple de rendu du fonctionnement avec \protect\texttt \relax  {amplot}.}}{figure}\relax 
+\doTocEntry\tocsubsubsection{2.2.3}{\csname a:TocLink\endcsname{1}{x1-140002.2.3}{QQ2-1-15}{V\let \prOteCt \relax \Protect \csname acp:c\endcsname {1}erification des sauvegardes}}{12}\relax 
+\doTocEntry\tocsubsection{2.3}{\csname a:TocLink\endcsname{1}{x1-150002.3}{QQ2-1-16}{Restauration de donn\let \prOteCt \relax \Protect \csname acp:c\endcsname {1}ees}}{12}\relax 
+\doTocEntry\tocsubsubsection{2.3.1}{\csname a:TocLink\endcsname{1}{x1-160002.3.1}{QQ2-1-17}{Fonctionnement standard}}{12}\relax 
+\doTocEntry\tocparagraph{2.3.1.1}{\csname a:TocLink\endcsname{1}{x1-170002.3.1.1}{QQ2-1-18}{En utilisant les index}}{12}\relax 
+\doTocEntry\tocparagraph{2.3.1.2}{\csname a:TocLink\endcsname{1}{x1-180002.3.1.2}{QQ2-1-19}{Sans utiliser les index}}{13}\relax 
+\doTocEntry\tocsubsubsection{2.3.2}{\csname a:TocLink\endcsname{1}{x1-190002.3.2}{QQ2-1-20}{R\let \prOteCt \relax \Protect \csname acp:c\endcsname {1}ecup\let \prOteCt \relax \Protect \csname acp:c\endcsname {1}eration \let \prOteCt \relax \Protect \csname acp:c\endcsname {0}a partir de rien}}{14}\relax 
+\doTocEntry\tocsubsection{2.4}{\csname a:TocLink\endcsname{1}{x1-200002.4}{QQ2-1-21}{Sauvegardes sans clients Unix}}{15}\relax 
+\doTocEntry\tocsubsubsection{2.4.1}{\csname a:TocLink\endcsname{1}{x1-210002.4.1}{QQ2-1-22}{Sauvegardes de serveurs de fichiers}}{15}\relax 
+\doTocEntry\tocsubsubsection{2.4.2}{\csname a:TocLink\endcsname{1}{x1-220002.4.2}{QQ2-1-23}{Sauvegardes de clients Windows}}{15}\relax 
+\doTocEntry\tocsubsection{2.5}{\csname a:TocLink\endcsname{1}{x1-230002.5}{QQ2-1-24}{Installation}}{15}\relax 
+\doTocEntry\tocsubsection{2.6}{\csname a:TocLink\endcsname{1}{x1-240002.6}{QQ2-1-25}{Archivage}}{16}\relax 
+\doTocEntry\tocsubsection{2.7}{\csname a:TocLink\endcsname{1}{x1-250002.7}{QQ2-1-26}{\let \prOteCt \relax \Protect \csname acp:c\endcsname {1}Evolutions futures}}{17}\relax 
+\doTocEntry\tocsection{3}{\csname a:TocLink\endcsname{1}{x1-260003}{QQ2-1-27}{Exemple des sauvegardes du CRI}}{17}\relax 
+\doTocEntry\tocsubsection{3.1}{\csname a:TocLink\endcsname{1}{x1-270003.1}{QQ2-1-28}{Mode op\let \prOteCt \relax \Protect \csname acp:c\endcsname {1}eratoire ou \IeC {\guillemotleft } de la vie et de la mort des cassettes \IeC {\guillemotright }}}{19}\relax 
+\doTocEntry\tocsubsection{3.2}{\csname a:TocLink\endcsname{1}{x1-280003.2}{QQ2-1-29}{Installation}}{19}\relax 
+\doTocEntry\tocsubsection{3.3}{\csname a:TocLink\endcsname{1}{x1-290003.3}{QQ2-1-30}{Configuration}}{22}\relax 
+\doTocEntry\tocsubsubsection{3.3.1}{\csname a:TocLink\endcsname{1}{x1-300003.3.1}{QQ2-1-31}{Param\let \prOteCt \relax \Protect \csname acp:c\endcsname {2}etres d'une configuration}}{22}\relax 
+\doTocEntry\tocparagraph{3.3.1.1}{\csname a:TocLink\endcsname{1}{x1-310003.3.1.1}{QQ2-1-32}{Sauvegarde journali\let \prOteCt \relax \Protect \csname acp:c\endcsname {0}ere}}{22}\relax 
+\doTocEntry\tocparagraph{3.3.1.2}{\csname a:TocLink\endcsname{1}{x1-320003.3.1.2}{QQ2-1-33}{Archivage hebdomadaire}}{23}\relax 
+\doTocEntry\tocsubsubsection{3.3.2}{\csname a:TocLink\endcsname{1}{x1-330003.3.2}{QQ2-1-34}{Liste des partitions \let \prOteCt \relax \Protect \csname acp:c\endcsname {0}a sauvegarder}}{24}\relax 
+\doTocEntry\tocsection{4}{\csname a:TocLink\endcsname{1}{x1-340004}{QQ2-1-35}{Conclusion}}{25}\relax 
+\doTocEntry\toclikesection{}{\csname a:TocLink\endcsname{1}{x1-350004}{QQ2-1-36}{Coordonn\let \prOteCt \relax \Protect \csname acp:c\endcsname {1}ees de l'auteur}}{26}\relax 
+\doTocEntry\toclikesection{}{\csname a:TocLink\endcsname{1}{x1-360004}{QQ2-1-37}{R\let \prOteCt \relax \Protect \csname acp:c\endcsname {1}ef\let \prOteCt \relax \Protect \csname acp:c\endcsname {1}erences}}{26}\relax 
+\par 

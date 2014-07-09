@@ -1,0 +1,1434 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage{french,frbib}
+\let\fsc\textsc
+\usepackage{perso2e,LienPDF}
+
+\usepackage[francais]{babel}
+\let\ifFTR=\iftrue
+\NoAutoSpaceBeforeFDP
+
+%% Test if TeX4ht is used...
+\newif\iftexforht
+{\catcode`\:11\gdef\TempoRaire{\ifx\load:cfg\Undef\texforhtfalse\else\texforhttrue\fi}}
+\TempoRaire
+
+\usepackage[dvips]{graphicx}
+\usepackage{alltt,fancybox}
+\usepackage[dvips,colorlinks=true,pdfauthor=Ronan.Keryell@enst-bretagne.fr]{hyperref}
+\usepackage{abbrev_reactive}
+
+\newif\iflong
+%% Choisit la version longue ou courte de l'article :
+%\longfalse
+\longtrue
+
+%% Récupère le numéro de version RCS :
+\def\getVersion Revision: #1 {\def\Version{#1}}
+\def\getDollars$#1${\getVersion#1}
+\getDollars$Revision: 1.5 $
+
+%% Pour échapper à la correction orthographique :
+\newcommand{\English}[1]{\emph{#1}}
+\newcommand{\NoSpell}[1]{#1}
+
+\newcommand{\figlarge}[1]{\includegraphics[width=\textwidth]{#1}}
+
+\renewcommand{\floatpagefraction}{1}
+\renewcommand{\textfraction}{0}
+\renewcommand{\topfraction}{1}
+\renewcommand{\bottomfraction}{1}
+
+\setcounter{tocdepth}{10}     % Dans la table des matières
+\setcounter{secnumdepth}{10}  % Avec un numéro.
+
+\sloppy
+
+% On autorise la création d'un index :
+\makeindex
+
+\let\TailleExemple=\scriptsize
+\newenvironment{exemple}{\VerbatimEnvironment\bgroup\TailleExemple\begin{Verbatim}}{\end{Verbatim}\egroup}
+
+
+
+\begin{document}
+
+%\catcode`\:=12
+%\show\cite
+
+\author{Ronan \textsc{Keryell}}
+
+%%\date{}
+\iflong
+%% Beuh, il y a un bug dans le maketitle avec TeX4ht... :-(
+\begin{center}
+  \textbf{{\large Utilisation du logiciel d'administration automatique
+    \Acfengine}\iflong
+    \\---\\\small version étendue\\
+    {\small ENSTBr/INFO/RR/2001-011}\fi}
+  \\
+  Ronan \textsc{Keryell}\\
+  \today
+\end{center}
+%\title{Utilisation du logiciel d'administration automatique
+%  \Acfengine
+%  \\---\\\small version étendue\\
+%  ENSTBr/INFO/RR/2001-011}
+\else
+\title{Utilisation du logiciel d'administration automatique
+  \Acfengine%% ENSTBr/INFO/RR/2001-010
+}
+\maketitle
+\fi
+
+
+\begin{abstract}
+  Cet article présente le système d'automatisation des tâches
+  d'administration système \Acfengine avec comme illustration la mise en
+  place d'un environnement logiciel permettant une automatisation de
+  l'installation et de la maintenance d'un système d'exploitation de type
+  \Aunix d'un réseau d'ordinateurs. \Acfengine est utilisé pour la mise en
+  place et la correction de l'état du système à partir d'un langage
+  déclaratif.
+  
+  Le système exposé est déployé au sein de deux laboratoires de recherche
+  en informatique à l'\Aensmp et à l'\Aenstbr pour la gestion de machines
+  génériques ou de machines dédiées à un projet de recherche sur les
+  réseaux actifs.
+\end{abstract}
+
+
+\section{Introduction}
+\label{sec:introduction}
+
+L'installation automatique des ordinateurs est un problème récurrent et
+naturel pour les informaticiens car, par essence, l'informatique est la
+science de l'automatisation et il ne s'agit là que de l'appliquer à
+elle-même : « \English{boot-straper} » l'outil lui-même en allant jusqu'à
+automatiser le déploiement du système d'automatisation. Quoi de plus
+frustrant en effet que d'installer une machine quand on sait le faire et
+que cela devient chronophage avec le nombre de machines à installer ?...
+
+Le Centre de Recherche en Informatique de l'\Aensmp et le Laboratoire
+Informatique et Télécommunication de l'\Aenstbr sont spécialisés en
+parallélisation, compilation, optimisation de programme et en
+distribution. Il est donc logique que ces technologies soient appliquées à
+l'outil informatique lui-même, c'est à dire à l'organisation système,
+aussi bien des machines des chercheurs, des élèves, des ordinateurs
+parallèles ou des projets de recherches plus spécifiques comme les réseaux
+actifs, ou encore des machines personnelles, utilisées pour le télétravail
+ou autre, avec le déploiement d'accès personnels rapides à Internet tel
+que \Aadsl.
+
+Il existe de nombreuses méthodes d'installation automatique pour
+différents systèmes d'exploitations mais, afin de réduire les efforts de
+développement, nous proposons une méthode en deux phases :
+%%\begin{order}
+\begin{itemize}
+\item utiliser la méthode d'installation spécifique à un système
+  d'exploitation de manière minimale pour avoir un système tout juste
+  fonctionnel ;
+\item utiliser une méthode générique portable pour terminer l'installation
+  et maintenir le système dans un état fonctionnel, c'est à dire
+  automatiser l'administration système.
+\end{itemize}
+%%\end{order}
+L'idée est qu'on va factoriser les efforts dans la partie générique de
+l'installation. Cette partie peut être réalisée avec n'importe quel
+langage permettant d'interagir avec le système (typiquement des
+\emph{shell-script}) mais nous utiliserons ici un langage déclaratif
+permettant de classifier les machines en se rapprochant d'une méthodologie
+objet : \Agnu/\Acfengine.
+
+Dans cette étude on écarte donc les systèmes qui n'ont pas (encore) de
+systèmes d'installation automatique, ne seraient-ce que basiques.
+
+La suite de l'article présente le système \Acfengine
+(\S~\ref{sec:cfengine}) suivi d'un résumé de la manière dont il est
+utilisé au \Alit (\S~\ref{sec:mise_en_place}).  Quelqu'un intéressé par
+les potentialités de ce type de système pourra regarder directement
+l'exemple donné dans cette dernière partie afin de se donner une idée.
+
+
+\section{Le logiciel Cfengine}
+\label{sec:cfengine}
+
+\Acfengine est un logiciel développé depuis 1993 principalement par Mark
+\textsc{Burgess} \cite{WWW-cfengine,cfengine-recent2001} dans le cadre
+d'un projet de recherche concernant l'administration système distribuée et
+automatisée. Son usage actuel est estimé à une centaine de milliers de
+n\oe{}uds dans le monde Unix et Windows.
+
+Le concept de base en est la gestion de la configuration des machines à
+base d'une politique établie sous formes de règles permettant de
+centraliser un comportement d'assez haut niveau plutôt que d'avoir à
+définir les tâches en détail pour tous les cas possibles de machines.
+
+L'intérêt du modèle est de définir des actions à effectuer en fonction des
+états du système (tel service ne marche pas, un disque est plein) plutôt
+que d'avoir à définir toutes les transitions possibles entre les états
+(que faire pour passer de l'état (service ne marche pas, répertoire plein)
+à l'état (service en marche, disque avec de la place libre), ce qui
+voudrait dire prévoir le produit cartésien des états. Cela permet
+d'appréhender les évolutions futures de son architecture d'administration
+et de son parc de machines avec une complexité contrôlable.
+
+L'initiateur de ce projet aime le comparer à un système immunitaire où le
+système réagit par une série d'actions lorsqu'il rencontre telle ou telle
+situation anormale et progressivement le système doit revenir vers l'état
+stable pleinement fonctionnel, si possible.
+
+
+\subsection{Composants constituant Cfengine}
+\label{sec:comp-const-cfeng}
+
+\Acfengine est en fait constitué principalement de plusieurs composants
+\cite{WWW-cfengine-tutorial,WWW-cfengine-reference} :
+\begin{itemize}
+\item le système de base :
+  \begin{itemize}
+  \item l'ensemble des fichiers de configuration définissant le
+    comportement à adopter, typiquement localisés dans le répertoire
+    \texttt{/usr/local/share/cfengine} reflété par la valeur de la
+    variable d'environnement \texttt{CFINPUTS}. La configuration y est
+    stockée dans le fichier \texttt{cfengine.conf} ;
+  \item l'exécutant de \Acfengine \texttt{cfagent} doit être lancé
+    régulièrement pour effectuer le travail ;
+  \end{itemize}
+\item des systèmes optionnels :
+  \begin{itemize}
+  \item un serveur sécurisé de configurations \texttt{cfservd} permettant
+    à des \texttt{cfagent}s distants de récupérer leur configuration s'ils
+    ne peuvent pas y accéder par d'autres moyens. Il permet aussi des
+    exécutions à distance de \texttt{cfagent}s ;
+  \item un démon centralisant l'état global du système afin de faire des
+    statistiques sur le fonctionnement du système ;
+  \item un outil de représentation graphique de l'état du système.
+  \end{itemize}
+\end{itemize}
+Les noms des exécutables dans la liste précédente concernent la version 2
+de \Acfengine et non l'ancienne version.
+
+Il existe un mode \texttt{cfengine.el} pour \Aemacs qui permet de rajouter
+des couleurs et gérer l'indentation des fichiers de configuration pour
+faciliter encore plus la tâche de l'administratrice(-eur).
+
+
+\subsection{Classes et environnement}
+\label{sec:class-et-envir}
+
+La configuration d'une machine va dépendre de nombreux aspects :
+\begin{itemize}
+\item son rôle dans l'entreprise ;
+\item sa localisation géographique ;
+\item le réseau qui la contient ;
+\item sa structure matérielle :
+  \begin{itemize}
+  \item architecture ;
+  \item système d'exploitation ;
+  \item disques disponibles ;
+  \item type de réseau local ;
+  \item écran disponible ;
+  \item ...
+  \end{itemize}
+\end{itemize}
+
+Il est clair que le nombre de possibilités est énorme et la manière de
+gérer cette complexité dans \Acfengine est de raisonner par classes de
+machines suivant différents critères plus ou moins orthogonaux.
+
+
+\subsubsection{Classes « matérielles »}
+\label{sec:classes--materielles}
+
+Comme \Acfengine tourne sur chaque machine qui doit être administrée de
+cette manière, la classification d'une machine est faite au moment de
+l'exécution de \texttt{cfagent} et une liste d'attributs qui vont déclarer
+l'appartenance à autant de classes. Par exemple pour la machine
+\texttt{rodomouls.enst-bretagne.fr} différentes classes seront
+automatiquement définies :
+\begin{itemize}
+\item l'identité de la machine définit des classes de noms
+  (\verb|rodomouls_enst_bretagne_fr|, \verb|enst_bretagne_fr|,
+  \texttt{rodomouls}), d'adresses (\verb|192_44_75_24|), réseau
+  (\verb|192_44_75|) ;
+\item le système d'exploitation et l'architecture matérielle définissent
+  des classes : \texttt{solaris}, \verb|32_bit|, \verb|sunos_5_8|,
+  \verb|sunos_sun4u|, \verb|sunos_sun4u_5_8|,
+  \verb|sunos_sun4u_5_8_Generic_108528_09|, \verb|solaris2_8| d'une part
+  et \verb|sparc|, \verb|sun4u| d'autre part ;
+\item le temps et la date définissent des classes temporelle
+  (\texttt{Thursday}, \texttt{Hr17}, \texttt{Min46}, \verb|Min45_50|,
+  \texttt{Day20}, \texttt{September}, \texttt{Yr2001}). L'idée est de
+  pouvoir éventuellement changer de comportement au cours du temps ;
+\item une classe \texttt{any} à laquelle toute machine appartient.
+\end{itemize}
+
+
+\subsubsection{Classes utilisateur}
+\label{sec:classes-utilisateur}
+
+Évidemment les classes précédentes sont de bas niveau et il est
+indispensable de définir de nouvelles classes à partir de ces dernières ou
+de définition de \emph{netgroup} \Aunix pour avoir une configuration
+propre et gérable.
+
+
+\paragraph{Algèbre booléenne sur les classes}
+\label{sec:algebre-bool-sur}
+
+Partout où une classe peut être utilisée on peut en fait utiliser une
+expression booléenne de classes avec les opérateurs classiques et les
+parenthèses.
+
+\paragraph{Déclaration explicite}
+\label{sec:decl-expl}
+
+La manière la plus simple est de définir l'appartenance à des classes en
+dur dans une action de \texttt{control} :
+\begin{exemple}
+addclasses = ( mon-labo France )
+\end{exemple}
+L'intérêt peut être aussi qu'on pourra sortir exceptionnellement d'une
+classe via une option de ligne de commande
+(\S~\ref{sec:controle-des-classes}).
+
+Une manière moins triviale de définir l'appartenance à une classe est
+d'utiliser l'action \texttt{classes} ou son synonyme \texttt{groups} qui
+permet de définir des classes à partir d'opérations d'union et
+d'intersection sur d'autres classes ou des \texttt{netgroup} \Aunix comme
+dans :
+\begin{exemple}
+classes:
+  apache_hosts = ( +@n_web www.enstb.org -gavotte.enst-bretagne.fr)
+  cri_sun = ( +@n_cri_sun )
+  sun_sans_serveur_WWW = ( +@n_cri_sun -@n_web )
+\end{exemple}
+L'intérêt de récupérer les \texttt{netgroup} est d'éviter la redondance
+dans la classification, dans la mesure où on est déjà obligé de faire la
+part des choses pour gérer les droits d'exportation \Anfs, etc.
+
+
+\paragraph{Contrôle des classes par ligne de commande}
+\label{sec:controle-des-classes}
+
+On peut définir explicitement l'appartenance à une classe en lançant
+\texttt{cfagent} avec une option \texttt{-D} ou au contraire en
+soustrayant l'appartenance à une classe avec l'option \texttt{-N}.
+
+L'intérêt est de pouvoir changer le comportement de \Acfengine
+ponctuellement, comme par exemple l'incantation que nous utilisons lors de
+la fin de l'installation automatique d'\Aunix
+\begin{exemple}
+cfagent -DInstallationTime
+\end{exemple}
+qui permet de spécialiser le comportement des règles pour tenir compte du
+fait qu'on est en pleine installation du système et que certaines choses
+sont superflues alors que d'autres sont à faire en plus.
+
+
+\paragraph{Appartenance à une classe par succès d'une commande}
+\label{sec:appart-une-classe}
+
+Un autre moyen d'appartenir ou pas à une classe est de tester le résultat
+d'une ou plusieurs commande telle que :
+\begin{exemple}
+classes:
+   have_cc = ( "/bin/test -x /usr/ucb/cc"
+               "/bin/test -x /local/gnu/cc" )
+\end{exemple}
+La classe \verb|have_cc| sera vraie si au moins un des \texttt{test} a
+renvoyé vrai.
+
+
+\paragraph{Classes de retour d'action}
+\label{sec:classes-de-retour}
+
+Afin d'avoir des comportements mettant en \oe{}uvre la causalité, une
+action peut définir un ensemble de classes si elle est exécutée,
+permettant ainsi l'exécution d'autres classes par la suite.
+
+Pour ce faire il suffit de rajouter la liste des classes à définir dans
+une action avec :
+{\TailleExemple
+\begin{alltt}
+  define=\emph{liste-de-classes}
+\end{alltt}}
+Ce concept est le moteur principal de \Acfengine.
+
+
+\paragraph{Classes définies par des modules}
+\label{sec:classes-definies-par}
+
+L'exécution d'un module peut définir des classes parmi celles indiquées
+dans l'\texttt{actionsequence} (\S~\ref{sec:sequence}) en envoyant sur la
+sortie standard autant de lignes de type :
+{\TailleExemple
+\begin{alltt}
++\emph{ma-classe}
+\end{alltt}}
+que nécessaire.
+
+
+\subsection{Variables}
+\label{sec:variables}
+
+Comme tout langage, \Acfengine comporte la notion de
+\href{http://www.cfengine.org/docs/cfengine-Tutorial.html#Variable\%20substitution}{variables},
+certaines prédéfinies par le système et évidemment celles définies par
+l'utilisateur.
+
+Les variables s'utilisent avec la syntaxe \texttt{\$(\emph{variable})}.
+
+
+\subsubsection{Variables prédéfinies}
+\label{sec:vari-pred}
+
+On peut ranger les variables prédéfinies en différentes catégories dont
+voici les plus importantes :
+\begin{itemize}
+\item des éléments de nommage de la machine :
+  \begin{description}
+  \item[\texttt{host} :] le nom de la machine ;
+  \item[\texttt{fqhost} :] son nom complètement qualifié au sens du \Adns ;
+  \item[\texttt{ipaddress} :] son adresse \Aip numérique ;
+  \item[\texttt{domain} :] son domaine ;
+  \item[\texttt{faculty} ou \texttt{site} :] contiennent indifféremment le
+    nom de l'entité de l'entreprise défini dans une action de
+    \texttt{control} ;
+  \end{description}
+\item des indications temporelles :
+  \begin{description}
+  \item[\texttt{date} :] la date courante ;
+  \item[\texttt{year} :] l'année courante ;
+  \item[\texttt{timezone} :] le fuseau horaire tel qu'il a été défini dans une
+    action de \texttt{control} ;
+  \end{description}
+\item l'adresse électronique de l'administrateur système \texttt{sysadm} ;
+\item la liste des classes :
+  \begin{description}
+  \item[\texttt{AllClasses} :] contient toutes les classes auquel appartient
+    l'instance de \Acfengine à un instant donnée sous la forme
+    \texttt{CFALLCLASSES=\emph{class1}:\emph{class2...}}. Cela permet de
+    l'exporter simplement à des \emph{shell-scripts} par exemple ;
+  \item[\texttt{class} :] contient la liste des classes prédéfinies ;
+  \end{description}
+\item des variables syntaxiques contenant des constantes textuelles de
+  type caractère pour se simplifier la vie dans la définition de chaînes
+  de caractères :
+  \begin{itemize}
+  \item de caractères de contrôle \texttt{cr}, \texttt{lf}, \texttt{n}
+    (nouvelle ligne), \texttt{tab} ;
+  \item des guillemets avec \texttt{quote} et \texttt{dblquote} ;
+  \item et d'autres comme \texttt{spc} et \texttt{dollar}.
+  \end{itemize}
+\end{itemize}
+
+
+\subsubsection{Variables utilisateur}
+\label{sec:vari-util}
+
+Elle sont déclarées dans une section de \texttt{control} avec la syntaxe
+suivante :
+{\TailleExemple
+\begin{alltt}
+\emph{variable} = ( \emph{contenu} )
+\end{alltt}}
+le \texttt{\emph{contenu}} pouvant être ou non entre guillemets
+quelconques.
+
+Un autre moyen de déclarer des variables est qu'un module
+(\S~\ref{sec:sequence}) renvoie des chaînes de type :
+{\TailleExemple
+\begin{alltt}
+=\emph{variable}=\emph{valeur}
+\end{alltt}}
+
+
+\subsection{Actions}
+\label{sec:actions}
+
+On peut découper les tâches de \Acfengine en sous-tâches qui vont être
+rangées par action thématique. Une section d'actions a la structure
+générique :
+{\TailleExemple
+\begin{alltt}
+\emph{thème}:
+  \emph{classe}::
+    \emph{action1}
+    \emph{action2}
+    ...
+\end{alltt}}
+pour déclarer des actions \texttt{\emph{action1}} et
+\texttt{\emph{action2}} définies dans le thème d'action
+\texttt{\emph{thème}} si la machine appartient à la classe
+\texttt{\emph{classe}}.
+
+Par exemple
+\begin{exemple}
+links:
+   solaris.apache_hosts::
+      # To have apache starting at boot time:
+      /etc/rc2.d/K15apachectl -> /etc/init.d/apachectl
+      /etc/rc3.d/S85apachectl -> /etc/init.d/apachectl
+\end{exemple}
+définit 2 actions de type « créer un lien s'il n'existe pas » si on est
+sous \Asolaris et qu'on est une machine qui doit faire tourner \Aapache
+qui ont pour effet de créer les liens sous \texttt{/etc/rc2.d} et sous
+\texttt{/etc/rc3.d} pour faire démarrer automatiquement le serveur \Awww
+lorsque le système exporte ses ressources à l'extérieur.
+
+Il y a beaucoup de types d'actions et chaque type a de nombreux paramètres
+et il ne saurait être question de les détailler tous ici
+\cite{WWW-cfengine-reference}. Seuls les principaux seront montrés avec
+quelques exemples afin d'en dévoiler l'esprit.
+
+En générale une action peut être configurée pour corriger un problème,
+définir une classe le cas échéant, ou tout simplement renvoyer un
+avertissement ou une erreur si telle ou telle condition n'est pas
+vérifiée.
+
+
+\subsubsection{Actions de contrôle}
+\label{sec:theme-controle}
+
+Il ne s'agit pas là à proprement parler d'actions concrètes mais du
+contrôle du comportement global de \Acfengine.
+
+L'action \texttt{import} est la plus simple et permet d'inclure d'autres
+fichiers de configuration pour mieux structurer la configuration :
+\begin{exemple}
+import:
+   $(cf_directory)/main.cf
+   $(cf_directory)/accounting.cf
+\end{exemple}
+
+L'action \texttt{control} est l'auberge espagnole de \Acfengine avec les
+déclarations de variables, des déclarations de classes, des motifs
+d'exclusion, etc.
+\begin{exemple}
+control:
+   cf_directory = ( /usr/local/share/cfengine/cf )
+   LIT::
+      site      = ( LIT )
+      domain    = ( enst-bretagne.fr )
+      sysadm    = ( Ronan.Keryell@enst-bretagne.fr ) 
+   any::
+      timezone  = ( MET )
+\end{exemple}
+
+
+\subsubsection{Thème contrôlant les fichiers}
+\label{sec:theme-daction-de}
+
+Comme sous \Aunix tout est fichier, il est normal que la majorité des
+actions de \Acfengine soit tournée vers les fichiers.
+
+Une première action est de vérifier et corriger la présence et les droits
+de fichiers et éventuellement de les créer avec \texttt{files} :
+\begin{exemple}
+files:
+   solaris::
+      # Create this file to log the login failures:
+      /var/adm/loginlog mode=600 owner=root group=sys action=touch
+   any::
+      home mode=o-w r=inf act=fixall
+      home/public_html mode=a+r fixall
+\end{exemple}
+
+Un cas particulier d'action sur les répertoires est géré par
+\texttt{directories} comme dans :
+\begin{exemple}
+directories:
+   # Create the local mount points per machines:
+   LIT.rodomouls::
+      /export/burette
+      /export/dinette
+      /export/pipette
+   LIT.gavotte::
+      /export/interne
+      /export/calice1
+      /export/calice2
+      /export/calice3
+\end{exemple}
+
+Une tâche fastidieuse lors de l'installation de systèmes est qu'il faut
+souvent aller faire des corrections dans de nombreux fichiers pour se
+trouver dans la configuration voulu. C'est automatisé avec les actions du
+thème \texttt{editfiles} comme suit :
+\begin{exemple}
+editfiles:
+   solaris::
+      {
+         # Log all the login failures:
+         /etc/default/login
+         AppendIfNoSuchLine "SYSLOG_FAILED_LOGINS=0"
+      }
+      {
+         # Add accounting jobs to the adm crontab:
+         /var/spool/cron/crontabs/adm
+         AutoCreate
+         AppendIfNoSuchLine "# Accounting stuff:"
+         AppendIfNoSuchLine "0 * * * * /usr/lib/acct/ckpacct"
+         AppendIfNoSuchLine 
+            "30 2 * * * /usr/lib/acct/runacct 2> /var/adm/acct/nite/fd2log"
+         AppendIfNoSuchLine "30 7 1 * * /usr/lib/acct/monacct"
+         DefineClasses "StartAccounting"
+         DefineClasses "RestartCron"
+      }
+      # To mount the file systems with logging enabled to eradicate fsck.
+      { /etc/vfstab
+         # To use logging ufs file systems:
+         ReplaceAll '^(/dev/.*[ $(tab)]ufs[ $(tab)].*)-$' With '\1logging'
+      }
+   solaris.LIT::
+      # Use DNS and files :
+      { /etc/nsswitch.conf
+         SetCommentStart '#'
+         CommentLinesStarting 'hosts:      nis [NOTFOUND=return] files'
+         CommentLinesStarting 'hosts:      files'
+         CommentLinesStarting 'hosts:      files dns'
+         AppendIfNoSuchLine '# Put the DNS in first place to have FQHN. RK.'
+         AppendIfNoSuchLine 'hosts:     dns files'
+      }
+\end{exemple}%$
+Les directives d'édition sont nombreuses et plutôt spécialisées dans les
+éditions incrémentales les plus couramment utilisées en administration
+système.
+
+Le contenu d'un fichier ou d'une arborescence plus ou moins complète
+peuvent aussi être récupérés depuis une autre arborescence ou un serveur
+\texttt{cfservd} distant :
+\begin{exemple}
+copy:
+   UserDiskServer::
+      /local/masterfiles/.cshrc  dest=home/.cshrc mode=0600
+   solaris.OpenSSH::
+      $(shared_conf)/OpenSSH/etc/openssh/ssh_config
+         dest=/etc/openssh/ssh_config
+         type=byte
+         define=InstallSsh
+\end{exemple}%$
+qui copiera régulièrement des \texttt{.cshrc} chez tous les utilisateurs
+sur les machines faisant office de serveurs de disques et installera un
+morceau de la base de données anti-\emph{spam} de \texttt{sendmail} sur
+toutes les machines depuis un répertoire de référence.
+
+Les liens symboliques ou durs peuvent être créés s'ils n'existent pas avec
+l'action \texttt{links} :
+\begin{exemple}
+links:
+   # Add the entry to launch pppd at boot time:
+   solaris.pppd_hosts::
+      /etc/rc3.d/S90pppd ->! /etc/init.d/pppd
+\end{exemple}
+ou encore, de manière plus intéressante, on peut faire des liens vers tous
+les fichiers de plusieurs arborescences, par exemple pour fournir à
+l'utilisateur un simple \texttt{/usr/local/bin} qui serait une union de
+nombreux répertoires.
+
+Même grands, les disques ne le sont jamais assez et il peut être
+nécessaire de faire du ménage avec la primitive \texttt{tidy} de manière
+plus ou moins profonde :
+\begin{exemple}
+tidy:
+   AllHomeServers::
+      home     pattern=core   R=inf age=0
+      home     pattern=*~     R=inf age=7
+      home     pattern=#*     R=inf age=30
+   any::
+      /tmp/    pat=*            R=inf   age=1
+      /        pat=core         R=2     age=0
+      /etc     pat=hosts.equiv  r=0     age=0
+\end{exemple}
+
+Certains fichiers peuvent être dangereux mais on ne veut pas les effacer
+pour autant. L'action \texttt{disable} permet de changer de nom au fichier
+voire de gérer la notion de versions :
+\begin{exemple}
+disable:
+   any::
+      etc/hosts.equiv
+   WWW.(Sunday|Wednesday)::
+      /usr/local/httpd/logs/access_log  rotate=10
+\end{exemple}
+
+Certains fichiers ou répertoires doivent échapper aux copies ou aux
+nettoyages. Cela est précisé avec l'action \texttt{ignore} :
+\begin{exemple}
+ignore:
+   any::
+      # Prevent tidying .X11 directories in /tmp
+      .X11
+      # Don't tidy emacs locks
+      !*
+      /local/lib/gnu/emacs/lock/
+\end{exemple}
+
+
+\subsubsection{Thèmes contrôlant les processus}
+\label{sec:theme-processus}
+
+Les actions de type \texttt{shellcommands} permettent d'exécuter des
+commandes depuis \Acfengine :
+\begin{exemple}
+shellcommands:
+   AllBinaryServers.sun4.Saturday::
+      "/usr/etc/catman -w -M /usr/local/man"
+      "/usr/etc/catman -w -M /usr/local/X11R5/man"
+   solaris.LaunchExportfs::
+      "/usr/sbin/shareall"
+\end{exemple}
+
+Mais un contrôle des processus en train de tourner est faisable grâce aux
+actions \texttt{processes} :
+\begin{exemple}
+processes:
+   # At least one httpd process should run,
+   # except during installation of course...
+   solaris.apache_hosts.!InstallationTime::
+      "/usr/local/apache/bin/httpd"
+         matches=>0
+         restart "/etc/init.d/apachectl start"
+   RestartSyslogd::
+      # Tell syslogd to read again its configuration:
+      "/usr/sbin/syslogd" signal=hup
+\end{exemple}
+
+
+\subsubsection{Thèmes de type macro}
+\label{sec:theme-macro}
+
+Les thèmes de type macro permettent de déclarer des objets qui sont
+utilisables par d'autres actions :
+\begin{itemize}
+\item les thèmes \texttt{classes} et \texttt{groups} qui sont synomymes et
+  permettent de déclarer de nouvelles classes et sont discutés en
+  \S~\ref{sec:decl-expl} ;
+\item \texttt{acl} permet la déclaration d'\Aacl (\English{Access Control
+    List}) de manière portable et de les réutiliser dans les actions comme
+    droits d'accès plus précis ;
+  \item \texttt{filters} va déclarer des contraintes, réutilisables
+    ailleurs pour modulariser le code, telles que des contraintes sur le
+    temps, des tailles, des expressions régulières sur les noms, des modes
+    et des droits d'accès, des aspects concernant des processus.
+\end{itemize}
+
+
+\subsubsection{Thèmes de configuration réseau}
+\label{sec:theme-reseau}
+
+La configuration réseau d'une machine est contrôlée par un certain nombre
+d'actions.
+
+
+L'action \texttt{broadcast} spécifie si les adresses de diffusion se
+terminent par des « 0 » ou des « 1 » binaires.
+
+L'action \texttt{interfaces} permet de spécifier par interface réseau le
+masque et le type de diffusion de manière plus spécifique que dans
+l'action de \texttt{control}.
+
+L'action \texttt{defaultroute} permet de vérifier que la route par défaut
+est correcte. \Acfengine n'est pas capable de la corriger, seul un
+avertissement signalera le problème.
+
+Enfin l'action \texttt{resolve} permet de configurer automatiquement
+l'usage du \Adns.
+
+
+\subsubsection{Thèmes de configuration des disques}
+\label{sec:theme-disques}
+
+Dans un système d'exploitation la persistance des données est assurée par
+des disques durs et il est primordial qu'ils soient bien gérés. De ce fait
+\Acfengine propose de nombreuses actions pour aider leur gestion.
+
+Les synonymes \texttt{disks} et \texttt{required} permettent de déclencher
+des actions s'il n'y a plus assez de place ou que des points de montage
+ont disparu.
+
+Ensuite il y a plusieurs classes qui n'ont de sens que si on utilise
+l'organisation des montages de disques de l'université de l'auteur de
+\Acfengine, ce qui est discutable. \texttt{mountables} déclare les
+ressources disques réseau utilisables, \texttt{binservers} et
+\texttt{homeservers} permettent de choisir parmi ces disques lesquels
+seront montés comme disque contenant respectivement des binaires et des
+répertoires d'utilisateurs. \texttt{mailserver} spécifie le disque réseau
+à utiliser pour lire le courrier. \texttt{unmount} permet d'effectuer des
+démontages.
+
+En général une solution à base d'automonteur remplacera avantageusement ce
+système.
+
+On peut cependant faire des montages explicites généraux en utilisant les
+actions \texttt{miscmounts} :
+\begin{exemple}
+miscmounts:
+   physics::
+      libraryserver:/$(site)/libraryserver/data2
+         /$(site)/libraryserver/data2 mode=ro
+\end{exemple}
+
+ 
+\subsection{Séquence d'actions}
+\label{sec:sequence}
+
+Pour que le découpage en action garde une certaine causalité, il est
+nécessaire d'ordonner les actions suivant une sertaine séquence. Par
+exemple une fois qu'on a modifié le fichier de configuration d'un démon il
+peut être nécessaire de notifier ce dernier avec un signal quelconque ou
+de le relancer. Il est clair que l'inverse empêchera la prise en compte de
+la nouvelle configuration.
+
+Cet ordonnancement est capital dans \Acfengine et est spécifié via la
+primitive de \texttt{control} \texttt{actionsequence} comme par exemple :
+\begin{exemple}
+control:
+  any::
+    actionsequence = (
+      netconfig
+      resolve
+      checktimezone
+      directories
+      files
+      copy
+      editfiles
+      links
+      tidy
+      module:mytests.class1.class2.class3 arg1 arg2 
+      shellcommands
+      processes
+      # At least for the Minitel access installation:
+      copy.minitel
+      editfiles.minitel
+    )
+\end{exemple}
+On peut voir que certaines actions doivent être répétées (comme ici
+\texttt{copy}) pour atteindre l'effet voulu à cause des dépendances. On
+peut définir des classes supplémentaires à la volée. En particulier
+\texttt{editfiles.minitel} signifie que l'on va réexécuter toutes les
+actions du thème \texttt{editfiles} mais en appartenant en plus à la
+classe \texttt{minitel}.
+
+On peut étendre les actions disponibles avec la notion de \texttt{module}.
+Dans l'exemple précédent on a rajouté l'exécution d'un programme externe
+qui aura 2 arguments et pourra définir les 3 classes indiquées. Le module
+hérite des variables d'environnement de \texttt{cfagent}.
+
+
+\section{Mise en \oe{}uvre}
+\label{sec:mise_en_place}
+
+
+\subsection{Hypothèses}
+\label{sec:hypotheses}
+
+Les hypothèses de travail pour une telle architecture sont :
+\begin{itemize}
+\item la simplicité afin d'avoir un système utilisable par un maximum de
+  personnes, éventuellement sans compétence système sans faire peur outre
+  mesure ;
+\item la portabilité d'un point de vue :
+  \begin{itemize}
+  \item du système d'exploitation utilisé (\Asolaris,
+    \Agnu/\Alinux/\Adebian, \Agnu/\Alinux/\Aredhat,...) et du modèle
+    d'ordinateur (\Asun, \Apc,...) ;
+  \item localisation et entité administrative, laboratoire, entreprise,
+    maison ;
+  \item utilisation de machines : que ce soit en réseau ou pas, une
+    machine utilisateur ou plutôt de type serveur, spécialisée comme des
+    n\oe{}uds d'une machine parallèle, embarquée comme pour un pare-feu ou
+    un n\oe{}ud de réseau actif, des serveurs \Awww stockés chez un
+    hébergeur et sur lesquels il est difficile d'intervenir
+    physiquement,...
+  \end{itemize}
+\item un référentiel centralisé pour avoir une vision cohérente du système
+  et faciliter l'installation du système au départ ou en cas de gros
+  dégât. La mise à jour à plusieurs de ce référentiel permet de partager
+  et mettre en commun les expériences des administrateurs ;
+\item la tolérance aux pannes en ayant un nombre arbitraire d'instances du
+  système d'installation disponible ;
+\item on suppose une confiance mutuelle entre les administrateurs des
+  différents sites (car il est clair qu'il est facile pour un site
+  mal-intentionné de rajouter des trous de sécurité, de détruire le
+  système,...). Cela peut se concevoir par exemple si les sites
+  travaillent sur des projets communs ou partages des membres (c'est par
+  exemple le cas de l'auteur de cet article actuellement mis à
+  disponibilité par l'\Aensmp à l'\Aenstbr) et que l'intérêt à factoriser
+  les efforts est supérieur aux risques encourus.
+\end{itemize}
+
+D'autres hypothèses ne sont pas directement liées à l'infrastructure
+d'installation présentée mais à l'utilisation du système qui est faite et
+donc permet de mieux comprendre les exemples qui sont donnés dans la suite
+:
+\begin{itemize}
+\item avoir un espace de nommage unique quelle que soit la machine dans un
+  domaine administratif : un chercheur ou un élève doit pouvoir accéder à
+  son compte et travailler depuis n'importe quelle machine quelle que soit
+  la localisation physique du compte ;
+\item exploiter toutes les ressources matérielles disponibles, en
+  particulier les disques durs, pour améliorer les capacités et augmenter
+  la tolérance aux pannes ;
+\item supprimer le maximum de points uniques de panne possibles par
+  exemple en ayant plusieurs routeurs de courrier électronique, quitte à
+  utiliser de la place disque et des machines en plus pour le faire ;
+\item distribuer le plus possible les services sur les différentes
+  machines pour une meilleure tolérance aux pannes même pour des services
+  n'existant qu'à un exemplaire : si une machine tombe en panne, seul le
+  compte d'un ou de quelques utilisateurs sont indisponibles jusqu'au
+  transfert ou restauration sur une autre machine par exemple ;
+\item préférer des approches logicielles pour assurer la tolérance aux
+  pannes (ne pas utiliser par exemple de \Araid matériel si on peut mettre
+  plusieurs machines pour faire un serveur \Anfs redondant) car cela
+  permet de tirer profit du seul matériel existant ;
+\item utiliser un système de sauvegarde en réseau pour sauvegarder chaque
+  nuit toutes les informations sensibles (en utilisant ici le logiciel
+  libre \Aamanda pour éviter entre autre de payer des licences par machine
+  sauvegardées).
+\end{itemize}
+Toutes ces dernières hypothèses ont poussé la mise en place de
+l'automatisation du système.
+
+Le système d'installation est utilisé pour le déploiement automatique d'un
+réseau actif pour la distribution de vidéo et de contenu multimédia à
+l'\Aenstbr dans le cadre du projet \Areactive. Chaque routeur est en fait
+un ordinateur sous \Agnu/\Alinux qui, outre le rôle de routeur \Aip
+classique, sert de cache, de stockage et de serveur de contenu réparti sur
+tous les disques des n\oe{}uds du réseau, chacun à chaque étage de chaque
+bâtiment de la résidence des élèves de l'\Aenstbr. L'installation
+automatique est faite par vague à partir d'une référence accessible au
+premier n\oe{}ud du réseau. Une fois ce premier n\oe{}ud installé
+automatiquement avec sur celui-ci un serveur d'installation, ses voisins
+vont être installés à partir de celui-ci. Ces derniers serviront à
+installer eux-mêmes leurs voisins et ainsi de suite jusqu'à avoir un
+réseau fonctionnel complet.
+
+
+\subsection{Architecture}
+\label{sec:architecture}
+
+
+\subsubsection{Structure du référentiel}
+\label{sec:struct-du-refer}
+
+Afin de suivre l'évolution du système, tous les fichiers sont gérés par le
+système de gestion de version \Arcs, très simple à utiliser par exemple
+sous \Aemacs. L'intérêt supplémentaire est qu'en utilisant l'entête \Arcs,
+on sait où se trouve le fichier d'origine à modifier, car il n'est pas
+toujours simple de traquer l'origine d'un fichier installé automatiquement
+dans \texttt{/etc} par exemple.
+
+Toute la configuration du système se trouve dans 2 répertoires de
+référence dans \texttt{/usr/local/share} :
+\begin{description}
+\item[\texttt{cfengine} :] contient la configuration de base de \Acfengine
+  \begin{description}
+  \item[\texttt{cfengine.conf} :] il s'agit du fichier de configuration de
+    \Acfengine qui se contente en fait d'inclure tous les fichiers du
+    répertoire suivant ;
+  \item[\texttt{cfengine/cf} :] pour plus de clarté les différents
+    fichiers de configurations sont dans ce sous-répertoire, rangés par
+    fonction ou thème plutôt que d'être dans quelques fichiers
+    monolithiques comme le sont les exemples fournis avec la distribution
+    de \Acfengine ;
+  \end{description}
+\item[\texttt{conf} :] contient tous les fichiers de référence nécessaire
+  à configurer correctement le système, tels que description des
+  imprimantes, fichiers réseaux, tables gérant le courrier, etc. La
+  philosophie choisie a été de ranger les choses par ordre d'application
+  importante, puis par site, par système d'exploitation et enfin par
+  répertoire de destination des fichiers à installer. Ce qui donne de
+  manière non exhaustive :
+  \begin{description}
+  \item[\texttt{CRI} :] répertoire contenant les fichiers généraux
+    spécifiques au \Acri ;
+  \item[\texttt{etc}] répertoire contenant ce qui va génériquement dans
+    \texttt{/etc} ;
+  \item[\texttt{linux} :] hiérarchie spécifique à l'installation de
+    \Alinux, autre que les configurations d'application importante
+    \begin{description}
+    \item[\texttt{etc} :] hiérarchie \texttt{/etc} spécifique à \Alinux ;
+    \item[\texttt{fai} :] rassemble les fichiers impliqués dans la
+      procédure d'installation automatique \Afai de \Adebian ;
+    \end{description}
+  \item[\texttt{LIT} :] répertoire contenant les fichiers généraux
+    spécifiques au \Alit ;
+  \item[\texttt{log} :] contient les informations sur les transferts
+    multi-site du référentiel de configuration ou d'autres hiérarchies.
+    Outre le fait d'améliorer la traçabilité de manière évidente, cela
+    permet aux administrateurs des différents sites de se tenir au courant
+    des choses modifiées par les administrateurs distants ou encore
+    d'informer les utilisateurs ou autres administrateurs d'un site local
+    des modifications apportées à leur système, les nouveaux logiciels
+    disponibles,...
+    
+    Ce répertoire est classé par relations inter-site. Par exemple :
+    \begin{description}
+    \item[\texttt{CRI-LIT}] contient la liste des fichiers mis à jour
+      depuis le \Acri vers le \Alit. ainsi le fichier
+      \verb|2001.07.20-usr-local-src| contiendra les fichiers synchronisés
+      dans la partition \texttt{/usr/local/src} le \texttt{20/7/2001} et
+      \verb|2001.07.26-usr-local| ceux synchronisés dans la partition
+      \texttt{/usr/local} le \texttt{26/7/2001} ;
+    \item[\texttt{LIT-CRI}] contient les mêmes fichiers en ce qui concerne
+      la mise à jour depuis le \Alit vers le \Acri ;
+    \end{description}
+  \item[\texttt{mail} :] ce qui est nécessaire au bon fonctionnement du
+    courrier électronique, à savoir une partie commune et quelques
+    définitions plus spécifiques qu'on va trouver dans les répertoires
+    \texttt{generic}, \texttt{CRI} et \texttt{LIT} ;
+  \item[\texttt{ppp} :] fichiers spécifique à un accès \textsc{ppp} ;
+  \item[\texttt{ssh} :] fichiers spécifiques à l'installation de
+    \texttt{ssh} ;
+  \item[\texttt{SunOS5} :] fichiers spécifiques à l'installation des
+    machines sous \Asolaris hormis les configurations d'application
+    importante ;
+    \begin{description}
+    \item[\texttt{etc} :] hiérarchie \texttt{/etc} spécifique à \Asolaris
+      ;
+    \item[\texttt{jumpstart} :] rassemble les fichiers impliqués dans la
+      procédure d'installation automatique de \Asolaris. Les fichiers
+      contenant les images du système lui-même sont ailleurs, hors de la
+      hiérarchie \texttt{/usr/local/share} pour des raisons de place.
+    \end{description}
+  \end{description} 
+\end{description}
+
+La synchronisation des référentiels est actuellement lancée à la main de
+manière régulière d'abord en mode seulement verbeux étant donné les
+risques inhérents en cas d'impondérable.  Cela permet de suivre de près
+l'évolution des fichiers installés sur les différents site et de détecter
+les erreurs grossières, des répertoires temporaires oubliés lors d'une
+compilation qu'il faudrait nettoyer... Une fois que les différences sont
+inspectées, la synchronisation réelle est lancée.
+
+
+\subsubsection{Extrait de la configuration \Acfengine}
+\label{sec:extrait-de-la}
+
+Contrairement à la méthode utilisée par l'auteur de \Acfengine le fichier
+de configuration a été de le hiérarchiser par thèmes fonctionnels plutôt
+que par architectures de machines.
+
+\begin{exemple}
+control:
+   # Where all the configuration files for cfengine are:
+   # Will be /usr/local/share/cfengine/cf soon
+   cf_directory = ( /usr/local/share/cfengine/cf )
+import:
+   # Split things up to keep things tidy:
+   # The main file...
+   $(cf_directory)/main.cf
+   # and all the other files sorted by function:
+   $(cf_directory)/accounting.cf
+   $(cf_directory)/accounts.cf
+   $(cf_directory)/apache.cf
+   $(cf_directory)/automount.cf
+   $(cf_directory)/cfengine.cf
+   $(cf_directory)/cron.cf
+   $(cf_directory)/exportfs.cf
+   $(cf_directory)/holidays.cf
+   $(cf_directory)/localmounts.cf
+   $(cf_directory)/logging.cf
+   $(cf_directory)/minitel_access.cf
+   $(cf_directory)/naming.cf
+   $(cf_directory)/network.cf
+   $(cf_directory)/ntp.cf
+   $(cf_directory)/patch.cf
+   $(cf_directory)/ppp_access.cf
+   $(cf_directory)/printing.cf
+   $(cf_directory)/sendmail.cf
+   $(cf_directory)/solaris.cf
+   $(cf_directory)/ssh.cf
+\end{exemple}%$
+
+Alors qu'au \Acri on utilise encore les \Anis, pour des raisons de
+tolérance aux pannes au \Alit, on n'utilise plus de système de nommage
+global si ce n'est le \Adns, ou plutôt on utilise \Acfengine pour propager
+les fichiers de nommage via \texttt{naming.cf} et faire notre propre
+système de nommage robuste :
+\begin{exemple}
+ editfiles:
+   solaris.CRI::
+      # Use DNS and NIS :
+      { /etc/nsswitch.conf
+         SetCommentStart '#'
+         CommentLinesStarting 'hosts:      nis [NOTFOUND=return] files'
+         CommentLinesStarting 'hosts:      files'
+         CommentLinesStarting 'hosts:      files dns'
+         AppendIfNoSuchLine '# Put the DNS in first place to have FQHN. RK.'
+         AppendIfNoSuchLine 'hosts:     dns nis files'
+      }
+
+   solaris.LIT::
+      # Use DNS and files :
+      { /etc/nsswitch.conf
+         SetCommentStart '#'
+         CommentLinesStarting 'hosts:      nis [NOTFOUND=return] files'
+         CommentLinesStarting 'hosts:      files'
+         CommentLinesStarting 'hosts:      files dns'
+         AppendIfNoSuchLine '# Put the DNS in first place to have FQHN. RK.'
+         AppendIfNoSuchLine 'hosts:     dns files'
+      }
+
+copy:
+   solaris::
+      # Set up the host file :
+      $(shared_conf)/$(site)/etc/hosts
+         dest=/etc/inet/hosts
+         type=byte
+
+      # Set up the netgroup file :
+      $(shared_conf)/$(site)/etc/netgroup
+         dest=/etc/netgroup
+         type=byte
+
+resolve:
+   # Declare the DNS servers to use :
+   CRI::
+      193.48.171.40
+      193.48.171.215
+      193.48.180.100
+
+   LIT::
+      192.44.75.10
+      192.108.115.2
+      192.44.77.1
+\end{exemple}
+
+Du coup, les fichiers déclarants les comptes doivent être propagés, ce qui
+est simplement fait avec \texttt{accounts.cf}
+\iflong
+:
+\begin{exemple}
+editfiles:
+   solaris::
+      # Authorized root to remote login as root.
+      # Useful only for desesperated case...
+      # That means that in normal circumstance, this should never be
+      # used except with ciphered methods (ssh...).
+      { /etc/default/login
+         CommentLinesStarting "CONSOLE=/dev/console"
+      }
+
+copy:
+   any::
+      $(shared_conf)/$(site)/etc/passwd
+         dest=/etc/passwd
+         type=byte
+      
+      $(shared_conf)/$(site)/etc/shadow
+         dest=/etc/shadow
+         type=byte
+      
+      $(shared_conf)/$(site)/etc/group
+         dest=/etc/group
+         type=byte
+
+      # Authorized log in without password from machines of the group:
+      $(shared_conf)/$(site)/etc/hosts.equiv
+         dest=/etc/hosts.equiv
+         type=byte
+
+      # Root can log in from administration machines:
+      $(shared_conf)/$(site)/rhosts
+         dest=/.rhosts
+         type=byte
+\end{exemple}
+\else
+dont on peut trouver l'extrait dans la version étendue de cet article
+\cite{keryell01-JRES-cfengine-etendu}.
+\fi
+
+Il en est de même pour toutes les ressources gérées par le système de
+nommage, comme les tables d'automontage, etc.
+
+Le cas de \texttt{sendmail} est intéressant car son installation
+personnalisée est réputée compliquée mais est automatisée par le
+\texttt{sendmail.cf} :
+\begin{exemple}
+# Sendmail installation and configuration.
+groups:
+   mail_servers = ( gavotte.enstb.org smtp-cri.ensmp.fr )
+
+copy:
+   any::
+      # Install directly the files from the server since
+      # sendmail is launched before automount.
+      # This adds also better fault tolerance.
+      /usr/local/sbin/sendmail
+         dest=/usr/lib/sendmail
+         type=byte
+         define=RelaunchSendmail
+\end{exemple}
+\iflong
+\begin{exemple}
+
+      /usr/local/sbin/editmap
+         dest=/usr/sbin/editmap
+         type=byte
+
+      /usr/local/sbin/makemap
+         dest=/usr/sbin/makemap
+         type=byte
+
+      /usr/local/sbin/mailstats
+         dest=/usr/sbin/mailstats
+         type=byte
+
+      /usr/local/sbin/praliases
+         dest=/usr/sbin/praliases 
+         type=byte
+
+      $(shared_conf)/mail/generic/helpfile
+         dest=/etc/mail/helpfile
+         owner=root group=root
+         type=byte
+
+      $(shared_conf)/mail/generic/cf/cf/submit.cf
+         dest=/etc/mail/submit.cf
+         owner=root group=root
+         type=byte
+
+      # The anti-spam database:
+      $(shared_conf)/mail/$(site)/access.dir
+         dest=/etc/mail/access.dir
+         owner=root group=root
+         type=byte
+
+      $(shared_conf)/mail/$(site)/access.pag
+         dest=/etc/mail/access.pag
+         owner=root group=root
+         type=byte
+
+mail_servers::
+      $(shared_conf)/mail/$(site)/local-host-names
+         dest=/etc/mail/local-host-names
+         type=byte
+         define=RelaunchSendmail
+
+      $(shared_conf)/mail/$(site)/server-$(os).cf
+         dest=/etc/mail/sendmail.cf
+         type=byte
+         define=RelaunchSendmail
+
+      # Specific database to a full-fledged mail router:
+      $(shared_conf)/mail/$(site)/domaintable.dir
+         dest=/etc/mail/domaintable.dir
+         owner=root group=root
+         type=byte
+
+      $(shared_conf)/mail/$(site)/domaintable.pag
+         dest=/etc/mail/domaintable.pag
+         owner=root group=root
+         type=byte
+
+      $(shared_conf)/mail/$(site)/genericstable.dir
+         dest=/etc/mail/genericstable.dir
+         owner=root group=root
+         type=byte
+
+      $(shared_conf)/mail/$(site)/genericstable.pag
+         dest=/etc/mail/genericstable.pag
+         owner=root group=root
+         type=byte
+
+      $(shared_conf)/mail/$(site)/mailertable.dir
+         dest=/etc/mail/mailertable.dir
+         owner=root group=root
+         type=byte
+
+      $(shared_conf)/mail/$(site)/mailertable.pag
+         dest=/etc/mail/mailertable.pag
+         owner=root group=root
+         type=byte
+
+      $(shared_conf)/mail/$(site)/virtusertable.dir
+         dest=/etc/mail/virtusertable.dir
+         owner=root group=root
+         type=byte
+
+      $(shared_conf)/mail/$(site)/virtusertable.pag
+         dest=/etc/mail/virtusertable.pag
+         owner=root group=root
+         type=byte
+
+!mail_servers::
+      $(shared_conf)/mail/$(site)/leaf-$(os).cf
+         dest=/etc/mail/sendmail.cf
+         type=byte
+         define=RelaunchSendmail
+
+files:
+   solaris::
+      # The statistics file for sendmail:
+      /etc/mail/statistics
+         mode=644 owner=root group=bin
+         action=touch
+
+links:
+   solaris::    
+      # Links for sendmail pseudo-commands: 
+      /usr/bin/hoststat ->! /usr/lib/sendmail
+      /usr/bin/mailq ->! /usr/lib/sendmail
+      /usr/bin/newaliases ->! /usr/lib/sendmail
+      /usr/bin/purgestat ->! /usr/lib/sendmail
+
+\end{exemple}
+\else
+\begin{exemple}
+[...]
+\end{exemple}
+\fi
+\begin{exemple}
+directories:
+   # Set sendmail mode and owner properly for security:
+   any::
+      / owner=root mode=go-w
+      /etc owner=root mode=go-w
+      /etc/mail owner=root mode=go-w
+      /usr owner=root mode=go-w
+      /var owner=root mode=go-w
+      /var/spool owner=root mode=go-w
+      /var/spool/mqueue owner=root mode=go-w
+
+shellcommands:
+   RelaunchSendmail.solaris::
+      "/etc/init.d/sendmail stop"
+      "/etc/init.d/sendmail start"
+
+processes:
+   solaris::
+      # Start it anyway. More than 0 instance should run:
+      "sendmail"
+         matches=>0
+         restart "/etc/init.d/sendmail start"
+\end{exemple}
+Cette configuration multi-site gère à la fois les machines serveurs et
+clientes.
+\iflong
+\else
+On consultera \cite{keryell01-JRES-cfengine-etendu} pour
+l'exemple complet.
+\fi
+
+Enfin, pour amorcer le système, on profite du premier appel de
+\texttt{cfagent} pour installer confortablement son exécution régulière
+avec \texttt{cfengine.cf} :
+\begin{exemple}
+  editfiles:
+   solaris::
+      {
+         # Add accounting jobs to the root crontab:
+         /var/spool/cron/crontabs/root
+         AutoCreate
+         AppendIfNoSuchLine "# cfengine incantation stuff."
+         AppendIfNoSuchLine "# Send the result as a mail to the cfengine local administrator:"
+         AppendIfNoSuchLine "19 * * * * /usr/local/sbin/cfagent \
+            -f /usr/local/share/cfengine/cfengine.conf 2>&1 \
+            | /usr/bin/mailx -s 'Cfengine report' \
+            `/usr/local/sbin/cfagent -a  \
+            -f /usr/local/share/cfengine/cfengine.conf`"
+         DefineClasses "RestartCron"
+      }
+\end{exemple}
+
+
+\subsubsection{Inclusion dans le Solaris JumpStart}
+\label{sec:inclusion-dans-le}
+
+\Acfengine est à mettre en place à la fin de l'installation automatique du
+système d'exploitation, JumpStart pour \Asolaris, \Afai pour \Adebian,...
+
+Dans le cas de JumpStart, l'appel est fait dans le script de terminaison
+de l'installation :
+\begin{exemple}
+# Run in verbose mode:
+set -v -x
+# At the end of the install, the future / is indeed in /a,
+# and / is only temporary during the installation. 
+UsrLocal=/usr/local
+TempUsrLocal=/a$UsrLocal
+# Since there is no running automount yet, no NIS, no DNS,...:
+/bin/mkdir -p $TempUsrLocal
+/usr/sbin/mount -F nfs 192.44.75.87:/export/calice1/local $TempUsrLocal
+# Disable the autoshutdown:
+/usr/bin/touch /a/noautoshutdown
+# Make cfengine believe it is really in / intead of /a:
+/usr/sbin/chroot /a $UsrLocal/sbin/cfagent -v -DInstallationTime -f $UsrLocal/share/cfengine/cfengine.conf
+# Clean up the mounting point since it will be recreated by autofs anyway:
+/usr/sbin/umount $TempUsrLocal
+rmdir $TempUsrLocal
+\end{exemple}%$
+
+C'est l'exécution finale de \texttt{cfagent} qui va personnaliser
+l'installation du système et le rendre pleinement fonctionnel en mettant
+en place une exécution régulière de \texttt{cfagent}, l'agent exécutant de
+\Acfengine.
+
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+\Acfengine est un outil d'assez haut niveau d'automatisation des tâches
+d'administration système qui permet de concevoir des organisations
+systèmes complexes multi-sites, multi-architectures avec plusieurs
+systèmes d'exploitation différents tout en gardant un contrôle gérable de
+la complexité ce qui explique qu'il soit utilisé par de nombreux sites
+dans le monde.
+
+Actuellement le logiciel est en pleine évolution avec la version 2 qui va
+vers la maturité, même si le portage sous \Ant n'a pas récemment évolué.
+On peut néanmoins regretter quelques lourdeurs de syntaxe et le fait
+finalement que \Acfengine ne soit pas inclut dans un vrai langage de
+programmation classique. Cela pourrait automatiser encore plus
+l'administration avec la possibilité de générer au vol des règles
+\Acfengine. C'est un axe de recherche actuellement regardé au \Alit avec
+le projet \textsc{pcf}engine qui consiste à avoir les concepts d'un
+\Acfengine d'ordre supérieur (pour pouvoir manipuler directement les
+concepts de \Acfengine) directement dans le langage \Aperl.
+
+Il reste encore à faire de notre côté la mutualisation des efforts pour la
+mise au point de l'infrastructure générique et automatiser la
+spécialisation de l'infrastructure pour une intégration dans un nouveau
+contexte et site. On aurait ainsi l'équivalent des \English{patterns} et
+\English{frameworks} du monde du génie logiciel qu'il suffirait
+d'instancier pour avoir une configuration système complète correspondant à
+ses besoins.
+
+Des sites ne voulant pas tout partager dans ce pot commun pourraient
+rajouter des règles d'exclusion dans \texttt{rsync} (du style
+\texttt{--exclude conf/**/CEA-DAM/**} si par exemple le
+\textsc{cea}/\textsc{dam} voulait utiliser un tel système...)
+
+Les exemples complets sont disponibles depuis la page \Awww de l'auteur de
+cet article et dans son cours d'administration système.  De même, on peut
+y récupérer la version d'origine étendue de cet article en \LaTeX{} avant
+sa traduction via \TeX4ht en \Ahtml et sa digestion par Word.
+
+
+\section*{Coordonnées de l'auteur}
+\label{sec:coord-de-laut}
+
+\noindent Laboratoire Informatique et Télécommunications\\
+École Nationale Supérieure des Télécommunications de Bretagne\\
+BP832, 29285 BREST CEDEX, FRANCE.\\
+Tél. : (+33|0) 2.29.00.14.15, fax. : (+33|0) 2.29.00.12.82.\\
+\texttt{Ronan.Keryell@enst-bretagne.fr},
+\LienPDF{http://www-info.enst-bretagne.fr/~keryell}
+
+
+\bibliography{biblio,systeme}
+\bibliographystyle{alphaperso}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
+% LocalWords:  mal-intentionné
