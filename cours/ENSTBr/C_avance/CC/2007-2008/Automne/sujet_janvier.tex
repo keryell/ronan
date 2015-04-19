@@ -1,0 +1,297 @@
+%\documentclass{sujet_ENSTBr}
+\documentclass{../../../../styles/sujet_ENSTBr}
+\usepackage{soul,../../../../styles/LienPDF,ifthen,pifont,amsthm}
+\usepackage{../../../../styles/lettrine-RK,../../../../styles/questions-reponses}
+\usepackage{listings}
+\usepackage{tikz}
+
+\lstset{extendedchars=true, language=C, basicstyle=\small, numbers=left,
+  numberstyle=\tiny, stepnumber=2, numberfirstline=true, showspaces=true,
+  showstringspaces=false, showtabs=true,
+  tabsize=8, tab=\rightarrowfill}
+%\lstloadlanguages{Basic}
+
+
+\begin{document}
+
+\epreuve{\textsc{inf}\oldstylenums{446}}
+
+\date{14 janvier 2008}
+
+\fancyfoot[LO,RE]{\footnotesize Ronan \textsc{Keryell}}
+\fancyfoot[RO,LE]{\thepage}
+\fancyfoot[CO,CE]{}
+\thispagestyle{empty}
+
+\centerline{%
+  \begin{tabular}[c]{l}
+    \includegraphics[height=2cm]{../../../../logos/ENST_Bretagne-2006_Fondblanc.ps}
+  \end{tabular}
+  \hfill
+  \begin{tabular}[c]{r}
+    Département Informatique
+  \end{tabular}
+  }
+
+\LigneHorizontale
+
+\centerline{%
+  \begin{tabular}{l}
+    \textbf{Nom} :\\
+    \textbf{Prénom} :
+  \end{tabular}
+  \hfill
+  \begin{tabular}{lr}
+    Année scolaire : & 2007--2008\\
+    Date : & \csname @date\endcsname
+  \end{tabular}
+  }
+
+\LigneHorizontale
+
+\begin{center}
+  \bf \Large Module \theepreuve\\
+  Session de juin\\
+  ---\\
+  {\Huge Programmation avancée en C}\\
+  ---\\
+  Contrôle de connaissance\footnote{Avec document, sans triche, sans copie
+    sur les voisins, sans micro-ordinateur portable ou non, sans
+    macro-ordinateur, sans téléphone portable ou non, sans oreillette de
+    téléphone ni de dictaphone, sans talkie-walkie, sans télépathie, sans
+    métempsycose, sans pompe. Sont tolérés : anti-sèche, tatouage ou
+    vêtement imprimé en rapport avec le sujet, mouchoir de poche
+    pré-imprimé, piercing ou scarification en rapport avec l'\theepreuve,
+    bronzage à code barre ou 2D...} de 45~minutes
+\end{center}
+
+\LigneHorizontale
+
+\lettrine M\textsc{erci} de répondre (au moins) dans les blancs.\\
+Lire tout le sujet en entier du début à la fin, en commençant à la
+première page et jusqu'à la dernière page, avant de commencer à répondre :
+cela peut vous donner de l'inspiration et vous permettre de mieux allouer
+votre temps en fonction de vos compétences.
+
+\begin{center}
+  Chaque question sera notée entre 0 et 10 et la note globale sera
+  calculée par une fonction des notes élémentaires. La fonction définitive
+  sera choisie après correction des copies.
+
+  \textbf{Attention :} tout ce que vous écrirez sur cette copie pourra
+  être retenu contre vous, voire avoir une influence sur la note
+  d'\theepreuve~!
+\end{center}
+
+
+\section{Généralités}
+
+
+\begin{question}{9}{3}
+Quelle valeur le programme suivant affiche-t-il lors de
+l'exécution ?
+
+%cf scope.c
+\begin{lstlisting}
+#include <stdio.h>
+#include <stdlib.h>
+
+int i = 42;
+
+int main(int argc, char **argv) {
+    printf("%d\n", i);
+    i++;
+    printf("%d\n", i);
+    {
+        int i = 8;
+        printf("%d\n", i);
+
+        for (int i = 0; i < 2; i++)
+            printf("%d\n", i);
+        {
+            extern int i;
+            printf("%d\n", i);
+        }
+        printf("%d\n", i);
+    }
+    printf("%d\n", i);
+
+    exit(EXIT_SUCCESS);
+}
+\end{lstlisting}
+\end{question}
+
+\begin{answer}
+Le programme affiche :\\
+42\\
+43\\
+8\\
+0\\
+1\\
+43\\
+8\\
+43
+\end{answer}
+
+
+\section{Arithmétique binaire}
+\label{sec:arithmtique-binaire}
+
+
+\begin{question}{20}{10}
+  Écrire une fonction qui calcule et renvoie la distance de
+  \textsc{Hamming} de 2 entiers passés en paramètre. Merci de vous adapter
+  à la taille des \texttt{int} de l'architecture sur laquelle vous allez
+  compiler votre programme. Si vous avez oublié, la distance de
+  \textsc{Hamming} entre 2 nombres est le nombre de bits qui diffèrent
+  dans leur notation binaire. Par exemple la distance entre 5 ($101_2$) et
+  14 ($1110_2$) est 3. Cela sert à plein de choses (codage, moteurs de
+  recherche, bio-informatique...). Pour vous inspirer, avez-vous remarqué
+  que le « ou exclusif » en C $5$\verb|^|$14$ vaut $1011_2$ ?
+\end{question}
+
+
+
+\section{Allocation}
+\label{sec:allocation}
+
+\begin{question}{10}{5}
+  Qu'est-ce que le programmeur a voulu faire ? Quel est le problème
+  concernant l'allocation\footnote{Il y a plein d'autres problèmes, outre
+    le fait que le programmeur aurait dû commenter son programme. \smiley}
+  ?
+%hexa.c
+\begin{lstlisting}
+#include <stdio.h>
+#include <stdlib.h>
+
+#define HEX(n, car)                             \
+  if ((n) > 9)                                  \
+    car = (n) - 10 + 'a';                       \
+  else                                          \
+    car = (n) + '0';
+
+char * code(unsigned char c) {
+    char t[3];
+    HEX(c >> 4, t[0])
+    HEX(c & 15, t[1])
+    t[2] = '\0';
+    return t;
+}
+
+int main(int argc, char **argv) {
+    unsigned char valeur = 93;
+    printf("%s\n", code(valeur));
+    exit(EXIT_SUCCESS);
+}
+\end{lstlisting}
+Le programme compile mais ne marche pas. Est-ce une coïncidence si le
+compilateur indique :
+\begin{verbatim}
+cc -std=c99    hexa.c   -o hexa
+hexa.c: In function 'code':
+hexa.c:15: attention : cette fonction retourne l'adresse
+ d'une variable locale
+\end{verbatim}
+\end{question}
+
+\begin{question}{5}{3}
+  Que faire pour faire marcher l'exemple précédent ?
+\end{question}
+
+
+\section{Préprocesseur}
+\label{sec:prprocesseur}
+
+\begin{question}{10}{5}
+  Écrire dans le but d'aider la mise au point des programmes une
+  macro-fonction \texttt{DEBUG\_INT($n$)} qui affiche la valeur d'une
+  expression entière passée en paramètre et affiche le nom de la fonction,
+  le nom de fichier et le numéro de ligne où se situe cette
+  macro-fonction. Afin de supprimer les messages de débogage pour la
+  version de production du programme, faire en sorte que si la
+  macro-constante \texttt{NDEBUG} est définie, \texttt{DEBUG\_INT($n$)}
+  soit vide\footnote{C'est à dire que, si on compile avec l'option
+    \texttt{-D NDEBUG} ou qu'on a un \texttt{\#define NDEBUG} en tête de
+    fichier, on veut supprimer les instructions de mise au point.}
+\end{question}
+
+
+\section{Petit problème sur les chaînes de caractères}
+
+Suite à des systèmes d'exploitation cassés, les machines du RésÉl n'ont
+plus d'éditeur de texte \texttt{vi} qui fonctionne et du coup les
+administrateurs systèmes sont tout perdus ! En particulier ils n'ont plus
+leur commande magique qu'ils connaissaient, la touche \texttt{s} qui
+permet de transformer une chaîne en une autre dans un texte. Ainsi,
+lorsqu'on tape dans \texttt{vi}
+\begin{verbatim}
+:%s/éditeur/Emacs/g
+\end{verbatim}
+cela a pour effet de transformer toutes les occurrences du mot «~éditeur~»
+par le mot «~Emacs~» dans tout le texte.
+
+Pour sauver tes camarades du RésÉl, tu vas devoir réaliser en C cette
+fonction sans laquelle ils ne savent plus rien faire !
+
+À terme il faut réaliser la fonction
+\begin{lstlisting}
+char * substitue(char * texte, char * commande)
+\end{lstlisting}
+qui prend une chaîne de caractère \texttt{texte} sur laquelle on va
+travailler tel que
+\begin{verbatim}
+Je veux un éditeur !
+Je vais l'appeler vi. vivivi mon petit éditeur adoré !
+\end{verbatim}
+et une chaîne de caractères \texttt{commande} telle que
+\lstinline|":%s/éditeur/poney/g"| et qui va donc renvoyer une nouvelle
+chaîne de caractères contenant :
+\begin{verbatim}
+Je veux un poney ! 
+Je vais l'appeler vi. vivivi mon petit poney adoré ! 
+\end{verbatim}
+
+
+\begin{question}{40}{10}
+  Écris déjà une procédure
+\begin{lstlisting}
+bool analyse_commande(char * commande,
+                      char ** avant,
+                      char ** après)       
+\end{lstlisting}
+  qui analyse la chaîne \texttt{commande} et renvoie dans le pointeur de
+  caractère \texttt{avant} passé par adresse la première chaîne de la
+  commande et dans \texttt{après} la seconde chaîne. Par exemple
+\begin{lstlisting}
+char * avant;
+char * après;
+analyse_commande("%s/nuit/jour/g", &avant, &après)       
+\end{lstlisting}
+  fait pointer \texttt{avant} sur la chaîne \lstinline|"nuit"| et
+  \texttt{après} sur la chaîne \lstinline|"jour"|.
+
+  On s'autorise de modifier la chaîne \texttt{commande} pour se simplifier
+  la vie si besoin est\footnote{Et je suis sûr que nous en avons tous
+    besoin... Si vous n'en avez pas besoin et que vous vous ennuyez, vous
+    avez le droit de gérer les variantes de la commande \texttt{s},
+    l'absence de \texttt{g} et/ou de \texttt{\%}, prendre n'importe quel
+    caractère à la place du \texttt{/}...}.
+\end{question}
+
+
+\begin{question}{50}{10}
+  Une fois qu'on a extrait avec la fonction précédente les chaînes à
+  transformer, écrire la fonction 
+\begin{lstlisting}
+char * substitue_chaine(char * texte, char * avant, char * apres)
+\end{lstlisting}
+  qui renvoie une chaîne contenant le \texttt{texte} où on a transformé
+  toutes les occurrences des chaînes \texttt{avant} en \texttt{après}.
+\end{question}
+\AfficheDuree
+
+
+\end{document}
+
+% LocalWords:  big-endian little-endian

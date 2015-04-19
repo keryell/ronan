@@ -1,0 +1,3424 @@
+\iffalse
+remplacer freeswan par son successeur
+
+
+> Christophe Garrido a écrit :
+>> Bonjour,
+>> J'ai trouvé ça dans mes logs sendmail :
+>> SYSERR(root): mail.jrtr.org. config error: mail loops back to me (MX 
+>> problem?)
+>> - un host mail.jrtr.org  renvoie  127.0.0.1
+>
+> il y en a plein, souvent associés avec un TXT "v=spf1 +all". Leur durée
+> de vie est en général très courte (quelques jours ou semaines).
+>
+> Très probablement des spammeurs qui se créent des domaines "jetables"
+> afin de pouvoir envoyer des mails avec un SPF "valide" afin de mieux
+> traverser les passerelles antispam.
+>
+> le MX 127.0.0.1 permet de ne pas être embêté par les DSNs et d'éviter
+> qu'ils ne tombent dans un spamtrap...
+
+Bonjour,
+
+127.0.0.1 n'est pas très malin, puisque c'est interdit par la RFC 3330
+chapitre 2.
+
+D'ailleurs, 
+http://www.rfc-ignorant.org/tools/lookup.php?domain=jrtr.org
+depuis le 25 septembre. Mais comme une minorité de MTA utilisent cette
+rhsbl, cela ne doit pas vraiment les ennuyer.
+
+Par ailleurs, la date de "last update" du whois n'a rien à voir avec la
+dernière modification du RRset A mail.jrtr.org
+
+> Idéalement il faudrait refuser dès la connexion SMTP entrante les mails
+> qui ont un MX invalide, au même titre que ceux qui ont un SPF invalide;
+> je crois que j-chkmail doit pouvoir faire ça...
+
+rhsbl bogusmx.rfc-ignorant.org (par exemple)
+
+J'ai malgré tout quelques faux positifs, souvent des domaines qui
+étaient mal configurés pendant quelques jours, puis qui sont redevenus
+corrects. Il suffit d'aller sur le site web de rfc-ignorant, le listage
+ou le délistage est fait par un robot. Il faut et il suffit.
+
+Ca me fait penser, pour ceux qui font du nolisting, il ne faut pas
+utiliser une adresse listée dans les réseaux 10.*, 127.*, etc :
+http://www.rfc-ignorant.org/rfcs/rfc3330.php
+
+
+> -- 
+> Ce message a ete verifie par MailScanner
+> pour des virus ou des polluriels et rien de
+> suspect n'a ete trouve.
+
+ouf ! Comment ça se passe avec un mail signé ? :)
+
+
+
+
+
+Simplifier texte TP en virant vieilleries. Faire Debian only
+
+Mettre les TPs dans les transparents ?
+
+Travailler sur des zones plus simples, à la mano avant h2n.
+
+DDoS
+
+Détailler un peu plus le protocol DNS lui-même
+
+SIP
+   
+http://www.bortzmeyer.org/dns-vulnerabilites.html
+
+
+http://www.nongnu.org/ruli/
+
+
+
+Faire corrigé de TP
+
+FAQ BIND
+Q: Why don't my zones reload when I do an "rndc reload" or SIGHUP?
+
+A: A zone can be updated either by editing zone files and reloading
+the server or by dynamic update, but not both.  If you have enabled
+dynamic update for a zone using the "allow-update" option, you are not
+supposed to edit the zone file by hand, and the server will not
+attempt to reload it.
+
+
+
+Q: How can I make a server a slave for both an internal and
+an external view at the same time?  When I tried, both views
+on the slave were transferred from the same view on the master.
+
+A: You will need to give the master and slave multiple IP addresses and
+use those to make sure you reach the correct view on the other machine.
+
+        e.g.
+        Master: 10.0.1.1 (internal), 10.0.1.2 (external, IP alias)
+            internal:
+                match-clients { !10.0.1.2; !10.0.1.4; 10.0.1/24; };
+                notify-source 10.0.1.1;
+                transfer-source 10.0.1.1;
+                query-source address 10.0.1.1;
+            external:
+                match-clients { any; };
+                recursion no;   // don't offer recursion to the world
+                notify-source 10.0.1.2;
+                transfer-source 10.0.1.2;
+                query-source address 10.0.1.2;
+
+        Slave: 10.0.1.3 (internal), 10.0.1.4 (external, IP alias)
+            internal:
+                match-clients { !10.0.1.2; !10.0.1.4; 10.0.1/24; };
+                notify-source 10.0.1.3;
+                transfer-source 10.0.1.3;
+                query-source address 10.0.1.3;
+            external:
+                match-clients { any; };
+                recursion no;   // don't offer recursion to the world
+                notify-source 10.0.1.4;
+                transfer-source 10.0.1.4;
+                query-source address 10.0.1.4;
+
+        You put the external address on the alias so that all the other
+        dns clients on these boxes see the internal view by default.
+
+
+spam-rbl.com
+
+liste de discussion dnsfr ?
+
+serveur cache récursif sur un site
+
+wildcard
+
+$GENERATE
+
+exemple d'attaque dnsspoof
+
+http://www.faqs.org/rfcs/rfc1912.html
+
+des liens intéressants sur le sujet : 
+- http://www.openrbl.org/stats.htm
+- http://www.sdsc.edu/~jeff/spam/cbc.html
+ 
+Infos de localisation depuis http://openrbl.org/
+
+http://www.nic-generique.prd.fr/sheets/facts/tld-wildcards-en
+
+http://www.nic-generique.prd.fr/HOWTO
+
+From: Stephane Bortzmeyer <bortzmeyer@nic.fr>
+Subject: [dns-fr] Méfiez-vous de l'option root-delegation-only de BIND
+To: dns-fr@cru.fr
+Date: Thu, 30 Oct 2003 10:46:36 +0100
+Organization: NIC France
+
+[Ce qui suit n'est évidemment pas un avis "officiel" de l'AFNIC.]
+
+Un certain nombre d'administrateurs ont installé une version récente
+de BIND pour pouvoir filtrer les jokers que Verisign avait mis dans
+".com" et ".net". D'autant plus que Verisign annonce qu'ils vont
+recommencer <URL:http://fr.news.yahoo.com/031016/7/3g8vh.html>.
+
+Ces versions récentes ont une option root-delegation-only qui renverse
+le fonctionnement de l'option delegation-only. delegation-only
+nécessite d'indiquer quels TLD doivent être nettoyés (on peut lister
+".com" et ".net", par exemple). root-delegation-only nécessite au
+contraire d'indiquer quels TLD il ne faut *pas* nettoyer. Cela semble
+plus simple pour l'administrateur système mais beaucoup de TLD
+utilisent des techniques qui ressemblent suffisamment aux trucs de
+Verisign pour être filtrés par BIND.
+
+Une liste d'exclusions est donc disponible dans la documentation de
+BIND mais elle est très incomplète. Une meilleure liste est en ligne
+<URL:http://www.isc.org/products/BIND/delegation-only.html>.
+
+Si vous utilisez cette option, soyez sûr que votre liste d'exclusions
+est assez longue (un symptôme typique : vos utilisateurs ne peuvent
+plus envoyer de courrier à ".name", qui est dans la seconde liste mais
+pas dans la première). Vous pouvez surveiller le journal où BIND
+indique ce qu'il fait :
+
+Oct 30 10:20:19 vespucci named[30689]: enforced delegation-only for 'cc' (www.dfdfssgdnic.cc/A/IN) from 206.253.214.13#53
+
+On peut aussi s'inspirer des conseils donnés en
+<URL:http://www.icann.org/correspondence/gnr-to-secsac-13oct03.pdf>.
+
+
+ Contrefaçons : Gandi contraint de placer un aiguillage électronique pour détourner les
+internautes  12/06/2002
+Alain Girardet, président de la 3ème chambre du tribunal de grande instance de Paris, vient d?innover en
+ordonnant des mesures originales pour empêcher la diffusion sur internet de fichiers musicaux contrefaisants. Dans
+son ordonnance du 31 mai dernier, il a demandé à l?unité d?enregistrement de noms de domaine française Gandi
+de placer un aiguillage électronique détournant les internautes voulant accéder à www.miditext.com vers une page
+explicative du site de l?Agence pour la Protection des Programmes (APP): celle-ci informe le public de la
+suspension provisoire de la diffusion et présente le texte intégral de la décision de justice. Le juge a également
+interdit à Gandi de permettre le transfert du nom de domaine en question vers une autre unité d?enregistrement.
+Depuis le 12 juin, les internautes ne peuvent donc plus consulter ou télécharger un des 15 000 fichiers de paroles,
+de partitions ou de fichiers Midi ou WMA depuis le site miditext.com.
+Des éditeurs de musique ainsi que la Chambre syndicale de l?édition musicale avaient demandé à l?APP de
+constater la présence sur miditext.com d??uvres faisant partie de leur catalogue. Convaincu du caractère
+contrefaisant du site, le juge se trouvait cependant dans l?impossibilité d?agir auprès de l?éditeur ou de
+l?hébergeur du site afin de faire cesser la diffusion de ces contrefaçons. Le constat de l?APP avait montré, en
+effet, que le site ne portait aucune mention de l?éditeur. Même la rubrique "Nous contacter" renvoyait sur une
+adresse électronique "miditext@hotmail.com" sans indication du responsable du site. Quant à l?hébergeur, il est
+situé aux Etats-Unis. Le juge s?est donc tourné vers l?unité d?enregistrement auprès de laquelle une personne
+physique domiciliée en Russie avait réservé le nom de domaine Miditext.com. Bien que gratuit pour l?internaute, ce
+site constitue néanmoins une entreprise commerciale qui génère des profits grâce aux bannières publicitaires
+placées sur sa page d?accueil. Un lien direct permettait l?accès au site de régie publicitaire "comclick.com" qui
+rémunère les sites abritant ses bannières en fonction du nombre de clics.
+Tous ces éléments ont convaincu le juge Girardet de prendre ces mesures exceptionnelles dans le cadre d?une
+procédure non contradictoire afin d?éviter tout transfert du nom de domaine vers une autre unité d?enregistrement
+ou celui du site vers un autre hébergeur. Malgré les obstacles techniques, le droit n?est pas sans ressource face à
+la contrefaçon en ligne. Le tribunal de Paris a ainsi démontré que les règles classiques du droit d?auteur peuvent
+parfaitement s?adapter au réseau. Dans cette affaire, Alain Girardet a appliqué une disposition utilisée à l?origine
+pour interdire les représentations théâtrales non autorisées. 
+
+FAQ
+
+MX et tolérance aux pannes.
+
+Mettre un exemple de zone plus perso
+
+Déclarer mes cours à BIND
+
+Parler de l'organisation et des numéros IP, de whois...
+
+Voir la discussion sur les piratages d'engregistrement DNS dans
+~/systeme/securite/DNS
+
+- Coopération de zones privées (Intranet) et publique (Extranet)
+Date: Thu, 15 Jun 2000 11:38:08 +0200
+From: Alain Thivillon <Alain.Thivillon@hsc.fr>
+To: Jean-Laurent Soltner <JL.Soltner@univ-mulhouse.fr>
+Cc: dns-fr@cru.fr
+Subject: Re: interrogation de DNS particulier
+Mime-Version: 1.0
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.1.10i
+X-Organization: Herve Schauer Consultants
+X-Operating-System: FreeBSD 5.0-CURRENT
+X-Loop: dns-fr@cru.fr
+List-Help: <mailto:sympa@cru.fr?subject=help>
+List-Unsubscribe: <mailto:sympa@cru.fr?subject=unsubscribe%20dns-fr>
+List-Subscribe: <mailto:sympa@cru.fr?subject=subscribe%20dns-fr>
+List-Post: <mailto:dns-fr@cru.fr>
+List-Owner: <mailto:dns-fr-request@cru.fr>
+
+Jean-Laurent Soltner <JL.Soltner@univ-mulhouse.fr> écrivait (wrote) :
+
+> Nous souhaitons relier les 2 domaines privés. Comment peut-on 
+> configurer le DNS privé de X de facon a ce qu'il interroge directement
+> le DNS privé de Y si une requete est faite a partir d'une machine de X 
+> vers une machine de Y ?
+
+   Sur le DNS privé de X:
+
+   zone "Y"  {
+     type forward;
+     forward only;
+     forwarders {
+         adresseipduprivedeY;
+     };
+   };
+
+  Faut bind 8.2.
+
+\fi%$
+
+\documentclass[a4]{seminar}
+\input{seminar.bug}
+\input{seminar.bg2}
+\def\slidename{Transparent}
+\def\listslidename{Table des transparents}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{array,multicol}
+% Marche plus !
+\usepackage{amsmath,wasysym,marvosym}
+\usepackage{verbatim,alltt}
+
+%% Mes choses bien à moi :
+%%\usepackage{perso2e,trans2e_rk,bbold2e}
+\usepackage{perso2e}
+
+%% bbold2e doit apparaître après trans2e_rk :
+\usepackage{bbold2e}
+%\input{abbrev_pomp}
+
+%\usepackage[backref,dvips,pdfauthor=Ronan.Keryell@enst-bretagne.fr]{hyperref}
+\usepackage[dvips,pdfauthor=Ronan.Keryell@enst-bretagne.fr]{hyperref}
+\usepackage{trans2e_rk,LienPDF,RFC}
+\usepackage[francais]{babel}
+\usepackage{babel_francais_rk}
+\usepackage{pst-node}
+
+\let\TailleExemple=\small
+\newenvironment{exemple}{\VerbatimEnvironment\bgroup\TailleExemple\begin{Verbatim}}{\end{Verbatim}\egroup}
+
+
+\newcommand{\ZoneCheck}{\LienPDF{http://zonecheck.fr}\xspace}
+\newcommand{\NAMED}{NAMED}
+
+\renewcommand{\textepieds}{\vbox{%
+    \tiny
+    \hbox to \longpieds{%
+      \qquad \scriptsize BIND \emph{\&} DNS\hfil {{\couleuritemr$\bullet$} \bf\theslidepart\ }}
+    \hbox to \longpieds{%
+      \qquad \href{http://info.enstb.org}{Département
+        Informatique}%
+      \hfil{\scriptsize{\couleuritemt$\blacktriangleright$} \bf\theslidevolume\ }}}%
+}
+
+
+  \slidevolume{\href{http://enstb.org/\string~keryell/cours/IAR2M/BIND}{IAR2M
+      --- Cours DNS/BIND}}
+
+
+\renewcommand{\LeLogoEnBasAGauche}{%
+         \includegraphics[height=\hauteurdessinspieds]{logo/www.enst-bretagne.fr/resources/logos/ENST_Bretagne-2006_Fondblanc.ps}}
+
+\ChangeLogoEnBasADroite{petau.eps}
+
+\evalsemtrans
+
+
+%% Récupère le numéro de version RCS :
+\def\getVersion Revision: #1 {\def\Version{#1}}
+\def\getDollars$#1${\getVersion#1}
+\getDollars$Revision: 1.30 $
+
+\slidepagestyle{empty}
+
+\newcommand{\drawline}{{\red \noindent\leavevmode\hrulefill}}
+
+\DealWithTwoUp
+
+\title{\drawline\\Serveur de Nom de Domaine dans Internet (DNS)\\
+  ---\\
+  Berkeley Internet Name Domain (BIND)\\
+  \LienPDF{http://enstb.org/\string~keryell/cours/IAR2M/BIND}\\
+  \drawline
+  }
+
+\author{
+  Ronan Keryell\\
+  \texttt{rk@enstb.org}\\
+  ---\\
+  Département Informatique\\
+  École Nationale Supérieure des Télécommunications de Bretagne}
+
+\date{20-21 novembre 2007\\
+  Version \Version}
+
+\begin{document}
+
+\let\section\slidepart
+\let\subsection\slidevolume
+\def\label#1{}
+
+\DealWithColors
+
+\TRANSTITLESIZE
+\slideframe{none}
+\begin{slide}
+  \couleurtexte
+  \maketitle
+  \addtocounter{slide}{-1}
+  \slidepagestyle{empty}
+\end{slide}
+\TRANSNORMALSIZE
+
+
+\slidepagestyle{CRI}
+
+\begin{trans}{Copyright (c)}
+  \begin{itemizer}
+  \item Copyright (c) 1986--2037 by \texttt{Ronan.Keryell@cri.ensmp.fr}.
+
+    This material may be distributed only subject to the terms and
+    conditions set forth in the Open Publication License, v1.0 or later
+    (the latest version is presently available at
+    \LienPDF{http://www.opencontent.org/openpub/}).
+  \item Ce support sert à mes cours dispensés à l'École des Mines de Paris
+    et en formation continue à l'ENST Bretagne.  Si vous améliorez ces
+    cours, merci de m'envoyer vos modifications~! \texttt{:-)}
+\begin{verbatim}
+$Id: trans.tex,v 1.30 2007/10/22 03:41:51 keryell Exp keryell $
+\end{verbatim}
+  \end{itemizer}
+\end{trans}
+
+
+
+\slidepart{Introduction}
+
+\begin{trans}{Introduction}
+  \begin{itemizec}
+  \item Adresses IP de 32 bits pour numéroter les machines sur Internet
+    $\equiv$ 10 chiffres décimaux
+  \item Utilisation intensive pour le courrier, WWW, news, \texttt{telnet},
+    \texttt{ftp},...
+  \item IPv6 sur 128 bits $\equiv$ \vavers{} 39 chiffres décimaux à retenir...
+  \item Nécessité de noms mnémotechniques et plus commerciaux
+  \item Conversion entre numéros IP et noms de
+    machines et autres
+  \item Nécessite un visibilité mondiale
+  \item Offrir une distribution spatiale
+  \item Gérer la cohérence temporelle
+  \item Besoin d'une bonne tolérance aux pannes
+  \end{itemizec}
+  \belleboite{Domain Name System (DNS)}
+\end{trans}
+
+
+\begin{trans}{Données cruciales...}
+  \begin{itemizer}
+  \item \Attention{} Importance stratégique
+  \item DNS en panne : perte de services importants \frownie
+  \item DNS corrompu : système délirant \frownie
+  \item DNS piraté : pages WWW pointant vers la concurrence \frownie
+  \item \Attention{} Bien choisir ses noms (marques, lisibilité...)
+  \item \Attention{} Bien payer à temps ses enregistrements (si payants)
+  \item \Attention{} Monde où la carte banquaire est reine... Attention
+    aux retards administratifs ! Sinon \frownie
+  \item \Attention{}\Attention{} $\exists$ boîtes internationales de
+    cyber-racket qui rachètent un domaine dès qu'il devient libre (si on a
+    oublié le loyer), font pointer vers des sites pornographiques et
+    veulent le revendre cher \frownie
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Histoire}
+  \begin{itemizer}
+  \item ARPAnet : quelques machines au début
+  \item Toutes les informations sur les n\oe{}uds du réseau étaient dans LE
+    fichier \texttt{HOST.TXT}, \RFC{952}
+\begin{exemple}
+NET : 198.49.236.0 : PENSACOLANET2 :
+GATEWAY : 26.10.0.14, 147.36.15.1 : PIRMASENS-GW1.ARMY.MIL : CISCO-AGS-2 : UNIX : TCP/IP, EGP :
+HOST : 134.229.2.2 : PENS-EMH1.NAVY.MIL : ATT-3B2 : UNIX : X.25,TCP/IP,TCP/SMTP,TCP/FTP,TCP/TELNET :
+HOST : 134.124.40.5 : WHALENS.UMSL.EDU :: AIX : TCP/TELNET,TCP/FTP,TCP/SMTP :
+HOST : 137.194.160.1 : ULYSSE.ENST.FR : SUN : UNIX ::
+\end{exemple}
+  \item Maintenu par le \texttt{Network Information Center} au SRI
+  \item Récupéré périodiquement par les n\oe{}uds du réseau
+  \item Problème avec $\nearrow$ nombre machines
+    \begin{itemizet}
+    \item Chaque modification/ajout de machine \vavers{} mail au SRI
+    \item Mise à jour \vavers{} transfert du fichier vers nombreuses
+      machines $\searrow$ performance du réseau
+    \item Conflits de noms globaux
+    \item Problèmes de cohérence entre les copies existantes
+    \end{itemizet}
+  \item Toujours dans UNIX !
+    \begin{itemizet}
+    \item \texttt{gettable} : récupère \texttt{HOST.TXT}
+    \item \texttt{htable} : \texttt{HOST.TXT} \vavers{}
+      \texttt{/etc/hosts} et autres
+    \end{itemizet}
+  \end{itemizer}
+  \belleboite{\vavers{}
+    Trouver autre chose...}
+\end{trans}
+
+
+\begin{trans}{Naissance du DNS}
+  \begin{itemizer}
+  \item Trouver un nouveau système
+  \item Extensible
+  \item Sans goulet d'étranglement
+  \item Distribué
+  \item Administration locale décentralisée
+  \item \vavers{} \RFC{882} et \RFC{883} en 1984
+  \item Réalisation de JEEVES
+  \item Réalisation de BIND sur UNIX 4.3BSD
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Croissance du DNS}
+\LienPDF{http://www.isc.org/ds/WWW-200301} : Internet Domain Survey, Jan 2003,
+Number of Hosts advertised in the DNS
+\begin{exemple}
+        |     Survey    Adjusted     Replied
+  Date  | Host Count  Host Count    To Ping*
+--------+-----------------------------------
+Jan 1993|  1,313,000             
+Jul 1993|  1,776,000                 464,000
+Jan 1994|  2,217,000                 576,000
+Jul 1994|  3,212,000                 707,000
+Jan 1995|  4,852,000   5,846,000     970,000
+Jul 1995|  6,642,000   8,200,000   1,149,000
+Jan 1996|  9,472,000  14,352,000   1,682,000
+Jul 1996| 12,881,000  16,729,000   2,569,000
+Jan 1997| 16,146,000  21,819,000   3,392,000
+Jul 1997| 19,540,000  26,053,000   4,314,410   [last OLD Survey]
+Jan 1998| 29,670,000               5,331,640   [first NEW Survey]
+Jul 1998| 36,739,000               6,529,000
+Jan 1999| 43,230,000               8,426,000
+Jul 1999| 56,218,000                  -
+Jan 2000| 72,398,092                  -
+Jul 2000| 93,047,785                  -
+Jan 2001|109,574,429                  -
+Jul 2001|125,888,197
+Jan 2002|147,344,723                  -
+Jul 2002|162,128,493                  -
+Jan 2003|171,638,297                  -
+\end{exemple}
+Évidemment, plein de machines non déclarées, partageant des adresses
+(fournisseur d'accès) ou NAT sur des adresses privées
+\end{trans}
+
+
+\begin{trans}{Autres systèmes de nommage}
+  \begin{itemizer}
+  \item Aucun ! \texttt{/etc/hosts}... Peut suffire pour les noms locaux
+    si réplication automatisée (cf \texttt{Cfengine} par exemple). Intérêt
+    : robustesse ! Mais compléter avec le DNS...
+  \item NIS Network Information Service (origine Sun)
+  \item NIS+ (origine Sun) hiérarchique et contrôles d'accès
+  \item Annuaires X.500 et LDAP (solution à la mode, version simplifiée du
+    précédent)
+  \item WINS Windows Internet Name Service (MicroSoft)
+  \item ...
+  \item DNS $\equiv$ protocole de nommage unificateur sur Internet
+  \item FNS (Sun) multiplexe le tout : fichiers, NIS, NIS+, DNS, LDAP,...
+  \end{itemizer}
+\end{trans}
+
+
+\input{../../lib/Reseaux/RFC/Introduction}
+
+
+\begin{trans}{Ressources}
+  \begin{itemize}
+  \item \LienPDF{http://www.nic.fr} : site de l'AFNIC (Association
+    Française pour le Nommage Internet en Coopération)
+    \begin{itemize}
+    \item \LienPDF{http://www.afnic.fr/formation/supports}
+    \item \LienPDF{http://www.afnic.fr/guides}
+    \item \LienPDF{http://www.nic.fr/guides/dns-intro}
+    \item \LienPDF{http://www.afnic.fr/outils}
+    \end{itemize}
+  \item \LienPDF{http://www.domainesinfo.fr} des informations plus
+    politiques
+  \item \LienPDF{http://www.generic-nic.net} : « Le projet "NIC générique"
+    essaie de rassembler tous les documents utiles à un nouveau NIC
+    (Network Information Center) ou bien à un NIC existant qui est engagé
+    dans une grande transformation »
+  \item \LienPDF{http://www.dns.net/dnsrd/} : DNS Resources Directory
+    \begin{itemize}
+    \item \LienPDF{http://www.dns.net/dnsrd/rfc/} (\&
+      \LienPDF{http://www.bind9.net/rfc})
+    \end{itemize}
+  \item \LienPDF{http://www.isc.org/sw/bind} : ISC BIND --- Internet
+    Software Consortium Berkeley Internet Name Domain. ISC développe aussi
+    un serveur DHCP et un serveur de news (INN)
+    \begin{itemize}
+    \item
+      \LienPDF{http://www.isc.org/sw/bind/arm93/Bv9ARM.pdf}
+    \item \LienPDF{http://www.isc.org/index.pl?/sw/bind/arm93} \&
+      \texttt{doc/index.html}
+    \item \LienPDF{http://www.bind9.net} : info, livres...
+    \end{itemize}
+  \item Livre \emph{DNS and BIND}, Cricket Liu \& Paul Albitz, O'Reilly,
+    4th Edition April 2001, 0-596-00158-4, Order Number: 1584, 622
+    pages, \$44.95 \LienPDF{http://www.oreilly.com/catalog/dns4/}
+  \item Livre \emph{DNS et BIND}, Paul Albitz et Cricket Liu , O'Reilly,
+    4ème édition janvier 2002, 2-84177-150-4, 486 pages, 49\EUR{}
+    \LienPDF{http://www.oreilly.fr/catalogue/dns-bind-4ed.html}
+  \item Livre \emph{DNS \& BIND Cookbook}, Cricket Liu, O'Reilly, October
+    2002, 0-596-00410-9, 240 pages, \$34.95
+    \LienPDF{http://www.oreilly.com/catalog/dnsbindckbk}
+  \item La liste de discussion \texttt{dns-fr@cru.fr} via
+    \LienPDF{http://listes.cru.fr/sympa/info/dns-fr}
+  \item \LienPDF{news:comp.protocols.dns.bind}
+  \end{itemize}
+\end{trans}
+
+
+\Outline{Plan}{Plan}{
+  \item \hyperlink{Principes}{Principes du DNS}
+  \item \hyperlink{Domaine}{Créer son domaine}
+  \item \hyperlink{Format}{Formats des zones}
+  \item \hyperlink{Client}{Comment utiliser le DNS sur un client ?}
+  \item \hyperlink{Outils}{Outils}
+  \item \hyperlink{BIND}{Description de BIND}
+  \item \hyperlink{Fichier Zone}{Générer un fichier de zone}
+  \item \hyperlink{Avancé}{BIND avancé : DNSSEC, IPv6}
+  \item \hyperlink{Pratique}{Mise en pratique}
+  \item \hyperlink{Table}{Table des matières}
+}
+
+
+\slidepart{DNS}
+
+
+\OutputOutline{Plan}
+
+
+\begin{trans}{Principe du DNS}
+  \begin{itemizer}
+  \item \hypertarget{Principes}{Hiérarchiser} les espaces de nommage
+  \item Contrôle local sur son propre morceau
+  \item Robustesse par réplication
+  \item Performances par cache des données
+  \item Communication par mécanisme client/serveur : resolver/serveur de nom
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Hiérarchie de nommage}
+  \begin{multicols}{2}
+    Système de fichiers UNIX
+    \psfiglarge{dessins/hierarchie_UNIX.idraw}
+    Hiérarchie du DNS
+    \psfiglarge{dessins/hierarchie_DNS.idraw}
+  \end{multicols}
+
+  \begin{itemizer}
+  \item Nommage unique du chemin même si un sous-chemin ou une feuille
+    sont identiques
+  \item Mécanisme similaire aux liens : les alias (liens symboliques) ou
+    les réplications (liens \emph{hard)}
+  \item Montage d'un disque ou d'un système de fichier sur un serveur
+    distant~: reléguer un sous-domaine à un autre serveur DNS
+  \item Montage possible d'un disque depuis plusieurs machines pour
+    résister aux pannes~: plusieurs serveurs DNS peuvent servir un
+    sous-domaine
+  \end{itemizer}
+
+  \deuxcolonnes{Système de fichiers UNIX\\
+    \psfiglarge{dessins/hierarchie_UNIX_dist.idraw}
+
+    Hiérarchie du DNS
+    \psfiglarge{dessins/hierarchie_DNS_dist.idraw}
+    }
+  \begin{itemizer}
+  \item Chaque feuille contient l'information de traduction telles que
+    \begin{itemizet}
+    \item Numéro IP
+    \item Type de matériel
+    \item Comment envoyer le mail
+    \item ...
+    \end{itemizet}
+  \item Un n\oe{}ud non feuille représente un domaine mais peut aussi être
+    un nom de domaine de machine
+  \item Hiérarchie logique : pas de relation physique (géographique...) a
+    priori
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Espace de nommage dans Internet}
+  \begin{itemizer}
+  \item « \texttt{.} » : \emph{top-level domain}, domaine racine
+  \item Domaine de premier niveau
+    \begin{itemizet}
+    \item \texttt{com} commerciaux
+    \item \texttt{edu} organismes d'éducation américains (universités)
+    \item \texttt{gov} organismes gouvernementaux USA
+    \item \texttt{mil} organismes militaires USA
+    \item \texttt{net} organismes de gestion de réseaux
+    \item \texttt{org} organismes non-commerciaux
+    \item \texttt{int} organismes internationaux
+    \item \texttt{arpa} transition ARPAnet$\longrightarrow$Internet +
+      traduction inverse
+    \item Tendance au flou et au débordement dans les domaines \texttt{com},
+      \texttt{net} et \texttt{org}...
+    \item Très américain : historiquement ARPAnet...
+    \item Nouveau : \texttt{.biz}, \texttt{.info},... : Cf.
+      \LienPDF{http://www.icann.org}
+      \begin{itemize}
+      \item RFC 3675 : « \emph{.sex Considered Dangerous} », Février 2004
+      \end{itemize}
+    \item Domaines par pays quasi-ISO~3166
+      \begin{itemizer}
+      \item \texttt{fr}
+      \item \texttt{de}
+      \item \texttt{uk} (et non \texttt{gb})
+      \end{itemizer}
+    \end{itemizet}
+  \item Domaine de second niveau
+    \begin{itemizet}
+    \item \texttt{com.au}, \texttt{edu.au} comme « \texttt{.} »
+    \item \texttt{ensmp.fr} : à plat dans \texttt{.fr}
+    \item Hiérarchisé dans \texttt{.fr} :
+      \begin{itemizec}
+      \item \texttt{gouv.fr} gouvernement français
+      \item \texttt{tm.fr} marques déposées en France
+      \item \texttt{asso.fr} associations loi 1901
+      \item ...
+      \end{itemizec}
+    \end{itemizet}
+  \item 3$^{\text{ème}}$ niveau, etc.
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Nom dans le DNS}
+  \RFC{952}, \RFC{1035} puis \RFC{1123}
+  \begin{itemizer}
+  \item Noms séparés par des « \texttt{.} ». Taille du tout $\leq 255$
+  \item Taille de chaque nom $\leq$ 63 caractères ASCII (lettres, chiffres
+    et « \texttt{-} » (pas en première ni dernière position)), premier
+    caractère plus forcément une lettre (depuis le \RFC{1123} \vavers doit
+    tester d'abord si syntaxe \#.\#.\#.\# correcte avant de regarder si
+    c'est un nom... \frownie)
+  \item Égalité entre minuscule et majuscule
+  \item Concaténation d'au plus 127 noms
+  \item Nom absolu (non ambigu...) si terminé par « \texttt{.} » : FQDN
+    \emph{Fully Qualified Domain Name} \\
+    Supposons l'existence de \texttt{cs.ensmp.fr} (Computer Science)\\
+    Qui est \texttt{cs} ?
+    \begin{itemizet}
+    \item \texttt{cs.} (Tchécoslovaquie) ?
+    \item \texttt{cs.ensmp.fr.} (si on est dans le domaine
+      \texttt{ensmp.fr}) ? Dernier par défaut
+    \end{itemizet}
+  \item Domaine $\equiv$ sous-arbre de l'espace de nommage
+    \begin{itemizet}
+    \item $\cdots$\texttt{.ensmp.fr}
+    \item $\cdots$\texttt{.org}
+    \item $\cdots$\texttt{.enstb.org}
+    \item $\cdots$\texttt{.rire.enstb.org}
+    \end{itemizet}
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Délégation}
+  \begin{itemizer}
+  \item Réalise la hiérarchisation administrative
+  \item Sous-domaines gérés par d'autres organismes responsables de leur
+    propres données et de leurs propres délégations
+  \item Le domaine parent n'a que des pointeurs (noms de serveurs) vers
+    les DNS gérant les sous-domaines
+  \item \texttt{fr.} a un pointeur \texttt{ensmp} vers les DNS de l'École
+    des Mines de Paris 
+  \item Limite implicite dans le nombre (127) mais pas dans l'enchaînement
+    des délégations
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Zones}
+   Point de délégation dans la hiérarchie DNS
+  \begin{itemizer}
+  \item \textbf{Zone} $\equiv$ \textbf{portion du domaine} gérée
+    effectivement par un serveur
+  \item Un serveur contient les données de son/ses domaine(s) : la/les
+    \emph{zone}(s) : il fait \textbf{autorité} en la matière
+    (\emph{authoritative})
+  \item Un domaine est divisé en plusieurs zone s'il y a
+    \textbf{délégation}
+  \item Un serveur \textbf{maître primaire} charge les données depuis un
+    fichier local (« base de données »)
+  \item Un serveur (\textbf{esclave} ou \textbf{maître secondaire})
+    transfère au démarrage la zone depuis un serveur de référence (serveur
+    maître) qui fait autorité
+  \item Un serveur peut faire autorité sur plusieurs zones
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Système de résolution}
+  \begin{itemizer}
+  \item Programme client ou bibliothèque de résolution (\emph{resolver})
+  \item Interroge \emph{un} (son) serveur de nom
+  \item Interprète les réponses (numéro IP, erreur,...)
+  \item Renvoie l'information au client (\texttt{ssh}, navigateur,
+    \texttt{ftp},...)
+  \item Un serveur de nom est \emph{aussi} capable de résoudre les noms en
+    se promenant dans la hiérarchie de serveur pour les domaines dont il
+    n'a pas autorité
+  \item Problème : où commencer la recherche ?\\
+    Dans une liste de serveurs racine (\emph{hint}) !
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Serveur racine}
+  \begin{itemizer}
+  \item Serveur gérant « \texttt{.} » \BCP{40}
+  \item Pointe vers les serveurs faisant autorité sur les domaines de
+    premier niveau
+  \item A généralement pour des raisons de performance aussi autorité sur
+    les domaines de premier niveau
+  \item Si plus de serveurs racines, tout s'arrête... \vavers{} 13
+    serveurs actuellement \texttt{A.ROOT-SERVERS.NET} $\cdots$
+    \texttt{M.ROOT-SERVERS.NET} répartis sur la planète
+    \begin{itemizet}
+    \item \vavers{} souvent cible d'attaque de dénis de services (Dos)
+      (21-22/10/2002 \LienPDF{http://d.root-servers.org/october21.txt},
+      \LienPDF{http://h.root-servers.org/hroot-month-1002.jpg})
+    \item
+      \url{http://dnsmon.ripe.net/dns-servmon/domain/plot?domain=uk&day=6&month=2&year=2007&hour=10&period=2h&plot%2F=SHOW}
+        Attaque serveurs UltraDNS du 6/02/2007
+    \item \LienPDF{http://www.net4war.com/news4war/infoguerre/root-servers-attaques.htm}
+    \end{itemizet}
+  \item \vavers{} Évolue vers une réplication mondiale de chaque serveur
+    racine via anycast BGP... Comment savoir qui nous répond vraiment ?
+
+    Exemple sur \LienPDF{http://f.root-servers.org}
+\begin{exemple}
+dig +norec @F.ROOT-SERVERS.NET HOSTNAME.BIND CHAOS TXT
+;; ANSWER SECTION:
+HOSTNAME.BIND.          0       CH      TXT     "cdg1a.f.root-servers.org" 
+\end{exemple}
+\texttt{traceroute} va donner aussi une idée
+  \item Regarder \LienPDF{http://www.root-servers.org}
+  \item Exemple
+    \LienPDF{http://www.isc.org/ops/f-root} était
+    \begin{itemizet}
+    \item 2 Compaq AlphaServer ES40 avec chacun 4 Alpha à 500~Mhz,
+      8~Go RAM, BIND 9
+    \item Hébergé chez PAIX.net, Inc. in Palo Alto, California, connexions
+      par plusieurs Fast Ethernet sur fibre
+    \item En fait répliqué
+    \end{itemizet}
+  \item Un serveur racine a enfin été mis en service en France
+    ($\equiv$Paris \smiley) officiellement le 22/12/2003
+    \begin{itemizet}
+      \item Coopération ISC, SFINX/Renater, Telehouse, NEC and Foundry
+      Networks
+    \item Miroir du serveur F
+    \item IPv4 et IPv6
+    \item Serveur secondaire de \texttt{.fr}
+    \end{itemizet}
+  \item Comment initialiser les racines ?
+    \begin{itemizet}
+    \item \texttt{dig . any} \smiley
+    \item \LienPDF{ftp://ftp.rs.internic.net/domain} \smiley
+    \item \LienPDF{ftp://198.41.0.6/domain}
+    \end{itemizet}
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Résolution d'un nom}
+  \begin{itemizer}
+  \item Demande de résoudre \emph{récursivement} \texttt{www.amanda.org} qui
+    demande au serveur de nom local
+  \end{itemizer}
+    \begin{center}
+      {\footnotesize
+      \begin{tabular}{|l||l|r|}
+        \hline
+        \emph{Question du} &  & \\
+        \emph{serveur de nom local} & \emph{Serveur de} & \emph{Réponse} \\\hline
+        \texttt{www.amanda.org} ? & « \texttt{.} » & Aller voir serveur de \texttt{org.}  \\\hline
+        \texttt{www.amanda.org} ? & « \texttt{org.} » & Aller voir serveur de \texttt{amanda.org.}  \\\hline
+        \texttt{www.amanda.org} ? & « \texttt{amanda.org.} » & nom canonique \texttt{spiderman.amanda.org.}  \\\hline
+        \texttt{spiderman.amanda.org} ? & « \texttt{amanda.org.} » & \texttt{208.213.83.7}  \\\hline
+      \end{tabular}
+      }
+    \end{center}
+  \begin{itemizer}
+  \item Si le système de résolution ne demandait pas la récursion, il
+    devrait \emph{itérer} lui-même...
+  \item Économie :
+    \begin{itemizet}
+    \item le serveur contacte le serveur \emph{connu} le plus proche dans
+      la hiérarchie au lieu d'un serveur racine
+    \item exemple
+      \begin{itemizec}
+      \item \texttt{deauville.ensmp.fr} demande qui est
+        \texttt{www.enst.fr}
+      \item Demande au serveur de \texttt{fr.} plutôt qu'à un serveur
+        racine (dénis de service \frownie)
+      \end{itemizec}
+    \end{itemizet}
+  \item Seul le serveur de nom local (ou celui attaché au resolver) fait
+    de la récursion
+  \item Les serveurs racines ne font \emph{plus} de récursion pour des
+    raisons de performances... En plus cela permet de ne pas cacher de
+    l'information et donc d'économiser de la mémoire !
+  \item Si plusieurs serveurs de noms possibles : choix par BIND en
+    fonction du temps d'aller-retour des paquets DNS
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Glu}
+  \begin{itemize}
+  \item Exemple : serveurs DNS gérant \texttt{org.} délèguent
+    \texttt{enstb.org} aux machines de nom \texttt{dns2.enstb.org.} et
+    \texttt{dns3.enstb.org.}
+  \item Un serveur enquêtant sur \texttt{enstb.org} doit contacter une des
+    2 machines via protocole DNS \vavers besoin de l'adresse IP qui a
+    besoin d'une requête DNS qui a besoin... \frownie
+  \item Problème d'\oe{}uf ou la poule ! \frownie
+  \item \vavers Idée : déclarer ces noms avec leur adresse IP dans
+    \texttt{org.} directement $\equiv$ la glu
+  \end{itemize}
+  Exemple : regarder qui répond dans
+\begin{verbatim}
+dig dns2.enstb.org +trace
+\end{verbatim}
+\end{trans}
+
+
+\begin{trans}{\emph{Lame servers}}
+  \begin{itemizer}
+  \item Délégation de zone à des serveurs
+  \item Que se passe-t-il si un serveur qui doit faire autorité ne sait
+    rien sur sa zone ?
+  \item Serveur à la rue... \frownie
+  \item Domaine qui ne fonctionnera pas si on a le malheur d'interroger ce
+    serveur
+  \item $\exists$ moteurs de recherche des \emph{lame servers} qui
+    envoient automatiquement des courriels aux (ir)responsables des zones
+    concernées
+  \item Penser à vérifier ses zones, par exemple avec
+    \begin{itemizet}
+    \item \ZoneCheck v2
+    \item \LienPDF{http://www.dnsreport.com}
+  \end{itemizet}
+\item En général dans les journaux de fonctionnement son propre DNS note
+    les problèmes rencontrés :
+\begin{exemple}
+Nov 30 17:41:49 minou named[9310]: lame server resolving 'ns.eu.org'
+ (in 'EU.org'?): 80.67.173.21#53
+Nov 30 17:41:51 minou named[9310]: lame server resolving 'dns0.mmu.ac.UK'
+ (in 'mmu.ac.UK'?): 149.170.39.92#53
+Nov 30 17:41:51 minou named[9310]: lame server resolving  'dns1.strath.ac.UK'
+ (in 'strath.ac.UK'?): 150.237.128.10#53
+\end{exemple}
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Protocole}
+  \begin{itemizer}
+  \item Utilisation du port IP/UDP/53
+  \item Utilisation du port IP/TCP/53 sur versions modernes
+  \item IPv4 et IPv6 (orthogonalement aux requêtes...)
+  \item Utilisé à la fois entre client-serveur et serveur-serveur
+  \item Si sécurité par pare-feux, s'arranger pour laisser passer les
+    requêtes DNS vers son serveur et réponses depuis son serveur
+    sur port 53 en UDP et TCP
+  \item Paquets estampillés d'un identifiant
+  \item Protocole de base peu sécurisé (cf \texttt{dnsspoof} de
+    \LienPDF{http://naughty.monkey.org/~dugsong/dsniff/}) si pas de
+    signature cryptographique (TSIG)
+    \begin{itemizet}
+    \item Deviner le port UDP de la requête
+    \item Deviner l'identifiant de la requête
+    \end{itemizet}
+  \item Se restreindre au moins à TCP : deviner en plus le numéro de
+    séquence du paquet TCP
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Traduction numéro IP vers nom de domaine}
+  \begin{itemizer}
+  \item Besoins
+    \begin{itemizet}
+    \item Autorisation d'une connexion \texttt{rlogin} à partir d'un nom
+      dans son \texttt{.rhosts}
+    \item Messages de debug plus humains
+    \item ...
+    \end{itemizet}
+  \item Comment avoir la traduction inverse des mécanismes précédents ? 
+  \item Traduction nom vers adresse implémentée et efficace dans le DNS
+  \item Comment adapter le système existant ?
+
+    \newslide
+    
+  \item Idée : découper une adresse IP de 32 bits 4 paquets de 8 bits
+    codés en décimal \texttt{$x$.$y$.$z$.$t$} et interpréter
+    \emph{textuellement}
+  \item Créer un domaine spécifique \texttt{in-addr.arpa.} pour la
+    traduction inverse
+  \item Faire une recherche \texttt{$x$.$y$.$z$.$t$.in-addr.arpa.} ?
+    \begin{itemizet}
+    \item \texttt{deauville.ensmp.fr} $\equiv$ \texttt{192.54.172.242}
+    \item \texttt{192.54.172.242.in-addr.arpa.} ?
+    \item Réseaux : hiérarchisé par le poids fort (sous-réseaux...) :
+      1 réseau des Mines : \texttt{192.54.172.*}
+    \item Tous les noms de machines seraient dans
+      \texttt{192.54.172.*.in-addr.arpa.} ?
+    \item Mauvais ! Il faudrait être responsable du haut de la
+      hiérarchie... \frownie
+    \end{itemizet}
+  \item Idée : inverser les nombres de l'adresse
+    \begin{itemizet}
+    \item Recherche de \texttt{$t$.$z$.$y$.$x$.in-addr.arpa.}
+    \item \texttt{242.172.54.192.in-addr.arpa.} ?
+    \item Mines responsable de \texttt{*.172.54.192.in-addr.arpa.}  bas de
+      la hiérarchie
+    \end{itemizet}
+  \item \LienPDF{http://www.ipindex.net/}
+    \LienPDF{http://blues.eurovia.es/mirrors/www.ipindex.net} donne une
+    idée de l'usage des adresses IP
+  \item Services de géoréférence : \LienPDF{http://www.maxmind.com}
+  \item Comment faire du CIDR alors que tout est fait pour des classes A,
+    B ou C ? Cf. plus loin...
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Requête inverse}
+  Comment faire une recherche arbitraire (autre que sur une adresse IP) ?
+  \begin{itemizer}
+  \item Mécanisme de requête inverse à un serveur
+  \item Répond s'il connaît ou pas
+  \item Pas de récursion (sémantique ?)
+  \item Au demandeur d'essayer tous les serveurs du monde...
+  \item Bug \vavers{} trou de sécurité dans vieilles versions de BIND
+  \item Plus implémenté dans les dernières versions de BIND
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Mécanisme de cache}
+  \begin{itemizer}
+  \item Problème : goulet d'étranglement aux serveurs racines à chaque
+    requête \frownie
+  \item Idée : mécanisme de cache \smiley
+  \item Retenir dans une mémoire les traductions les plus souvent
+    demandées
+  \item Retenir aussi le fait que certaines traductions n'existent pas
+    (erreurs répétitives...) : cachage négatif
+  \item Retenir toutes les informations aperçues lors des recherches
+    récursives : cela peut servir plus tard (liste de serveurs faisant
+    autorité, leurs numéros IP...)
+    \begin{itemize}
+    \item \vavers{} \Attention{} Attaques par pollution si on accepte
+      \emph{toute} information sans vérification si serveur fait autorité
+      \frownie
+    \item Comment vérifier sans DNSSEC avec adresse source UDP triviale à
+      usurper ? \frownie
+    \end{itemize}
+  \item Permet de survivre un peu mieux à une coupure réseau ou à des
+    pannes de DNS distants...
+  \item Comment propager les mises à jour des données aux caches des
+    serveurs ? Trop de caches de serveurs et pas de mécanisme hiérarchique
+    de diffusion
+  \item Rajout d'une durée de vie (TTL \emph{Time To Live}) associé à une
+    zone choisie par l'administrateur
+  \item Si la durée de vie d'une donnée est dépassée, la donnée est
+    effacée du cache
+  \item Compromis à trouver sur le TTL
+    \begin{itemizet}
+    \item Bonnes performances \vavers{} TTL $\nearrow$
+    \item Propagation des mises à jour rapides \vavers{} TTL $\searrow$
+    \end{itemizet}
+  \item TTL pour les réponses négatives fixé à 10 minutes par défaut
+  \item Même avec les caches les serveurs racines reçoivent des milliers
+    de requêtes par seconde... mais on y survit !
+  \end{itemizer}
+\end{trans}
+
+
+\slidepart{Créer son domaine}
+
+
+\OutputOutline{Plan}
+
+
+\begin{trans}{Déclarer un nouveau domaine}
+  \begin{itemizer}
+  \item \hypertarget{Domaine}{Choisir} un nom
+  \item Vérifier qu'il n'existe pas déjà...
+  \item Contacter le responsable du domaine père
+  \item Problème intrinsèque : interaction entre le nom de domaine et le
+    nom du domaine père (nouveau nom de domaine concaténé au nom du père)
+  \item Mettre en place un DNS et le déclarer auprès du responsable du
+    domaine père ou faire héberger tout le système de DNS
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Choisir un nom}
+  \begin{itemizer}
+  \item Nom dans un domaine de la racine (\texttt{com.}, \texttt{org.},
+    \texttt{net.},...)
+  \item Nom dans une hiérarchie d'un pays : étudier la hiérarchie du pays
+  \item Problème (esthétique et commercial) du choix d'un nom : il va
+    durer longtemps mais souvent on le choisit sans
+    expérience... Consulter des personnes compétentes.\\
+    Exemples :
+    \begin{itemizet}
+    \item \texttt{airliquide.fr} mais \texttt{air-liquide.fr} mieux
+    \item \texttt{edfgdf.fr} mais \texttt{edf-gdf.fr} mieux
+    \item Question de goût... Possible d'avoir plusieurs noms...
+      \begin{itemizec}
+      \item Synonymes
+      \item Permet de récupérer des fautes de frappe ! Avant qu'un site
+        pirate le fasse... \frownie
+      \end{itemizec}
+    \end{itemizet}
+  \item Vérifier que le nom n'existe pas (cyber-racket... \frownie) !
+  \item Un bon début \LienPDF{http://www.internic.net}
+  \item Mais éclatement du services \vavers{} autres domaines que ceux de
+    l'InterNIC~: \LienPDF{http://www.internic.net/help/other-reg.html}, la
+    France \LienPDF{http://www.nic.fr/}
+    \begin{itemizet}
+    \item \emph{registry} : organisme gérant une zone de niveau supérieur
+      (TLD)
+    \item \emph{registrar} : organisme allouant les noms aux clients et
+      les enregistrant auprès du \emph{registry}\\
+      \LienPDF{http://www.internic.net/regist.html} : Libre concurrence
+    \end{itemizet}
+  \item Question de coût
+    \begin{itemize}
+    \item Tous les noms de 1 à 4 lettres dans les domaines classiques ont
+      \emph{déjà} été enregistrés !
+    \item Un nom $xy$\texttt{.org} $\approx 50\,000\,\$$
+    \item Un nom $xy$\texttt{.com} $\approx 200\,000\,\$$
+    \item Même être sur la liste d'attente d'un nom se monnaie
+\iffalse
+From: "I AZOULAY" <prog@club-internet.fr>
+Subject: Re: [dns-fr] NDD en 2 caracteres
+To: <dns-fr@cru.fr>
+Date: Mon, 2 Aug 2004 23:14:48 +0200
+Reply-To: "I AZOULAY" <prog@club-internet.fr>
+Organization: I AZOULAY
+
+Non ce n'est pas ca
+
+le registre org les recupere au fur et a mesure des non renouvellements et ne les remet pas dans le
+domaine public
+
+Un 2 positions se negocie aux alentours de 50000 $ en org et 4 fois plus en com. Ce sont d'ailleurs
+les seuls qui se vendent encore a ces prix
+
+des 3 et des 4 positions il y en a encore quelques uns de libre en org et net
+
+----- Original Message ----- 
+From: "Elisabeth Porteneuve" <Elisabeth.Porteneuve@cetp.ipsl.fr>
+To: <dns-fr@cru.fr>; <isspecedicounasse@yahoo.fr>
+Sent: Monday, August 02, 2004 10:33 PM
+Subject: Re: [dns-fr] NDD en 2 caracteres
+
+
+>
+>
+> > Message-ID: <20040802180924.27066.qmail@web21121.mail.yahoo.com>
+> > Date: Mon, 2 Aug 2004 20:09:24 +0200 (CEST)
+> > From: =?iso-8859-1?q?ispece=20dicounasse?= <isspecedicounasse@yahoo.fr>
+> > To: dns-fr@cru.fr
+> >
+> > Bonjour,
+> > je souhaitez déposer un nom de domaine composé de 2
+> > caractères (en .org)
+> > Connaissez vous un registrar chez qui celà est
+> > possible ?
+> > Je n'en ai pas trouvé...
+> > Merci de votre aide
+> > Olivier
+> >
+>
+> Je crois me rapeller l'une des premieres reunions ICANN en 1999
+> ou 2000 lors de laquelle il a ete rapporte que tous les noms
+> de domaines jusqu'au 4 caracteres (en fait 4 lettres-digits-hyphen)
+> ont ete enregistres sous .com/.net/.org
+> -- peu importe donc le registrar que vous tenteriez, la reponse sera
+> toujours la meme: non disponible.
+> Il y a des vendeurs de listes d'attente (WLS) chez lesquels vous
+> pouvez vous enregistrer, moyennant une certaine somme, pour attendre
+> que "votre" nom se libere.
+>
+> Estivalement,
+> Elisabeth Porteneuve
+>
+$
+\fi
+    \end{itemize}
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Bases whois}
+  \begin{itemizer}
+  \item Le DNS contient des informations sur des machines
+  \item Où stocker les données administratives permettant de facturer,
+    d'initialiser les domaines de haut niveau,... ?
+  \item \vavers{} Base administrative « \emph{who is who ?} »
+  \item Base de données accessible à distance avec le protocol
+    \texttt{whois}
+  \item Avec morcellement gestion internet \vavers{} nombreux sites
+    \texttt{whois}, difficile de trouver l'information \frownie{} :
+\begin{exemple}
+whois -h whois.internic.net ...
+whois -h whois.networksolutions.com ...
+whois -h whois.crsnic.net ...
+whois -h whois.ripe.net ...
+whois -h whois.arin.net ...
+whois -h whois.gandi.net keryell
+person:     Ronan Keryell
+nic-hdl:    RK72-GANDI
+address:    ENST Bretagne - LIT
+address:    BP832
+address:    29285
+address:    PLOUZANE
+address:    France
+phone:      +33 2 98 00 14 15
+fax:        +33 2 98 00 12 82
+e-mail:     Ronan.Keryell@enst-bretagne.fr
+\end{exemple}
+  \item Méta-\texttt{whois}
+    \LienPDF{http://www.allwhois.com/},
+    \LienPDF{http://www.geektools.com/cgi-bin/proxy.cgi}
+  \item Personnellement j'ai une commande \texttt{whoisnet} :
+\begin{exemple}
+#! /bin/sh
+whois -h whois.internic.net $1
+whois -h whois.networksolutions.com $1
+whois -h whois.crsnic.net $1
+whois -h whois.ripe.net $1
+whois -h whois.arin.net $1
+whois -h whois.gandi.net $1
+\end{exemple}
+\item \texttt{whoisnet enstb.org}
+\begin{exemple}
+   Domain Name: ENSTB.ORG
+   Registrar: GANDI
+   Whois Server: whois.gandi.net
+   Referral URL: http://www.gandi.net
+   Name Server: DNS-CRI.ENSMP.FR
+   Name Server: DNS2.ENSTB.ORG
+   Name Server: DNS3.ENSTB.ORG
+   Updated Date: 04-nov-2002
+\end{exemple}
+Mais maintenant les \texttt{whois} modernes font ça tout seul
+\item $\exists$ aussi des systèmes libres pour gérer son propre registrar
+  ! \LienPDF{http://isc.org/index.pl?/products/OpenReg/}
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Enregistrer un nouveau domaine}
+  \begin{itemizer}
+  \item Consulter son fournisseur Internet
+  \item Si propre serveur de nom vérifier que le réseau est bien
+    enregistré aussi avec tous les \texttt{whois}
+  \item S'enregistrer auprès du domaine père
+  \item Vérifier que cela fonctionne avec
+    \ZoneCheck\\
+    Prendre néanmoins les avis de ce programme avec des pincettes...
+  \item $\exists$ noms de domaines gratuits. Exemple :
+    \LienPDF{http://www.eu.org}. Aussi à la base d'enregistreurs
+    professionnels (\LienPDF{www.gandi.net})
+  \end{itemizer}
+\end{trans}
+
+
+\slidepart{Ressources et zones du DNS}
+
+
+\OutputOutline{Plan}
+
+
+\begin{trans}{Types de ressources du DNS}
+  \RFC{1035}
+  \begin{itemizer}
+  \item Définit une représentation textuelle aux paquets binaires du
+    protocole (requête dans outils, réponses, fichiers de données,...)
+  \item \texttt{CLASS} \hypertarget{Format}{définit} la classe
+    d'utilisation de l'enregistrement (DNS plus large qu'Internet)
+    \begin{itemizet}
+    \item \texttt{IN} Internet
+    \item \texttt{CS} CSNET (obsolète)
+    \item \texttt{CH} CHAOS (MIT)
+    \item \texttt{HS} Hesiod
+    \end{itemizet}
+  \item \texttt{RR} (\texttt{Resource Record}) contient un enregistrement
+    d'information de différents types avec une durée de vie optionnelle en
+    seconde (32 bits \vavers 68 ans \smiley) :
+    \begin{itemizet}
+    \item \texttt{A} adresse de machine\\
+      \texttt{www IN A 192.54.172.231}
+      Une machine avec plusieurs adresse a plusieurs \texttt{A RR}
+    \item \texttt{NS} nom d'un serveur de nom faisant autorité pour délégation\\
+      \texttt{trad IN NS chailly.ensmp.fr.}
+    \item \texttt{CNAME} définit un alias qui a pour \emph{nom
+        canonique}...\\
+      \texttt{www.kazimodal CNAME kazimodal}
+      \begin{itemize}
+      \item Un alias ne doit pas être utilisé en partie droite d'un RR
+        afin de limiter les récursions
+      \item Un alias ne peut pas avoir d'autre entrée pour éviter toute
+        schizophrénie du DNS\\
+        \emph{Exception pour les signatures du DNSSEC. Cf. partie DNSSEC.}
+      \end{itemize}
+    \item \texttt{SOA} \emph{start of a zone of authority}
+      \begin{itemizer}
+      \item \emph{\texttt{MNAME}} nom du serveur de référence (maître)
+      \item \emph{\texttt{RNAME}} nom de domaine encodant l'adresse mail
+        en \texttt{destinataire.un.domaine} interprété en
+        \texttt{destinataire@un.domaine} pour Internet
+      \item \emph{\texttt{SERIAL}} numéro de série sur 32 bits monotone
+        croissant modulo 32 bits utilisé pour avertir des mises à jour. Cf
+        transparent à venir
+      \item \emph{\texttt{REFRESH}} temps en seconde (32 bits) avant un
+        rafraîchissement de zone
+      \item \emph{\texttt{RETRY}} temps en seconde (32 bits) avant un
+        autre essai de rafraîchissement de zone qui a échoué
+      \item \emph{\texttt{EXPIRE}} temps en seconde (32 bits) avant que la zone
+        ne soit plus considérée comme faisant autorité
+      \item \emph{\texttt{MINIMUM}} durée de vie (TTL) (32 bits) en
+        seconde des données cachées négativement \RFC{2308}
+      \end{itemizer}
+\begin{verbatim}
+@ IN SOA chailly.ensmp.fr. keryell.chailly.ensmp.fr. (
+         98120200        ; Serial
+         21600   ; Refresh 6 hour (nic.fr said...)
+         3600    ; Retry   1 hour
+         3600000 ; Expire  1000 hours
+         600  )  ; Cachage négatif 10 minutes
+\end{verbatim}
+    \item \texttt{WKS} déclare les \emph{well known service} fournis
+    \item \texttt{PTR} pointeur dans nom de domaine, typiquement pour la
+      traduction adresse vers nom dans \texttt{in-addr.arpa}\\
+      \texttt{1 IN PTR routeur-10.4.0.ensmp.fr.}
+    \item \texttt{HINFO} informations sur le CPU et l'OS de la machine
+    \item \texttt{MX} définit la machine vers qui doit être envoyé le
+      courrier avec un ordre de priorité décroissant (0 $\equiv$ en
+      premier)
+    \item \texttt{TXT} de l'information textuelle quelconque
+    \end{itemizet}
+    Des tonnes d'extensions expérimentales dans
+    \begin{itemizet}
+    \item \RFC{1183} : DCE, nom du responsable, X25, ISDN (Numéris)
+    \item \RFC{1664} : X400
+    \item ...
+    \end{itemizet}
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Numéro de série et arithmétique des intervalles}
+  \begin{itemize}
+  \item Numéro de série dans le RR SOA permet de détecter mises à jour
+  \item Ne pas oublier d'augmenter ce nombre sur un maître après chaque
+    modification si on veut que les modifications soient
+    propagées... Bug classique \frownie
+  \item Pas stocké en précision infinie mais sur 32 bits... Problèmes de
+    débordement \vavers Calcul modulo $2^{32}$ basé sur le \RFC{1982}
+  \item Problème de relation d'ordre non définie modulo \frownie
+    \begin{align}
+      1 &< 4294967295\label{eq:1}\\
+      1 &>     4294967295
+    \end{align}
+    car $4294967295 = (2^{32}-1) \equiv -1 \mod 2^{32}$
+  \item Idée : privilégier la comparaison des valeurs plus proches, donc
+    plus probables $1 \succ 4294967295$
+  \item Pour $(s_1,s_2)\in{\bbold S}^2$
+    \begin{align}
+      s_1 \prec s_2 \Longleftrightarrow (0 < s_2 - s_1< 2^{31}) \vee (0 <
+      s_2 - (s_1-2^{32})< 2^{31})\label{eq:2}\\
+      s_1 \succ s_2 \Longleftrightarrow (0 < s_1 - s_2< 2^{31}) \vee (0 <
+      s_1 - (s_2-2^{32})< 2^{31})
+    \end{align}
+    Si $s_2 \equiv s_1 + 2^{31} \mod 2^{32}$, pas comparable...
+ \item Dans temps anciens, valeur 0 spéciale de resynchronisation :
+    propage systématiquement aux serveurs secondaires... Du coup éviter 0
+    comme valeur normale
+
+    \newslide
+
+  \item Mais comment faire pour remettre tous serveurs secondaires en
+    phase lorsqu'on change de plan de numérotation de série de SOA d'un
+    vieux $v$ à un nouveau $n$ ?
+    \begin{itemize}
+    \item \Rnode{boucle}{Si} $n \succ v$ pas de problème : serveurs secondaires verront
+      qu'une nouvelle version doit être chargée
+    \item Sinon, problème : serveurs secondaires verront une nouvelle
+      version plus vieille ou incomparable, donc ignorée... \frownie
+      \begin{itemize}
+      \item Faire migration par étape
+      \item Aller à $v' \equiv v+2^{31}-1 \mod 2^{32}$ qui est le plus
+        grand successeur de $v$
+      \item Attendre propagation vers secondaires
+      \item $v := v'$
+      \item \Rnode{boucler}{Reboucler}
+        \ncarc[arcangle=90,linecolor=red]{->}{boucler}{boucle}
+      \end{itemize}
+
+    \end{itemize}
+  \item Procédé mnémotechnique dans vie courante
+    \begin{itemize}
+    \item Stocker la date dans le numéro de série
+    \item Exemple 2007100300
+    \item \Attention Ne pas oublier de garantir croissance stricte si mise
+      à jour, même si modifications à suivre...
+    \end{itemize}
+  \end{itemize}
+\end{trans}
+
+
+\begin{trans}{Format d'une zone}
+  \RFC{1035} section 5
+  \begin{itemizer}
+  \item Utile pour lire le contenu des caches
+  \item Sert à définir une zone dans BIND
+  \item Orienté ligne
+  \item mais \texttt{(}$\cdots$\texttt{)} permet d'écrire un
+    enregistrement sur plusieurs lignes
+  \item \texttt{;} commentaire
+  \item \texttt{@} représente l'origine courante de la zone. Utilisée dans
+    les noms relatifs (ne terminant pas par «~\texttt{.}~») $\approx$
+    répertoire courant («~\texttt{.}~») dans un système de fichiers
+  \item \texttt{\$ORIGIN \emph{domain-name} [\emph{comment}]} change
+    l'origine courante de la zone $\approx$ \texttt{cd} sous Unix
+  \item \texttt{\$INCLUDE \emph{file-name} [\emph{domain-name}]
+      [\emph{comment}]} inclut un fichier et définit son (et seulement
+    son) origine courante
+
+    \newslide
+
+  \item Un enregistrement a la forme
+    \begin{itemizet}
+    \item \texttt{\emph{domain-name} \emph{rr} [\emph{comment}]}
+    \item \texttt{<blank> \emph{rr} [\emph{comment}]} pour ajouter
+      l'enregistrement au nom de domaine précédent
+    \item \texttt{\emph{rr}} ont la forme
+      \begin{itemizer}
+      \item \texttt{[\emph{TTL}] [\emph{class}] \emph{type} \emph{RDATA}}
+      \item \texttt{[\emph{class}] [\emph{TTL}] \emph{type} \emph{RDATA}}
+      \end{itemizer}
+      Les \texttt{\emph{TTL}} et \texttt{\emph{class}} manquants prennent
+      les mêmes valeurs que celles des enregistrements précédents\\
+      \begin{itemizer}
+      \item Certains enregistrements peuvent avoir plusieurs valeurs
+      \item Exemple de routeurs ou de répartition de charge : plusieurs RR
+      A paramétrable en :
+      \begin{itemizec}
+      \item Réponse tourniquet (répartit la charge sur plusieurs serveurs)
+      \item Réponse la plus proche en terme de réseau (diminue la pression
+        réseau)
+      \end{itemizec}
+      \end{itemizer}
+    \item \texttt{\$TTL \emph{TTL}} fixe le TTL par défaut pour les
+      enregistrements suivants
+    \end{itemizet}
+  \item Pour le cache (accessible par \texttt{rndc dumpdb}) il faut aussi
+    noter la non existence
+\begin{exemple}
+SPOOL.MU.EDU.           8284    ­AAAA  ;-$NXRRSET
+; authauthority
+                        8284    ­A6    ;-$NXRRSET
+; authanswer
+
+\end{exemple}
+  \end{itemizer}
+\end{trans}
+
+
+\slidepart{Courrier électronique}
+
+
+\begin{trans}{Routage de courrier électronique \& DNS}
+  \begin{itemizer}
+  \item À quelle machine envoyer du mail ?
+  \item Idée : envoyer à la machine destinataire en utilisant l'adresse
+    trouvée dans le RR de type A (adresse) du DNS
+  \item Problèmes
+    \begin{itemizet}
+    \item La machine est derrière un firewall
+    \item La machine est dans un réseau non routable \RFC{1918} (privé
+      10.$x$.$y$.$z$,...)
+    \item La machine n'existe pas ! Concept : \texttt{ens.fr} (essayer
+      \texttt{host ens.fr}), adresse purement mail,...
+    \end{itemizet}
+  \item Idée : rajouter des champs RR MX dans le DNS précisant les
+    échangeurs de mail à utiliser et avec quelle priorité \RFC{974}
+    \begin{itemizet}
+    \item Permet de définir des passerelles vers des domaines pas sur
+      Internet (Bitnet, \texttt{uucp},...)
+    \item Centraliser la réception des messages sur une machine qui a un
+      système plus robuste, mieux protégée contre les \emph{spams}, ou seul
+      accès via coupe-feu
+    \item Mettre des adresses conceptuelles pur mail (sociétés n'ayant
+      qu'une adresse de mail commercial)
+      %% Pas dans Jussieu
+    \item Répartir la charge sur des points d'entrée d'un réseau privé
+      %% Pas dans Jussieu
+    \item Donner des sites de secours
+      %%
+      {\scriptsize
+\begin{alltt}
+\textbf{host iar2m.ensmp.fr}
+iar2m.ensmp.fr has address 10.2.16.200
+iar2m.ensmp.fr mail is handled (pri=1) by cri.ensmp.fr
+iar2m.ensmp.fr mail is handled (pri=2) by fontainebleau.ensmp.fr
+iar2m.ensmp.fr mail is handled (pri=3) by paris.ensmp.fr
+iar2m.ensmp.fr mail is handled (pri=4) by baloo.ensmp.fr
+\end{alltt}
+} utilise d'abord les MX de plus petite priorité. En cas de problème les
+sites de secours avec de gros disques récupèrent le mail de manière plus
+sûre et plus longtemps que s'il restaient en attente sur le site de
+départ. En plus on peut récupérer le courier par un autre moyen
+(bandes,...)
+%% Pas dans Jussieu
+\item La machine MX principal doit savoir si nécessaire router les
+  messages en interne \emph{sans} consulter les RR MX...
+\item Les RR MX doivent contenir de vrais noms canoniques et non pas des
+  alias même si cela fonctionne en général (nivellement par le bas...)
+\item Possibilité d'avoir des \emph{wildcard} MX pour définir une entrée
+  courrier pour tout un domaine
+\begin{verbatim}
+*.obscur.truc IN MX 1 mine.net
+\end{verbatim}
+    \end{itemizet}
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{La lutte anti-spam}
+  De plus en plus de messages indésirables... \frownie
+  \begin{itemizer}
+  \item Mettre des filtres au niveau de la lecture du courrier
+  \item Mettre des filtres au niveau de la distribution finale du message
+    (style \texttt{procmail})
+  \item Mettre des filtres au niveau de \texttt{sendmail} (ou autre
+    facteur postal)
+    \begin{itemizet}
+    \item Éliminer les mesages avec des adresses d'envoyeur folkloriques
+      (domaines qui n'existent pas...)
+    \item Éliminer les connexions depuis des machines sans nom déclaré dans
+      le DNS\\
+      \Attention{} Dans certains pays Internet est si mal configuré qu'il
+      n'y a pas de traduction inverse... \frownie
+    \item Éviter de servir de n\oe{}ud de transit de spam
+    \item Éliminer les mails en provenance de serveurs bien connus comme
+      étant peu fréquentables (liste noire, RBL)
+    \end{itemizet}
+  \item Difficile de trouver les vrais auteurs du spam : examiner
+    \emph{tous} les entêtes mais certains sont faux \frownie, des sites
+    intermédiaires mal configurés peuvent servir de relais et cacher
+    l'identité de l'auteur
+  \item Souvent machines piratées pour envoyer massivement du spam :
+    beaucoup de courriels pour peu de ressources locales
+    \begin{itemize}
+    \item En cas d'échec d'émission pas de ré-essai
+    \item \vavers \textsc{Greylisting} : fait exprès de refuser courriels
+      la première fois depuis une source louche
+    \item Seuls les vrais échangeurs de mails auront courage d'essayer à
+      nouveau plus tard
+    \end{itemize}
+  \item Méta-spam : envoyer des mails avec comme fausse adresse d'origine
+    un site tiers \vavers{} ce site va recevoir les messages d'erreur et
+    les râlantes des incompétents... \frownie
+  \item À lire\\
+    \LienPDF{http://www.halte-au-spam.com}\\
+    \LienPDF{ftp://ftp.univ-lyon1.fr/pub/faq/by-name/fr/usenet/abus/reagir-general}\\
+    \LienPDF{ftp://ftp.univ-lyon1.fr/pub/faq/by-name/fr/usenet/abus/reagir-conseils}
+  \item Aller vers du courrier électronique certifié ?
+  \end{itemizer}
+  \Attention{} Comme pour le courrier papier, pas de bonne solution...
+  \frownie
+\end{trans}
+
+
+\begin{trans}{Utilisation originale du DNS : la RBL}
+  \begin{itemizer}
+  \item Système de DNS $\equiv$ une base de données hiérarchisé
+  \item Perversions possibles : \texttt{in-addr.arpa}
+  \item Idée : utiliser le DNS pour stocker les numéros IP de machines
+    faisant du \emph{spam} de mails. Mise à jour en temps réel de la MAPS
+    RBL (\emph{Mail Abuse Protection System - Realtime Blackhole List})
+  \item La RBL est mise à jour par des gens qui se plaignent d'abus
+  \item Les systèmes d'échange de mail font une vérification dans le
+    domaine \texttt{rbl.maps.vix.com} de la même manière que dans
+    \texttt{in-addr.arpa}. Si le numéro IP est trouvé c'est que la machine
+    a été déclarée polluante
+  \item \Attention{} Problème si un jour on se trouve nommé dans la RBL...
+  \item \vavers{} Motivation pour avoir un système de courrier bien géré
+    (éviter le relais inutile par exemple)
+  \item \LienPDF{http://www.mail-abuse.org} par exemple
+  \item Développement du \emph{spam} \vavers{} travail considérable
+    \vavers{} $\exists$ de plus en plus de services payants de ce type
+  \item Utilisation dans \texttt{enstb.org} dans le \texttt{.mc} de
+    \texttt{sendmail} :
+\begin{exemple}
+dnl AntiSPAM stuff:
+FEATURE(`dnsbl', `list.dsbl.org', `"550 Email rejected due to sending server misconfiguration - see http://dsbl.org"')dnl
+FEATURE(`dnsbl', `sbl.spamhaus.org', `"550 Email rejected due to sending server misconfiguration - see http://www.spamhaus.org"')dnl
+FEATURE(`dnsbl', `will-spam-for-food.eu.org')dnl
+\end{exemple}
+\item Pour faire une recherche multiliste : \LienPDF{http://www.robtex.com/rbl}
+\item Procès de \emph{spammers} contre ces systèmes... \frownie
+\item Requête DNS à chaque message reçu \vavers{} ralentissement du débit
+  du courrier
+\item Optimisation : devenir serveur secondaire de ces zones (cf
+  \texttt{forwarders}). En général payant
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Sender Policy Framework (SPF)}
+  \LienPDF{http://www.openspf.org}
+  \begin{itemize}
+  \item Idée : déclarer quelles sont les machines autorisées à envoyer
+    \emph{son} courrier
+  \item Évite usurpation d'adresses \texttt{MAIL FROM} par des spammeurs
+  \item Information rajoutée dans le DNS du \texttt{MAIL FROM}
+  \item Puisqu'un spammeur n'a pas de contrôle du DNS du domaine à
+    usurper, il ne peut pas modifier l'enregistrement SPF
+  \item \LienPDF{http://old.openspf.org/wizard.html} Synthèse en ligne de
+    paramètres SPF
+  \end{itemize}
+\end{trans}
+
+
+\begin{trans}{Syntaxe SPF}
+  SPFv1 décrit par \RFC{4408}
+  \begin{itemize}
+  \item Rajouté dans RR TXT du \texttt{MAIL FROM} pour ne pas avoir à
+    créer nouvel RR mais $\exists$ aussi RR SPF
+  \item Utilisateurs d'\texttt{example.net}
+    \begin{itemize}
+    \item Envoient du mail depuis leurs \Rnode{versLeMX}{MX}
+    \item Envoient du mail depuis
+      \Rnode{versMachine}{\texttt{pluto.example.net}}
+    \item Envoient du mail depuis \Rnode{versInclut}{\texttt{gmail.com}} qui
+      possède ses propres paramètres
+    \item \Rnode{versBannit}{Toute autre machine est illégitime}
+    \end{itemize}
+    \texttt{example.net.  TXT "v=spf1 \Rnode{leMX}{mx}
+      \Rnode{machine}{a\string:pluto.example.net}
+      \Rnode{inclut}{include\string:gmail.com} \Rnode{bannit}{-all}"}
+    \ncarc[arcangle=90,linecolor=red]{->}{versLeMX}{leMX}
+    \ncarc[arcangle=90,linecolor=red]{->}{versMachine}{machine}
+    \ncarc[arcangle=90,linecolor=red]{->}{versInclut}{inclut}
+    \ncarc[arcangle=90,linecolor=red]{->}{versBannit}{bannit}
+  \item \texttt{dig gmail.com txt} donne
+\begin{verbatim}
+gmail.com. 300 IN TXT "v=spf1 redirect=_spf.google.com"
+\end{verbatim}
+    Puis un \verb|dig _spf.google.com txt| mène à\\
+    \texttt{\_spf.google.com. 161 IN TXT  "v=spf1 ip4\string:216.239.32.0/19 ip4\string:64.233.160.0/19 ip4\string:66.249.80.0/20 ip4\string:72.14.192.0/18 ip4\string:209.85.128.0/17 ip4\string:66.102.0.0/20 ip4\string:74.125.0.0/16 ?all"}
+  \item Qualifieurs
+    \begin{itemize}
+    \item \texttt{+} : passe
+    \item \texttt{-} : échoue
+    \item \verb|~|: « \emph{SoftFail} » pas un rejet franc mais contribue
+      à penser que c'est mauvais, à combiner avec autre chose
+    \item \texttt{?} : neutre
+    \end{itemize}
+  \item Un enregistrement se termine par un \texttt{all} ou
+    \texttt{redirect} pour aller voir ailleurs
+  \end{itemize}
+\end{trans}
+
+
+\begin{trans}{Tolérance aux pannes}
+  \begin{itemizer}
+  \item Si le DNS s'arrête, la majorité des applications d'Internet
+    s'arrêtent ! \frownie
+  \item Cible favorite des dénis de service (DoS) des pirates
+  \item \vavers Besoin d'une bonne stratégie
+  \item Tolérance aux pannes : plusieurs serveurs si possible sur
+    différents réseaux sur différents fournisseurs primaires
+  \item Définir plusieurs maîtres primaires avec système de
+    synchronisation des fichiers de zones pour survivre à une perte de
+    visibilité des serveurs faisant autorité
+  \item Il est possible de déclarer plus de serveurs de nom dans sa zone
+    que les délégations déclarées dans le serveur du domaine parent pour
+    augmenter la distribution des requêtes locales (\emph{stealth
+      servers)} ou si DMZ,...
+  \item En particulier le vrai serveur primaire n'est pas forcément public
+    et annoncé
+  \item Utilisation d'anycast BGP pour distribuer sur Internet des
+    machines répondant à la même adresse : utilisé de manière intensive
+    pour les serveurs racine
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Réagir à des attaques de DDoS}
+  \begin{itemizer}
+  \item $\exists$ des dénis de service distribué lancés depuis
+    des machines attaquant un service sur une machine donnée
+  \item Exemple du virus \texttt{W32/MyDoom.B@MM}
+    \begin{itemizet}
+    \item Attaque du serveur \LienPDF{http://www.sco.com}
+    \item Réponse en fermant les connexions TCP/80
+    \item Avant l'attaque TTL de \texttt{sco.com} passé à 60 secondes pour
+      changer rapidement \texttt{www.sco.com} vers un autre adresse IP
+      (127.0.0.1 par exemple \smiley)
+    \item
+      \LienPDF{http://news.netcraft.com/archives/2004/02/01/sunday_morning_and_wwwscocom_is_still_in_the_dns.html}
+    \item Utilisation du nom \LienPDF{http://www.thescogroup.com} possible
+      pendant l'attaque \LienPDF{http://news.netcraft.com/archives/2004/02/02/sco_to_use_new_domain_for_the_duration_of_mydoom_ddos.html}
+    \end{itemizet}
+  \item \texttt{W32/MyDoom.B@MM} cible \LienPDF{http://www.microsoft.com}
+    \begin{itemizet}
+    \item Distribution mondiale décentralisée des serveurs via Akamai
+      \vavers{} bonne résistance à la base
+    \item TTL passé à 60 secondes aussi au cas où pour réagir vite...
+    \item \LienPDF{http://news.netcraft.com/archives/2004/02/02/microsoft_shorten_wwwmicrosoftcom_ttl_in_anticipation_of_mydoomb_payload.html}
+    \end{itemizet}
+  \item Autre besoin d'un TTL faible : planification d'un changement de
+    nommage pour limiter la durée d'incohérence
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Utiliser le DNS pour faire du DDoS ?}
+  \begin{itemize}
+  \item Protocole simple au dessus d'UDP facile à tromper
+  \item \Attention{} Si fausse adresse source dans question, serveur
+    répond à cette fausse adresse
+  \item \vavers Utilisation par un pirate pour télécommander serveurs vers
+    une victime
+  \item Pour être « efficace », il faut des serveurs avec gros
+    enregistrements (AXFR, clés DNSSEC...) à répondre à une petite
+    question (facteur amplificateur pour pirate)
+  \item \vavers Utiliser des serveurs récursifs qui vont répondre à des
+    questions dont ils vont chercher les réponses. Le pirate peut choisir
+    des données arbitrairement grandes
+  \item Exploitation d'un service gentil (récursion pour tous pour faire
+    du debug...) pour faire du mal \frownie
+  \item \vavers Suppression de récursion pour tous, réservée aux machines
+    de son réseau
+  \item De manière générale, les DDoS sont difficile à gérer... \frownie
+  \end{itemize}
+\end{trans}
+
+
+\begin{trans}{Gestion des adresses privées}
+   \begin{itemizer}
+  \item Le \RFC{1918} définit la notion d'adresses privées
+    \begin{itemizet}
+    \item 10.0.0.0/8 : $2^{24}$ adresses
+    \item 172.16.0.0/12 : $2^{20}$ adresses
+    \item 192.168.0.0/16 : $2^{16}$ adresses
+    \end{itemizet}
+  \item Utile pour faire de gros Intranet si pas assez d'adresses
+    publiques,...
+  \item La gestion des requêtes DNS inverses \emph{devraient être gérées}
+    par l'entité utilisatrice (\RFC{1912})
+  \item Sinon bombardement des serveurs racines vers des domaines inverses
+    qui n'existent pas ! \frownie
+  \item \vavers Projet AS112 (\LienPDF{http://as112.net})
+    \begin{itemizet}
+    \item Idée : répliquer les serveurs DNS qui répondent à ces adresses
+    \item Utiliser anycast de BGP pour annoncer ces machines (...sur
+      AS112)
+    \item \texttt{dig @prisoner.iana.org hostname.as112.net any} permet de
+    savoir qui répond aux requêtes pour l'AS112
+    \item Pour info, 204.152.184.191 est le \emph{stealth} serveur
+      primaire
+    \item Pour faire son propre serveur « AS112 » dans son entreprise :
+      \LienPDF{http://www.chagreslabs.net/jmbrown/research/as112}
+    \item 192.175.48.1 est le SOA (bombardé de demandes de mises à jour
+      Windows par exemple)
+    \item 192.175.48.6 et 192.175.48.42 sont les NS (bombardé de requêtes)
+    \end{itemizet}
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Faire du CIDR sans pomme}
+  \begin{itemizer}
+  \item Mécanisme de résolution inverse très orienté classes A, B et C
+    \frownie
+  \item Clients veulent gérer leur DNS \smiley
+  \item Comment faire pour déléguer la résolution DNS chez le client avec
+    le CIDR qui permet d'attribuer des réseaux aussi petits que /31 ?
+  \item Idée : mettre des alias pour chaque entrée dans la zone C vers le
+    DNS du client \BCP{20}, \RFC{2317}
+  \item Exemple de \texttt{minou.info.enstb.org} (193.50.97.146) dans 193.50.97.128/25 (\texttt{FR-ENSTB-BREST})\\
+    \texttt{146.97.50.193.in-addr.arpa} pointe vers
+    \texttt{146.FR-ENSTB-BREST.97.50.193.in-addr.arpa.}\\
+    \texttt{FR-ENSTB-BREST.97.50.193.in-addr.arpa.} est géré par une
+    machine dans \texttt{enstb.org} qui fera la traduction pour les 128
+    adresses\\
+    \Attention{} suppose que les outils acceptent un CNAME en pleine
+    récursion vers un PTR...
+  \end{itemizer}
+\begin{exemple}
+chailly99-keryell > dig -x 193.50.97.146 +trace
+.                       476680  IN      NS      G.ROOT-SERVERS.NET.
+.                       476680  IN      NS      H.ROOT-SERVERS.NET.
+.                       476680  IN      NS      I.ROOT-SERVERS.NET.
+.                       476680  IN      NS      J.ROOT-SERVERS.NET.
+.                       476680  IN      NS      K.ROOT-SERVERS.NET.
+.                       476680  IN      NS      L.ROOT-SERVERS.NET.
+.                       476680  IN      NS      M.ROOT-SERVERS.NET.
+.                       476680  IN      NS      A.ROOT-SERVERS.NET.
+.                       476680  IN      NS      B.ROOT-SERVERS.NET.
+.                       476680  IN      NS      C.ROOT-SERVERS.NET.
+.                       476680  IN      NS      D.ROOT-SERVERS.NET.
+.                       476680  IN      NS      E.ROOT-SERVERS.NET.
+.                       476680  IN      NS      F.ROOT-SERVERS.NET.
+;; Received 244 bytes from 193.48.171.215#53(193.48.171.215) in 5 ms
+
+193.in-addr.arpa.       86400   IN      NS      NS.RIPE.NET.
+193.in-addr.arpa.       86400   IN      NS      AUTH03.NS.UU.NET.
+193.in-addr.arpa.       86400   IN      NS      NS2.NIC.FR.
+193.in-addr.arpa.       86400   IN      NS      SUNIC.SUNET.SE.
+193.in-addr.arpa.       86400   IN      NS      MUNNARI.OZ.AU.
+193.in-addr.arpa.       86400   IN      NS      NS.APNIC.NET.
+;; Received 294 bytes from 192.112.36.4#53(G.ROOT-SERVERS.NET) in 298 ms
+
+97.50.193.in-addr.arpa. 86400   IN      NS      ns1.renater.fr.
+97.50.193.in-addr.arpa. 86400   IN      NS      ns3.nic.fr.
+;; Received 138 bytes from 193.0.0.193#53(NS.RIPE.NET) in 50 ms
+
+146.97.50.193.in-addr.arpa. 86400 IN    CNAME   146.FR-ENSTB-BREST.97.50.193.in-addr.arpa.
+FR-ENSTB-BREST.97.50.193.in-addr.arpa. 86400 IN NS dns-cri.ensmp.fr.
+FR-ENSTB-BREST.97.50.193.in-addr.arpa. 86400 IN NS dns2.enstb.org.
+;; Received 135 bytes from 193.49.160.100#53(ns1.renater.fr) in 54 ms
+
+chailly99-keryell > dig 146.FR-ENSTB-BREST.97.50.193.in-addr.arpa. ptr
+;; ANSWER SECTION:
+146.FR-ENSTB-BREST.97.50.193.in-addr.arpa. 3600 IN PTR minou.info.enstb.org.
+\end{exemple}
+\end{trans}
+
+
+\begin{trans}{Connaître la version d'un serveur DNS}
+  \begin{itemizer}
+  \item Souvent cachée dans \texttt{version.bind CH TXT}
+  \item Interrogeable par
+\begin{exemple}
+dig @dns-cri.ensmp.fr version.bind txt chaos
+;; ANSWER SECTION:
+version.bind.           0       CH      TXT     "9.2.3rc4"
+\end{exemple}
+   \item Changeable avec l'option \texttt{version} de BIND
+   \item Restreignable par \emph{view}
+\begin{exemple}
+  view "chaos" chaos {
+          match-clients { <those to be refused>; };
+          allow-query { none; };
+          zone "." {
+                  type hint;
+                  file "/dev/null";  // or any empty file
+          };
+  };
+\end{exemple}
+  \end{itemizer}
+\end{trans}
+
+
+\slidepart{Services}
+
+
+\begin{trans}{Adresses de services}
+  \begin{itemizer}
+  \item Besoin de localiser adresses de serveurs NIS, WINS,...
+    \begin{itemizet}      
+    \item Câblé en dur \frownie
+    \item Requête diffusée sur le réseau « qui a le ... ? »
+    \item Interroger une base de données distribuée
+    \end{itemizet}
+  \item Idée : généralisation des concepts comme le MX sans avoir à
+    rajouter encore un RR\\
+    \vavers{} Extension du DNS avec
+    \LienPDF{http://www.ietf.org/rfc/rfc2782.txt} \emph{A DNS RR for
+      specifying the location of services (DNS SRV)}
+    \begin{itemizet}
+    \item Rajout de pseudo-noms de domaine commençant par des « \_ »
+      (éviter collisions de noms) :
+\begin{alltt}
+_\emph{service}._\emph{proto}.\emph{name}
+\end{alltt}
+    \item Avec classiques \emph{TTL} et \emph{class}
+    \item \emph{Priority} $\in[0,65535]$. On choisira toujours la réponse
+      à priorité la plus basse (cf MX)
+    \item \emph{Weight} $\in[0,65535]$. Idem pour départager des priorités
+      égales
+    \item \emph{Port} $\in[0,65535]$ à contacter pour le service
+    \item \emph{Target} à contacter pour le service
+    \end{itemizet}
+    Syntaxe d'un RR SRV :
+    \begin{alltt}
+_\emph{Service}._\emph{Proto}.\emph{Name} \emph{TTL} \emph{Class} SRV \emph{Priority} \emph{Weight} \emph{Port} \emph{Target}
+    \end{alltt}
+    Exemple pour connaître le serveur LDAP de \texttt{exemple.com},
+    faire une requête :\\
+\begin{verbatim}
+_ldap._tcp.example.com
+\end{verbatim}
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Spécificités MicroSoft}
+  \begin{itemizer}
+  \item Utilisation du DNS comme base de données distribuée avec les
+    \emph{SRV RR}
+  \item
+    \LienPDF{http://www.microsoft.com/techNet/win2000/win2ksrv/technote/w2kdns.asp}
+    \emph{Windows 2000 DNS - A white paper}
+  \item
+    \LienPDF{http://www.nominum.com/resources/faqs/bind-faq.html\#w2k}
+    FAQ \emph{Microsoft Windows 2000 and BIND}
+  \item Windows 2000 stocke données Active Directory dans une sous-zone
+    \verb|_msdcs|, en particulier le catalogue global (style
+    \verb|gc._msdcs.example.com|)
+
+\newslide
+
+  \item Configuration typique de BIND pour accepter les mises à jour par
+    les serveurs Active Directory :
+\begin{exemple}
+zone "_msdcs.example.com" 
+{
+    type master;
+    file "_msdcs.example.db";
+    check-names ignore;
+    // Fait confiance aux machines locales en attendant que Windows
+    // et BIND se mettent d'accord sur une authentification :
+    allow-update { localnets; };
+};
+\end{exemple}
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Stocker des numéros de téléphone}
+  \begin{itemizer}
+  \item DNS $\equiv$ base de données répartie
+  \item Naming Authority Pointer (NAPTR)
+  \item Associer des informations à un n° de téléphone
+  \item Domaine \texttt{e164.arpa} utilisé comme \texttt{in-addr.arp}
+    chiffre par chiffre à l'envers :
+    \begin{itemizet}
+    \item Définit les \verb/sip:/ et \verb/smtp:/ d'un numéro et renvoi
+      téléphonique (\RFC{2806}) :
+\begin{exemple}
+$ORIGIN 2.1.2.1.5.5.5.0.7.7.1.e164.arpa.
+;;      order pref flags service           regexp replacement
+ IN NAPTR 100 10 "u" "sip+E2U"  "!^.*$!sip:information@foo.se!i"     .
+ IN NAPTR 102 10 "u" "smtp+E2U" "!^.*$!mailto:information@foo.se!i"  .  
+ IN NAPTR 102 10 "u" "tel+E2U"     "!^.*$!tel:+4689761234!"     .
+\end{exemple}%$
+\item Tous les infos concernant un domaine de numéro sont dans une base
+  \texttt{ldap:}
+\begin{exemple}
+$ORIGIN 6.4.e164.arpa.
+   * IN NAPTR 100 10 "u" "ldap+E2U" "!^+46(.*)$!ldap://ldap.se/cn=01!" .
+\end{exemple}%$
+    \end{itemizet}
+  \item Permet une délégation hiérarchique conforme au téléphone
+  \item Pour +33 RNRT \LienPDF{http://www.numerobis.prd.fr}
+  \end{itemizer}
+  ENUM \RFC{2916} : E.164 number and DNS
+\end{trans}
+
+
+\begin{trans}{DDDS --- découverte dynamique de délégation}
+  \begin{itemizer}
+  \item URI : Uniform Resource Identifiers\\
+    Problèmes de persistence avec le temps (noms de machine changent,...)
+  \item \vavers URN : Uniform Resource Names \RFC{2141}
+  \item Système de règles de réécritures complexes stockées dans le DNS
+    avec des NAPTR (Naming Authority Pointer)
+\begin{exemple}
+http.uri.arpa. IN NAPTR
+ ;;  order   pref flags service      regexp             replacement
+      100     90   ""      ""   "!^http://([^/:]+)!1!i"       .
+\end{exemple}
+  \item Comment trouver un serveur associé au service d'une URN ?
+  \item Généralise ENUM
+\begin{exemple}
+example.com.
+;;      order pref flags service           regexp replacement
+IN NAPTR 100  50  "a"    "z3950+N2L+N2C"     ""   cidserver.example.com.
+IN NAPTR 100  50  "a"    "rcds+N2C"          ""   cidserver.example.com.
+IN NAPTR 100  50  "s"    "http+N2L+N2C+N2R"  ""   www.example.com.
+\end{exemple}
+\item Encore de la science fiction...
+  \end{itemizer}
+  \RFC{3401}, \RFC{3402}, \RFC{3403}, \RFC{3404}, \RFC{3405}
+\end{trans}
+
+
+\slidepart{Configuration client}
+
+
+\OutputOutline{Plan}
+
+
+\begin{trans}{Fichier /etc/resolv.conf}
+  \begin{itemizer}
+  \item \hypertarget{Client}{Fichier} de configuration du resolver :
+    explique à sa machine comment faire les traductions
+  \item \texttt{man resolv.conf} (resolver de Sun) ou \texttt{man -s 5
+      resolver} (resolver BIND)
+  \item Options
+    \begin{itemizet}
+    \item \texttt{nameserver \emph{adresse}} précise le serveur de nom à
+      utiliser
+    \item \texttt{domain \emph{name}} définit le nom de domaine local
+      rajouté aux noms relatifs
+    \item \texttt{search \emph{searchlist}} définit une liste de domaines
+      (séparés par des espaces) essayés lors d'une résolution de nom
+      relatifs
+    \item \texttt{sortlist \emph{addresslist}} trie les réponses dans
+      l'ordre de préférence des numéros de réseaux donnés
+    \item \texttt{options \emph{optionlist}} précise certaines options
+      fines\\
+      \verb/options ndots:2/ : recherche des noms sans les considérer
+      comme locaux s'ils ont 2 «~\texttt{.}~» ou plus
+    \end{itemizet}
+  \item Si un nom complet local est défini avec la commande
+    \texttt{hostname}, le domaine peut ne pas être précisé dans
+    \texttt{/etc/resolv.conf}
+  \item Vérifier que la syntaxe est correctement comprise avec un
+    \texttt{set all} dans \texttt{nslookup}
+  \end{itemizer}
+\begin{exemple}
+nameserver 192.44.75.10
+nameserver 192.108.115.2
+nameserver 192.44.77.1
+search enst-bretagne.fr enstb.org ensmp.fr trad.org
+domain enst-bretagne.fr
+\end{exemple}
+On peut prendre en compte un fichier d'alias de noms en initialisant la
+variable d'environnement \texttt{HOSTALIASES} à ce nom de fichier
+\end{trans}
+
+
+\begin{trans}{Fichier /etc/nsswitch.conf}
+  \begin{itemizer}
+  \item Précise l'utilisation des systèmes de nommage par ressource
+  \item Ressources \texttt{aliases},
+    \texttt{automount},...,\texttt{\textsl{hosts}},...
+  \item Systèmes de nommages : \texttt{files}, \texttt{nis},
+    \texttt{nisplus}, \texttt{dns}, \texttt{compat}, \texttt{xfn}
+  \item Exemple\\
+    \texttt{hosts: xfn dns nis [NOTFOUND=return] files}
+  \item \texttt{man nsswitch.conf}
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Vers un resolver indépendant}
+  \begin{itemizer}
+  \item Resolver standard :
+    \begin{itemizet}
+    \item Bibliothèque lié avec processus utilisateur
+    \item Nouveaux protocoles (chaînes de bits et DNAME IPv6, DNSSEC,...)
+    \item Devient trop complexe et trop lourd
+    \end{itemizet}
+  \item Idée avoir un processus indépendant qui factorise le travail de
+    résolution
+  \item Accessible par bibliothèque simplifiée (\emph{light-weight
+      resolver}) par UDP port 921 sur \texttt{localhost} (résout problèmes
+      d'insécurité)
+  \item Travail effectué par processus démon \texttt{lwresd} configuré via
+    \texttt{/etc/lwresd.conf} ou BIND avec directive \texttt{lwres}
+  \end{itemizer}
+\end{trans}
+
+
+\slidepart{Utilitaires d'interrogation}
+
+
+\OutputOutline{Plan}
+
+
+\begin{trans}{Programmes de mise au point}
+  \begin{itemizer}
+  \item \hypertarget{Outils}{Nécessité} d'avoir des outils de mise au point
+  \item Besoin d'interroger directement un DNS
+  \item Court-circuite la résolution classique par le système
+    d'exploitation (NIS, \texttt{/etc/hosts}, \texttt{/etc/resolv.conf})
+  \item Possibilité de demander toute une zone
+  \item Permet de simuler des requêtes inter-DNS
+  \item Peut passer outre les dépassements de temps de réponse
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Outils en ligne}
+  \begin{itemize}
+  \item Permet d'avoir rapidement un survol
+  \item Ne permet généralement pas de faire des tests internes, hors
+    productions
+  \end{itemize}
+  Exemple
+  \begin{itemize}
+  \item
+    « robtex swiss army knife internet tool »\\
+    \LienPDF{http://www.robtex.com/} dépiote entre autre graphiquement
+    informations DNS mais aussi
+\begin{verbatim}
+rbl (example: 213.41.240.87) checks multiple RBL:s. check if your mailserver is listed in any blacklist
+ipnumber (example: 213.41.240.87) checks ipnumber
+hostnames (example: keryell.pck.nerim.net) checks dns-info for a specific hostname
+domainnames (example: pck.nerim.net) checks dns-info for a domain
+whois lookup (example: pck.nerim.net) checks whois-info for a domain
+c-net (example 213.41.240) checks reverse for a c-net
+route (example 213.41.128.0/17 checks a specific route
+as numbers (example: AS13193 (ASN NERIM Nerim xDSL Internet Provider))
+bgp announcements (example: AS13193)
+as macros (example: as-ams-ix-peers)
+rfcnumbers (example: rfc2822)
+\end{verbatim}
+  \item \LienPDF{http://dnsmon.ripe.net/} surveille communications entre
+    différents serveurs DNS (cf statistiques lors d'attaques)
+  \item \LienPDF{http://www.cymru.com/monitoring/dnssumm/} « TEAM CYMRU
+    DNS Name Server Status Summary » donne informations de connexion avec
+    serveurs racines
+  \end{itemize}
+\end{trans}
+
+
+\begin{trans}{Programme dig}
+  Programme maintenu par l'équipe de BIND... donc à préférer
+  \begin{itemizer}
+  \item \texttt{man dig}
+  \item \Attention{} Interroge par défaut les serveurs de nom de
+    \texttt{/etc/resolv.conf} mais ignore \texttt{search} ou
+    \texttt{domain}
+  \item \texttt{dig [@\emph{server}] [-f \emph{query-file}] [-k
+      \emph{key-file}] [-y \emph{name}\string:\emph{key}] [-i] [[-x] \emph{domain}
+      [\emph{query-type}] [+\emph{query-option}] [-\emph{dig-option}] ]*}
+    \begin{itemizet}
+    \item \texttt{\emph{query-type}} : \texttt{any}, \texttt{a},
+      \texttt{sig}, \texttt{mx}, \texttt{axfr} (transfert de zone),
+      \texttt{ixfr=\emph{N}} (transfert de zone incrémentale depuis le n°
+      de série \texttt{\emph{N}}),...  Peut aussi être précisé par
+      \texttt{-t \emph{query-type}}
+    \item \texttt{-x} devant une adresse demande automatiquement la
+      requête inverse dans \texttt{in-addr.arpa} et PTR ou
+      \texttt{ip6.arpa}. Rajouter \texttt{-i} pour vieilles requêtes IPv6
+      dans \texttt{ip6.int}
+    \item Plein d'options
+      \begin{itemizec}
+      \item \texttt{+[no]tcp} : utilise TCP au lieu d'UDP
+      \item \texttt{+domain=\emph{somename}} : utilise un domaine par
+        défaut
+      \item \texttt{+[no]search} : utilise la liste de domaines de
+        \texttt{resolv.conf}
+      \item \texttt{+[no]cdflag} : positionne le bit CD (\emph{checking
+          disabled}) pour éviter les vérifications DNSSEC
+      \item \texttt{+[no]recurse} : positionne le bit RD (\emph{recursion
+          desired}) demandant au serveur la recherche récursive
+      \item \texttt{+[no]nssearch} : affiche le SOA du domaine selon tous
+        les serveurs DNS du domaine
+      \item \texttt{+[no]trace} : trace récursivement la requête depuis
+        les serveurs racines
+      \item \texttt{+[no]short} : moins verbeux
+      \item \texttt{+[no]dnssec} : demande à utiliser DNSSEC
+      \end{itemizec}
+    \item \emph{key-file} contient une clé pour DNSSEC
+    \item \emph{name}\verb/:/\emph{key} idem en ligne de commande
+      \Attention{} car \texttt{ps} peut l'afficher...
+    \end{itemizet}
+    \item Plein d'autres options...
+\begin{exemple}
+dig @dns.princeton.edu cri.ensmp.fr any +norecurse
+\end{exemple}
+  \item Notation \texttt{-x 128.9.0.32} à la place de
+    \texttt{32.0.9.128.in-addr.arpa}
+  \item Pour avoir le contenu d'une zone :
+\begin{exemple}
+dig @dns-cri.ensmp.fr enstb.org axfr
+\end{exemple}
+...si autorisé !
+\item \texttt{dig -}\texttt{-help} et \texttt{dig -h} plus complet
+\item Possible de mettre des options dans son \verb|${HOME}/.digrc|
+\end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Programme host}
+  \begin{itemizer}
+  \item Demande une traduction de base utilisant le serveur de nom défini
+    sur la machine (cf \texttt{/etc/resolv.conf})
+  \item Nom \vavers{} numéro IP : \texttt{host cri}
+{\footnotesize
+\begin{verbatim}
+cri.ensmp.fr has address 192.54.172.200
+cri.ensmp.fr mail is handled (pri=4) by baloo.ensmp.fr
+cri.ensmp.fr mail is handled (pri=1) by cri.ensmp.fr
+cri.ensmp.fr mail is handled (pri=2) by fontainebleau.ensmp.fr
+cri.ensmp.fr mail is handled (pri=3) by paris.ensmp.fr
+\end{verbatim}
+}
+  \item Numéro IP \vavers{} nom : \texttt{host 192.54.172.231}
+{\footnotesize
+\begin{verbatim}
+231.172.54.192.IN-ADDR.ARPA domain name pointer recanati.ensmp.fr
+\end{verbatim}
+}
+  \item Options utiles :
+    \begin{itemizet}
+    \item \texttt{-a} verbeuse
+{\footnotesize
+\begin{verbatim}
+deauville-keryell > host -a iar2m.ensmp.fr
+Trying null domain
+rcode = 0 (Success), ancount=5
+iar2m.ensmp.fr  154406 IN       A       10.2.16.200
+iar2m.ensmp.fr  154406 IN       MX      1 cri.ensmp.fr
+iar2m.ensmp.fr  154406 IN       MX      2 fontainebleau.ensmp.fr
+iar2m.ensmp.fr  154406 IN       MX      3 paris.ensmp.fr
+iar2m.ensmp.fr  154406 IN       MX      4 baloo.ensmp.fr
+Additional information:
+cri.ensmp.fr    154406 IN       A       192.54.172.200
+fontainebleau.ensmp.fr  154406 IN       A       192.54.148.100
+paris.ensmp.fr  154406 IN       A       192.54.165.200
+baloo.ensmp.fr  154406 IN       A       192.54.173.101
+\end{verbatim}
+}
+    \item \texttt{-d} affiche les transactions réseau
+    \item \texttt{-l} liste un domaine \texttt{host -l ensmp.fr}
+    \end{itemizet}
+  \item \texttt{man host}
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Programme nslookup}
+  \Attention{} Programme en voie d'abandon
+  \begin{itemizer}
+  \item \texttt{man nslookup} (version Sun) ou \texttt{man -s 8 nslookup}
+    (version BIND)
+\begin{verbatim}
+nslookup [-option ...] [host-to-find | -[server]]
+\end{verbatim}
+  \item Mode ligne : similaire au programme \texttt{host}. Possibilités
+    d'avoir plus d'options (cf. \texttt{set} du mode interactif)
+  \item Mode interactif : sorte de shell d'interrogation des DNS
+    \begin{itemizet}
+    \item \texttt{?} ou \texttt{help} affiche l'aide en ligne
+    \item \texttt{\emph{host} [\emph{server}]} demande de l'information
+      sur le nom ou numéro de machine \texttt{\emph{host}} au serveur
+      \texttt{\emph{server}}
+    \item \texttt{server \emph{domain}} change le serveur par défaut
+    \item \texttt{lserver \emph{domain}} change le serveur par défaut en
+      utilisant le serveur initial. Utile lorsqu'on s'est trompé dans la
+      commande \texttt{server}...
+    \item \texttt{root} utilise le serveur racine comme défaut
+    \item \texttt{ls [\emph{option}] \emph{domain} [>[>] \emph{filename}]}
+      récupère les informations disponibles sur \texttt{\emph{domain}} et
+      les affiche à l'écran ou les met dans un fichier. Option \texttt{-t}
+      demande tous les types d'information par exemple
+    \item \texttt{view \emph{filename}} fait un \texttt{more} du fichier
+    \item \texttt{set all} affiche l'état des options
+    \item \texttt{set \emph{keyword}[=\emph{value}]} positionne une
+      option
+      \begin{itemizer}
+      \item \texttt{[no]debug} met/enlève le debug
+      \item \texttt{[no]d2} met/enlève le debug intensif
+      \item \texttt{domain=\emph{name}} change le nom du domaine local
+      \item \texttt{srchlist=\emph{name1}/\emph{name2}/...} change la
+        liste des domaines rajoutés lors de la résolution d'un nom et
+        change le domaine local à \texttt{\emph{name1}}
+      \item \texttt{type=\emph{value}} type de réponses demandées
+        \begin{itemizer}
+        \item \texttt{ANY} tout type d'information
+        \item \texttt{A} que les adresses. \Attention{} valeur par
+          défaut... \vavers{}~\texttt{\$HOME/.nslookuprc}
+        \item \texttt{CNAME} que les noms canoniques
+        \item \texttt{MX} que les échangeurs de mail
+        \item \texttt{NS} que les noms des serveurs
+        \item \texttt{PTR} que les noms
+        \item \texttt{SOA} que l'entête d'une zone
+        \end{itemizer}
+      \item \texttt{[no]recurse} demande la récursion du serveur (vrai par
+        défaut)
+      \item \texttt{[no]vc} pour utiliser TCP au lieu d'UDP (pratique si
+      derrière certains pare-feux)
+      \end{itemizer}
+    \item \texttt{finger [\emph{name}] [>[>]] \emph{filename}} fait un
+      \texttt{finger} sur la machine courante
+    \item \texttt{exit} ou \verb|^D| pour sortir
+    \end{itemizet}
+  \item Le fichier \texttt{\$HOME/.nslookuprc} peut contenir ses options
+    préférées
+  \end{itemizer}
+\end{trans}
+
+
+\slidepart{BIND}
+
+
+\OutputOutline{Plan}
+
+
+\begin{trans}{BIND 9}
+  \begin{itemizer}
+  \item \hypertarget{BIND}{BIND} est le gestionnaire de DNS le plus connu
+    et probablement un des plus complets\\
+    \LienPDF{http://mydns.bboy.net/survey/} sondage 2004
+  \item Fonctionne sur Unix et Windows 2000
+  \item DNS Dynamic Updates \RFC{2136}
+  \item DNS Change Notification \RFC{1996}
+  \item Nouvelle syntaxe des fichiers de configuration avec la version 8/9
+    par rapport à la version 4 et :
+    \begin{itemizet}
+    \item Système de log flexible par catégories
+    \item Listes d'accès par adresse IP sur les requêtes, transferts de
+      zones et mises à jours pour chaque zone
+    \item Transferts de zones plus efficaces
+    \item Meilleures performances pour les serveurs gérant des milliers de
+      zones
+    \item Sécurité
+    \item Parallélisé pour multi-processeurs
+    \item Plein de bugs corrigés...
+    \end{itemizet}
+
+\newslide
+
+  \item Possibilité de convertir un fichier de configuration version
+    4.9.$x$ en version 8/9 via\\
+    \texttt{contrib/named-bootconf/named-bootconf.sh}
+  \end{itemizer}
+\end{trans}
+
+
+
+\begin{trans}{Installation (Linux/Debian)}
+  \begin{itemizer}
+  \item Si pas déjà installé...
+  \item Un extrait de ce qui est en rapport avec \texttt{bind} :\\
+    \texttt{aptitude search bind} donne entre autres :
+\begin{exemple}
+autodns-dhcp - Automatic DNS updates for DHCP
+bind9 - Internet Domain Name Server
+bind9-doc - Documentation for BIND
+bind9-host - Version of 'host' bundled with BIND 9.X
+dhcp-dns - Dynamic DNS updates for DHCP
+dlint - Checks dns zone information using nameserver lookups
+dnsmasq - A caching DNS forwarder.
+dnsutils - Clients provided with BIND
+host - Utility for Querying DNS Servers
+ldap2dns - LDAP based DNS management system.
+libbind-confparser-perl - Parser class for BIND configuration files
+libbind-dev - Static Libraries and Headers used by BIND
+liblwres1 - Lightweight Resolver Library used by BIND
+lwresd - Lightweight Resolver Daemon
+nslint - Lint for DNS files, checks integrity
+\end{exemple}
+  \item Une installation :
+\begin{exemple}
+amd1:~/fai# aptitude install bind9 bind9-doc bind9-host dnsutils
+Reading Package Lists... Done
+Building Dependency Tree... Done
+Sorry, bind9-host is already the newest version.
+Sorry, dnsutils is already the newest version.
+The following NEW packages will be installed:
+  bind9 bind9-doc 
+0 packages upgraded, 2 newly installed, 0 to remove and 10  not upgraded.
+Need to get 0B/387kB of archives. After unpacking 943kB will be used.
+Selecting previously deselected package bind9.
+(Reading database ... 90425 files and directories currently installed.)
+Unpacking bind9 (from .../b/bind9/bind9_9.2.1-4_i386.deb) ...
+Selecting previously deselected package bind9-doc.
+Unpacking bind9-doc (from .../bind9-doc_9.2.1-4_all.deb) ...
+Setting up bind9 (9.2.1-4) ...
+Starting domain name service: named.
+
+Setting up bind9-doc (9.2.1-4) ...
+amd1:~/fai# ps augxww|grep named
+root     17192  0.0  0.4 10156 2132 ?        S    16:08   0:00 /usr/sbin/named
+root     17193  0.0  0.4 10156 2132 ?        S    16:08   0:00 /usr/sbin/named
+root     17194  0.0  0.4 10156 2132 ?        S    16:08   0:00 /usr/sbin/named
+root     17195  0.0  0.4 10156 2132 ?        S    16:08   0:00 /usr/sbin/named
+root     17196  0.0  0.4 10156 2132 ?        S    16:08   0:00 /usr/sbin/named
+root     17202  0.0  0.0  1324  428 pts/0    R    16:08   0:00 grep named
+\end{exemple}
+\item Une trace dans les messages systèmes \texttt{/var/log/syslog} :
+\begin{exemple}
+Dec  4 16:08:13 amd1 named[17192]: starting BIND 9.2.1
+Dec  4 16:08:13 amd1 named[17192]: using 1 CPU
+Dec  4 16:08:13 amd1 named[17194]: loading configuration from '/etc/bind/named.conf'
+Dec  4 16:08:13 amd1 named[17194]: listening on IPv4 interface lo, 127.0.0.1#53
+Dec  4 16:08:13 amd1 named[17194]: listening on IPv4 interface eth0, 192.168.70.65#53
+Dec  4 16:08:13 amd1 named[17194]: listening on IPv4 interface eth1, 193.50.97.146#53
+Dec  4 16:08:13 amd1 named[17194]: command channel listening on 127.0.0.1#953
+Dec  4 16:08:13 amd1 named[17194]: command channel listening on ::1#953
+Dec  4 16:08:13 amd1 named[17194]: zone 0.in-addr.arpa/IN: loaded serial 1
+Dec  4 16:08:13 amd1 named[17194]: zone 127.in-addr.arpa/IN: loaded serial 1
+Dec  4 16:08:13 amd1 named[17194]: zone 255.in-addr.arpa/IN: loaded serial 1
+Dec  4 16:08:13 amd1 named[17194]: zone localhost/IN: loaded serial 1
+Dec  4 16:08:13 amd1 named[17194]: running
+\end{exemple}
+Ça marche !
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Installation sur BSD}
+  Au choix
+  \begin{itemizet}
+  \item \verb|cd /usr/ports/net/bind9 && make install clean|
+  \item \verb|portinstall bind9|
+  \end{itemizet}
+\end{trans}
+
+
+\begin{trans}{Documentation de BIND}
+  \begin{itemizer}
+  \item \LienPDF{http://www.isc.org/products/BIND/docs} : vieille
+    documentation (v8)
+  \item FAQ dans le répertoire principal
+  \item Répertoire \texttt{doc/} de BIND 9.2.0 par exemple :
+    \begin{itemizet}
+    \item \texttt{arm} documentation sur BIND et sa configuration au format
+      DOCBOOK/XML et HTML
+    \item \texttt{draft/} versions provisoires de RFC potentiels
+    \item \texttt{man/} manuels à installer
+    \item \texttt{misc/} divers \texttt{dnssec}, \texttt{ipv6},
+      \texttt{migration}, \texttt{options}, \texttt{sdb} (\emph{Simplified
+        Database Interface})
+    \item \texttt{rfc/} des RFC concernant DNS et BIND
+    \end{itemizet}
+  \item Sous Linux/Debian, \texttt{dpkg -L bind9-doc} montre que c'est
+    dans \texttt{/usr/share/doc/bind9-doc} et en particulier :
+    \texttt{/usr/share/doc/bind9-doc/arm/Bv9ARM.html}
+  \end{itemizer}
+  Restructuration du code dans BINDv9 \vavers{} $\exists$ des régressions
+  par rapport à BINDv8 \frownie\\
+  \vavers{} besoin de lire la documentation régulièrement...
+\end{trans}
+
+
+\begin{trans}{Compilation de BIND}
+  \begin{itemize}
+  \item Si on veut le faire \emph{a la mano}
+  \item Répertoire \texttt{src/} de BIND 9
+\begin{verbatim}
+./configure
+make
+\end{verbatim}
+    Sous \texttt{root} :
+\begin{verbatim}
+make install
+\end{verbatim}
+  \end{itemize}
+\end{trans}
+
+
+\slidepart{Configuration de BIND}
+
+
+\begin{trans}{Configuration de BIND}
+  \begin{itemizer}
+  \item \texttt{man -s 8 named} pour la version 9
+  \item
+    \href{http://www.isc.org/products/BIND/docs}{\texttt{docs}}
+    documentation sur BIND et sa configuration
+  \item Par défaut utilise
+    \begin{itemizet}
+    \item \texttt{/etc/named.conf} comme fichier de configuration
+    \item \texttt{/var/run/named.pid} numéro de processus
+    \item \texttt{/var/tmp/named\_dump.db} vidage de la base de données du
+      serveur
+    \item \texttt{/var/tmp/named.run} sortie de debug
+    \item \texttt{/var/tmp/named.stats} statistiques du serveur
+    \end{itemizet}
+  \item Dépend des conventions utilisées dans le système d'exploitation
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Exemple de configuration}
+{\footnotesize
+\begin{verbatim}
+/*
+ * A simple BIND configuration
+ */
+
+/* Commentaire */
+// Comment taire ?
+# Comme en terre
+options {
+        directory "/var/named";
+};
+
+logging {
+        category lame-servers { null; };
+        category cname { null; };
+};
+
+zone "isc.org" in {
+        type master;
+        // Le fichier de référence :
+        file "master/isc.org";
+};
+
+zone "vix.com" in {
+        type slave;
+        // Le fichier de sauvegarde :
+        file "slave/vix.com";
+        masters { 10.0.0.53; };
+};
+
+zone "." in {
+        type hint;
+        // Le fichier définissant les racines :
+        file "named.cache";
+};
+
+zone "0.0.127.in-addr.arpa" in {
+        type master;
+        file "master/127.0.0";
+};
+\end{verbatim}
+}
+\end{trans}
+
+
+\begin{trans}{Inclusion de fichier include}
+  \href{http://www.isc.org/products/BIND/docs/config/include.html}{\texttt{doc/html/include.html}}
+\begin{alltt}
+include \emph{path_name};
+\end{alltt}
+Permet de hiérarchiser le fichier de configuration
+\end{trans}
+
+
+\begin{trans}{Les options}
+  \href{http://www.isc.org/products/BIND/docs/config/options.html}{\texttt{doc/html/options.html}}
+\begin{alltt}
+options \{
+  [ directory \emph{path_name}; ]
+  [ named-xfer \emph{path_name}; ]
+  [ dump-file \emph{path_name}; ]
+  \(\vdots\)
+\};
+\end{alltt}
+Par exemple :
+\begin{itemizer}
+\item \texttt{host-statistics \emph{yes\_or\_no};} maintient des
+  statistiques sur toutes les machines interagissant avec le serveur
+\item \texttt{forward ( only | first );} fait suivre les requêtes à un
+  ensemble précis de serveurs. Avec \texttt{first}, si le serveur consulté
+  ne répond pas à la question, le serveur local fait une requête normale.
+\item \texttt{forwarders \{ [ \emph{in\_addr} ; [ \emph{in\_addr} ; ... ] ]
+    \};} liste des machines à qui les requêtes sont acheminées. Intérêt du
+  principe : pas de connexion directe à internet (pare-feu) ou serveurs
+  implémentant de gros caches. Par défaut, pas de \emph{forwarding}
+\item \texttt{check-names ( master | slave | response ) ( warn | fail |
+    ignore); } vérifie la syntaxe des noms de domaine. Par défaut :
+\begin{verbatim}
+check-names master fail;
+check-names slave warn;
+check-names response ignore;
+\end{verbatim}
+\item \texttt{allow-query \{ \emph{address\_match\_list} \};}
+\item \texttt{allow-transfer \{ \emph{address\_match\_list} \};}
+\item \texttt{allow-recursion \{ \emph{address\_match\_list} \};} pour
+  éviter d'être DNS ouvert
+\item \texttt{topology \{ \emph{address\_match\_list} \};} permet de spécifier
+  des priorités pour l'interrogation de serveurs. Utile si on a une
+  structure réseau complexe dans un même domaine : plusieurs réseaux
+  locaux, plusieurs réseaux distants, etc. comme aux Mines
+\item \texttt{blackhole \{ \emph{address\_match\_list} \};} : met ces
+    requêtes à la poubelle (style \RFC{1918})
+  \item \texttt{transfer-format ( one-answer | many-answers );} :
+  compacte les transferts de zone
+\end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Spécification de zone}
+  \href{http://www.isc.org/products/BIND/docs/config/zone.html}{\texttt{doc/html/zone.html}}
+  \begin{itemizer}
+  \item La liste de serveurs racines minimale pour le démarrage
+\begin{alltt}
+zone "." [ ( in | hs | hesiod | chaos ) ] \{ 
+  type hint;
+  file \emph{path\_name};
+  [ check-names ( warn | fail | ignore ); ]
+\};
+\end{alltt}
+\item La définition d'une zone maître
+\begin{alltt}
+zone domain_name [ ( in | hs | hesiod | chaos ) ] \{ 
+  type master;
+  file \emph{path\_name};
+  [ database "\emph{une_base_de_données_où_se_servir}"; ]
+  [ check-names ( warn | fail | ignore ); ]
+  [ allow-update \{ \emph{address\_match\_list} \}; ]
+  [ allow-query \{ \emph{address\_match\_list} \}; ]
+  [ allow-transfer \{ \emph{address_match\_list} \}; ]
+  [ notify \emph{yes\_or\_no}; ]
+  [ also-notify \{ \emph{ip\_addr}; [ \emph{ip\_addr}; ... ] \}; ]
+\};
+\end{alltt}
+\item Autres zones de délégation
+\begin{alltt}
+zone domain_name [ ( in | hs | hesiod | chaos ) ] \{ 
+  type ( slave | stub );
+  [ file \emph{path\_name}; ]
+  masters \{ \emph{ip\_addr}; [ \emph{ip\_addr}; ... ] \};
+  [ check-names ( warn | fail | ignore ); ]
+  [ allow-update \{ \emph{address\_match\_list} \}; ]
+  [ allow-query \{ \emph{address\_match\_list} \}; ]
+  [ allow-transfer \{ \emph{address\_match\_list} \}; ]
+  [ max-transfer-time-in \emph{number}; ]
+  [ notify \emph{yes\_or\_no}; ]
+  [ also-notify \{ \emph{ip\_addr}; [ \emph{ip\_addr}; ... ] \}; ]
+\}; 
+\end{alltt}
+\begin{itemizet}
+\item Zone esclave (\emph{slave}) resynchronisée sur des maîtres
+  \begin{itemizec}
+  \item Peut aussi notifier les autres serveurs (modification locale
+    dynamique, utilisation d'esclaves comme maîtres par d'autres esclaves
+    car le maître n'est pas accessible,...)
+  \item Peut aussi notifier d'autres serveurs (pour pallier à des manques
+    de visibilité directe avec le maître,...)
+  \end{itemizec}
+\end{itemizet}
+\item Une zone \texttt{stub} permet de récupérer la liste des NS d'un
+  domaine qu'on délègue et de l'utiliser sans avoir à mettre à jour sa
+  liste complète de NS, ni la glu\\
+  Comme esclave mais en ne chargeant que les NS et la glu
+\item Zone \texttt{forward} : permet de rediriger les requêtes vers un
+  serveur
+  \begin{itemizet}
+  \item Résolution d'un Intranet
+  \item Gros cache d'entreprise
+  \end{itemizet}
+\end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Options pour un serveur distant server}
+  Définit les intéractions avec un autre serveur DNS
+  \href{http://www.isc.org/products/BIND/docs/config/server.html}{\texttt{doc/html/server.html}}
+\begin{alltt}
+server \emph{ip\_addr} \{
+    [ bogus \emph{yes\_or\_no} ; ] \textsf{// Censure}
+    [ provide-ixfr \emph{yes\_or\_no} ; ]
+    [ request-ixfr \emph{yes\_or\_no} ; ]
+    [ edns \emph{yes\_or\_no} ; ]
+    [ transfers \emph{number} ; ]
+    [ transfer-format ( one-answer | many-answers ) ; ]]
+    [ keys \{ \emph{string} ; [ \emph{string} ; [...]] \} ; ]
+\};
+\end{alltt}
+\end{trans}
+
+
+\begin{trans}{Liste de contrôle d'accès acl}
+  \href{http://www.isc.org/products/BIND/docs/config/acl.html}{\texttt{doc/html/acl.html}}
+\begin{alltt}
+acl \emph{name} \{
+  \emph{address_match_list}
+\};
+\end{alltt}
+Sont définies par défaut les \texttt{acl} suivantes :
+\begin{itemizer}
+\item \texttt{any} tout le monde
+\item \texttt{none} personne
+\item \texttt{localhost} seulement les adresses IP de la machine locale
+\item \texttt{localnets} seulement les machines des réseaux auxquels
+  appartient la machine locale
+\end{itemizer}
+\begin{verbatim}
+acl rire {
+    193.50.97.128/25;
+    2001:660:7302:e000::/52;
+};
+\end{verbatim}
+\end{trans}
+
+
+
+\begin{trans}{Différentes vues view}
+\begin{itemizer}
+\item Permet de répondre différemment en fonction des clients\\
+  \vavers{} Intranet/Extranet
+\begin{alltt}
+view "internal" \{
+               \emph{// This should match our internal networks.}
+      match-clients \{ 10.0.0.0/8; \};
+               \emph{// Provide recursive service to internal clients only.}
+      recursion yes;
+               \emph{// Provide a complete view of the example.com zone}
+               \emph{// including addresses of internal hosts.}
+      zone "example.com" \{
+            type master;
+            file "example-internal.db";
+      \};
+\};
+view "external" \{
+      match-clients \{ any; \};
+               \emph{// Refuse recursive service to external clients.}
+      recursion no;
+               \emph{// Provide a restricted view of the example.com zone}
+               \emph{// containing only publicly accessible hosts.}
+      zone "example.com" \{
+           type master;
+           file "example-external.db";
+      \};
+\};
+\end{alltt}
+\item Nouveau dans BIND v9
+\item \Attention{} Si on met des \emph{view} il faut tout mettre en
+  \emph{view}...
+\end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Enregistrement d'informations logging}
+  \href{http://www.isc.org/products/BIND/docs/config/logging.html}{\texttt{doc/html/logging.html}}\\
+  Très complet. Par défaut :
+{\footnotesize
+\begin{alltt}
+logging \{
+    category default \{ default_syslog; default_debug; \};
+    category panic \{ default_syslog; default_stderr; \};
+    category packet \{ default_debug; \};
+    category eventlib \{ default_debug; \};
+\};
+channel default_syslog \{
+    syslog daemon;        # send to syslog's daemon facility
+    severity info;        # only send priority info and higher
+\};
+
+channel default_debug \{
+    file "named.run";     # write to named.run in the working directory
+                          # Note: stderr is used instead of "named.run"
+                          # if the server is started with the "-f" option.
+    severity dynamic;     # log at the server's current debug level
+\};
+
+channel default_stderr \{  # writes to stderr
+    file "<stderr>";      # this is illustrative only; there's currently
+                          # no way of specifying an internal file
+                          # descriptor in the configuration language.
+    severity info;        # only send priority info and higher
+\};
+
+channel null \{            
+    null;                 # toss anything sent to this channel
+\};
+\end{alltt}
+}
+Format de configuration :
+{\footnotesize
+\begin{alltt}
+logging \{
+  [ channel \emph{channel_name} \{
+    ( file \emph{path_name}
+       [ versions ( number | unlimited ) ]
+       [ size \emph{size_spec} ]
+     | syslog ( kern | user | mail | daemon | auth | syslog | lpr |
+                news | uucp | cron | authpriv | ftp |
+                local0 | local1 | local2 | local3 |
+                local4 | local5 | local6 | local7 )
+     | null );
+
+    [ severity ( critical | error | warning | notice |
+                 info  | debug [ \emph{level} ] | dynamic ); ]
+    [ print-category \emph{yes_or_no}; ]
+    [ print-severity \emph{yes_or_no}; ]
+    [ print-time \emph{yes_or_no}; ]
+  \}; ]
+
+  [ category \emph{category_name} \{
+    \emph{channel_name}; [ \emph{channel_name}; ... ]
+  \}; ]
+  ...
+\};
+\end{alltt}
+}
+De nombreuses catégories d'événements existent : \texttt{queries},
+\texttt{update}, \texttt{packet}, \texttt{load}, \texttt{lame-servers},
+\texttt{statistics},...
+\end{trans}
+
+
+\begin{trans}{lwres}
+  \begin{itemizer}
+  \item Utilise BIND en processus indépendant qui factorise le travail de
+    résolution
+  \item Accessible par bibliothèque simplifiée (\emph{light-weight
+      resolver}) par UDP port 921 sur \texttt{localhost} par défaut
+    (résout problèmes d'insécurité)
+  \item Permet de paramétrer les clés de sécurité, les signatures, les
+    options, IPv6, les statistiques,...
+  \end{itemizer}
+\begin{alltt}
+lwres \{
+    [ listen-on \{ \emph{ip\_addr} [port \emph{ip\_port}] ; [ \emph{ip\_addr} [port \emph{ip\_port}] ; ... ] \}; ]
+    [ view \emph{view\_name}; ]
+    [ search \{ \emph{domain\_name} ; [ \emph{domain\_name} ; ... ] \}; ]
+    [ ndots \emph{number}; ]
+\};
+\end{alltt}
+\end{trans}
+
+
+\begin{trans}{Sécurité \& authentification key}
+  \href{http://www.isc.org/bind8/key.html}{\texttt{doc/html/key.html}}
+\begin{alltt}
+key \emph{key_id} \{
+  algorithm \emph{algorithm_id};
+  secret \emph{secret_string};
+\};
+\end{alltt}
+Définit une clé qui sera utilisée dans une autre directive pour sécuriser
+des accès, authentifier,...
+\end{trans}
+
+
+\slidepart{Contrôle}
+
+
+\begin{trans}{Démarrage de BIND}
+  \begin{itemizer}
+  \item Linux/Debian
+    \begin{itemizet}
+    \item Lancé depuis \texttt{/etc/rc2.d/S15bind9}
+    \item Classiquement
+\begin{exemple}
+/etc/init.d/bind9 {start|stop|reload|restart|force-reload}
+\end{exemple}
+    \end{itemizet}
+  \item Solaris
+    \begin{itemizet}
+    \item \texttt{man named} en natif sur le système (version 4 en Solaris
+      2.6, 8 en Solaris 7)
+    \item \texttt{man -s 8 named} pour la version 8 qui nous intéresse
+    \item Le nom de l'exécutable de BIND est \texttt{named}
+    \item Solaris 9 lance \texttt{named} depuis
+      \texttt{/etc/rc2.d/S72inetsvc} (lien vers
+      \texttt{/etc/init.d/inetsvc})
+    \item Modifier \texttt{/etc/init.d/inetsvc} pour une syntaxe version 8
+      le cas échéant (inutile à partir de Solaris 7). Par exemple
+\begin{exemple}
+if [ -f /usr/sbin/in.named -a -f /etc/named.boot ]; then
+        /usr/sbin/in.named;     echo "starting internet domain name server."
+\end{exemple}
+      en
+\begin{exemple}
+if [ -f /usr/sbin/named -a -f /etc/named.conf ]; then
+        /usr/sbin/named;     echo "starting internet domain name server V8."
+\end{exemple}
+    \end{itemizet} 
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Contrôle de \NAMED{} : rndc}
+  \begin{itemizer}
+  \item Contrôle le fonctionnement de \NAMED{} à distance via
+    TCP port 953 (par rapport au vieux \texttt{ndc})
+  \item \texttt{man rndc}
+\begin{alltt}
+rndc [-c \emph{config}] [-s \emph{server}] [-p \emph{port}] [-y \emph{key}] \emph{command} [\emph{command}...]|
+\end{alltt}
+    \begin{itemizet}
+%%    \item \texttt{start} : démarre \NAMED{} s'il ne tourne pas déjà
+    \item \texttt{stop} : arrête \NAMED{} en sauvegardant les mises à jour
+      en cours
+    \item \texttt{restart} : arrête et redémarre \NAMED{} mais... non
+    implémenté !
+    \item \texttt{halt} : arrête \NAMED{} froidement
+    \item \texttt{status} : status de \NAMED{}
+    \item \texttt{reconfig} : recharge la configuration et les nouvelles
+      zones
+    \item \texttt{reload [\emph{zone} [\emph{class} [\emph{view}]]]} :
+      recharge les zones primaires et secondaires en fonction des numéros
+      de série
+    \item \texttt{flush [\emph{view}]} : vide les caches du serveur
+    \item \texttt{stats} : met les statistiques de \NAMED{} dans
+      \texttt{/var/tmp/named.stats} ou \verb|/var/cache/bind/named.stats|
+    \item \texttt{dumpdb} : met la base de données et le cache courant de
+      \NAMED{} dans \verb|/var/tmp/named_dump.db| ou
+      \verb|/var/cache/bind/named_dump.db|
+    \item \texttt{querylog} : \NAMED{} enregistre toutes les requêtes via
+      \texttt{syslog}
+    \item \texttt{trace}/\texttt{notrace} : incrémente/annule le niveau de
+      trace qui va dans \texttt{/var/tmp/named.run}
+    \end{itemizet}
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Protection de rndc}
+  \begin{itemizer}
+  \item Éviter que tout le monde puisse contrôler son BIND...
+  \item Configuration par \texttt{rndc.conf} : clé (secret partagé) dans
+    \texttt{/etc/bind/rndc.key} :
+\begin{exemple}
+key "rndc-key" {
+    algorithm hmac-md5;
+    secret "Izb8d/vxJAfeBmZQ3LVzcQ==";
+};
+\end{exemple}
+  \item Si accès à la clé :
+\begin{exemple}
+amd1:~/fai# rndc stats   
+\end{exemple}
+\item Si pas accès à la clé :
+\begin{exemple}
+keryell@minou:~$ /usr/sbin/rndc stats
+rndc: error: none:0: open: /etc/bind/rndc.key: permission denied
+rndc: could not load rndc configuration
+\end{exemple}%$
+\item Voir la doc pour avoir plusieurs clés pour différents serveurs
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Autres outils venant avec BIND}
+  \begin{itemizer}
+  \item \texttt{addr} affiche une adresse IPv4 ou v6 en décimal ou
+    hexadécimal
+  \item \texttt{dnsquery} autre outil pour faire des requêtes à un serveur
+    \texttt{man dnsquery}
+  \item \texttt{named-xfer} permet de tester les transferts de zone.
+    Utilisé en fait par \texttt{named} lui-même pour ses transferts.
+    Typique BINDv8 \texttt{man named-xfer}
+  \item \texttt{nsupdate} envoie des requêtes de mise à jour dynamique
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Mise à jour dynamique de domaine}
+  Réalise \RFC{2136}
+  \begin{itemizer}
+  \item Permettre des mises à jour de DNS (en fonction de DHCP,...) sans
+    devoir relancer le DNS
+  \item Commande \texttt{nsupdate} d'envoi de requêtes de mise à jour
+    dynamique. Commandes du style
+\begin{alltt}
+update add \emph{domaine} \emph{TTL} [\emph{class}] \emph{type} \emph{rdata}
+update delete \emph{domaine} [\emph{type}] [\emph{rdata}]
+send
+\end{alltt}
+  \item Possibilité de mettre des préconditions de type :
+\begin{alltt}
+prereq nxdomain nickname.example.com
+update add nickname.example.com 86400 CNAME somehost.example.com
+send
+\end{alltt}
+\item Sécurité avec \texttt{nsupdate [-d] [-v] [[-y \emph{keyname}:\emph{secret}]
+    [-k \emph{keyfile}]] [\emph{filename}]}
+  \Attention{} si secret en ligne de commande car avec \texttt{ps
+    augxww} ou \texttt{ps -ef}...
+\item \texttt{man nsupdate} :
+  \begin{itemize}
+  \item \texttt{-d} : trace en mode debug
+  \item \texttt{-v} : utilise TCP
+  \end{itemize}
+\item BINDv9 incrémente le numéro de série de la zone à chaque mise à jour
+  dynamique \vavers{} \Attention{} si en plus un mécanisme style
+  \texttt{h2n}
+\item BINDv9 garde un fichier de journalisation des modifications qui
+  garde le $\Delta$ par rapport au fichier de zone d'origine (écrit si
+  \texttt{rndc stop})
+  \end{itemizer}
+\end{trans}
+
+
+
+\slidepart{Génération des fichiers de zone}
+
+\OutputOutline{Plan}
+
+
+\begin{trans}{Comment générer les fichiers de zone ?}
+  \begin{itemizer}
+  \item \Attention{} \hypertarget{Fichier Zone}{Il} faut garantir la
+    cohérence noms $\leftrightarrow$ adresses
+  \item À la main... Bon pour les petits domaines
+  \item Utiliser des outils. \LienPDF{http://www.dns.net/dnsrd/tools.html}
+    ou maison. Aux Mines outil maison (archéologie : amélioré d'Ulm via un
+    \texttt{awk} \vavers{} \texttt{perl} avec \texttt{a2p} au passage, lui
+    même amélioré de l'INRIA...) utilisant un \texttt{/etc/hosts}
+    contenant des pseudo-commentaires
+  \item Par exemple \texttt{h2n}
+    \LienPDF{http://examples.oreilly.com/dns4/dns.4ed.tar.Z}, étendu
+    ensuite chez HP \LienPDF{ftp://ftp.hpl.hp.com/pub/h2n}\\
+    Installation :
+\begin{verbatim}
+cp h2n /usr/local/bin
+cp h2n.man /usr/local/man/man8/h2n.8
+\end{verbatim}
+    Autre possibilité pour FreeBSD :
+\begin{verbatim}
+portinstall h2n
+\end{verbatim}
+  \item Un outil permet d'avoir une idée du format des fichiers de
+    configuration...
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Utilisation de h2n}
+  \begin{itemizer}
+  \item Génère des fichiers \texttt{db.$\cdots$} à partir du
+    \texttt{/etc/hosts} local ($\equiv$ base de données)
+  \item \texttt{h2n -d \emph{domain} -n
+      \emph{network}[\string:\emph{netmask}] [\emph{options}]}
+  \item \texttt{\emph{domain}} domaine de sa zone. Si plusieurs domaines,
+    faire tourner plusieurs fois \texttt{h2n} et générer le fichier de
+    configuration à la main
+  \item \texttt{\emph{network}[\string:\emph{netmask}]} numéro de réseau.
+    Plusieurs \texttt{-n} sont possibles
+  \item On peut spécifier des RR spéciaux par fichier \texttt{db.$\cdots$}
+    en les incluant dans un fichier \texttt{spcl.$\cdots$}
+  \item \texttt{\emph{options}} :
+    \begin{itemizet}
+    \item \texttt{-b \emph{boot-file}} autre fichier de configuration que
+      par défaut (utile pour BINDv8-9)
+    \item \texttt{-C \emph{comment-file}} permet de générer des RR
+      supplémentaires à partir de pseudo-commentaires dans
+      \texttt{/etc/hosts} à partir de traductions dans
+      \texttt{\emph{comment-file}} ayant le format
+\begin{verbatim}
+key:resource     record
+\end{verbatim}
+    Exemple pour préciser un MX particulier à une
+    machine. \texttt{/etc/hosts} contient
+\begin{verbatim}
+192.54.172.242 deauville # cri mx-cri Sun Ultra 1/140
+\end{verbatim}
+Avec dans \texttt{\emph{comment-file}}
+\begin{verbatim}
+mx-cri:IN MX 10 cri.ensmp.fr.
+\end{verbatim}
+    \item \texttt{-c \emph{remote-domain}}
+    \item \texttt{-e \emph{domain}} exclut toutes les machines du domaine
+    \item \texttt{-f \emph{file}} lit les options dans un fichier
+    \item \texttt{-H \emph{file}} utilise un autre fichier
+      qu'\texttt{/etc/hosts}
+    \item \texttt{-h \emph{host}} précise une autre machine pour le SOA
+      que la machine locale
+    \item \texttt{-i \emph{serial}} impose une valeur aux numéros de série
+    \item \texttt{-M} ne génère pas de MX par défaut qui est soi-même
+      pour chaque machine. Ce MX peut aussi être supprimé par machine avec
+      \texttt{[no smtp]} en commentaire de \texttt{/etc/hosts}
+    \item \texttt{-m \emph{priorité}\string:\emph{machine}} rajoute pour chaque
+      nom cet enregistrement MX
+    \item \texttt{-N \emph{netmask}} applique ce \texttt{\emph{netmask}}
+      à tous les réseaux
+    \item \texttt{-o
+        \emph{refresh}\string:\emph{retry}\string:\emph{expire}\string:\emph{minimum}}
+      change les valeurs par défaut dans le SOA
+      (\verb/10800:3600:604800:86400/)\\
+      \Attention{} dans BINDv9 le \texttt{\emph{minimum}} indique le temps
+      de cachage pour les réponses négatives ! Donc, modifier ce paramètre
+    \item \texttt{-s \emph{server}} spécifie un serveur de nom (maître ou
+      esclave). Permet les notifications de BIND 8. Plusieurs \texttt{-s}
+    \item \texttt{-t} génère un champs TXT à partir des commentaires de
+      la table des machines \texttt{/etc/hosts}
+    \item \texttt{-u \emph{user}} précise l'adresse mail du responsable de
+      la zone au lieu de \texttt{root}
+    \item \texttt{-v 4|8} génère du format BIND version 4 ou
+      8. \Attention{} version 4 par défaut...
+    \item \texttt{-w} rajoute un WKS précisant \texttt{smtp} comme service
+    \item \texttt{-y} génère un numéro de série basé sur la date. Pratique
+      pour connaître la date de dernière mise à jour !\\
+      Utilise les vieux fichiers de zone et incrémente\\
+      \Attention{} à l'interaction des mises à jour incrémentales qui
+      incrémentent aussi le numéro de série...
+    \item \texttt{-Z \emph{adresse}} crée un fichier de configuration
+      \texttt{boot.sec} pour un serveur secondaire avec
+      l'\texttt{\emph{adresse}} du maître par défaut
+    \item \texttt{-z \emph{adresse}} comme \texttt{-Z}, crée un fichier de
+      configuration \texttt{boot.sec.save} pour un serveur secondaire et
+      un fichier de secours contenant les données (en cas de disparition
+      du primaire...)
+    \end{itemizet}
+  \end{itemizer}
+\end{trans}
+
+\begin{trans}{Limitations d'h2n}
+  \begin{itemizer}
+  \item Génère des noms de fichiers de zone tronqués
+  \item Ne gère pas IPv6 ou DNSSEC
+  \item Très configurable mais peu extensible
+  \item Fichiers de zone non triés pour des humains
+  \item Beaucoup d'extension dans la version de HP (CIDR...) \smiley{}
+    mais fait des suppositions sur noms dans \texttt{/etc/hosts} \frownie
+  \item Corollaire
+    \begin{itemizet}
+    \item Utiliser \texttt{h2n} dans une infrastructure plus complexe qui
+      pré-/posttraite les flux
+    \item Utiliser un autre outil ?\\
+      Projet à base de Python en cours chez moi...
+    \end{itemizet}
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Exemple de mise en \oe{}uvre d'h2n}
+  \begin{itemize}
+  \item Part de \texttt{/usr/local/share/conf/LIT/etc/hosts}
+  \item Génère les fichiers du DNS dans
+    \texttt{/usr/local/share/conf/RIRE/var/named}
+  \item \texttt{Makefile} contrôlant le fonctionnement
+  \end{itemize}
+\begin{exemple}
+#       $ Header: /usr/local/share/conf/RIRE/var/named/RCS/Makefile,v 1.10 2003/12/11 14:17:26 root Exp $
+# REFRESH:RETRY:EXPIRE:MINIMUM
+# Changed since in BINDv9 MINIMUM is for negative caching:
+TIMINGS=7200:3600:604800:600
+HOST_FILE=../../../RIRE/etc/hosts
+MASTER=db.127.0.0 db.192.168.70 db.193.50.97 db.enstb.org spcl.enstb.org db.diwan.eu.org keryell-even.trad.org
+MASTER_DIR=/var/cache/bind/master
+
+db.enstb: Makefile $(HOST_FILE)
+        # Remove the first line ($TTL) before processing by h2n:
+        -(echo 1d ; echo wq) | ex db.127.0.0
+        -(echo 1d ; echo wq) | ex db.192.168.70
+        -(echo 1d ; echo wq) | ex db.193.50.97
+        -(echo 1d ; echo wq) | ex db.enstb.org
+        # To force h2n to declare it in the db file:
+        -ln -s spcl.enstb.org spcl.enstb
+        # h2n truncate file names... :-(
+        -mv db.enstb.org db.enstb
+        /home/keryell/h2n/h2n -v 8 -b named.conf -t -w -y -H $(HOST_FILE) \
+        -C directives -d enstb.org -u keryell.cri.ensmp.fr -h dns2.enstb.org
+        -s dns2.enstb.org -s dns3.enstb.org -s dns-cri.ensmp.fr \
+        -s rsm.rennes.enst-bretagne.fr -z 193.48.171.215 -n 193.50.97 \
+        -n 192.168.70 -n 127.0.0 -m 20:minou.info.enstb.org -o $(TIMINGS)
+        mv db.enstb db.enstb.org
+        -(echo %s,spcl.enstb,master/spcl.enstb.org, ; echo wq) | ex db.enstb.org
+        # Deal with CIDR :
+        sed 's/\.97\.50\.193\.IN-ADDR.ARPA.//' db.193.50.97 \
+        > db.193.50.97.simple && mv db.193.50.97.simple db.193.50.97
+        ./CIDR_conf 97.50.193.IN-ADDR.ARPA \
+        FR-ENSTB-BREST.97.50.193.in-addr.arpa named.conf
+        ./CIDR_conf 97.50.193.IN-ADDR.ARPA \
+        FR-ENSTB-BREST.97.50.193.in-addr.arpa boot.sec
+        ./CIDR_conf 97.50.193.IN-ADDR.ARPA \
+        FR-ENSTB-BREST.97.50.193.in-addr.arpa boot.sec.save
+        # Add back the $$TTL by default needed with BINDv9
+        ./add_TTL db.127.0.0
+        ./add_TTL db.192.168.70
+        ./add_TTL db.193.50.97
+        ./add_TTL db.enstb.org
+
+
+install:
+        cp $(HOST_FILE) /etc
+        mkdir -p $(MASTER_DIR)
+        cp $(MASTER) $(MASTER_DIR)
+        /etc/init.d/bind9 force-reload
+\end{exemple}%$
+  \begin{itemize}
+  \item Programme d'aide \verb|CIDR_conf|
+\begin{exemple}
+#! /bin/sh
+
+IP_NET=$1
+IP_NET_CIDR_ZONE=$2
+FILE=$3
+TMPFILE=$FILE.$$.tmp
+SED_EX=`echo 's,"'$IP_NET'","'$IP_NET_CIDR_ZONE'",' | sed 's/\./\\\./g'`
+
+sed $SED_EX $FILE > $TMPFILE && mv $TMPFILE $FILE
+\end{exemple}
+\item Programme d'aide \verb|add_TTL|
+\begin{exemple}
+#! /bin/sh
+
+FILE=$1
+TMPFILE=$FILE.$$.tmp
+echo '$TTL 3600 ; 1 hour default TTL' > $TMPFILE
+cat $FILE >> $TMPFILE
+mv $TMPFILE $FILE
+\end{exemple}%$
+  \end{itemize}
+\end{trans}
+
+
+\begin{trans}{Quelques contributions livrées avec BIND}
+  Répertoire \texttt{contrib/} de BIND 8 contenant par exemple :
+  \begin{itemizer}
+  \item \texttt{dnsparse/} outils pour générer un \texttt{/etc/hosts} à
+    partir de zones DNS
+  \item \texttt{getkeyby/} outils pour récupérer des clés de chiffrement
+     via DNS
+  \item \texttt{nutshell/} les (vieux) programmes du livre \emph{DNS and
+      BIND} de chez O'Reilly. Récupérer plutôt depuis
+    \LienPDF{ftp://ftp.uu.net/published/oreilly/nutshell/dnsbind/dns.tar.Z}
+  \item \texttt{tic/} Outil générant les zones à partir de fichier
+    \texttt{/etc/hosts}
+  \end{itemizer}
+\end{trans}
+
+
+\slidepart{BIND et DNS avancé}
+
+
+\OutputOutline{Plan}
+
+
+\begin{trans}{Développements récents et futurs}
+  \LienPDF{http://www.isc.org/bind-plans.html}
+  \begin{itemizer}
+  \item \hypertarget{Avancé}{Pris} en charge par
+    l'\href{http://www.isc.org}{Internet Software Consortium}
+  \item Paul Vixie (architecte et programmeur) \& Bob Halley (programmeur)
+  \item IPv6
+  \item Rajout de la sécurité (DNSSEC de TIS et DNSSAFE de RSA)
+  \item Résolution sécurisée (TSIG)
+  \item Transferts de zone incrémentaux (IXFR)
+  \item Amélioration de la mise à jour des zones 
+  \item Support payant possible
+  \end{itemizer}
+\end{trans}
+
+
+\input{../../lib/Reseaux/IPv6/Introduction}
+
+
+\slidepart{DNS \& IPv6}
+
+\begin{trans}{DNS \& IPv6 : Vieille méthode (qui a gagné)}
+  \begin{itemizer}
+  \item Reprendre les vieilles méthodes IPv4 en adaptant \vavers
+    \RFC{1886}
+  \item Rajout d'un enregistrement AAAA avec des adresses de 128
+    (4*A\smiley)~bits dans les zones directes
+\begin{exemple}
+an-dro.plouzane IN AAAA 2001:7a8:2e22:0:a00:46ff:fe68:181b
+\end{exemple}
+\item Équivalent de \texttt{in-addr.arpa} passé dans \texttt{ip6.int}
+  passé en hexadécimal et en bloc de 4 bit (au lieu de décimal par tranche
+  de 8 bits en IPv4)
+\begin{exemple}
+b.1.8.1.8.6.e.f.f.f.6.4.0.0.a.0.0.0.0.0.2.2.e.2.8.a.7.0.1.0.0.2.ip6.int
+    PTR an-dro.plouzane.enstb.org
+\end{exemple}
+  \item Problèmes
+    \begin{itemizet}
+    \item Le CIDR n'est pas simple si par alignés sur 4 bits
+    \item On pollue \texttt{.int} avec \texttt{ip6} alors que
+      \texttt{.int} est pour des humains
+    \item Beaucoup de répétitions dans les adresses
+    \item Si on change de fournisseur il faut changer tous les AAAA
+    \item Si multi-domiciliation, beaucoup de zones redondantes à
+      synchroniser
+    \end{itemizet}
+    \vavers Méthode en voie d'abandon ? À garder pour « vieux » clients DNS
+    IPv6 ? Eh non ! Lors d'une élection c'est cette méthode qui
+    restera... \frownie
+  \item Utilise néanmoins \texttt{ip6.arpa}
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{DNS \& IPv6 : nouvelle méthode (qui a perdu)}
+  \begin{itemizer}
+  \item On repart dans \texttt{arpa} avec \texttt{ip6.arpa} \BCP{49}
+  \item Une adresse IPv6 est souvent définie par morceaux : fournisseur
+    d'accès+réseau local+ interface par exemple
+  \item Nouvel enregistrement A6 permettant ces concaténations en itérant
+    sur des enregistrement de type\\
+    \texttt{nom IN A6 \emph{taille} \emph{adresse} \emph{zone}}\\
+    où \texttt{\emph{nom}} aura l'\texttt{\emph{adresse}} dont les
+    \texttt{\emph{taille}} premiers bits seront à chercher dans le
+    \texttt{A6} de la \texttt{\emph{zone}}
+\begin{exemple}
+an-dro.info.enstb.org A6 64 ::a00:46ff:fe68:181b ip6.info.enstb.org
+ip6.info.enstb.org A6 48 0:0:0:9771:: enstb.vthd.net
+enstb.vthd.net A6 0 2001:688:1f9c:
+\end{exemple}
+    Définira l'adresse \verb|2001:688:1f9c:9771:a00:46ff:fe68:181b|
+  \item Si une machine est connectée à plusieurs fournisseurs d'accès
+    Internet on aura plusieurs \texttt{A6} pour gérer les différents
+    préfixes
+  \item Méthode inverse
+    \begin{itemizet}
+    \item Adresses représentées par un nouveau type \RFC{2673} : chaîne de
+      bits pour gérer proprement le CIDR
+\begin{exemple}
+\[x200106881f9c/48\]
+\end{exemple}
+\item Recherche ensuite de
+  \verb|\[x200106881f9c97710a0046fffe68181b\].ip6.arpa|
+    \item Introduit une sorte de \texttt{CNAME} spécialisé :
+    \texttt{DNAME} pour faire des réécritures avec des :
+\begin{exemple}
+\[x200106881f9c8/48\].ip6.arpa DNAME ip6.vthd.net
+\[x9771/16\].ip6.vthd.net DNAME ip6.info.enstb.org
+\[x0a0046fffe68181b\].ip6.info.enstb.org PTR an-dro.info.enstb.org
+\end{exemple}
+aura pour effet de faire répondre successivement lors de la recherche :
+\begin{exemple}
+\[x200106881f9c97710a0046fffe68181b\].ip6.arpa CNAME
+  \[x97710a0046fffe68181b\].ip6.vthd.net
+\[x97710a0046fffe68181b\].ip6.vthd.net CNAME
+  \[x0a0046fffe68181b\].ip6.info.enstb.org
+\[x0a0046fffe68181b\].ip6.info.enstb.org PTR an-dro.info.enstb.org
+\end{exemple}
+  \end{itemizet}
+\end{itemizer}
+Cf \RFC{3364} pour une comparaison approche AAAA \RFC{3363} qui a gagné ou
+A6 \RFC{2874}
+\end{trans}
+
+
+\slidepart{Internationalisation}
+
+\begin{trans}{Internationalisation des noms de domaine}
+  \LienPDF{http://www.afnic.fr/formation/supports/formation-unicode}
+  \begin{itemizer}
+  \item DNS de base très anglo-saxon : a--z, - et 0-9. Encore moins que
+    l'ASCII ! \frownie
+  \item Besoin de noms de domaines français, chinois, russes, arabes,
+    hébreux,...
+  \item Déjà fait pour les entêtes du courriel (ASCII) avec MIME
+  \item Propositions de solutions applicatives non portables... \frownie
+  \item Pourtant $\exists$ UNICODE/ISO 10646
+    \LienPDF{http://www.unicode.org} visant la représentation de toutes
+    les langues de la Terre (et quelques autres \smiley) avec 32~bits
+  \item $\exists$ différents encodages d'UNICODE : UTF-7, UTF-8
+    (\RFC{3629}), UTF-16, UTF-32,...
+  \item Comment faire rentrer ça dans le DNS ?
+  \end{itemizer}
+\end{trans}
+
+
+\begin{trans}{Noms de domaine en UNICODE}
+  \begin{itemizer}
+  \item Problèmes d'unicité : par exemple lettre accentuée représentable
+    par elle-même ou en combinaison du caractère standard et de
+    l'accentuation, écriture de gauche à droite ou dans d'autres directions
+  \item \vavers Besoin de normaliser avant réponse DNS :
+    \texttt{stringprep} du \RFC{3454}
+    \item Définir un nouvel encodage d'UNICODE compatible avec le DNS~: le
+    \emph{punycode} du \RFC{3492}
+  \item \RFC{3490} Internationalizing Domain Names in Applications (IDNA)
+    : rajoute le préfixe \texttt{xn-}\texttt{-} devant la chaîne punycodée
+  \item UNICODE est une norme qui évolue \vavers faire évoluer les RFC en
+    conséquence...
+  \end{itemizer}
+\end{trans}
+
+
+
+\slidepart{Sécurité}
+
+\begin{trans}{Sécurisation du serveur lui-même}
+  \LienPDF{http://www.cymru.com/Documents/secure-bind-template.html}
+  \begin{itemize}
+  \item Faire tourner BIND dans une prison système ou machine (virtuelle) propre
+  \item Ne pas répondre aux paquets avec adresses improbables
+  \item Limiter la récursion à qui de droit
+  \item Éventuellement avoir une version privée des données
+  \end{itemize}
+\end{trans}
+
+
+\input{../../lib/Reseaux/DNSSEC/Introduction}
+
+
+\input{../../lib/Reseaux/IPsec/Introduction}
+
+
+\slidepart{Conclusion}
+
+
+\begin{trans}{Conclusion}
+  \begin{itemizer}
+  \item \hypertarget{Conclusion}{Système} de gestion de nom efficace et
+    unificateur
+  \item Comme tous les systèmes cruciaux d'Internet : au moins une
+    implémentation efficace et gratuite
+  \item Portable
+  \item Très complet
+  \item[\vavers{}] Travaux pratiques
+  \end{itemizer}
+\end{trans}
+
+
+\slidepart{Travaux pratiques}
+
+
+\OutputOutline{Plan}
+
+
+\begin{trans}{Réaliser son propre DNS}
+  \begin{itemizer}
+  \item Créer un domaine \texttt{\emph{son-nom}.com} sur sa machine avec
+    une utilisation maximaliste de \texttt{h2n}
+  \item Pourquoi les autres machines ne voient-elles pas ce domaine ?
+  \item Créer un domaine \texttt{\emph{son-nom}.enstb.org}
+  \item Vérifier avec \ZoneCheck
+  \item Y mettre par exemple les machines de \texttt{/etc/hosts}
+  \item Mettre en place des politiques d'accès et des politiques de
+    maîtres-esclaves
+  \item Tester les transferts de zone
+  \end{itemizer}
+\end{trans}
+
+
+\slidepart{Table des matières}
+
+\begin{trans}{Table des matières}
+\hypertarget{Table}{~}
+  %% Fait quelque chose de compact :
+%%BUG
+  \begin{multicols}{2}
+    \tiny
+    \let\large=\tiny
+                                % Bug ?
+    %\Slidecontents
+    \listofslides
+  \end{multicols}
+\end{trans}
+
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "trans"
+%%% ispell-local-dictionary: "francais"
+%%% End: 

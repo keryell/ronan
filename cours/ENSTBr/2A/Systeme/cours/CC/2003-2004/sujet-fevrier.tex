@@ -1,0 +1,304 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{a4wide}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage{psfig}
+\usepackage{pstricks,amstext,marvosym}
+\usepackage[francais]{babel}
+%\usepackage[dvips]{hyperref}
+
+\def\fup#1{$^{\text{#1}}$}
+
+\begin{document}
+
+\newcommand{\LigneHorizontale}{\centerline{\red \noindent\leavevmode\hrulefill}}
+
+\newcounter{NumeroQuestion}
+\setcounter{NumeroQuestion}{0}
+\newenvironment{question}[1]{%
+  \begingroup
+  \def\taille{#1}%
+  \addtocounter{NumeroQuestion}{1}
+  \noindent%
+  \textbf{Question \arabic{NumeroQuestion}} :%
+  }{%
+  \nopagebreak
+  \vspace*{\taille\baselineskip}%
+  %\nopagebreak~
+  %\vfil
+  \endgroup%
+  }
+
+\centerline{%
+  \begin{tabular}[c]{l}
+    \psfig{file=logo/www.enst-bretagne.fr/resources/logos/logo-ENSTBretagne-bicolore.eps,%%
+      height=2cm}
+  \end{tabular}
+  \hfill
+  \begin{tabular}[c]{r}
+    Département Informatique
+  \end{tabular}
+  }
+
+\LigneHorizontale
+
+\centerline{%
+  \begin{tabular}{l}
+    Promotion : 2002--2005\\
+    2\fup{ème} année\\
+    \textbf{Nom} :
+  \end{tabular}
+  \hfill
+  \begin{tabular}{lr}
+    Année scolaire : & 2003--2004\\
+    Date : & 6 février 2004\\
+    \textbf{Prénom} : & 
+  \end{tabular}
+  }
+
+\LigneHorizontale
+
+\begin{center}
+  \bf \Large Module ISI 204\\
+  Session de février\\
+  ---\\
+  {\Huge Systèmes d'exploitation et leur support d'exécution}\\
+  ---\\
+  Contrôle de connaissance\footnote{Sans document, sans calculatrice, sans
+    triche, sans copie sur les voisins, sans micro-ordinateur portable ou
+    non, sans macro-ordinateur, sans téléphone portable ou non, sans
+    talkie-walkie, sans télépathie, sans métempsycose, sans pompe, sans
+    anti-sèche, sans tatouage ni vêtement imprimé en rapport avec le
+    sujet, sans mouchoir de poche pré-imprimé, sans piercing, sans
+    scarification en rapport avec \textsc{isi-204},...} de 1 heure et 30
+  minutes
+\end{center}
+
+\LigneHorizontale
+
+\begin{center}
+  Merci de répondre (au moins) dans les blancs.\\
+  Lire tout le sujet avant de commencer à répondre : cela peut vous donner
+  de l'inspiration...
+
+  Chaque question sera notée entre 0 et 10 et la note globale sera
+  calculée par une fonction des notes élémentaires. La fonction définitive
+  sera choisie après correction des copies.
+
+  \textbf{Attention :} tout ce que vous écrirez sur cette copie pourra
+  être retenu contre vous, cité sans ménagement dans certaines revues,
+  voire avoir une influence sur la note d'\textsc{isi204}.
+\end{center}
+
+
+\section{Généralités système}
+
+
+\begin{question}{9}
+  À quoi sert un système d'exploitation (succinctement...) ?
+\end{question}
+
+
+\begin{question}{12}
+  Heureusement, on peut aussi vivre sans système d'exploitation. Donner
+  des applications informatiques complètes (matériel~+~logiciel) où on n'a
+  pas besoin raisonnablement de système d'exploitation.
+\end{question}
+
+
+\begin{question}{12}
+  Pourquoi avoir un mode noyau et un mode utilisateur dans les processeurs
+  et les systèmes d'exploitation évolués ?
+\end{question}
+
+
+\section{Systèmes de fichiers}
+
+
+\begin{question}{12}
+  Qu'est-ce qu'un système de fichier ?
+\end{question}
+
+
+\begin{question}{12}
+  Quels sont les optimisations qu'on peut faire au niveau d'un système
+  d'exploitation pour améliorer les accès au disque dur ?
+\end{question}
+
+
+\begin{question}{20}
+  Imaginer un exemple de structure de données (sans répertoire) pour
+  stocker des fichiers dans une carte de mémoire flash (du type qu'on met
+  dans les appareils photos numériques ou les baladeurs \textsc{mp3}). On
+  considérera la mémoire flash comme capable de stocker simplement des
+  suites d'octets à un endroit donné. Toutes les idées sont bonnes à
+  prendre ! Détailler.
+  
+  Ce serait bien si on pouvait incrémentalement rajouter des fichiers (des
+  morceaux de musique) ou en enlever sans avoir à tout ré-écrire le
+  contenu de la carte depuis le début.
+  
+  Chiffrer le surcoût de votre structure de données par rapport aux
+  données utiles en fonction de la finesse de la structure de données.
+  Quels sont les avantages et inconvénients de votre système selon les
+  usages (peu de fichiers mais des gros, pleins de petits fichiers, de la
+  lecture, de l'écriture, de l'effacement,...) ?
+\end{question}
+
+
+\section{Concurrence, parallélisme}
+
+
+
+\begin{question}{8}
+  Qu'est-ce qu'un processus ?
+\end{question}
+
+
+\begin{question}{10}
+  Qu'est-ce qu'un processus multi-threadé et à quoi cela peut bien servir
+  ?
+\end{question}
+
+
+\begin{question}{14}
+  Qu'est-ce qu'une interruption ? À quoi cela peut bien servir ? 
+  
+  Imaginez ce que pourrait être un système d'exploitation sans
+  interruption, comment cela pourrait marcher, comment devrait-on
+  programmer les choses (pour que le curseur bouge à l'écran quand on
+  bouge la souris pendant un gros calcul...) ?
+\end{question}
+
+
+\begin{question}{12}
+  Donnez des critères utilisables pour faire l'ordonnancement des
+  processus ?  Comment faire pour favoriser le mode interactif sans avoir
+  de coprocesseur divinatoire ?
+\end{question}
+
+
+
+\section{Gestion mémoire}
+
+\begin{question}{8}
+  Vous avez 2 ordinateurs connectés seulement par un réseau. Un
+  utilisateur veut faire fonctionner 1 processus sur chaque ordinateur
+  tout en pouvant partager des variables entre chaque processus. Comment
+  réaliser concrètement ce concept de partage au niveau du système
+  d'exploitation ?
+\end{question}
+
+
+\section{La totale}
+
+\begin{question}{12}
+  En 2147 MacroSoft a racheté Multics pour commercialiser enfin un système
+  d'exploitation virtuel multidimensionnel dénommé Matrix ou Matrice selon
+  les langues. Ce système d'exploitation conçu par l'Architecte permet de
+  faire fonctionner différentes machines virtuelles pouvant elles-mêmes
+  faire fonctionner n'importe quel type d'application ou système
+  d'exploitation.
+
+  Si c'est bien fait, peut-on faire tourner une Matrice dans la Matrice ?
+
+  Peut-on faire tourner récursivement une infinité de Matrice dans la
+  Matrice ? Pourquoi ?
+\end{question}
+
+
+\begin{question}{12}
+  Un processus quelconque (qu'on nommera dans la suite Trinity pour des
+  raisons de simplification) peut-il savoir s'il fonctionne dans une
+  machine réelle ou virtuelle ? Comment en particulier peut-il avoir une
+  notion du temps qui passe ? Qui lui donne le temps ?
+\end{question}
+
+
+\begin{question}{12}
+  Supposons qu'un processus quelconque (dénommé agent Smith dans la suite
+  car quelconque et programmé selon le paradigme d'agent logiciel) veuille
+  exécuter une grosse application et ait besoin de beaucoup de ressources
+  de calcul. Il va se reproduire par clonage.
+  
+  Comment faire pour que tous les processus Smith (qui exécutent le même
+  programme) n'utilisent pas autant de mémoire de programme qu'il y a
+  d'instances de processus Smith dans la Matrice ?
+\end{question}
+
+
+\begin{question}{12}
+  Comment accélérer la Matrice dans le cas de création de nombreux clones
+  sachant que les clones sont quasi parfaits et qu'au moment de la création
+  d'un clone ce dernier partage toutes les informations de son original,
+  c'est à dire les données, les variables et autres objets en plus du cas
+  du programme déjà évoqué précédemment ?
+  
+  Comment néanmoins préserver une autonomie ultérieure au clone pour qu'il
+  puisse vivre sa propre vie sans directement modifier ses collègues ?
+\end{question}
+
+
+\begin{question}{12}
+  Si on suppose que Neo n'a aucun contrôle sur un processus style Smith
+  mais a par contre un droit de debogage dessus, comment est faite la
+  Matrice pour que Neo soit capable de modifier une instance du code d'un
+  Smith sans modifier le code de tous les autres processus Smith ?
+\end{question}
+
+
+\begin{question}{12}
+  Le programme de l'agent Smith est en fait le virus
+  \texttt{Mx/MySmith@MM} inspiré des virus du début du 21$^{\text{ème}}$
+  siècle trouvés dans la bibliothèque du Mérovingien dont le principe est
+  de faire du dénis de service distribué (\textsc{dd}o\textsc{s}) en
+  bombardant de courrier électronique trouvé dans les boîtes aux lettres
+  (abrégées dans la suite \textsc{bal}s) des utilisateurs innocents
+  infectés par le virus \texttt{Mx/MySmith@MM}.
+  
+  Si Neo est la cible de Smith et si Neo a trouvé un trou de sécurité dans
+  la Matrice qui lui permet de modifier à sa guise l'ordonnanceur
+  (\emph{scheduler}) de celle-ci, comment Neo doit-il modifier sa priorité
+  pour échapper aux \textsc{bal}s de Smith en trouvant du temps pour jeter
+  à la poubelle les \textsc{bal}s suffisamment rapidement afin de lui
+  laisser du temps pour faire du travail utile ? Justifier.
+\end{question}
+
+
+\begin{question}{20}
+  Dans la vraie vie et dans un système global il est intéressant d'avoir
+  un système de communication logicielle entre différentes machines
+  virtuelles, ne serait-ce que par exemple pour faire du couper-coller
+  entre une fenêtre Unix et une fenêtre d'un émulateur de \textsc{pc}
+  faisant tourner un Windows.
+  
+  Pour changer, dans la Matrice ce n'est pas un \emph{bus} logiciel mais
+  un autre moyen de transport plus rapide, un \emph{train} logiciel géré
+  par l'\emph{homme du train} qui va être chargé de transporter des objets
+  voire des processus entiers entre la machine virtuelle où fonctionnent
+  les processus principaux style Neo, Trinity ou Smith et la machine
+  virtuelle qui fait tourner le système d'exploitation «~Monde du
+  Mérovingien~».
+  
+  Imaginez une manière de réaliser ce genre de système. Quels sont les
+  problèmes ?
+  
+  Pour corser le tout le Monde du Mérovingien est programmé dans un vieux
+  langage machine basé sur des jurons français incompatibles avec les
+  autres machines virtuelles de la Matrice basé sur de l'anglais poli
+  d'Oxford qui font tourner des processus style Neo et Trinity. Comment
+  faire exécuter des processus style Neo dans la machine virtuelle du
+  Monde du Mérovingien ? Que dire des performances ? Comment gérer
+  l'ordonnancement des processus pour que la vitesse d'exécution des
+  différents processus des 2 mondes restent compatibles entre eux pour une
+  interaction franche et amicale sans privilégier l'un ou l'autre monde ?
+\end{question}
+
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

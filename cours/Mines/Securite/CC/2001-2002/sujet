@@ -1,0 +1,34 @@
+Citer un protocole de connexion à distance (style telnet) mais sécurisé.
+
+1 ligne
+
+Comparer les algorithmes cryptographiques à clé publique (asymétriques) et
+ceux à clé privée (symétrique) (avantages et inconvénients).
+
+20 Lignes
+
+Quel est l'intérêt d'une protection par un pare-feu (firewall) ? Quel
+genre de problèmes ne sont pas traités par ce biais ?
+
+10l
+
+Comment faire de l'authentification par mot de passe sans avoir à stocker
+les mots de passes en clair et de manière à ce qu'on ne puisse pas
+simplement déchiffrer les mots de passe ?
+
+8l
+
+D'un point de vue attaque en aveugle sur une connexion établie (un pirate
+ne peut qu'envoyer des paquets sans avoir de réponse), lequel des
+protocole UDP ou TCP est le plus sûr ? Pourquoi ?
+
+10l
+
+Question ouverte : comment faire un poste de travail style Windows plus
+sécurisé ?
+
+15l
+
+Question subsidiaire : quel est le mot de passe de Bernard Ayrault ?
+
+1l

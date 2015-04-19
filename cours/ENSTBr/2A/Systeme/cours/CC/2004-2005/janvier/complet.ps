@@ -1,0 +1,3937 @@
+%!PS-Adobe-3.0
+%%Title: sujet.ps, 423_0.ps
+%%For: Ronan KERYELL
+%%Creator: a2ps version 4.13
+%%CreationDate: Thu Mar  3 21:38:07 2005
+%%BoundingBox: 24 24 571 818
+%%DocumentData: Clean7Bit
+%%Orientation: Portrait
+%%Pages: 8
+%%PageOrder: Special
+%%DocumentMedia: A4 595 842 0 () ()
+%%DocumentNeededResources: font Courier
+%%+ font Courier-Bold
+%%+ font Courier-BoldOblique
+%%+ font Courier-Oblique
+%%+ font Helvetica
+%%+ font Helvetica-Bold
+%%+ font Symbol
+%%+ font Times-Bold
+%%+ font Times-Roman
+%%DocumentProcessColors: Black 
+%%DocumentSuppliedResources: procset a2ps-a2ps-hdr
+%%+ procset a2ps-black+white-Prolog
+%%+ encoding ISO-8859-1Encoding
+%%EndComments
+/a2psdict 200 dict def
+a2psdict begin
+%%BeginProlog
+%%Copyright: (c) 1988, 89, 90, 91, 92, 93 Miguel Santana
+%%Copyright: (c) 1995, 96, 97, 98 Akim Demaille, Miguel Santana
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+
+% EPSF import as in the Red Book
+/BeginInclude {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack 
+  userdict begin
+    0 setgray 0 setlinecap
+    1 setlinewidth 0 setlinejoin
+    10 setmiterlimit [ ] 0 setdash newpath
+    gs_languagelevel 1 ne {
+      false setstrokeadjust false setoverprint 
+    } if
+} bind def
+
+/EndInclude {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+/BeginEPSF {
+  BeginInclude
+  /showpage { } def
+} bind def
+
+/EndEPSF {
+  EndInclude
+} bind def
+
+% Page prefeed
+/page_prefeed {         % bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} bind def
+
+/deffont {
+  findfont exch scalefont def
+} bind def
+
+/reencode_font {
+  findfont reencode 2 copy definefont pop def
+} bind def
+
+% Function c-show (str => -)
+% centers text only according to x axis.
+/c-show { 
+  dup stringwidth pop
+  2 div neg 0 rmoveto
+  show
+} bind def
+
+% Function l-show (str => -)
+% prints texts so that it ends at currentpoint
+/l-show {
+  dup stringwidth pop neg 
+  0 
+  rmoveto show
+} bind def
+
+% center-fit show (str w => -)
+% show centered, and scale currentfont so that the width is less than w
+/cfshow {
+  exch dup stringwidth pop
+  % If the title is too big, try to make it smaller
+  3 2 roll 2 copy
+  gt
+  { % if, i.e. too big
+    exch div
+    currentfont exch scalefont setfont
+  } { % ifelse
+    pop pop 
+  }
+  ifelse
+  c-show			% center title
+} bind def
+
+% Return the y size of the current font
+% - => fontsize
+/currentfontsize {
+  currentfont /FontType get 0 eq {
+    currentfont /FontMatrix get 3 get
+  }{
+    currentfont /FontMatrix get 3 get 1000 mul
+  } ifelse
+} bind def
+
+% reencode the font
+% <encoding-vector> <fontdict> -> <newfontdict>
+/reencode { %def
+  dup length 5 add dict begin
+    { %forall
+      1 index /FID ne 
+      { def }{ pop pop } ifelse
+    } forall
+    /Encoding exch def
+
+    % Use the font's bounding box to determine the ascent, descent,
+    % and overall height; don't forget that these values have to be
+    % transformed using the font's matrix.
+    % We use `load' because sometimes BBox is executable, sometimes not.
+    % Since we need 4 numbers an not an array avoid BBox from being executed
+    /FontBBox load aload pop
+    FontMatrix transform /Ascent exch def pop
+    FontMatrix transform /Descent exch def pop
+    /FontHeight Ascent Descent sub def
+
+    % Define these in case they're not in the FontInfo (also, here
+    % they're easier to get to.
+    /UnderlinePosition 1 def
+    /UnderlineThickness 1 def
+    
+    % Get the underline position and thickness if they're defined.
+    currentdict /FontInfo known {
+      FontInfo
+      
+      dup /UnderlinePosition known {
+	dup /UnderlinePosition get
+	0 exch FontMatrix transform exch pop
+	/UnderlinePosition exch def
+      } if
+      
+      dup /UnderlineThickness known {
+	/UnderlineThickness get
+	0 exch FontMatrix transform exch pop
+	/UnderlineThickness exch def
+      } if
+      
+    } if
+    currentdict 
+  end 
+} bind def
+
+% composite fonts for ASCII-EUC mixed strings
+% Version 1.2 1/31/1990
+% Original Ken'ichi HANDA (handa@etl.go.jp)
+% Modified Norio Katayama (katayama@rd.nacsis.ac.jp),1998
+% Extend & Fix Koji Nakamaru (maru@on.cs.keio.ac.jp), 1999
+% Anyone can freely copy, modify, distribute this program.
+
+/copyfont {	% font-dic extra-entry-count  copyfont  font-dic
+	1 index maxlength add dict begin
+	{	1 index /FID ne 2 index /UniqueID ne and
+		{def} {pop pop} ifelse
+	} forall
+	currentdict
+	end
+} bind def
+
+/compositefont { % ASCIIFontName EUCFontName RomanScale RomanOffset Rot(T/F) compositefont font
+    /RomanRotation exch def
+    /RomanOffset exch def
+    /RomanScale exch def
+    userdict /fixeucfont_dict known not {
+	userdict begin
+	    /fixeucfont_dict 2 dict begin
+		/UpperByteEncoding [
+		    16#00 1 16#20 { pop 0 } for
+		    16#21 1 16#28 { 16#20 sub } for
+		    16#29 1 16#2F { pop 0 } for
+		    16#30 1 16#74 { 16#27 sub } for
+		    16#75 1 16#FF { pop 0 } for
+		] def
+	        /LowerByteEncoding [
+		    16#00 1 16#A0 { pop /.notdef } for
+		    16#A1 1 16#FE { 16#80 sub 16 2 string cvrs
+				    (cXX) dup 1 4 -1 roll
+				    putinterval cvn } for
+		    /.notdef
+		] def
+		currentdict
+	    end def
+	end
+    } if
+    findfont dup /FontType get 0 eq {
+	14 dict begin
+	    %
+	    % 7+8 bit EUC font
+	    %
+	    12 dict begin
+		/EUCFont exch def
+		/FontInfo (7+8 bit EUC font) readonly def
+		/PaintType 0 def
+		/FontType 0 def
+		/FontMatrix matrix def
+		% /FontName
+		/Encoding fixeucfont_dict /UpperByteEncoding get def
+		/FMapType 2 def
+		EUCFont /WMode known
+		{ EUCFont /WMode get /WMode exch def }
+		{ /WMode 0 def } ifelse
+		/FDepVector [
+		    EUCFont /FDepVector get 0 get
+		    [ 16#21 1 16#28 {} for 16#30 1 16#74 {} for ]
+		    {
+			13 dict begin
+			    /EUCFont EUCFont def
+			    /UpperByte exch 16#80 add def	
+			    % /FontName
+			    /FontInfo (EUC lower byte font) readonly def
+			    /PaintType 0 def
+			    /FontType 3 def
+			    /FontMatrix matrix def
+			    /FontBBox {0 0 0 0} def
+			    /Encoding
+				fixeucfont_dict /LowerByteEncoding get def
+			    % /UniqueID
+			    % /WMode
+			    /BuildChar {
+				gsave
+				exch dup /EUCFont get setfont
+				/UpperByte get
+				2 string
+				dup 0 4 -1 roll put
+				dup 1 4 -1 roll put
+				dup stringwidth setcharwidth
+				0 0 moveto show
+				grestore
+			    } bind def
+			    currentdict
+			end
+			/lowerbytefont exch definefont
+		    } forall
+		] def
+		currentdict
+	    end
+	    /eucfont exch definefont
+	    exch
+	    findfont 1 copyfont dup begin
+		RomanRotation {
+			/FontMatrix FontMatrix
+			[ 0 RomanScale neg RomanScale 0 RomanOffset neg 0 ]
+			matrix concatmatrix def
+		}{
+			/FontMatrix FontMatrix
+			[ RomanScale 0 0 RomanScale 0 RomanOffset ] matrix concatmatrix
+			def
+			/CDevProc
+			    {pop pop pop pop 0 exch -1000 exch 2 div 880} def
+		} ifelse
+	    end
+	    /asciifont exch definefont
+	    exch
+	    /FDepVector [ 4 2 roll ] def
+	    /FontType 0 def
+	    /WMode 0 def
+	    /FMapType 4 def
+	    /FontMatrix matrix def
+	    /Encoding [0 1] def
+	    /FontBBox {0 0 0 0} def
+%	    /FontHeight 1.0 def % XXXX
+	    /FontHeight RomanScale 1.0 ge { RomanScale }{ 1.0 } ifelse def
+	    /Descent -0.3 def   % XXXX
+	    currentdict
+	end
+	/tmpfont exch definefont
+	pop
+	/tmpfont findfont
+    }{
+	pop findfont 0 copyfont
+    } ifelse
+} def	
+
+/slantfont {	% FontName slant-degree  slantfont  font'
+    exch findfont 1 copyfont begin
+    [ 1 0 4 -1 roll 1 0 0 ] FontMatrix exch matrix concatmatrix
+    /FontMatrix exch def
+    currentdict
+    end
+} def
+
+% Function print line number (<string> # -)
+/# {
+  gsave
+    sx cw mul neg 2 div 0 rmoveto
+    f# setfont
+    c-show
+  grestore
+} bind def
+
+% -------- Some routines to enlight plain b/w printings ---------
+
+% Underline
+% width --
+/dounderline {
+  currentpoint
+  gsave
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    0 rlineto
+    stroke
+  grestore
+} bind def
+
+% Underline a string
+% string --
+/dounderlinestring {
+  stringwidth pop
+  dounderline
+} bind def
+
+/UL {
+  /ul exch store
+} bind def
+
+% Draw a box of WIDTH wrt current font
+% width --
+/dobox {
+  currentpoint
+  gsave
+    newpath
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    dup 0 rlineto
+    0 currentfont /FontHeight get currentfontsize mul rlineto
+    neg 0 rlineto
+    closepath
+    stroke
+  grestore
+} bind def
+
+/BX {
+  /bx exch store
+} bind def
+
+% Box a string
+% string --
+/doboxstring {
+  stringwidth pop
+  dobox
+} bind def
+
+%
+% ------------- Color routines ---------------
+%
+/FG /setrgbcolor load def
+
+% Draw the background
+% width --
+/dobackground {
+  currentpoint
+  gsave
+    newpath
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    dup 0 rlineto
+    0 currentfont /FontHeight get currentfontsize mul rlineto
+    neg 0 rlineto
+    closepath
+    bgcolor aload pop setrgbcolor
+    fill
+  grestore
+} bind def
+
+% Draw bg for a string
+% string --
+/dobackgroundstring {
+  stringwidth pop
+  dobackground
+} bind def
+
+
+/BG {
+  dup /bg exch store
+  { mark 4 1 roll ] /bgcolor exch store } if
+} bind def
+
+
+/Show {
+  bg { dup dobackgroundstring } if
+  ul { dup dounderlinestring } if
+  bx { dup doboxstring } if
+  show
+} bind def
+
+% Function T(ab), jumps to the n-th tabulation in the current line
+/T {
+  cw mul x0 add
+  bg { dup currentpoint pop sub dobackground } if
+  ul { dup currentpoint pop sub dounderline } if
+  bx { dup currentpoint pop sub dobox } if
+  y0 moveto
+} bind def
+
+% Function n: move to the next line
+/n {
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+% Function N: show and move to the next line
+/N {
+  Show
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+/S {
+  Show
+} bind def
+
+%%BeginResource: procset a2ps-a2ps-hdr 2.0 2
+%%Copyright: (c) 1988, 89, 90, 91, 92, 93 Miguel Santana
+%%Copyright: (c) 1995, 96, 97, 98 Akim Demaille, Miguel Santana
+% Function title: prints page header.
+% <ct> <rt> <lt> are passed as argument
+/title { 
+  % 1. Draw the background
+  x v get y v get moveto
+  gsave
+    0 th 2 div neg rmoveto 
+    th setlinewidth
+    0.95 setgray
+    pw 0 rlineto stroke
+  grestore
+  % 2. Border it
+  gsave
+    0.7 setlinewidth
+    pw 0 rlineto
+    0 th neg rlineto
+    pw neg 0 rlineto
+    closepath stroke
+  grestore
+  % stk: ct rt lt
+  x v get y v get th sub 1 add moveto
+%%IncludeResource: font Helvetica
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  % 3. The left title
+  gsave
+    dup stringwidth pop fnfs 0.8 mul add exch % leave space took on stack
+    fnfs 0.8 mul hm rmoveto
+    show			% left title
+  grestore
+  exch
+  % stk: ct ltw rt
+  % 4. the right title
+  gsave
+    dup stringwidth pop fnfs 0.8 mul add exch % leave space took on stack
+    dup
+    pw exch stringwidth pop fnfs 0.8 mul add sub
+    hm
+    rmoveto
+    show			% right title
+  grestore
+  % stk: ct ltw rtw
+  % 5. the center title
+  gsave
+    pw 3 1 roll
+    % stk: ct pw ltw rtw
+    3 copy 
+    % Move to the center of the left room
+    sub add 2 div hm rmoveto
+    % What is the available space in here?
+    add sub fnfs 0.8 mul sub fnfs 0.8 mul sub
+    % stk: ct space_left
+%%IncludeResource: font Helvetica-Bold
+  fHelvetica-Bold fnfs scalefont setfont
+    cfshow
+  grestore
+} bind def
+
+% Function border: prints virtual page border
+/border { %def
+  gsave				% print four sides
+    0 setgray
+    x v get y v get moveto
+    0.7 setlinewidth		% of the square
+    pw 0 rlineto
+    0 ph neg rlineto
+    pw neg 0 rlineto
+    closepath stroke
+  grestore
+} bind def
+
+% Function water: prints a water mark in background
+/water { %def
+  gsave
+    scx scy moveto rotate
+%%IncludeResource: font Times-Bold
+  fTimes-Bold 100 scalefont setfont
+    .97 setgray
+    dup stringwidth pop 2 div neg -50 rmoveto
+    show
+  grestore
+} bind def
+
+% Function rhead: prints the right header
+/rhead {  %def
+  lx ly moveto
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  l-show
+} bind def
+
+% Function footer (cf rf lf -> -)
+/footer {
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  dx dy moveto
+  show
+
+  snx sny moveto
+  l-show
+  
+  fnx fny moveto
+  c-show
+} bind def
+%%EndResource
+%%BeginResource: procset a2ps-black+white-Prolog 2.0 1
+
+% Function T(ab), jumps to the n-th tabulation in the current line
+/T { 
+  cw mul x0 add y0 moveto
+} bind def
+
+% Function n: move to the next line
+/n { %def
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+% Function N: show and move to the next line
+/N {
+  Show
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+}  bind def
+
+/S {
+  Show
+} bind def
+
+/p {
+  false UL
+  false BX
+  fCourier bfs scalefont setfont
+  Show
+} bind def
+
+/sy {
+  false UL
+  false BX
+  fSymbol bfs scalefont setfont
+  Show
+} bind def
+
+/k {
+  false UL
+  false BX
+  fCourier-Oblique bfs scalefont setfont
+  Show
+} bind def
+
+/K {
+  false UL
+  false BX
+  fCourier-Bold bfs scalefont setfont
+  Show
+} bind def
+
+/c {
+  false UL
+  false BX
+  fCourier-Oblique bfs scalefont setfont
+  Show
+} bind def
+
+/C {
+  false UL
+  false BX
+  fCourier-BoldOblique bfs scalefont setfont
+  Show 
+} bind def
+
+/l {
+  false UL
+  false BX
+  fHelvetica bfs scalefont setfont
+  Show
+} bind def
+
+/L {
+  false UL
+  false BX
+  fHelvetica-Bold bfs scalefont setfont
+  Show 
+} bind def
+
+/str{
+  false UL
+  false BX
+  fTimes-Roman bfs scalefont setfont
+  Show
+} bind def
+
+/e{
+  false UL
+  true BX
+  fHelvetica-Bold bfs scalefont setfont
+  Show
+} bind def
+
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier
+%%IncludeResource: font Courier-Oblique
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Times-Roman
+%%IncludeResource: font Symbol
+%%IncludeResource: font Courier-BoldOblique
+%%BeginResource: encoding ISO-8859-1Encoding
+/ISO-8859-1Encoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quoteright 
+/parenleft /parenright /asterisk /plus /comma /minus /period /slash 
+/zero /one /two /three /four /five /six /seven 
+/eight /nine /colon /semicolon /less /equal /greater /question 
+/at /A /B /C /D /E /F /G 
+/H /I /J /K /L /M /N /O 
+/P /Q /R /S /T /U /V /W 
+/X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore 
+/quoteleft /a /b /c /d /e /f /g 
+/h /i /j /k /l /m /n /o 
+/p /q /r /s /t /u /v /w 
+/x /y /z /braceleft /bar /braceright /asciitilde /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/space /exclamdown /cent /sterling /currency /yen /brokenbar /section 
+/dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron 
+/degree /plusminus /twosuperior /threesuperior /acute /mu /paragraph /bullet 
+/cedilla /onesuperior /ordmasculine /guillemotright /onequarter /onehalf /threequarters /questiondown 
+/Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla 
+/Egrave /Eacute /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis 
+/Eth /Ntilde /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply 
+/Oslash /Ugrave /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls 
+/agrave /aacute /acircumflex /atilde /adieresis /aring /ae /ccedilla 
+/egrave /eacute /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis 
+/eth /ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide 
+/oslash /ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis 
+] def
+%%EndResource
+% Initialize page description variables.
+/sh 842 def
+/sw 595 def
+/llx 24 def
+/urx 571 def
+/ury 818 def
+/lly 24 def
+/#copies 1 def
+/th 20.000000 def
+/fnfs 15 def
+/bfs 11.199836 def
+/cw 6.719901 def
+
+% Dictionary for ISO-8859-1 support
+/iso1dict 8 dict begin
+  /fCourier ISO-8859-1Encoding /Courier reencode_font
+  /fCourier-Bold ISO-8859-1Encoding /Courier-Bold reencode_font
+  /fCourier-BoldOblique ISO-8859-1Encoding /Courier-BoldOblique reencode_font
+  /fCourier-Oblique ISO-8859-1Encoding /Courier-Oblique reencode_font
+  /fHelvetica ISO-8859-1Encoding /Helvetica reencode_font
+  /fHelvetica-Bold ISO-8859-1Encoding /Helvetica-Bold reencode_font
+  /fTimes-Bold ISO-8859-1Encoding /Times-Bold reencode_font
+  /fTimes-Roman ISO-8859-1Encoding /Times-Roman reencode_font
+currentdict end def
+/bgcolor [ 0 0 0 ] def
+/bg false def
+/ul false def
+/bx false def
+% The font for line numbering
+/f# /Helvetica findfont bfs .6 mul scalefont def
+/fSymbol /Symbol findfont def
+/hm fnfs 0.25 mul def
+/pw
+   cw 81.400000 mul
+def
+/ph
+   747.029046 th add
+def
+/pmw 0 def
+/pmh 0 def
+/v 0 def
+/x [
+  0
+] def
+/y [
+  pmh ph add 0 mul ph add
+] def
+/scx sw 2 div def
+/scy sh 2 div def
+/snx urx def
+/sny lly 2 add def
+/dx llx def
+/dy sny def
+/fnx scx def
+/fny dy def
+/lx snx def
+/ly ury fnfs 0.8 mul sub def
+/sx 0 def
+/tab 8 def
+/x0 0 def
+/y0 0 def
+%%EndSetup
+
+BeginInclude
+%%BeginDocument: sujet.ps
+%!PS-Adobe-2.0
+%%Creator: dvips(k) 5.92b Copyright 2002 Radical Eye Software
+%%Title: sujet.dvi
+%%Pages: 4
+%%PageOrder: Ascend
+%%BoundingBox: 0 0 596 842
+%%DocumentFonts: Times-Roman Times-Bold CMSY10 CMMI12 Times-Italic
+%%EndComments
+%DVIPSWebPage: (www.radicaleye.com)
+%DVIPSCommandLine: dvips sujet.dvi -o
+%DVIPSParameters: dpi=600, compressed
+%DVIPSSource:  TeX output 2005.03.03:2138
+%%BeginProcSet: texc.pro
+%!
+/TeXDict 300 dict def TeXDict begin/N{def}def/B{bind def}N/S{exch}N/X{S
+N}B/A{dup}B/TR{translate}N/isls false N/vsize 11 72 mul N/hsize 8.5 72
+mul N/landplus90{false}def/@rigin{isls{[0 landplus90{1 -1}{-1 1}ifelse 0
+0 0]concat}if 72 Resolution div 72 VResolution div neg scale isls{
+landplus90{VResolution 72 div vsize mul 0 exch}{Resolution -72 div hsize
+mul 0}ifelse TR}if Resolution VResolution vsize -72 div 1 add mul TR[
+matrix currentmatrix{A A round sub abs 0.00001 lt{round}if}forall round
+exch round exch]setmatrix}N/@landscape{/isls true N}B/@manualfeed{
+statusdict/manualfeed true put}B/@copies{/#copies X}B/FMat[1 0 0 -1 0 0]
+N/FBB[0 0 0 0]N/nn 0 N/IEn 0 N/ctr 0 N/df-tail{/nn 8 dict N nn begin
+/FontType 3 N/FontMatrix fntrx N/FontBBox FBB N string/base X array
+/BitMaps X/BuildChar{CharBuilder}N/Encoding IEn N end A{/foo setfont}2
+array copy cvx N load 0 nn put/ctr 0 N[}B/sf 0 N/df{/sf 1 N/fntrx FMat N
+df-tail}B/dfs{div/sf X/fntrx[sf 0 0 sf neg 0 0]N df-tail}B/E{pop nn A
+definefont setfont}B/Cw{Cd A length 5 sub get}B/Ch{Cd A length 4 sub get
+}B/Cx{128 Cd A length 3 sub get sub}B/Cy{Cd A length 2 sub get 127 sub}
+B/Cdx{Cd A length 1 sub get}B/Ci{Cd A type/stringtype ne{ctr get/ctr ctr
+1 add N}if}B/id 0 N/rw 0 N/rc 0 N/gp 0 N/cp 0 N/G 0 N/CharBuilder{save 3
+1 roll S A/base get 2 index get S/BitMaps get S get/Cd X pop/ctr 0 N Cdx
+0 Cx Cy Ch sub Cx Cw add Cy setcachedevice Cw Ch true[1 0 0 -1 -.1 Cx
+sub Cy .1 sub]/id Ci N/rw Cw 7 add 8 idiv string N/rc 0 N/gp 0 N/cp 0 N{
+rc 0 ne{rc 1 sub/rc X rw}{G}ifelse}imagemask restore}B/G{{id gp get/gp
+gp 1 add N A 18 mod S 18 idiv pl S get exec}loop}B/adv{cp add/cp X}B
+/chg{rw cp id gp 4 index getinterval putinterval A gp add/gp X adv}B/nd{
+/cp 0 N rw exit}B/lsh{rw cp 2 copy get A 0 eq{pop 1}{A 255 eq{pop 254}{
+A A add 255 and S 1 and or}ifelse}ifelse put 1 adv}B/rsh{rw cp 2 copy
+get A 0 eq{pop 128}{A 255 eq{pop 127}{A 2 idiv S 128 and or}ifelse}
+ifelse put 1 adv}B/clr{rw cp 2 index string putinterval adv}B/set{rw cp
+fillstr 0 4 index getinterval putinterval adv}B/fillstr 18 string 0 1 17
+{2 copy 255 put pop}for N/pl[{adv 1 chg}{adv 1 chg nd}{1 add chg}{1 add
+chg nd}{adv lsh}{adv lsh nd}{adv rsh}{adv rsh nd}{1 add adv}{/rc X nd}{
+1 add set}{1 add clr}{adv 2 chg}{adv 2 chg nd}{pop nd}]A{bind pop}
+forall N/D{/cc X A type/stringtype ne{]}if nn/base get cc ctr put nn
+/BitMaps get S ctr S sf 1 ne{A A length 1 sub A 2 index S get sf div put
+}if put/ctr ctr 1 add N}B/I{cc 1 add D}B/bop{userdict/bop-hook known{
+bop-hook}if/SI save N @rigin 0 0 moveto/V matrix currentmatrix A 1 get A
+mul exch 0 get A mul add .99 lt{/QV}{/RV}ifelse load def pop pop}N/eop{
+SI restore userdict/eop-hook known{eop-hook}if showpage}N/@start{
+userdict/start-hook known{start-hook}if pop/VResolution X/Resolution X
+1000 div/DVImag X/IEn 256 array N 2 string 0 1 255{IEn S A 360 add 36 4
+index cvrs cvn put}for pop 65781.76 div/vsize X 65781.76 div/hsize X}N
+/p{show}N/RMat[1 0 0 -1 0 0]N/BDot 260 string N/Rx 0 N/Ry 0 N/V{}B/RV/v{
+/Ry X/Rx X V}B statusdict begin/product where{pop false[(Display)(NeXT)
+(LaserWriter 16/600)]{A length product length le{A length product exch 0
+exch getinterval eq{pop true exit}if}{pop}ifelse}forall}{false}ifelse
+end{{gsave TR -.1 .1 TR 1 1 scale Rx Ry false RMat{BDot}imagemask
+grestore}}{{gsave TR -.1 .1 TR Rx Ry scale 1 1 false RMat{BDot}
+imagemask grestore}}ifelse B/QV{gsave newpath transform round exch round
+exch itransform moveto Rx 0 rlineto 0 Ry neg rlineto Rx neg 0 rlineto
+fill grestore}B/a{moveto}B/delta 0 N/tail{A/delta X 0 rmoveto}B/M{S p
+delta add tail}B/b{S p tail}B/c{-4 M}B/d{-3 M}B/e{-2 M}B/f{-1 M}B/g{0 M}
+B/h{1 M}B/i{2 M}B/j{3 M}B/k{4 M}B/w{0 rmoveto}B/l{p -4 w}B/m{p -3 w}B/n{
+p -2 w}B/o{p -1 w}B/q{p 1 w}B/r{p 2 w}B/s{p 3 w}B/t{p 4 w}B/x{0 S
+rmoveto}B/y{3 2 roll p a}B/bos{/SS save N}B/eos{SS restore}B end
+
+%%EndProcSet
+%%BeginProcSet: pstricks.pro
+%!
+% PostScript prologue for pstricks.tex.
+% Version 97 patch 3, 98/06/01
+% For distribution, see pstricks.tex.
+%
+/tx@Dict 200 dict def tx@Dict begin
+/ADict 25 dict def
+/CM { matrix currentmatrix } bind def
+/SLW /setlinewidth load def
+/CLW /currentlinewidth load def
+/CP /currentpoint load def
+/ED { exch def } bind def
+/L /lineto load def
+/T /translate load def
+/TMatrix { } def
+/RAngle { 0 } def
+/Atan { /atan load stopped { pop pop 0 } if } def
+/Div { dup 0 eq { pop } { div } ifelse } def
+/NET { neg exch neg exch T } def
+/Pyth { dup mul exch dup mul add sqrt } def
+/PtoC { 2 copy cos mul 3 1 roll sin mul } def
+/PathLength@ { /z z y y1 sub x x1 sub Pyth add def /y1 y def /x1 x def }
+def
+/PathLength { flattenpath /z 0 def { /y1 ED /x1 ED /y2 y1 def /x2 x1 def
+} { /y ED /x ED PathLength@ } {} { /y y2 def /x x2 def PathLength@ }
+/pathforall load stopped { pop pop pop pop } if z } def
+/STP { .996264 dup scale } def
+/STV { SDict begin normalscale end STP  } def
+/DashLine { dup 0 gt { /a .5 def PathLength exch div } { pop /a 1 def
+PathLength } ifelse /b ED /x ED /y ED /z y x add def b a .5 sub 2 mul y
+mul sub z Div round z mul a .5 sub 2 mul y mul add b exch Div dup y mul
+/y ED x mul /x ED x 0 gt y 0 gt and { [ y x ] 1 a sub y mul } { [ 1 0 ]
+0 } ifelse setdash stroke } def
+/DotLine { /b PathLength def /a ED /z ED /y CLW def /z y z add def a 0 gt
+{ /b b a div def } { a 0 eq { /b b y sub def } { a -3 eq { /b b y add
+def } if } ifelse } ifelse [ 0 b b z Div round Div dup 0 le { pop 1 } if
+] a 0 gt { 0 } { y 2 div a -2 gt { neg } if } ifelse setdash 1
+setlinecap stroke } def
+/LineFill { gsave abs CLW add /a ED a 0 dtransform round exch round exch
+2 copy idtransform exch Atan rotate idtransform pop /a ED .25 .25
+% DG/SR modification begin - Dec. 12, 1997 - Patch 2
+%itransform translate pathbbox /y2 ED a Div ceiling cvi /x2 ED /y1 ED a
+itransform pathbbox /y2 ED a Div ceiling cvi /x2 ED /y1 ED a
+% DG/SR modification end
+Div cvi /x1 ED /y2 y2 y1 sub def clip newpath 2 setlinecap systemdict
+/setstrokeadjust known { true setstrokeadjust } if x2 x1 sub 1 add { x1
+% DG/SR modification begin - Jun.  1, 1998 - Patch 3 (from Michael Vulis)
+% a mul y1 moveto 0 y2 rlineto stroke /x1 x1 1 add def } repeat grestore }
+% def
+a mul y1 moveto 0 y2 rlineto stroke /x1 x1 1 add def } repeat grestore
+pop pop } def
+% DG/SR modification end
+/BeginArrow { ADict begin /@mtrx CM def gsave 2 copy T 2 index sub neg
+exch 3 index sub exch Atan rotate newpath } def
+/EndArrow { @mtrx setmatrix CP grestore end } def
+/Arrow { CLW mul add dup 2 div /w ED mul dup /h ED mul /a ED { 0 h T 1 -1
+scale } if w neg h moveto 0 0 L w h L w neg a neg rlineto gsave fill
+grestore } def
+/Tbar { CLW mul add /z ED z -2 div CLW 2 div moveto z 0 rlineto stroke 0
+CLW moveto } def
+/Bracket { CLW mul add dup CLW sub 2 div /x ED mul CLW add /y ED /z CLW 2
+div def x neg y moveto x neg CLW 2 div L x CLW 2 div L x y L stroke 0
+CLW moveto } def
+/RoundBracket { CLW mul add dup 2 div /x ED mul /y ED /mtrx CM def 0 CLW
+2 div T x y mul 0 ne { x y scale } if 1 1 moveto .85 .5 .35 0 0 0
+curveto -.35 0 -.85 .5 -1 1 curveto mtrx setmatrix stroke 0 CLW moveto }
+def
+/SD { 0 360 arc fill } def
+/EndDot { { /z DS def } { /z 0 def } ifelse /b ED 0 z DS SD b { 0 z DS
+CLW sub SD } if 0 DS z add CLW 4 div sub moveto } def
+/Shadow { [ { /moveto load } { /lineto load } { /curveto load } {
+/closepath load } /pathforall load stopped { pop pop pop pop CP /moveto
+load } if ] cvx newpath 3 1 roll T exec } def
+/NArray { aload length 2 div dup dup cvi eq not { exch pop } if /n exch
+cvi def } def
+/NArray { /f ED counttomark 2 div dup cvi /n ED n eq not { exch pop } if
+f { ] aload /Points ED } { n 2 mul 1 add -1 roll pop } ifelse } def
+/Line { NArray n 0 eq not { n 1 eq { 0 0 /n 2 def } if ArrowA /n n 2 sub
+def n { Lineto } repeat CP 4 2 roll ArrowB L pop pop } if } def
+/Arcto { /a [ 6 -2 roll ] cvx def a r /arcto load stopped { 5 } { 4 }
+ifelse { pop } repeat a } def
+/CheckClosed { dup n 2 mul 1 sub index eq 2 index n 2 mul 1 add index eq
+and { pop pop /n n 1 sub def } if } def
+/Polygon { NArray n 2 eq { 0 0 /n 3 def } if n 3 lt { n { pop pop }
+repeat } { n 3 gt { CheckClosed } if n 2 mul -2 roll /y0 ED /x0 ED /y1
+ED /x1 ED x1 y1 /x1 x0 x1 add 2 div def /y1 y0 y1 add 2 div def x1 y1
+moveto /n n 2 sub def n { Lineto } repeat x1 y1 x0 y0 6 4 roll Lineto
+Lineto pop pop closepath } ifelse } def
+/Diamond { /mtrx CM def T rotate /h ED /w ED dup 0 eq { pop } { CLW mul
+neg /d ED /a w h Atan def /h d a sin Div h add def /w d a cos Div w add
+def } ifelse mark w 2 div h 2 div w 0 0 h neg w neg 0 0 h w 2 div h 2
+div /ArrowA { moveto } def /ArrowB { } def false Line closepath mtrx
+setmatrix } def
+% DG modification begin - Jan. 15, 1997
+%/Triangle { /mtrx CM def translate rotate /h ED 2 div /w ED dup 0 eq {
+%pop } { CLW mul /d ED /h h d w h Atan sin Div sub def /w w d h w Atan 2
+%div dup cos exch sin Div mul sub def } ifelse mark 0 d w neg d 0 h w d 0
+%d /ArrowA { moveto } def /ArrowB { } def false Line closepath mtrx
+%setmatrix } def
+/Triangle { /mtrx CM def translate rotate /h ED 2 div /w ED dup
+CLW mul /d ED /h h d w h Atan sin Div sub def /w w d h w Atan 2
+div dup cos exch sin Div mul sub def mark 0 d w neg d 0 h w d 0
+d /ArrowA { moveto } def /ArrowB { } def false Line closepath mtrx
+% DG/SR modification begin - Jun.  1, 1998 - Patch 3 (from Michael Vulis)
+% setmatrix } def
+setmatrix pop } def
+% DG/SR modification end
+/CCA { /y ED /x ED 2 copy y sub /dy1 ED x sub /dx1 ED /l1 dx1 dy1 Pyth
+def } def
+/CCA { /y ED /x ED 2 copy y sub /dy1 ED x sub /dx1 ED /l1 dx1 dy1 Pyth
+def } def
+/CC { /l0 l1 def /x1 x dx sub def /y1 y dy sub def /dx0 dx1 def /dy0 dy1
+def CCA /dx dx0 l1 c exp mul dx1 l0 c exp mul add def /dy dy0 l1 c exp
+mul dy1 l0 c exp mul add def /m dx0 dy0 Atan dx1 dy1 Atan sub 2 div cos
+abs b exp a mul dx dy Pyth Div 2 div def /x2 x l0 dx mul m mul sub def
+/y2 y l0 dy mul m mul sub def /dx l1 dx mul m mul neg def /dy l1 dy mul
+m mul neg def } def
+/IC { /c c 1 add def c 0 lt { /c 0 def } { c 3 gt { /c 3 def } if }
+ifelse /a a 2 mul 3 div 45 cos b exp div def CCA /dx 0 def /dy 0 def }
+def
+/BOC { IC CC x2 y2 x1 y1 ArrowA CP 4 2 roll x y curveto } def
+/NC { CC x1 y1 x2 y2 x y curveto } def
+/EOC { x dx sub y dy sub 4 2 roll ArrowB 2 copy curveto } def
+/BAC { IC CC x y moveto CC x1 y1 CP ArrowA } def
+/NAC { x2 y2 x y curveto CC x1 y1 } def
+/EAC { x2 y2 x y ArrowB curveto pop pop } def
+/OpenCurve { NArray n 3 lt { n { pop pop } repeat } { BOC /n n 3 sub def
+n { NC } repeat EOC } ifelse } def
+/AltCurve { { false NArray n 2 mul 2 roll [ n 2 mul 3 sub 1 roll ] aload
+/Points ED n 2 mul -2 roll } { false NArray } ifelse n 4 lt { n { pop
+pop } repeat } { BAC /n n 4 sub def n { NAC } repeat EAC } ifelse } def
+/ClosedCurve { NArray n 3 lt { n { pop pop } repeat } { n 3 gt {
+CheckClosed } if 6 copy n 2 mul 6 add 6 roll IC CC x y moveto n { NC }
+repeat closepath pop pop } ifelse } def
+/SQ { /r ED r r moveto r r neg L r neg r neg L r neg r L fill } def
+/ST { /y ED /x ED x y moveto x neg y L 0 x L fill } def
+/SP { /r ED gsave 0 r moveto 4 { 72 rotate 0 r L } repeat fill grestore }
+def
+/FontDot { DS 2 mul dup matrix scale matrix concatmatrix exch matrix
+rotate matrix concatmatrix exch findfont exch makefont setfont } def
+/Rect { x1 y1 y2 add 2 div moveto x1 y2 lineto x2 y2 lineto x2 y1 lineto
+x1 y1 lineto closepath } def
+/OvalFrame { x1 x2 eq y1 y2 eq or { pop pop x1 y1 moveto x2 y2 L } { y1
+y2 sub abs x1 x2 sub abs 2 copy gt { exch pop } { pop } ifelse 2 div
+exch { dup 3 1 roll mul exch } if 2 copy lt { pop } { exch pop } ifelse
+/b ED x1 y1 y2 add 2 div moveto x1 y2 x2 y2 b arcto x2 y2 x2 y1 b arcto
+x2 y1 x1 y1 b arcto x1 y1 x1 y2 b arcto 16 { pop } repeat closepath }
+ifelse } def
+/Frame { CLW mul /a ED 3 -1 roll 2 copy gt { exch } if a sub /y2 ED a add
+/y1 ED 2 copy gt { exch } if a sub /x2 ED a add /x1 ED 1 index 0 eq {
+pop pop Rect } { OvalFrame } ifelse } def
+/BezierNArray { /f ED counttomark 2 div dup cvi /n ED n eq not { exch pop
+} if n 1 sub neg 3 mod 3 add 3 mod { 0 0 /n n 1 add def } repeat f { ]
+aload /Points ED } { n 2 mul 1 add -1 roll pop } ifelse } def
+/OpenBezier { BezierNArray n 1 eq { pop pop } { ArrowA n 4 sub 3 idiv { 6
+2 roll 4 2 roll curveto } repeat 6 2 roll 4 2 roll ArrowB curveto }
+ifelse } def
+/ClosedBezier { BezierNArray n 1 eq { pop pop } { moveto n 1 sub 3 idiv {
+6 2 roll 4 2 roll curveto } repeat closepath } ifelse } def
+/BezierShowPoints { gsave Points aload length 2 div cvi /n ED moveto n 1
+sub { lineto } repeat CLW 2 div SLW [ 4 4 ] 0 setdash stroke grestore }
+def
+/Parab { /y0 exch def /x0 exch def /y1 exch def /x1 exch def /dx x0 x1
+sub 3 div def /dy y0 y1 sub 3 div def x0 dx sub y0 dy add x1 y1 ArrowA
+x0 dx add y0 dy add x0 2 mul x1 sub y1 ArrowB curveto /Points [ x1 y1 x0
+y0 x0 2 mul x1 sub y1 ] def } def
+/Grid { newpath /a 4 string def /b ED /c ED /n ED cvi dup 1 lt { pop 1 }
+if /s ED s div dup 0 eq { pop 1 } if /dy ED s div dup 0 eq { pop 1 } if
+/dx ED dy div round dy mul /y0 ED dx div round dx mul /x0 ED dy div
+round cvi /y2 ED dx div round cvi /x2 ED dy div round cvi /y1 ED dx div
+round cvi /x1 ED /h y2 y1 sub 0 gt { 1 } { -1 } ifelse def /w x2 x1 sub
+0 gt { 1 } { -1 } ifelse def b 0 gt { /z1 b 4 div CLW 2 div add def
+/Helvetica findfont b scalefont setfont /b b .95 mul CLW 2 div add def }
+if systemdict /setstrokeadjust known { true setstrokeadjust /t { } def }
+{ /t { transform 0.25 sub round 0.25 add exch 0.25 sub round 0.25 add
+exch itransform } bind def } ifelse gsave n 0 gt { 1 setlinecap [ 0 dy n
+div ] dy n div 2 div setdash } { 2 setlinecap } ifelse /i x1 def /f y1
+dy mul n 0 gt { dy n div 2 div h mul sub } if def /g y2 dy mul n 0 gt {
+dy n div 2 div h mul add } if def x2 x1 sub w mul 1 add dup 1000 gt {
+pop 1000 } if { i dx mul dup y0 moveto b 0 gt { gsave c i a cvs dup
+stringwidth pop /z2 ED w 0 gt {z1} {z1 z2 add neg} ifelse h 0 gt {b neg}
+{z1} ifelse rmoveto show grestore } if dup t f moveto g t L stroke /i i
+w add def } repeat grestore gsave n 0 gt
+% DG/SR modification begin - Nov. 7, 1997 - Patch 1
+%{ 1 setlinecap [ 0 dx n div ] dy n div 2 div setdash }
+{ 1 setlinecap [ 0 dx n div ] dx n div 2 div setdash }
+% DG/SR modification end
+{ 2 setlinecap } ifelse /i y1 def /f x1 dx mul
+n 0 gt { dx n div 2 div w mul sub } if def /g x2 dx mul n 0 gt { dx n
+div 2 div w mul add } if def y2 y1 sub h mul 1 add dup 1000 gt { pop
+1000 } if { newpath i dy mul dup x0 exch moveto b 0 gt { gsave c i a cvs
+dup stringwidth pop /z2 ED w 0 gt {z1 z2 add neg} {z1} ifelse h 0 gt
+{z1} {b neg} ifelse rmoveto show grestore } if dup f exch t moveto g
+exch t L stroke /i i h add def } repeat grestore } def
+/ArcArrow { /d ED /b ED /a ED gsave newpath 0 -1000 moveto clip newpath 0
+1 0 0 b grestore c mul /e ED pop pop pop r a e d PtoC y add exch x add
+exch r a PtoC y add exch x add exch b pop pop pop pop a e d CLW 8 div c
+mul neg d } def
+/Ellipse { /mtrx CM def T scale 0 0 1 5 3 roll arc mtrx setmatrix } def
+/Rot { CP CP translate 3 -1 roll neg rotate NET  } def
+/RotBegin { tx@Dict /TMatrix known not { /TMatrix { } def /RAngle { 0 }
+def } if /TMatrix [ TMatrix CM ] cvx def /a ED a Rot /RAngle [ RAngle
+dup a add ] cvx def } def
+/RotEnd { /TMatrix [ TMatrix setmatrix ] cvx def /RAngle [ RAngle pop ]
+cvx def } def
+/PutCoor { gsave CP T CM STV exch exec moveto setmatrix CP grestore } def
+/PutBegin { /TMatrix [ TMatrix CM ] cvx def CP 4 2 roll T moveto } def
+/PutEnd { CP /TMatrix [ TMatrix setmatrix ] cvx def moveto } def
+/Uput { /a ED add 2 div /h ED 2 div /w ED /s a sin def /c a cos def /b s
+abs c abs 2 copy gt dup /q ED { pop } { exch pop } ifelse def /w1 c b
+div w mul def /h1 s b div h mul def q { w1 abs w sub dup c mul abs } {
+h1 abs h sub dup s mul abs } ifelse } def
+/UUput { /z ED abs /y ED /x ED q { x s div c mul abs y gt } { x c div s
+mul abs y gt } ifelse { x x mul y y mul sub z z mul add sqrt z add } { q
+{ x s div } { x c div } ifelse abs } ifelse a PtoC h1 add exch w1 add
+exch } def
+/BeginOL { dup (all) eq exch TheOL eq or { IfVisible not { Visible
+/IfVisible true def } if } { IfVisible { Invisible /IfVisible false def
+} if } ifelse } def
+/InitOL { /OLUnit [ 3000 3000 matrix defaultmatrix dtransform ] cvx def
+/Visible { CP OLUnit idtransform T moveto } def /Invisible { CP OLUnit
+neg exch neg exch idtransform T moveto } def /BOL { BeginOL } def
+/IfVisible true def } def
+end
+% END pstricks.pro
+
+%%EndProcSet
+%%BeginProcSet: pst-dots.pro
+%!PS-Adobe-2.0
+%%Title: Dot Font for PSTricks
+%%Creator: Timothy Van Zandt <tvz@Princeton.EDU>
+%%Creation Date: May 7, 1993
+%% Version 97 patch 1, 99/12/16
+%% Modified by Etienne Riga <etienne.riga@skynet.be> - Dec. 16, 1999
+%% to add /Diamond, /SolidDiamond and /BoldDiamond
+10 dict dup begin
+  /FontType 3 def
+  /FontMatrix [ .001 0 0 .001 0 0 ] def
+  /FontBBox [ 0 0 0 0 ] def
+  /Encoding 256 array def
+  0 1 255 { Encoding exch /.notdef put } for
+  Encoding
+    dup (b) 0 get /Bullet put
+    dup (c) 0 get /Circle put
+    dup (C) 0 get /BoldCircle put
+    dup (u) 0 get /SolidTriangle put
+    dup (t) 0 get /Triangle put
+    dup (T) 0 get /BoldTriangle put
+    dup (r) 0 get /SolidSquare put
+    dup (s) 0 get /Square put
+    dup (S) 0 get /BoldSquare put
+    dup (q) 0 get /SolidPentagon put
+    dup (p) 0 get /Pentagon put
+    dup (P) 0 get /BoldPentagon put
+% DG/SR modification begin - Dec. 16, 1999 - From Etienne Riga
+    dup (l) 0 get /SolidDiamond put
+    dup (d) 0 get /Diamond put
+        (D) 0 get /BoldDiamond put
+% DG/SR modification end
+  /Metrics 13 dict def
+  Metrics begin
+    /Bullet        1000   def
+    /Circle        1000   def
+    /BoldCircle    1000   def
+    /SolidTriangle 1344   def
+    /Triangle      1344   def
+    /BoldTriangle  1344   def
+    /SolidSquare    886   def
+    /Square         886   def
+    /BoldSquare     886   def
+    /SolidPentagon 1093.2 def
+    /Pentagon      1093.2 def
+    /BoldPentagon  1093.2 def
+% DG/SR modification begin - Dec. 16, 1999 - From Etienne Riga
+    /SolidDiamond  1008   def
+    /Diamond       1008   def
+    /BoldDiamond   1008   def
+% DG/SR modification end
+    /.notdef 0 def
+  end
+  /BBoxes 13 dict def
+  BBoxes begin
+    /Circle        { -550 -550 550 550 } def
+    /BoldCircle    /Circle load def
+    /Bullet        /Circle load def
+    /Triangle      { -571.5 -330 571.5 660 } def
+    /BoldTriangle  /Triangle load def
+    /SolidTriangle /Triangle load def
+    /Square        { -450 -450 450 450 } def
+    /BoldSquare    /Square load def
+    /SolidSquare   /Square load def
+    /Pentagon      { -546.6 -465 546.6 574.7 } def
+    /BoldPentagon  /Pentagon load def
+    /SolidPentagon /Pentagon load def
+% DG/SR modification begin - Dec. 16, 1999 - From Etienne Riga
+    /Diamond       { -428.5 -742.5 428.5 742.5 } def
+    /BoldDiamond   /Diamond load def
+    /SolidDiamond  /Diamond load def
+% DG/SR modification end
+    /.notdef { 0 0 0 0 } def
+  end
+  /CharProcs 20 dict def
+  CharProcs begin
+    /Adjust {
+      2 copy dtransform floor .5 add exch floor .5 add exch idtransform
+      3 -1 roll div 3 1 roll exch div exch scale
+    } def
+    /CirclePath    { 0 0 500 0 360 arc closepath } def
+    /Bullet        { 500 500 Adjust CirclePath fill } def
+    /Circle        { 500 500 Adjust CirclePath .9 .9 scale CirclePath
+                     eofill } def
+    /BoldCircle    { 500 500 Adjust CirclePath .8 .8 scale CirclePath
+                     eofill } def
+    /BoldCircle    { CirclePath .8 .8 scale CirclePath eofill } def
+    /TrianglePath  { 0  660 moveto -571.5 -330 lineto 571.5 -330 lineto
+                     closepath } def
+    /SolidTriangle { TrianglePath fill } def
+    /Triangle      { TrianglePath .85 .85 scale TrianglePath eofill } def
+    /BoldTriangle  { TrianglePath .7 .7 scale TrianglePath eofill } def
+    /SquarePath    { -450 450 moveto 450 450 lineto 450 -450 lineto
+                     -450 -450 lineto closepath } def
+    /SolidSquare   { SquarePath fill } def
+    /Square        { SquarePath .89 .89 scale SquarePath eofill } def
+    /BoldSquare    { SquarePath .78 .78 scale SquarePath eofill } def
+    /PentagonPath  {
+      -337.8 -465   moveto
+       337.8 -465   lineto
+       546.6  177.6 lineto
+         0    574.7 lineto
+      -546.6  177.6 lineto
+      closepath
+    } def
+    /SolidPentagon { PentagonPath fill } def
+    /Pentagon      { PentagonPath .89 .89 scale PentagonPath eofill } def
+    /BoldPentagon  { PentagonPath .78 .78 scale PentagonPath eofill } def
+% DG/SR modification begin - Dec. 16, 1999 - From Etienne Riga
+    /DiamondPath   { 0 742.5 moveto -428.5 0 lineto 0 -742.5 lineto
+                     428.5 0 lineto closepath } def
+    /SolidDiamond  { DiamondPath fill } def
+    /Diamond       { DiamondPath .85 .85 scale DiamondPath eofill } def
+    /BoldDiamond   { DiamondPath .7 .7 scale DiamondPath eofill } def
+% DG/SR modification end
+    /.notdef { } def
+  end
+  /BuildGlyph {
+    exch
+    begin
+      Metrics 1 index get exec 0
+      BBoxes 3 index get exec
+      setcachedevice
+      CharProcs begin load exec end
+    end
+  } def
+  /BuildChar {
+    1 index /Encoding get exch get
+    1 index /BuildGlyph get exec
+  } bind def
+end
+/PSTricksDotFont exch definefont pop
+%END pst-dots.pro
+
+%%EndProcSet
+%%BeginProcSet: 8r.enc
+% File  8r.enc as of 2002-03-12 for PSNFSS 9
+%
+% This is the encoding vector for Type1 and TrueType fonts to be used
+% with TeX.  This file is part of the PSNFSS bundle, version 9
+% 
+% Authors: S. Rahtz, P. MacKay, Alan Jeffrey, B. Horn, K. Berry, W. Schmidt
+%
+% Idea is to have all the characters normally included in Type 1 fonts
+% available for typesetting. This is effectively the characters in Adobe
+% Standard Encoding + ISO Latin 1 + extra characters from Lucida + Euro.
+% 
+% Character code assignments were made as follows:
+% 
+% (1) the Windows ANSI characters are almost all in their Windows ANSI
+% positions, because some Windows users cannot easily reencode the
+% fonts, and it makes no difference on other systems. The only Windows
+% ANSI characters not available are those that make no sense for
+% typesetting -- rubout (127 decimal), nobreakspace (160), softhyphen
+% (173). quotesingle and grave are moved just because it's such an
+% irritation not having them in TeX positions.
+% 
+% (2) Remaining characters are assigned arbitrarily to the lower part
+% of the range, avoiding 0, 10 and 13 in case we meet dumb software.
+% 
+% (3) Y&Y Lucida Bright includes some extra text characters; in the
+% hopes that other PostScript fonts, perhaps created for public
+% consumption, will include them, they are included starting at 0x12.
+% 
+% (4) Remaining positions left undefined are for use in (hopefully)
+% upward-compatible revisions, if someday more characters are generally
+% available.
+% 
+% (5) hyphen appears twice for compatibility with both ASCII and Windows.
+%
+% (6) /Euro is assigned to 128, as in Windows ANSI
+% 
+/TeXBase1Encoding [
+% 0x00 (encoded characters from Adobe Standard not in Windows 3.1)
+  /.notdef /dotaccent /fi /fl
+  /fraction /hungarumlaut /Lslash /lslash
+  /ogonek /ring /.notdef
+  /breve /minus /.notdef 
+% These are the only two remaining unencoded characters, so may as
+% well include them.
+  /Zcaron /zcaron 
+% 0x10
+ /caron /dotlessi 
+% (unusual TeX characters available in, e.g., Lucida Bright)
+ /dotlessj /ff /ffi /ffl 
+ /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef
+ % very contentious; it's so painful not having quoteleft and quoteright
+ % at 96 and 145 that we move the things normally found there down to here.
+ /grave /quotesingle 
+% 0x20 (ASCII begins)
+ /space /exclam /quotedbl /numbersign
+ /dollar /percent /ampersand /quoteright
+ /parenleft /parenright /asterisk /plus /comma /hyphen /period /slash
+% 0x30
+ /zero /one /two /three /four /five /six /seven
+ /eight /nine /colon /semicolon /less /equal /greater /question
+% 0x40
+ /at /A /B /C /D /E /F /G /H /I /J /K /L /M /N /O
+% 0x50
+ /P /Q /R /S /T /U /V /W
+ /X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore
+% 0x60
+ /quoteleft /a /b /c /d /e /f /g /h /i /j /k /l /m /n /o
+% 0x70
+ /p /q /r /s /t /u /v /w
+ /x /y /z /braceleft /bar /braceright /asciitilde
+ /.notdef % rubout; ASCII ends
+% 0x80
+ /Euro /.notdef /quotesinglbase /florin
+ /quotedblbase /ellipsis /dagger /daggerdbl
+ /circumflex /perthousand /Scaron /guilsinglleft
+ /OE /.notdef /.notdef /.notdef
+% 0x90
+ /.notdef /.notdef /.notdef /quotedblleft
+ /quotedblright /bullet /endash /emdash
+ /tilde /trademark /scaron /guilsinglright
+ /oe /.notdef /.notdef /Ydieresis
+% 0xA0
+ /.notdef % nobreakspace
+ /exclamdown /cent /sterling
+ /currency /yen /brokenbar /section
+ /dieresis /copyright /ordfeminine /guillemotleft
+ /logicalnot
+ /hyphen % Y&Y (also at 45); Windows' softhyphen
+ /registered
+ /macron
+% 0xD0
+ /degree /plusminus /twosuperior /threesuperior
+ /acute /mu /paragraph /periodcentered
+ /cedilla /onesuperior /ordmasculine /guillemotright
+ /onequarter /onehalf /threequarters /questiondown
+% 0xC0
+ /Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla
+ /Egrave /Eacute /Ecircumflex /Edieresis
+ /Igrave /Iacute /Icircumflex /Idieresis
+% 0xD0
+ /Eth /Ntilde /Ograve /Oacute
+ /Ocircumflex /Otilde /Odieresis /multiply
+ /Oslash /Ugrave /Uacute /Ucircumflex
+ /Udieresis /Yacute /Thorn /germandbls
+% 0xE0
+ /agrave /aacute /acircumflex /atilde
+ /adieresis /aring /ae /ccedilla
+ /egrave /eacute /ecircumflex /edieresis
+ /igrave /iacute /icircumflex /idieresis
+% 0xF0
+ /eth /ntilde /ograve /oacute
+ /ocircumflex /otilde /odieresis /divide
+ /oslash /ugrave /uacute /ucircumflex
+ /udieresis /yacute /thorn /ydieresis
+] def
+
+%%EndProcSet
+%%BeginProcSet: bbad153f.enc
+% Thomas Esser, Dec 2002. public domain
+%
+% Encoding for:
+%     cmsy10 cmsy5 cmsy6 cmsy7 cmsy8 cmsy9
+%
+/TeXbbad153fEncoding [
+/minus /periodcentered /multiply /asteriskmath /divide /diamondmath
+/plusminus /minusplus /circleplus /circleminus /circlemultiply
+/circledivide /circledot /circlecopyrt /openbullet /bullet
+/equivasymptotic /equivalence /reflexsubset /reflexsuperset /lessequal
+/greaterequal /precedesequal /followsequal /similar /approxequal
+/propersubset /propersuperset /lessmuch /greatermuch /precedes /follows
+/arrowleft /arrowright /arrowup /arrowdown /arrowboth /arrownortheast
+/arrowsoutheast /similarequal /arrowdblleft /arrowdblright /arrowdblup
+/arrowdbldown /arrowdblboth /arrownorthwest /arrowsouthwest /proportional
+/prime /infinity /element /owner /triangle /triangleinv /negationslash
+/mapsto /universal /existential /logicalnot /emptyset /Rfractur /Ifractur
+/latticetop /perpendicular /aleph /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /union /intersection
+/unionmulti /logicaland /logicalor /turnstileleft /turnstileright
+/floorleft /floorright /ceilingleft /ceilingright /braceleft /braceright
+/angbracketleft /angbracketright /bar /bardbl /arrowbothv /arrowdblbothv
+/backslash /wreathproduct /radical /coproduct /nabla /integral
+/unionsq /intersectionsq /subsetsqequal /supersetsqequal /section
+/dagger /daggerdbl /paragraph /club /diamond /heart /spade /arrowleft
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/minus /periodcentered /multiply /asteriskmath /divide /diamondmath
+/plusminus /minusplus /circleplus /circleminus /.notdef /.notdef
+/circlemultiply /circledivide /circledot /circlecopyrt /openbullet
+/bullet /equivasymptotic /equivalence /reflexsubset /reflexsuperset
+/lessequal /greaterequal /precedesequal /followsequal /similar
+/approxequal /propersubset /propersuperset /lessmuch /greatermuch
+/precedes /follows /arrowleft /spade /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+] def
+
+%%EndProcSet
+%%BeginProcSet: aae443f0.enc
+% Thomas Esser, Dec 2002. public domain
+%
+% Encoding for:
+%     cmmi10 cmmi12 cmmi5 cmmi6 cmmi7 cmmi8 cmmi9 cmmib10
+%
+/TeXaae443f0Encoding [
+/Gamma /Delta /Theta /Lambda /Xi /Pi /Sigma /Upsilon /Phi /Psi /Omega
+/alpha /beta /gamma /delta /epsilon1 /zeta /eta /theta /iota /kappa
+/lambda /mu /nu /xi /pi /rho /sigma /tau /upsilon /phi /chi /psi
+/omega /epsilon /theta1 /pi1 /rho1 /sigma1 /phi1 /arrowlefttophalf
+/arrowleftbothalf /arrowrighttophalf /arrowrightbothalf /arrowhookleft
+/arrowhookright /triangleright /triangleleft /zerooldstyle /oneoldstyle
+/twooldstyle /threeoldstyle /fouroldstyle /fiveoldstyle /sixoldstyle
+/sevenoldstyle /eightoldstyle /nineoldstyle /period /comma /less /slash
+/greater /star /partialdiff /A /B /C /D /E /F /G /H /I /J /K /L /M /N
+/O /P /Q /R /S /T /U /V /W /X /Y /Z /flat /natural /sharp /slurbelow
+/slurabove /lscript /a /b /c /d /e /f /g /h /i /j /k /l /m /n /o /p
+/q /r /s /t /u /v /w /x /y /z /dotlessi /dotlessj /weierstrass /vector
+/tie /psi /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/space /Gamma /Delta /Theta /Lambda /Xi /Pi /Sigma /Upsilon /Phi /Psi
+/.notdef /.notdef /Omega /alpha /beta /gamma /delta /epsilon1 /zeta /eta
+/theta /iota /kappa /lambda /mu /nu /xi /pi /rho /sigma /tau /upsilon
+/phi /chi /psi /tie /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef
+] def
+
+%%EndProcSet
+%%BeginProcSet: texps.pro
+%!
+TeXDict begin/rf{findfont dup length 1 add dict begin{1 index/FID ne 2
+index/UniqueID ne and{def}{pop pop}ifelse}forall[1 index 0 6 -1 roll
+exec 0 exch 5 -1 roll VResolution Resolution div mul neg 0 0]FontType 0
+ne{/Metrics exch def dict begin Encoding{exch dup type/integertype ne{
+pop pop 1 sub dup 0 le{pop}{[}ifelse}{FontMatrix 0 get div Metrics 0 get
+div def}ifelse}forall Metrics/Metrics currentdict end def}{{1 index type
+/nametype eq{exit}if exch pop}loop}ifelse[2 index currentdict end
+definefont 3 -1 roll makefont/setfont cvx]cvx def}def/ObliqueSlant{dup
+sin S cos div neg}B/SlantFont{4 index mul add}def/ExtendFont{3 -1 roll
+mul exch}def/ReEncodeFont{CharStrings rcheck{/Encoding false def dup[
+exch{dup CharStrings exch known not{pop/.notdef/Encoding true def}if}
+forall Encoding{]exch pop}{cleartomark}ifelse}if/Encoding exch def}def
+end
+
+%%EndProcSet
+%%BeginProcSet: special.pro
+%!
+TeXDict begin/SDict 200 dict N SDict begin/@SpecialDefaults{/hs 612 N
+/vs 792 N/ho 0 N/vo 0 N/hsc 1 N/vsc 1 N/ang 0 N/CLIP 0 N/rwiSeen false N
+/rhiSeen false N/letter{}N/note{}N/a4{}N/legal{}N}B/@scaleunit 100 N
+/@hscale{@scaleunit div/hsc X}B/@vscale{@scaleunit div/vsc X}B/@hsize{
+/hs X/CLIP 1 N}B/@vsize{/vs X/CLIP 1 N}B/@clip{/CLIP 2 N}B/@hoffset{/ho
+X}B/@voffset{/vo X}B/@angle{/ang X}B/@rwi{10 div/rwi X/rwiSeen true N}B
+/@rhi{10 div/rhi X/rhiSeen true N}B/@llx{/llx X}B/@lly{/lly X}B/@urx{
+/urx X}B/@ury{/ury X}B/magscale true def end/@MacSetUp{userdict/md known
+{userdict/md get type/dicttype eq{userdict begin md length 10 add md
+maxlength ge{/md md dup length 20 add dict copy def}if end md begin
+/letter{}N/note{}N/legal{}N/od{txpose 1 0 mtx defaultmatrix dtransform S
+atan/pa X newpath clippath mark{transform{itransform moveto}}{transform{
+itransform lineto}}{6 -2 roll transform 6 -2 roll transform 6 -2 roll
+transform{itransform 6 2 roll itransform 6 2 roll itransform 6 2 roll
+curveto}}{{closepath}}pathforall newpath counttomark array astore/gc xdf
+pop ct 39 0 put 10 fz 0 fs 2 F/|______Courier fnt invertflag{PaintBlack}
+if}N/txpose{pxs pys scale ppr aload pop por{noflips{pop S neg S TR pop 1
+-1 scale}if xflip yflip and{pop S neg S TR 180 rotate 1 -1 scale ppr 3
+get ppr 1 get neg sub neg ppr 2 get ppr 0 get neg sub neg TR}if xflip
+yflip not and{pop S neg S TR pop 180 rotate ppr 3 get ppr 1 get neg sub
+neg 0 TR}if yflip xflip not and{ppr 1 get neg ppr 0 get neg TR}if}{
+noflips{TR pop pop 270 rotate 1 -1 scale}if xflip yflip and{TR pop pop
+90 rotate 1 -1 scale ppr 3 get ppr 1 get neg sub neg ppr 2 get ppr 0 get
+neg sub neg TR}if xflip yflip not and{TR pop pop 90 rotate ppr 3 get ppr
+1 get neg sub neg 0 TR}if yflip xflip not and{TR pop pop 270 rotate ppr
+2 get ppr 0 get neg sub neg 0 S TR}if}ifelse scaleby96{ppr aload pop 4
+-1 roll add 2 div 3 1 roll add 2 div 2 copy TR .96 dup scale neg S neg S
+TR}if}N/cp{pop pop showpage pm restore}N end}if}if}N/normalscale{
+Resolution 72 div VResolution 72 div neg scale magscale{DVImag dup scale
+}if 0 setgray}N/psfts{S 65781.76 div N}N/startTexFig{/psf$SavedState
+save N userdict maxlength dict begin/magscale true def normalscale
+currentpoint TR/psf$ury psfts/psf$urx psfts/psf$lly psfts/psf$llx psfts
+/psf$y psfts/psf$x psfts currentpoint/psf$cy X/psf$cx X/psf$sx psf$x
+psf$urx psf$llx sub div N/psf$sy psf$y psf$ury psf$lly sub div N psf$sx
+psf$sy scale psf$cx psf$sx div psf$llx sub psf$cy psf$sy div psf$ury sub
+TR/showpage{}N/erasepage{}N/setpagedevice{pop}N/copypage{}N/p 3 def
+@MacSetUp}N/doclip{psf$llx psf$lly psf$urx psf$ury currentpoint 6 2 roll
+newpath 4 copy 4 2 roll moveto 6 -1 roll S lineto S lineto S lineto
+closepath clip newpath moveto}N/endTexFig{end psf$SavedState restore}N
+/@beginspecial{SDict begin/SpecialSave save N gsave normalscale
+currentpoint TR @SpecialDefaults count/ocount X/dcount countdictstack N}
+N/@setspecial{CLIP 1 eq{newpath 0 0 moveto hs 0 rlineto 0 vs rlineto hs
+neg 0 rlineto closepath clip}if ho vo TR hsc vsc scale ang rotate
+rwiSeen{rwi urx llx sub div rhiSeen{rhi ury lly sub div}{dup}ifelse
+scale llx neg lly neg TR}{rhiSeen{rhi ury lly sub div dup scale llx neg
+lly neg TR}if}ifelse CLIP 2 eq{newpath llx lly moveto urx lly lineto urx
+ury lineto llx ury lineto closepath clip}if/showpage{}N/erasepage{}N
+/setpagedevice{pop}N/copypage{}N newpath}N/@endspecial{count ocount sub{
+pop}repeat countdictstack dcount sub{end}repeat grestore SpecialSave
+restore end}N/@defspecial{SDict begin}N/@fedspecial{end}B/li{lineto}B
+/rl{rlineto}B/rc{rcurveto}B/np{/SaveX currentpoint/SaveY X N 1
+setlinecap newpath}N/st{stroke SaveX SaveY moveto}N/fil{fill SaveX SaveY
+moveto}N/ellipse{/endangle X/startangle X/yrad X/xrad X/savematrix
+matrix currentmatrix N TR xrad yrad scale 0 0 1 startangle endangle arc
+savematrix setmatrix}N end
+
+%%EndProcSet
+%%BeginFont: CMMI12
+%!PS-AdobeFont-1.1: CMMI12 1.100
+%%CreationDate: 1996 Jul 27 08:57:55
+% Copyright (C) 1997 American Mathematical Society. All Rights Reserved.
+11 dict begin
+/FontInfo 7 dict dup begin
+/version (1.100) readonly def
+/Notice (Copyright (C) 1997 American Mathematical Society. All Rights Reserved) readonly def
+/FullName (CMMI12) readonly def
+/FamilyName (Computer Modern) readonly def
+/Weight (Medium) readonly def
+/ItalicAngle -14.04 def
+/isFixedPitch false def
+end readonly def
+/FontName /CMMI12 def
+/PaintType 0 def
+/FontType 1 def
+/FontMatrix [0.001 0 0 0.001 0 0] readonly def
+/Encoding 256 array
+0 1 255 {1 index exch /.notdef put} for
+dup 0 /.notdef put
+readonly def
+/FontBBox{-30 -250 1026 750}readonly def
+/UniqueID 5087386 def
+currentdict end
+currentfile eexec
+D9D66F633B846A97B686A97E45A3D0AA0529731C99A784CCBE85B4993B2EEBDE
+3B12D472B7CF54651EF21185116A69AB1096ED4BAD2F646635E019B6417CC77B
+532F85D811C70D1429A19A5307EF63EB5C5E02C89FC6C20F6D9D89E7D91FE470
+B72BEFDA23F5DF76BE05AF4CE93137A219ED8A04A9D7D6FDF37E6B7FCDE0D90B
+986423E5960A5D9FBB4C956556E8DF90CBFAEC476FA36FD9A5C8175C9AF513FE
+D919C2DDD26BDC0D99398B9F4D03D6A8F05B47AF95EF28A9C561DBDC98C47CF5
+5250011D19E9366EB6FD153D3A100CAA6212E3D5D93990737F8D326D347B7EDC
+4391C9DF440285B8FC159D0E98D4258FC57892DCC57F7903449E07914FBE9E67
+3C15C2153C061EB541F66C11E7EE77D5D77C0B11E1AC55101DA976CCACAB6993
+EED1406FBB7FF30EAC9E90B90B2AF4EC7C273CA32F11A5C1426FF641B4A2FB2F
+4E68635C93DB835737567FAF8471CBC05078DCD4E40E25A2F4E5AF46C234CF59
+2A1CE8F39E1BA1B2A594355637E474167EAD4D97D51AF0A899B44387E1FD933A
+323AFDA6BA740534A510B4705C0A15647AFBF3E53A82BF320DD96753639BE49C
+2F79A1988863EF977B800C9DB5B42039C23EB86953713F730E03EA22FF7BB2C1
+D97D33FD77B1BDCC2A60B12CF7805CFC90C5B914C0F30A673DF9587F93E47CEA
+5932DD1930560C4F0D97547BCD805D6D854455B13A4D7382A22F562D7C55041F
+0FD294BDAA1834820F894265A667E5C97D95FF152531EF97258F56374502865D
+A1E7C0C5FB7C6FB7D3C43FEB3431095A59FBF6F61CEC6D6DEE09F4EB0FD70D77
+2A8B0A4984C6120293F6B947944BE23259F6EB64303D627353163B6505FC8A60
+00681F7A3968B6CBB49E0420A691258F5E7B07B417157803FCBE9B9FB1F80FD8
+CA08495F7285486D655B527ABF1AA044534A3AD4F4DA9E04A31A785C80A6C3A0
+B0DDDB4E46B075D4754A82A584DCD79F700FC74B248C8201FA186CB8BEA86880
+1B990CE2D26929F10665DDC70F456142AC21182C3B7F35FB2F904B8BD5F8D4AB
+DA2C3ABF1A81D72AEB900487DE2D38AB7BB7A57C5F2F4723F23497DEB3A5A133
+89167A7D63166D8E74E342451F0F108414CB221F8802343692C68AB1C2BFD00F
+84411FC72472E528053EC041E396333C90480C82F2BE2DD671D0F0661BB148EC
+AA8A18D139A687303EECDC406C8C00B476F321DFBDC8D8B289265FD8D017753B
+AE040378EF4A9012460ED13904CE401D4780C0DBC0496AD943C2DB7CA66BA0A8
+2FDC24688ADFB279C98449277982013CEA094CF7325018FDFE2FE15A3F9063AD
+DC24B5BF558572727FE098F2E839518ED25EAD7FFEE30BDE1EDE5BD17B6D2D7B
+23E053E870BA8B2F723BE05329EF20001CFDFF9858B24C1F58A2AB9D0D6AB25F
+2F30EA266E22424EAD084FAAB6B173A879EB434197933136E863BF959871C291
+ACDB89F3680F1360D5ED291229D13F807F2C8603755A004A4A11E4441F5ED65F
+24AAF256518DCE2463D1F6506C730742E520242DBA8A0DB48AC0E92A1F2BCB04
+61A6F18B670F37DB2B10F25100AC637A96A38DFC2FC987766916A5AD4F2C9D06
+BAD3011FBFD86945E83C1E660E2E7F4B66CA60D348D3E727BF95D8B9A6CF0531
+7F961B94772455FFD51BE4779F3C04CAD437DDA11E6A60E21C1777BA07A5C433
+8E0CD0AA96F77A39E7A08D298954EB31C304C8ABC4691B6C1EA3BE33AF8936E6
+817C8D14C8B9FB74A08B15BD422D303DCA607E0CC718229568A2DFD883D37EC3
+B1A3D7C141E679EE2C12B11E489430FA4443BB11F857D66A1ACF970520BBE1A4
+C58B47EEBA112EFF1A140DECD808D2658E82A44ED307D9EE33E9
+0000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000
+cleartomark
+%%EndFont 
+%%BeginFont: CMSY10
+%!PS-AdobeFont-1.1: CMSY10 1.0
+%%CreationDate: 1991 Aug 15 07:20:57
+% Copyright (C) 1997 American Mathematical Society. All Rights Reserved.
+11 dict begin
+/FontInfo 7 dict dup begin
+/version (1.0) readonly def
+/Notice (Copyright (C) 1997 American Mathematical Society. All Rights Reserved) readonly def
+/FullName (CMSY10) readonly def
+/FamilyName (Computer Modern) readonly def
+/Weight (Medium) readonly def
+/ItalicAngle -14.035 def
+/isFixedPitch false def
+end readonly def
+/FontName /CMSY10 def
+/PaintType 0 def
+/FontType 1 def
+/FontMatrix [0.001 0 0 0.001 0 0] readonly def
+/Encoding 256 array
+0 1 255 {1 index exch /.notdef put} for
+dup 0 /.notdef put
+readonly def
+/FontBBox{-29 -960 1116 775}readonly def
+/UniqueID 5000820 def
+currentdict end
+currentfile eexec
+D9D66F633B846A97B686A97E45A3D0AA052F09F9C8ADE9D907C058B87E9B6964
+7D53359E51216774A4EAA1E2B58EC3176BD1184A633B951372B4198D4E8C5EF4
+A213ACB58AA0A658908035BF2ED8531779838A960DFE2B27EA49C37156989C85
+E21B3ABF72E39A89232CD9F4237FC80C9E64E8425AA3BEF7DED60B122A52922A
+221A37D9A807DD01161779DDE7D31FF2B87F97C73D63EECDDA4C49501773468A
+27D1663E0B62F461F6E40A5D6676D1D12B51E641C1D4E8E2771864FC104F8CBF
+5B78EC1D88228725F1C453A678F58A7E1B7BD7CA700717D288EB8DA1F57C4F09
+0ABF1D42C5DDD0C384C7E22F8F8047BE1D4C1CC8E33368FB1AC82B4E96146730
+DE3302B2E6B819CB6AE455B1AF3187FFE8071AA57EF8A6616B9CB7941D44EC7A
+71A7BB3DF755178D7D2E4BB69859EFA4BBC30BD6BB1531133FD4D9438FF99F09
+4ECC068A324D75B5F696B8688EEB2F17E5ED34CCD6D047A4E3806D000C199D7C
+515DB70A8D4F6146FE068DC1E5DE8BC5703711DA090312BA3FC00A08C453C609
+C627A8BD98D9E826E714D0D80C0EAA865C7BE7A8354CAA754B9BC4B87DA7A47C
+E4842880ECB430B6AF65DA8DC659C6D27467A1D8FA5DC2D0E48DC1E1DA5E9840
+FE13EA98EF5A9160611F60C6D9827614DB3AEEC704F07FE12639CA38F26A8BCA
+25398F01A4A18954C6256B0087A09F89D96322E0F49906EF0D6064838F92E5E1
+49566099656A8D25E98597210D30EF8684C7DE01BDDFC5977142A1B3F11844EE
+5D3E8C9AB40E32AD2B17BEB5B5D788D78391AF0B3B279BD6ABE296E416A88094
+0B604143C0FBB66622912584362D66A0369E3B012D002FAFF33AFA466A9F820D
+82205D2BE2BC2590F41D1963B05EBBF547E016DE1253A9967491D522
+0000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000
+cleartomark
+%%EndFont 
+TeXDict begin 39158280 55380996 1000 600 600 (sujet.dvi)
+@start /Fa 139[28 39 39 9[50 2[44 50 2[50 97[{
+ TeXBase1Encoding ReEncodeFont }7 99.6264 /Times-Italic
+rf /Fb 233[59 22[{ TeXaae443f0Encoding ReEncodeFont }1
+99.6264 /CMMI12 rf /Fc 172[37 9[22 73[{ TeXBase1Encoding ReEncodeFont }
+2 66.4176 /Times-Roman rf /Fd 21[37 37 37 110[42 1[60
+42 42 23 32 28 1[42 42 42 65 23 42 23 23 42 42 1[37 42
+37 42 37 31[60 12[42 42 42 3[21 28 21 4[28 36[46 2[{
+ TeXBase1Encoding ReEncodeFont }34 83.022 /Times-Roman
+rf /Fe 206[29 49[{ TeXBase1Encoding ReEncodeFont }1 58.1154
+/Times-Roman rf /Ff 222[100 33[{ TeXbbad153fEncoding ReEncodeFont }1
+99.6264 /CMSY10 rf /Fg 22[92 92 110[103 103 2[115 69
+80 92 1[115 103 115 172 57 2[57 3[92 115 92 1[103 13[115
+43[69 39[{ TeXBase1Encoding ReEncodeFont }20 206.559
+/Times-Bold rf /Fh 172[64 9[45 73[{ TeXBase1Encoding ReEncodeFont }2
+114.77 /Times-Bold rf /Fi 11[72 10[64 64 80[143 29[72
+2[72 80 48 56 64 1[80 72 80 120 40 1[48 40 1[72 1[64
+80 64 1[72 12[96 80 5[135 5[112 3[104 13[72 72 72 72
+72 49[{ TeXBase1Encoding ReEncodeFont }32 143.462 /Times-Bold
+rf /Fj 22[44 115[55 33 39 44 2[50 55 83 3[28 3[44 19[78
+61 1[72 12[72 6[33 4[50 50 50 50 50 49[{ TeXBase1Encoding ReEncodeFont }
+20 99.6264 /Times-Bold rf /Fk 166[58 5[44 53 2[58 2[49
+2[27 3[49 69[{ TeXBase1Encoding ReEncodeFont }7 79.701
+/Times-Roman rf /Fl 21[44 44 44 44 6[44 31[72 41[50 27[44
+50 50 1[50 50 28 39 33 50 50 50 50 78 28 50 28 28 50
+50 33 44 50 44 50 44 11[72 61 55 66 72 55 1[72 89 61
+72 1[33 72 3[72 66 1[72 1[44 4[28 4[50 50 50 50 50 50
+1[25 33 25 2[33 33 33 78 34[55 55 2[{ TeXBase1Encoding ReEncodeFont }64
+99.6264 /Times-Roman rf end
+%%EndProlog
+%%BeginSetup
+%%Feature: *Resolution 600dpi
+TeXDict begin
+%%PaperSize: A4
+ end
+%%EndSetup
+%%Page: 1 1
+TeXDict begin 1 0 bop 0 84 a Fl(14)25 b(jan)l(vier)f(2005)2943
+b Fk(I)t(S)t(I)r Fl(423)p 0 124 3825 4 v 50 780 a @beginspecial
+-1 @llx -1 @lly 292 @urx 132 @ury 566 @rhi @setspecial
+%%BeginDocument: logo/www.enst-bretagne.fr/resources/logos/logo-ENSTBretagne-bicolore.eps
+%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: -1 -1 292 132
+%%Creator: (Mathias Herberts)
+%%Title: (logo ENST Bretagne)
+%%Copyright: (Mathias Herberts 1998)
+%%CreationDate: (1998.07.29)
+%%Pages: 1
+%%DocumentSuppliedResources: (Mathias.Herberts ENST-Bretagne) 1.0 0
+%%EndComments
+%%BeginProlog
+%%BeginProcSet: (Mathias.Herberts ENST-Bretagne) 1.0 0
+/ENSTBretagnedict 320 dict def
+
+ENSTBretagnedict begin
+
+/ENSTBretagne {true} def
+
+% Largeur du logo sans texte supplémentaire : 291 points
+% Hauteur du logo sans texte supplémentaire : 132 points
+% %%BoundingBox: -1 -1 292 132 (contour reel inclusif 0 0 291 131)
+
+% Importation des définitions des composants du logo
+
+% Ce fichier contient les définitions des composants
+% du logo.
+% Ces composants portent les noms :
+% Earth    pour la planête
+% Trail    pour la traînée
+% Sat	    pour le satellite
+% ENST	    pour le texte « ENST »
+% Bretagne pour le texte « Bretagne »
+% Ces composants font appel à des paramètres qui sont :
+% colCirc1         La couleur du plus grand cercle de la planête.
+% colCirc2	    La couleur du deuxième plus grand cercle.
+% colCirc3	    La couleur du troisième cercle.
+% colCirc4	    La couleur du quatrième cercle.
+% colCirc5	    La couleur du cinquième cercle.
+% colCirc6	    La couleur du sixième cercle.
+% colCirc7	    La couleur du septième cercle.
+% colCirc8	    La couleur du huitième cercle.
+% colCirc9	    La couleur du neuvième cercle.
+% colCirc10	    La couleur du dixième cercle.
+% colCirc11	    La couleur du onzième cercle.
+% colCirc12	    La couleur du douzième cercle.
+% colCirc13	    La couleur du treizième et plus petit cercle.
+% outlineSat       L'épaisseur du trait du satellite, par défaut en point PostScript.
+% coloutlineSat    La couleur du trait du satellite.
+% colBGSat	    La couleur du fond sous le satellite.
+% colSat	    La couleur intérieure du satellite.
+% outlineTrail	    L'épaisseur du trait de la traînée.
+% coloutlineTrail  La couleur du trait de la traînée.
+% colBGTrail	    La couleur du fond sous la traînée.
+% colTrail	    La couleur intérieure du satellite.
+% outlineENST	    L'épaisseur du contour du texte « ENST ».
+% outlineplusENST  L'épaisseur ajoutée à outlineENST pour le contour blanc.
+% coloutlineENST   La couleur du contour de « ENST ».
+% colBGENST	    La couleur du fond sous « ENST ».
+% colENST	    La couleur du corps du texte « ENST ».
+% outlineBretagne  L'épaisseur du contour du texte « Bretagne ».
+% colBGBretagne    La couleur du fond sous « Bretagne ».
+% colBretagne	    La couleur du corps du texte « Bretagne ».
+
+% Definitions generales
+
+/v {currentpoint 6 2 roll pl curveto} def
+/V {v} def
+/y {pl 2 copy curveto} def
+/Y /y load def
+/l {pl lineto} def
+/L /l load def
+/m {pl moveto} def
+/C {curveto} def
+/pl {transform
+    0.25 sub round 0.25 add exch
+    0.25 sub round 0.25 add exch
+    itransform
+} def
+
+/c {pl curveto} def
+/f {closepath fill} def
+/w {setlinewidth} def
+/N {newpath} def
+/OffsetON {-247 -441 translate} def
+/OffsetOFF {247 441 translate} def
+
+/rectclip where {pop} {/rectclip 
+{
+newpath
+4 -2 roll
+moveto
+2 1 roll
+dup
+0 rlineto
+2 1 roll
+0 2 1 roll
+rlineto
+neg
+0 rlineto
+closepath
+clip
+newpath
+} def} ifelse
+/setstrokeadjust where {pop} {/setstrokeadjust {pop} def} ifelse
+
+% Cercle 1
+
+/Circ1 {
+gsave
+colCirc1
+280.7876 506.6492 m
+280.7876 542.6156 309.9451 571.7732 345.9115 571.7732 c
+381.878 571.7732 411.0355 542.6156 411.0355 506.6492 c
+411.0355 470.6828 381.878 441.5253 345.9115 441.5253 c
+309.9451 441.5253 280.7876 470.6828 280.7876 506.6492 c
+f
+grestore
+} def
+
+% Cercle 2
+
+/Circ2 {
+gsave
+colCirc2
+290.4923 508.3052 m
+290.4923 541.5036 317.4059 568.4172 350.6042 568.4172 c
+383.8027 568.4172 410.7162 541.5036 410.7162 508.3052 c
+410.7162 475.1069 383.8027 448.1933 350.6042 448.1933 c
+317.4059 448.1933 290.4923 475.1069 290.4923 508.3052 c
+f
+grestore
+} def
+
+% Cercle 3
+
+/Circ3 {
+gsave
+colCirc3
+300.1971 509.9613 m
+300.1971 540.3917 324.8667 565.0612 355.297 565.0612 c
+385.7274 565.0612 410.3968 540.3917 410.3968 509.9613 c
+410.3968 479.5309 385.7274 454.8615 355.297 454.8615 c
+324.8667 454.8615 300.1971 479.5309 300.1971 509.9613 c
+f
+grestore
+} def
+
+% Cercle 4
+
+/Circ4 {
+gsave
+colCirc4
+309.9018 511.6174 m
+309.9018 539.2797 332.3274 561.7053 359.9897 561.7053 c
+387.652 561.7053 410.0775 539.2797 410.0775 511.6174 c
+410.0775 483.955 387.652 461.5296 359.9897 461.5296 c
+332.3274 461.5296 309.9018 483.955 309.9018 511.6174 c
+f
+grestore
+} def
+
+% Cercle 5
+
+/Circ5 {
+gsave
+colCirc5
+364.6824 468.1977 m
+389.5767 468.1977 409.7582 488.3791 409.7582 513.2735 c
+409.7582 538.1678 389.5767 558.3493 364.6824 558.3493 c
+339.7881 558.3493 319.6066 538.1678 319.6066 513.2735 c
+319.6066 488.3791 339.7881 468.1977 364.6824 468.1977 c
+f
+grestore
+} def
+
+% Cercle 6
+
+/Circ6 {
+gsave
+colCirc6
+329.7412 514.9275 m
+329.7412 536.933 347.581 554.7727 369.5866 554.7727 c
+391.5922 554.7727 409.4318 536.933 409.4318 514.9275 c
+409.4318 492.9218 391.5922 475.0822 369.5866 475.0822 c
+347.581 475.0822 329.7412 492.9218 329.7412 514.9275 c
+f
+grestore
+} def
+
+% Cercle 7
+
+/Circ7 {
+gsave
+colCirc7
+339.8759 516.5814 m
+339.8759 535.6983 355.3738 551.196 374.4907 551.196 c
+393.6075 551.196 409.1054 535.6983 409.1054 516.5814 c
+409.1054 497.4645 393.6075 481.9667 374.4907 481.9667 c
+355.3738 481.9667 339.8759 497.4645 339.8759 516.5814 c
+f
+grestore
+} def
+
+% Cercle 8
+
+/Circ8 {
+gsave
+colCirc8
+350.0106 518.2354 m
+350.0106 534.4635 363.1666 547.6195 379.3948 547.6195 c
+395.623 547.6195 408.779 534.4635 408.779 518.2354 c
+408.779 502.0071 395.623 488.8512 379.3948 488.8512 c
+363.1666 488.8512 350.0106 502.0071 350.0106 518.2354 c
+f
+grestore
+} def
+
+% Cercle 9
+
+/Circ9 {
+gsave
+colCirc9
+384.2989 495.7357 m
+397.6384 495.7357 408.4526 506.5498 408.4526 519.8893 c
+408.4526 533.2288 397.6384 544.0429 384.2989 544.0429 c
+370.9594 544.0429 360.1452 533.2288 360.1452 519.8893 c
+360.1452 506.5498 370.9594 495.7357 384.2989 495.7357 c
+f
+grestore
+} def
+
+% Cercle 10
+
+/Circ10 {
+gsave
+colCirc10
+367.2927 521.0548 m
+367.2927 532.3171 376.423 541.4474 387.6855 541.4474 c
+398.9478 541.4474 408.0782 532.3171 408.0782 521.0548 c
+408.0782 509.7923 398.9478 500.662 387.6855 500.662 c
+376.423 500.662 367.2927 509.7923 367.2927 521.0548 c
+f
+grestore
+} def
+
+% Cercle 11
+
+/Circ11 {
+gsave
+colCirc11
+374.4402 522.2202 m
+374.4402 531.4056 381.8866 538.852 391.072 538.852 c
+400.2573 538.852 407.7038 531.4056 407.7038 522.2202 c
+407.7038 513.0349 400.2573 505.5884 391.072 505.5884 c
+381.8866 505.5884 374.4402 513.0349 374.4402 522.2202 c
+f
+grestore
+} def
+
+% Cercle 12
+
+/Circ12 {
+gsave
+colCirc12
+381.5876 523.3857 m
+381.5876 530.494 387.3502 536.2565 394.4584 536.2565 c
+401.5668 536.2565 407.3293 530.494 407.3293 523.3857 c
+407.3293 516.2774 401.5668 510.5149 394.4584 510.5149 c
+387.3502 510.5149 381.5876 516.2774 381.5876 523.3857 c
+f
+grestore
+} def
+
+% Cercle 13
+
+/Circ13 {
+gsave
+colCirc13
+397.845 515.4412 m
+402.8762 515.4412 406.9549 519.52 406.9549 524.5512 c
+406.9549 529.5824 402.8762 533.6611 397.845 533.6611 c
+392.8138 533.6611 388.735 529.5824 388.735 524.5512 c
+388.735 519.52 392.8138 515.4412 397.845 515.4412 c
+f
+grestore
+} def
+
+% Fin des cercles
+
+/Matrice {
+[
+% Rangée 1 (HAUT) [Left Right Bottom Top]
+[327.05	333.5	567.15	570.6	]
+[338.85	345	567.35	571.8	]
+[350.7	356.4	567.55	571.6	]
+[362.55	367.85	567.6	569.65	]
+% Rangée 2
+[304.4	310.75	556.85	561.5	]
+[315.1	322.2	557.05	564.15	]
+[326.9	333.65	557.25	563.95	]
+[338.75	345.1	557.45	563.8	]
+[350.55	356.55	557.65	563.6	]
+[362.4	368	557.8	563.4	]
+[374.55	379.25	558.25	562.9	]
+[383.85	385.7	558.2	559.6	]
+% Rangée 3
+[293.2	299.5	545	552.2	]
+[303.2	310.8	545.2	552.85	]
+[315	322.3	545.4	552.7	]
+[326.8	333.75	545.6	552.55	]
+[338.6	345.2	545.8	552.4	]
+[350.45	356.7	546	552.2	]
+[362.25	368.15	546.2	552.05	]
+[374.05	379.6	546.4	551.9	]
+[386.2	390.75	546.9	551.55	]
+[396.4	397.8	546.1	547.75	]
+% Rangée 4
+[286.4	288.65	533.2	537.7	]
+[291.3	299.45	533.4	541.5	]
+[303.1	310.9	533.55	541.4	]
+[314.85	322.4	533.75	541.25	]
+[326.7	333.9	533.95	541.1	]
+[338.5	345.35	534.15	541	]
+[350.3	356.8	534.35	540.85	]
+[362.1	368.3	534.5	540.7	]
+[373.9	379.75	534.7	540.6	]
+[385.7	391.25	534.9	540.45	]
+[397.7	402.5	535.3	540	]
+% Rangée 5
+[282.4	288	521.55	530.15	]
+[291.2	299.5	521.7	530.05	]
+[303	311	521.9	529.9	]
+[314.75	322.5	522.1	529.8	]
+[326.6	334	522.3	529.7	]
+[338.35	345.45	522.5	529.6	]
+[350.15	356.95	522.7	529.5	]
+[361.95	368.5	522.9	529.4	]
+[373.7	379.95	523.1	529.25	]
+[385.5	391.4	523.25	529.15	]
+[397.3	402.9	523.45	529.05	]
+[407.05	408.8	523.65	528.95	]
+% Rangée 6
+[280.85	288.1	509.9	518.65	]
+[291.1	299.6	510.1	518.5	]
+[302.9	311.1	510.25	518.45	]
+[314.7	322.6	510.45	518.4	]
+[326.45	334.1	510.65	518.3	]
+[338.25	345.6	510.85	518.2	]
+[350	357.1	511.05	518.1	]
+[361.8	368.6	511.25	518	]
+[373.55	380.1	511.45	517.95	]
+[385.35	391.6	511.6	517.85	]
+[397.1	403.1	511.8	517.8	]
+[406.85	410.85	512	517.7	]
+% Rangée 7
+[280.85	288.15	498.25	507.15	]
+[291.05	299.65	498.45	507	]
+[302.8	311.2	498.65	507	]
+[314.6	322.7	498.8	506.95	]
+[326.35	334.2	499	506.9	]
+[338.1	345.7	499.2	506.8	]
+[349.85	357.25	499.4	506.75	]
+[361.65	368.75	499.6	506.7	]
+[373.4	380.25	499.8	506.6	]
+[385.15	391.8	499.95	506.55	]
+[396.9	403.3	500.15	506.5	]
+[406.65	411.05	500.35	506.45	]
+% Rangée 8
+[281.7	288.2	486.6	495.6	]
+[290.95	299.75	486.8	495.6	]
+[302.7	311.3	487	495.55	]
+[314.5	322.8	487.2	495.5	]
+[326.2	334.3	487.35	495.45	]
+[338	345.85	487.55	495.4	]
+[349.75	357.4	487.75	495.4	]
+[361.5	368.9	487.95	495.35	]
+[373.25	380.4	488.15	495.3	]
+[385	391.95	488.3	495.25	]
+[396.75	403.45	488.5	495.2	]
+[407.2	410.05	488.5	495.2	]
+% Rangée 9
+[284.80	288.3	476.35	484.1	]
+[290.9	299.85	475.15	484.1	]
+[302.6	311.35	475.35	484.1	]
+[314.4	322.9	475.55	484.05	]
+[326.1	334.45	475.7	484.05	]
+[337.85	345.95	475.9	484.05	]
+[349.6	357.5	476.1	484	]
+[361.35	369.05	476.3	484	]
+[373.1	380.6	476.5	484	]
+[384.8	392.1	476.7	484	]
+[396.55	403.65	476.85	483.95	]
+[406.6	407	482.9	483.95	]
+% Rangée 10
+[290.8	299.9	460.55	472.6	]
+[302.55	311.45	464.9	472.6	]
+[314.25	323	463.9	472.6	]
+[326	334.55	464.1	472.65	]
+[337.7	346.1	464.25	472.65	]
+[349.45	357.65	464.45	472.65	]
+[361.2	369.2	464.65	472.65	]
+[373	380.75	464.85	472.65	]
+[384.65	392.3	465.05	472.7	]
+[396.35	401.5	465.45	472.7	]
+% Rangée 11
+[302.45	311.55	452.05	461.15	]
+[314.15	323.1	452.25	461.2	]
+[325.9	334.65	452.45	461.2	]
+[337.6	346.25	452.6	461.25	]
+[349.3	357.8	452.8	461.3	]
+[361.05	369.3	453	461.3	]
+[372.75	380.9	453.2	461.35	]
+[384.45	392.45	454.15	461.35	]
+% Rangée 12
+[314.05	323.2	445.65	450.4	]
+[325.75	334.8	442.45	450.5	]
+[337.45	346.35	441.5	450.5	]
+[349.15	357.9	441.6	450.6	]
+[360.85	369.55	443.25	450.65	]
+[372.6	379.25	447.2	450.7	]
+]
+} def
+
+
+/Earth {
+    OffsetON
+    gsave    
+% On limite le clippath au plus grand cercle
+
+    newpath
+    280.7876 506.6492 m
+    280.7876 542.6156 309.9451 571.7732 345.9115 571.7732 c
+    381.878 571.7732 411.0355 542.6156 411.0355 506.6492 c
+    411.0355 470.6828 381.878 441.5253 345.9115 441.5253 c
+    309.9451 441.5253 280.7876 470.6828 280.7876 506.6492 c
+    closepath
+
+    clip
+
+% Puis a la Matrice
+
+    Matrice
+
+    newpath
+
+    {
+	aload pop
+	dup 5 -1 roll dup 6 1 roll exch moveto
+	dup 5 -2 roll dup 6 1 roll exch 6 1 roll exch lineto
+	4 1 roll dup 5 1 roll exch dup 6 1 roll exch lineto
+	exch pop exch lineto pop
+	closepath
+    } forall
+
+    0.001 setlinewidth
+
+    clip
+
+    newpath
+    Circ1
+    Circ2
+    Circ3
+    Circ4
+    Circ5
+    Circ6
+    Circ7
+    Circ8
+    Circ9
+    Circ10
+    Circ11
+    Circ12
+    Circ13
+    grestore
+    OffsetOFF
+% FIN Terre
+} def
+
+% Satellite (centré en 458.5338 520.1199)
+
+/Sat {
+OffsetON
+gsave
+% Bord blanc
+
+458.0055 512.2149 m
+462.8429 511.9515 467.0011 515.2773 467.2929 519.6431 c
+467.5847 524.009 463.8996 527.7616 459.0621 528.025 c
+454.2247 528.2884 450.0665 524.9625 449.7746 520.5968 c
+449.4829 516.2309 453.168 512.4782 458.0055 512.2149 c
+outlineSat 1 add w
+colBGSat
+%0 0 0 0 setcmykcolor
+stroke newpath
+
+% Bord du tracé effectif en noir
+
+458.0055 512.2149 m
+462.8429 511.9515 467.0011 515.2773 467.2929 519.6431 c
+467.5847 524.009 463.8996 527.7616 459.0621 528.025 c
+454.2247 528.2884 450.0665 524.9625 449.7746 520.5968 c
+449.4829 516.2309 453.168 512.4782 458.0055 512.2149 c
+outlineSat w 
+coloutlineSat
+stroke newpath
+
+% Tracé effectif
+
+colSat
+458.0055 512.2149 m
+462.8429 511.9515 467.0011 515.2773 467.2929 519.6431 c
+467.5847 524.009 463.8996 527.7616 459.0621 528.025 c
+454.2247 528.2884 450.0665 524.9625 449.7746 520.5968 c
+449.4829 516.2309 453.168 512.4782 458.0055 512.2149 c
+0.855 w 
+f
+grestore
+OffsetOFF
+} def
+
+% Trainee
+
+/Trail {
+OffsetON
+gsave
+% Bord blanc
+
+252.9037 495.2186 m
+252.2853 493.8489 252.0284 492.4762 252.1619 491.1116 c
+253.4987 477.4506 293.4561 469.778 341.4077 473.9747 C
+354.9103 476.5953 384.8022 479.8776 443.2424 512.8739 C
+446.843 511.3162 455.634 508.1277 458.741 507.0566 C
+355.5087 445.5329 273.6342 463.3152 257.3847 476.0369 C
+247.3021 483.9699 247.1121 490.9908 251.4387 496.7763 c
+257.8588 505.3614 268.5804 509.337 277.3236 511.4253 C
+261.5766 505.0799 255.8334 501.7081 252.9037 495.2186 c
+outlineTrail 1 add w
+colBGTrail
+stroke newpath
+
+% Bord noir du tracé effectif
+
+colTrail
+252.9037 495.2186 m
+252.2853 493.8489 252.0284 492.4762 252.1619 491.1116 c
+253.4987 477.4506 293.4561 469.778 341.4077 473.9747 C
+354.9103 476.5953 384.8022 479.8776 443.2424 512.8739 C
+446.843 511.3162 455.634 508.1277 458.741 507.0566 C
+355.5087 445.5329 273.6342 463.3152 257.3847 476.0369 C
+247.3021 483.9699 247.1121 490.9908 251.4387 496.7763 c
+257.8588 505.3614 268.5804 509.337 277.3236 511.4253 C
+261.5766 505.0799 255.8334 501.7081 252.9037 495.2186 c
+outlineTrail w
+coloutlineTrail
+stroke newpath
+
+% Tracé en gris
+
+colTrail
+252.9037 495.2186 m
+252.2853 493.8489 252.0284 492.4762 252.1619 491.1116 c
+253.4987 477.4506 293.4561 469.778 341.4077 473.9747 C
+354.9103 476.5953 384.8022 479.8776 443.2424 512.8739 C
+446.843 511.3162 455.634 508.1277 458.741 507.0566 C
+355.5087 445.5329 273.6342 463.3152 257.3847 476.0369 C
+247.3021 483.9699 247.1121 490.9908 251.4387 496.7763 c
+257.8588 505.3614 268.5804 509.337 277.3236 511.4253 C
+261.5766 505.0799 255.8334 501.7081 252.9037 495.2186 c
+outlineTrail w
+f
+grestore
+OffsetOFF
+} def
+
+% ENST
+
+/ENSTpath {
+ 404.724 541.859 moveto 
+ 376.608 541.859 lineto 
+ 370.272 496.713 lineto 
+ 403.206 496.713 lineto 
+ 404.262 504.397 lineto 
+ 380.898 504.397 lineto 
+ 382.548 515.924 lineto 
+ 398.85 515.924 lineto  
+ 399.906 523.608 lineto 
+ 383.604 523.608 lineto 
+ 385.122 534.175 lineto 
+ 403.668 534.175 lineto 
+closepath
+ 456.6 541.859 moveto   
+ 447.03 541.859 lineto  
+ 443.004 512.642 lineto 
+ 442.872 512.642 lineto 
+ 424.722 541.859 lineto 
+ 415.152 541.859 lineto 
+ 408.816 496.713 lineto 
+ 418.386 496.713 lineto 
+ 422.61 527.492 lineto  
+ 422.742 527.492 lineto 
+ 441.222 496.713 lineto 
+ 450.33 496.713 lineto  
+closepath
+ 491.118 539.042 moveto 
+ 487.223 541.352 482.604 542.82 478.247 542.82 curveto  
+ 469.139 542.82 462.167 536.92 462.167 529.01 curveto   
+ 462.167 517.196 479.457 516.338 479.457 508.88 curveto 
+ 479.457 505.91 476.691 503.437 472.505 503.437 curveto 
+ 468.743 503.437 463.397 505.628 459.767 508.55 curveto 
+ 458.315 500.696 lineto 
+ 462.341 498.056 467.093 495.752 473.627 495.752 curveto        
+ 483.725 495.752 489.062 502.596 489.062 510.2 curveto  
+ 489.062 522.806 471.772 523.664 471.772 530.132 curveto        
+ 471.772 533.102 474.85 535.135 478.643 535.135 curveto 
+ 482.075 535.135 486.893 533.262 489.797 531.122 curveto        
+closepath
+ 535.865 541.859 moveto 
+ 497.387 541.859 lineto 
+ 496.331 534.175 lineto 
+ 510.587 534.175 lineto 
+ 505.307 496.713 lineto 
+ 514.877 496.713 lineto 
+ 520.157 534.175 lineto 
+ 534.809 534.175 lineto 
+closepath
+ 532.763 497.0 moveto   
+} def
+/ENST {
+OffsetON
+gsave
+newpath 367.5 497 moveto ENSTpath
+outlineENST outlineplusENST add setlinewidth 
+colBGENST
+stroke
+
+newpath 367.5 497 moveto ENSTpath
+outlineENST setlinewidth
+coloutlineENST
+stroke
+
+newpath 367.5 497 moveto ENSTpath
+0 setlinewidth
+colENST fill
+grestore
+OffsetOFF
+} def
+
+% La définition ENSTclippedNG permet d'afficher
+% la jambe gauche du N de ENST en surimpression de la
+% traînée en appelant ENSTclippedNG après Trail
+
+/ENSTclippedNG {
+OffsetON
+gsave
+406 495 16 8 rectclip
+
+newpath 367.5 497 moveto ENSTpath
+outlineENST 1 add setlinewidth 
+colBGENST
+stroke
+
+newpath 367.5 497 moveto ENSTpath
+outlineENST setlinewidth
+coloutlineENST
+stroke
+
+newpath 367.5 497 moveto ENSTpath
+0 setlinewidth
+colENST fill
+
+grestore
+OffsetOFF
+} def
+
+% La définition ENSTclippedND permet d'afficher
+% la jambe droite du N de ENST en surimpression de la
+% traînée en appelant ENSTclippedND après Trail et Sat
+
+/ENSTclippedND {
+OffsetON
+gsave
+431 495 26 35 rectclip
+
+newpath 367.5 497 moveto ENSTpath
+outlineENST 1 add setlinewidth 
+colBGENST
+stroke
+
+newpath 367.5 497 moveto ENSTpath
+outlineENST setlinewidth
+coloutlineENST
+stroke
+
+newpath 367.5 497 moveto ENSTpath
+0 setlinewidth
+colENST fill
+
+grestore
+OffsetOFF
+} def
+
+% La définition ENSTclippedS permet d'afficher
+% le S de ENST en surimpression de la traînée et
+% du satellite en appelant ENSTclippedS après Trail et Sat
+
+/ENSTclippedS {
+OffsetON
+gsave
+456 494 15 36 rectclip
+
+newpath 367.5 497 moveto ENSTpath
+outlineENST 1 add setlinewidth 
+colBGENST
+stroke
+
+newpath 367.5 497 moveto ENSTpath
+outlineENST setlinewidth
+coloutlineENST
+%0 0 0 1 setcmykcolor
+stroke
+
+newpath 367.5 497 moveto ENSTpath
+0 setlinewidth
+colENST fill
+
+grestore
+OffsetOFF
+} def
+
+
+% Bretagne
+
+/Bretagnepath {
+326.7 497.672 moveto   
+321.42 460.21 lineto   
+339.79 460.21 lineto   
+348.92 460.21 352.662 466.359 352.662 470.89 curveto   
+352.662 475.125 350.021 478.81 345.675 480.075 curveto 
+349.25 481.89 350.741 484.805 350.741 488.435 curveto  
+350.741 492.78 348.021 497.672 338.635 497.672 curveto 
+closepath
+333.85 491.908 moveto  
+338.03 491.908 lineto  
+341.66 491.908 343.057 490.162 343.057 487.445 curveto 
+343.057 485.08 341.642 482.303 337.975 482.303 curveto 
+332.585 482.303 lineto 
+closepath
+331.76 476.539 moveto  
+337.425 476.539 lineto 
+341.275 476.539 344.017 475.109 344.017 471.77 curveto 
+344.017 468.91 342.413 465.973 337.755 465.973 curveto 
+330.165 465.973 lineto 
+closepath
+366.135 485.185 moveto 
+358.71 485.185 lineto  
+355.19 460.21 lineto   
+362.615 460.21 lineto  
+364.705 474.85 lineto  
+365.53 476.5 367.455 479.421 369.215 479.421 curveto   
+370.425 479.421 371.47 478.308 372.735 475.785 curveto 
+376.2 482.66 lineto    
+374.495 484.64 373.23 486.145 371.745 486.145 curveto  
+369.93 486.145 368.005 484.655 365.695 481.285 curveto 
+365.585 481.395 lineto 
+closepath
+399.74 471.737 moveto  
+401.5 479.551 397.265 486.145 389.455 486.145 curveto  
+381.92 486.145 375.716 479.714 375.716 471.66 curveto  
+375.716 464.29 380.637 459.249 388.355 459.249 curveto 
+390.94 459.249 393.965 460.003 397.045 461.32 curveto  
+398.365 467.535 lineto 
+394.295 465.885 391.435 465.013 389.125 465.013 curveto        
+385.55 465.013 383.02 467.484 383.405 471.737 curveto  
+closepath
+384.12 475.579 moveto  
+385.22 478.816 386.87 480.382 389.29 480.382 curveto   
+391.82 480.382 393.305 478.415 392.865 475.579 curveto 
+closepath
+417.285 490.25 moveto  
+409.75 490.25 lineto   
+408.87 485.184 lineto  
+403.81 485.184 lineto  
+402.875 479.421 lineto 
+407.935 479.421 lineto 
+406.175 469.955 lineto 
+405.24 464.73 407.605 459.249 413.765 459.249 curveto  
+415.965 459.249 417.725 459.76 420.145 461.1 curveto   
+420.145 467.645 lineto 
+417.945 466.545 416.845 465.973 415.855 465.973 curveto        
+413.765 465.973 413.325 468.479 413.82 471.385 curveto 
+415.25 479.421 lineto  
+420.75 479.421 lineto  
+421.74 485.184 lineto  
+416.24 485.184 lineto  
+closepath
+450.78 484.585 moveto  
+447.699 485.19 445.499 486.145 442.364 486.145 curveto 
+428.89 486.145 424.705 477.842 424.705 470.23 curveto  
+424.705 463.96 428.206 459.249 433.015 459.249 curveto 
+435.6 459.249 437.8 460.209 440.22 462.31 curveto      
+439.89 460.21 lineto   
+447.315 460.21 lineto  
+closepath
+440.935 467.26 moveto  
+439.23 465.83 437.305 465.973 435.6 465.973 curveto    
+433.345 465.973 432.39 467.397 432.39 469.845 curveto  
+432.39 472.925 433.71 480.075 442.585 479.14 curveto   
+closepath
+480.314 485.185 moveto 
+466.344 485.185 lineto 
+459.249 485.185 455.443 480.234 455.443 475.565 curveto        
+455.443 472.43 456.77 470.12 459.635 468.36 curveto    
+457.93 467.92 457.27 467.645 456.445 467.095 curveto   
+455.29 466.325 454.483 465.005 454.483 463.74 curveto  
+454.483 461.925 455.894 460.11 458.04 459.12 curveto   
+453.86 457.8 451.601 455.93 451.601 453.51 curveto     
+451.601 450.76 453.965 447.723 463.76 447.723 curveto  
+473.935 447.723 476.576 451.554 476.576 455.49 curveto 
+476.576 465.005 461.207 462.2 461.207 465.06 curveto   
+461.207 466.105 462.215 465.974 466.07 465.974 curveto 
+473.22 465.974 476.466 470.857 476.466 475.51 curveto  
+476.466 476.923 476.259 477.901 475.585 479.422 curveto        
+479.6 479.422 lineto   
+closepath
+469.645 476.391 moveto 
+469.645 473.806 468.82 470.777 465.575 470.777 curveto 
+463.43 470.777 462.167 472.124 462.167 474.465 curveto 
+462.167 478.04 463.577 480.382 466.18 480.382 curveto  
+468.325 480.382 469.645 478.847 469.645 476.391 curveto        
+closepath
+462.935 457.635 moveto 
+467.39 456.645 469.852 456.37 469.852 454.5 curveto    
+469.852 452.795 468.159 452.525 463.87 452.525 curveto 
+460.02 452.525 458.326 453.226 458.326 454.72 curveto  
+458.326 456.095 459.491 457.195 462.935 457.635 curveto        
+closepath
+492.029 485.185 moveto 
+484.604 485.185 lineto 
+481.084 460.21 lineto  
+488.509 460.21 lineto  
+490.764 476.06 lineto  
+493.294 478.755 495.329 480.382 497.034 480.382 curveto        
+499.014 480.382 499.564 477.553 499.234 474.905 curveto        
+497.144 460.21 lineto  
+504.569 460.21 lineto  
+506.714 475.455 lineto 
+507.429 480.57 505.889 486.145 500.114 486.145 curveto 
+497.089 486.145 494.614 484.998 491.589 482.165 curveto        
+closepath
+535.534 471.737 moveto 
+537.294 479.551 533.059 486.145 525.249 486.145 curveto        
+517.714 486.145 511.156 479.714 511.156 471.66 curveto 
+511.156 464.29 516.215 459.249 524.149 459.249 curveto 
+
+525.734 459.249 528.759 459.003 532.839 460.32 curveto 
+534.159 466.005 lineto 
+529.089 464.885 526.229 465.013 524.919 465.013 curveto        
+
+521.344 465.013 518.815 467.484 519.2 471.737 curveto  
+closepath
+519.915 475.579 moveto 
+521.015 478.816 522.665 480.382 525.085 480.382 curveto        
+527.615 480.382 529.1 478.415 528.66 475.579 curveto   
+closepath
+537.844 460.0 moveto   
+} def
+
+/Bretagne {
+OffsetON
+gsave
+% On écrit Bretagne d'abord en traçant le contour
+% des caractères en blanc avec un trait de 2 points d'épaisseur
+% puis en noir avec un trait de 1.5 point d'épaisseur et enfin en
+% remplissant le contour des caractères avec la couleur choisie
+
+newpath 319 460 moveto Bretagnepath
+outlineBretagne 1 add setlinewidth
+colBGBretagne
+stroke
+
+newpath 319 460 moveto Bretagnepath
+outlineBretagne setlinewidth 0 0 0 1 setcmykcolor stroke
+
+newpath 319 460 moveto Bretagnepath
+0 setlinewidth
+colBretagne fill
+grestore
+OffsetOFF
+} def
+
+
+% Définitions des contextes de couleurs
+
+% Définition des couleurs de fond standards
+
+/colBGSat      {0 0 0 0 setcmykcolor} def
+/colBGTrail    {0 0 0 0 setcmykcolor} def
+/colBGENST     {0 0 0 0 setcmykcolor} def
+/colBGBretagne {0 0 0 0 setcmykcolor} def
+
+% Contexte niveaux de gris 100 %
+
+/grayEarth {
+/colCirc1    {0 0 0 .7412 setcmykcolor} def
+/colCirc2    {0 0 0 .6863 setcmykcolor} def
+/colCirc3    {0 0 0 .6393 setcmykcolor} def
+/colCirc4    {0 0 0 .5961 setcmykcolor} def
+/colCirc5    {0 0 0 .5608 setcmykcolor} def
+/colCirc6    {0 0 0 .4824 setcmykcolor} def
+/colCirc7    {0 0 0 .3922 setcmykcolor} def
+/colCirc8    {0 0 0 .3020 setcmykcolor} def
+/colCirc9    {0 0 0 .2040 setcmykcolor} def
+/colCirc10   {0 0 0 .1569 setcmykcolor} def
+/colCirc11   {0 0 0 .1138 setcmykcolor} def
+/colCirc12   {0 0 0 .0706 setcmykcolor} def
+/colCirc13   {0 0 0 .0236 setcmykcolor} def
+} def
+
+/graySat {
+/outlineSat  {0.855} def  
+/coloutlineSat {0 0 0 .2040 setcmykcolor} def
+/colSat	     {0 0 0 .2040 setcmykcolor} def
+} def
+
+/grayTrail {
+/outlineTrail {0.7182} def
+/coloutlineTrail {0 0 0 0.3 setcmykcolor} def
+/colTrail     {0 0 0 0.3 setcmykcolor} def
+} def
+
+/grayENST {
+/outlineENST {1.5} def
+/outlineplusENST {1} def
+/coloutlineENST {0 0 0 1 setcmykcolor} def
+/colENST     {0 0 0 1 setcmykcolor} def
+} def
+
+/grayBretagne {
+/outlineBretagne {1.5} def
+/colBretagne {0 0 0 1 setcmykcolor} def
+} def
+
+% Contexte niveaux de gris 50 %
+
+/halfgrayEarth {
+/colCirc1    {0 0 0 .3706 setcmykcolor} def
+/colCirc2    {0 0 0 .3432 setcmykcolor} def
+/colCirc3    {0 0 0 .3196 setcmykcolor} def
+/colCirc4    {0 0 0 .2980 setcmykcolor} def
+/colCirc5    {0 0 0 .2804 setcmykcolor} def
+/colCirc6    {0 0 0 .2412 setcmykcolor} def
+/colCirc7    {0 0 0 .1961 setcmykcolor} def
+/colCirc8    {0 0 0 .1510 setcmykcolor} def
+/colCirc9    {0 0 0 .1020 setcmykcolor} def
+/colCirc10   {0 0 0 .0784 setcmykcolor} def
+/colCirc11   {0 0 0 .0569 setcmykcolor} def
+/colCirc12   {0 0 0 .0353 setcmykcolor} def
+/colCirc13   {0 0 0 .0118 setcmykcolor} def
+} def
+
+/halfgraySat {  
+/outlineSat  {0.855} def  
+/coloutlineSat {0 0 0 .1020 setcmykcolor} def
+/colSat	     {0 0 0 .1020 setcmykcolor} def
+} def
+
+/halfgrayTrail {
+/outlineTrail {0.7182} def
+/coloutlineTrail {0 0 0 0.15 setcmykcolor} def
+/colTrail     {0 0 0 0.15 setcmykcolor} def
+} def
+
+/halfgrayENST {
+/outlineENST {2.5} def
+/outlineplusENST {1} def
+/coloutlineENST {0 0 0 1 setcmykcolor} def
+/colENST     {0 0 0 .5 setcmykcolor} def
+} def
+
+/halfgrayBretagne {
+/outlineBretagne {2.5} def
+/colBretagne {0 0 0 .5 setcmykcolor} def
+} def
+
+% Contexte monochrome
+
+/monoEarth {
+/colCirc1    {0 0 0 1 setcmykcolor} def
+/colCirc2    {0 0 0 1 setcmykcolor} def
+/colCirc3    {0 0 0 1 setcmykcolor} def
+/colCirc4    {0 0 0 1 setcmykcolor} def
+/colCirc5    {0 0 0 1 setcmykcolor} def
+/colCirc6    {0 0 0 1 setcmykcolor} def
+/colCirc7    {0 0 0 1 setcmykcolor} def
+/colCirc8    {0 0 0 1 setcmykcolor} def
+/colCirc9    {0 0 0 1 setcmykcolor} def
+/colCirc10   {0 0 0 1 setcmykcolor} def
+/colCirc11   {0 0 0 1 setcmykcolor} def
+/colCirc12   {0 0 0 1 setcmykcolor} def
+/colCirc13   {0 0 0 1 setcmykcolor} def
+} def
+
+/monoSat {
+/outlineSat  {1} def  
+/coloutlineSat {0 0 0 1 setcmykcolor} def
+/colSat	     {0 0 0 1 setcmykcolor} def
+} def
+
+/monoTrail {
+/outlineTrail {1} def
+/coloutlineTrail {0 0 0 1 setcmykcolor} def
+/colTrail     {0 0 0 1 setcmykcolor} def
+} def
+
+/monoENST {
+grayENST
+/outlineplusENST {2} def
+} def
+
+/monoBretagne {
+grayBretagne
+} def
+
+% Sous contexte monochrome blanc
+
+/monowhiteEarth {
+monoEarth
+} def
+
+/monowhiteSat {
+/outlineSat  {2} def  
+/coloutlineSat {0 0 0 1 setcmykcolor} def
+/colSat	     {0 0 0 0 setcmykcolor} def
+} def
+
+/monowhiteTrail {
+/outlineTrail {2} def
+/coloutlineTrail {0 0 0 1 setcmykcolor} def
+/colTrail     {0 0 0 0 setcmykcolor} def
+} def
+
+/monowhiteENST {
+/outlineENST {2.5} def
+/outlineplusENST {1} def
+/coloutlineENST {0 0 0 1 setcmykcolor} def
+/colENST     {0 0 0 0 setcmykcolor} def
+} def
+
+/monowhiteBretagne {
+/outlineBretagne {2.5} def
+/colBretagne {0 0 0 0 setcmykcolor} def
+} def
+
+% Contexte couleur
+
+/colorEarth {
+/colCirc1    {1	    0.69    0	    0.11    setcmykcolor} def
+/colCirc2    {1	    0.5175  0.1975  0.1512  setcmykcolor} def
+/colCirc3    {1	    0.345   0.395   0.1925  setcmykcolor} def
+/colCirc4    {1	    0.1725  0.5925  0.2337  setcmykcolor} def
+/colCirc5    {1	    0	    0.79    0.275   setcmykcolor} def
+/colCirc6    {0.75  0.0375  0.8425  0.2062  setcmykcolor} def
+/colCirc7    {0.5   0.075   0.895   0.1375  setcmykcolor} def
+/colCirc8    {0.25  0.1125  0.9475  0.0687  setcmykcolor} def
+/colCirc9    {0	    0.15    1	    0	    setcmykcolor} def
+/colCirc10   {0	    0.1125  0.8	    0	    setcmykcolor} def
+/colCirc11   {0	    0.075   0.6	    0	    setcmykcolor} def
+/colCirc12   {0	    0.0375  0.4	    0	    setcmykcolor} def
+/colCirc13   {0	    0	    0.2	    0	    setcmykcolor} def
+} def
+
+/colorSat {  
+/outlineSat    {0.855} def  
+/coloutlineSat {0 0.15 1 0 setcmykcolor} def
+/colSat	       {0 0.15 1 0 setcmykcolor} def
+} def
+
+/colorTrail {
+grayTrail
+} def
+
+/colorENST {
+/outlineENST {1.5} def
+/outlineplusENST {1} def
+%/coloutlineENST {0 0 0 1 setcmykcolor} def
+/coloutlineENST {1 1 0 0 setcmykcolor} def
+/colENST     {1 1 0 0 setcmykcolor} def
+} def
+
+/colorBretagne {
+/outlineBretagne {1.5} def
+/colBretagne {1 1 0 0 setcmykcolor} def
+} def
+
+
+/fullcolor {
+colorEarth
+colorTrail
+colorSat
+colorENST
+monowhiteBretagne
+} def
+
+/reducedcolor {
+halfgrayEarth
+grayTrail
+%graySat
+monowhiteSat
+colorENST
+monowhiteBretagne
+} def
+
+/gray {
+halfgrayEarth
+grayTrail
+%graySat
+monowhiteSat
+monoENST
+monowhiteBretagne
+} def
+
+/mono {
+monoEarth
+monoTrail
+monowhiteSat
+monoENST
+monowhiteBretagne
+} def
+
+/params {
+0 setflat
+0 setlinecap
+0 setlinejoin
+4 setmiterlimit
+[] 0 setdash
+true setstrokeadjust
+} def
+
+/logo {
+gsave
+params
+0 0 291 131 rectclip
+Earth
+ENST
+Trail
+Sat
+Bretagne
+grestore
+} def
+
+/logoback {
+gsave
+params
+0 0 291 131 rectclip
+Earth
+ENST
+Trail
+Sat
+ENSTclippedND
+ENSTclippedS
+Bretagne
+grestore
+} def
+
+end
+%%EndProcSet
+%%EndProlog
+
+%%BeginSetup
+ENSTBretagnedict begin
+
+% Définition des couleurs de fond standards
+% Changer ces couleurs pour dessiner le logo sur un fond
+% de couleur différente du blanc.
+
+/colBGSat      {0 0 0 0 setcmykcolor} def
+/colBGTrail    {0 0 0 0 setcmykcolor} def
+/colBGENST     {0 0 0 0 setcmykcolor} def
+/colBGBretagne {0 0 0 0 setcmykcolor} def
+%%EndSetup
+%%Page: 1 1
+reducedcolor
+logoback
+%%Trailer
+end
+%%EOF
+
+%%EndDocument
+ @endspecial 2691 585 a(D\351partement)24 b(Informatique)0
+827 y
+ 1. 0. 0. setrgbcolor
+ 0 827 a 0 827 3825 4 v 0 827 a
+ 0 setgray
+ 0 827 a 50 920 a
+Fj(Nom)g Fl(:)50 1040 y Fj(Pr\351nom)h Fl(:)2382 920
+y(Ann\351e)g(scolaire)g(:)272 b(2004\2262005)2382 1040
+y(Date)25 b(:)506 b(14)24 b(jan)l(vier)h(2005)0 1101
+y
+ 1. 0. 0. setrgbcolor
+ 0 1101 a 0 1101 3825 4 v 0 1101 a
+ 0 setgray
+ 0 1101 a 1465 1400
+a Fi(Module)39 b Fh(I)8 b(S)g(I)t Fi(423)1365 1582 y(Session)35
+b(de)g(jan)-6 b(vier)1841 1765 y(\227)191 1947 y Fg(Syst\350mes)52
+b(d'exploitation)h(et)e(leur)g(support)1402 2148 y(d'ex\351cution)1841
+2330 y Fi(\227)668 2513 y(Contr\364le)34 b(de)h(connaissance)2225
+2461 y Fl(1)2312 2513 y Fi(de)g(45)h(minutes)0 2747 y
+ 1. 0. 0. setrgbcolor
+
+0 2747 a 0 2747 3825 4 v 0 2747 a
+ 0 setgray
+ 0 2747 a 994 2983 a
+Fl(Merci)25 b(de)g(r\351pondre)g(\(au)g(moins\))e(dans)i(les)g(blancs.)
+93 3103 y(Lire)g(tout)f(le)h(sujet)f(en)h(entier)f(du)h(d\351b)n(ut)f
+(\340)h(la)g(\002n,)g(en)g(commen\347ant)f(\340)h(la)g(premi\350re)g
+(page)g(et)g(jusqu'\340)f(la)41 3224 y(derni\350re)h(page,)g(a)n(v)n
+(ant)f(de)h(commencer)g(\340)g(r\351pondre)g(:)g(cela)g(peut)f(v)n(ous)
+h(donner)f(de)h(l'inspiration)e(et)i(v)n(ous)469 3344
+y(permettre)f(de)h(mieux)f(allouer)h(v)n(otre)g(temps)f(en)g(fonction)g
+(de)h(v)n(os)g(comp\351tences.)66 3466 y(Chaque)g(question)f(sera)h
+(not\351e)g(entre)g(0)f(et)h(10)g(et)g(la)f(note)h(globale)f(sera)h
+(calcul\351e)h(par)f(une)f(fonction)g(des)279 3586 y(notes)h
+(\351l\351mentaires.)f(La)h(fonction)f(d\351\002niti)n(v)o(e)f(sera)i
+(choisie)g(apr\350s)g(correction)g(des)f(copies.)49 3707
+y Fj(Attention)i(:)f Fl(tout)f(ce)h(que)g(v)n(ous)f(\351crirez)i(sur)e
+(cette)h(copie)g(pourra)g(\352tre)g(retenu)g(contre)g(v)n(ous,)f(v)n
+(oire)h(a)n(v)n(oir)1228 3828 y(une)g(in\003uence)g(sur)g(la)g(note)f
+(d')r Fk(I)t(S)t(I)r Fl(423.)0 4173 y Fi(1)143 b(G\351n\351ralit\351s)
+33 b(syst\350me)0 4399 y Fj(Question)d(1)g Fl(:)f(Quel)h(est)g
+(l'int\351r\352t)f(d'utiliser)g(une)h(machine)f(virtuelle)g(par)i
+(rapport)e(\340)i(une)e(machine)h(phy-)0 4519 y(sique)16
+b(?)25 b(\300)g(quoi)f(cela)h(peut)g(servir)16 b(?)25
+b(Quels)g(sont)f(les)g(incon)l(v\351nients)15 b(?)-100
+4640 y Ff(!)-100 4760 y(!)-100 4880 y(!)-100 5001 y(!)p
+0 5073 1530 4 v 116 5134 a Fe(1)149 5164 y Fd(A)-6 b(v)o(ec)18
+b(document,)d(a)n(v)o(ec)j(calculatrice,)f(sans)h(triche,)g(sans)g
+(copie)g(sur)g(les)g(v)n(oisins,)g(sans)h(micro-ordinateur)14
+b(portable)i(ou)i(non,)0 5264 y(sans)27 b(macro-ordinateur)m(,)21
+b(sans)27 b(t\351l\351phone)d(portable)h(ou)g(non,)g(sans)i(oreillette)
+f(de)g(t\351l\351phone)e(ni)j(de)f(dictaphone,)d(sans)k(talkie-)0
+5363 y(w)o(alkie,)f(sans)g(t\351l\351pathie,)f(sans)i(m\351tempsycose,)
+d(sans)i(pompe,)e(a)n(v)o(ec)i(anti-s\350che,)f(a)n(v)o(ec)h(tatouage)e
+(ou)i(v\352tement)f(imprim\351)g(en)0 5463 y(rapport)16
+b(a)n(v)o(ec)h(le)h(sujet,)g(a)n(v)o(ec)f(mouchoir)e(de)j(poche)e
+(pr\351-imprim\351,)f(a)n(v)o(ec)i(piercing)g(ou)g(scari\002cation)g
+(en)g(rapport)f(a)n(v)o(ec)h(l')r Fc(I)t(S)t(I)r Fd(423,...)0
+5712 y Fl(Ronan)27 b(K)t Fk(E)t(R)o(Y)t(E)t(L)t(L)32
+b Fl(&)24 b(Alain)i(L)t Fk(E)t(R)q(OY)533 b Fl(1)p eop
+end
+%%Page: 2 2
+TeXDict begin 2 1 bop 2 84 a Fk(I)t(S)t(I)r Fl(423)2944
+b(14)24 b(jan)l(vier)h(2005)p 0 124 3825 4 v -100 428
+a Ff(!)-100 548 y(!)-100 668 y(!)-100 789 y(!)-100 909
+y(!)-100 1029 y(!)-100 1150 y(!)-100 1270 y(!)-100 1391
+y(!)-100 1511 y(!)-100 1631 y(!)-100 1752 y(!)-100 1872
+y(!)-100 1993 y(!)-100 2113 y(!)-100 2233 y(!)-100 2354
+y(!)-100 2474 y(!)-100 2594 y(!)-100 2715 y(!)-100 2835
+y(!)0 3437 y Fj(Question)30 b(2)h Fl(:)f(Pourquoi)g(doit-on)f
+(g\351n\351ralement)h(rajouter)h(une)f(structure)g(de)h(syst\350me)e
+(de)i(\002chiers)g(\340)f(un)0 3557 y(disque)24 b(dur)h(pour)f(pouv)n
+(oir)g(l'utiliser)15 b(?)-100 3678 y Ff(!)-100 3798 y(!)-100
+3919 y(!)-100 4039 y(!)-100 4159 y(!)-100 4280 y(!)-100
+4400 y(!)-100 4521 y(!)-100 4641 y(!)-100 4761 y(!)-100
+4882 y(!)-100 5002 y(!)-100 5122 y(!)-100 5243 y(!)-100
+5363 y(!)1888 5733 y Fl(2)526 b(Ronan)27 b(K)t Fk(E)t(R)o(Y)t(E)t(L)t
+(L)32 b Fl(&)24 b(Alain)j(L)t Fk(E)t(R)q(OY)p eop end
+%%Page: 3 3
+TeXDict begin 3 2 bop 0 84 a Fl(14)25 b(jan)l(vier)f(2005)2943
+b Fk(I)t(S)t(I)r Fl(423)p 0 124 3825 4 v 0 432 a Fi(2)143
+b(T)-13 b(emps)34 b(partag\351)0 662 y Fj(Question)26
+b(3)g Fl(:)g(Un)g(syst\350me)f(\340)i(temps)e(partag\351)h(f)o(ait)g
+(des)g(changements)f(de)i(conte)o(xtes)e(\340)h(une)g(fr\351quence)h
+(de)0 782 y(1)21 b(kHz.)g(Un)f(changement)g(de)h(conte)o(xte)f(prend)h
+(30)g Fb(\026)p Fl(s.)f(Quelle)g(proportion)g(de)h(processeur)g(reste)g
+(disponible)0 903 y(pour)k(f)o(aire)g(fonctionner)f(les)h(programmes)f
+(des)g(utilisateurs)15 b(?)-100 1023 y Ff(!)-100 1144
+y(!)-100 1264 y(!)-100 1384 y(!)-100 1505 y(!)0 1749
+y Fj(Question)28 b(4)g Fl(:)f(Quels)h(sont)f(les)g(a)n(v)n(antages)g
+(et)h(incon)l(v\351nients)f(li\351s)g(\340)h(une)g(augmentation)e(ou)i
+(une)f(diminu-)0 1869 y(tion)d(de)h(la)g(fr\351quence)g(des)g
+(changements)f(de)h(conte)o(xtes)15 b(?)-100 1989 y Ff(!)-100
+2110 y(!)-100 2230 y(!)-100 2351 y(!)-100 2471 y(!)-100
+2591 y(!)-100 2712 y(!)-100 2832 y(!)-100 2952 y(!)-100
+3073 y(!)-100 3193 y(!)-100 3314 y(!)-100 3434 y(!)-100
+3554 y(!)-100 3675 y(!)0 3919 y Fj(Question)26 b(5)g
+Fl(:)g(Le)g(programmeur)f(du)h(jeu)g(sur)g(ordinateur)f(Matrix)g
+(simule)g(les)h(interactions)f(de)h(3)g(joueurs,)0 4039
+y(N\351o,)f(Smith)f(et)h(T)m(rinity)e(sous)h(forme)h(de)g(3)g
+(processus)f(l\351gers)h(\()p Fa(thr)l(eads)p Fl(\))g(de)g(type)f(no)o
+(yau.)g(Chaque)i(proces-)0 4159 y(sus)h(met)g(respecti)n(v)o(ement)e
+(10,)i(20)g(et)g(10)g Fb(\026)p Fl(s)g(\340)h(s'e)o(x\351cuter)-5
+b(.)26 b(Un)h(c)o(ycle)h(de)f(simulation)e(consiste)h(\340)i(e)o
+(x\351cuter)0 4280 y(successi)n(v)o(ement)j(chaque)j(processus)f(pour)g
+(calculer)h(les)f(interactions)f(entre)i(joueurs)e(\(salutation,)g
+(coup)0 4400 y(de)f(poing,)f(gi\003e,)g(passage)h(par)g(la)g
+(fen\352tre,)g(etc.\))g(et)g(chaque)g(changement)f(de)h(conte)o(xte)f
+(prend)h(l\340)f(encore)0 4521 y(20)24 b Fb(\026)p Fl(s.)g(\300)g
+(quelle)g(fr\351quence)h(maximale)f(les)g(interactions)f(du)h(jeu)g
+(sont-elles)g(f)o(aites)16 b(?)25 b(Sachant)g(que)f(plus)g(il)0
+4641 y(y)29 b(a)g(d'interactions)f(et)h(plus)f(le)h(jeu)g(est)g
+(\003uide)g(et)g(physiquement)d(r\351aliste,)j(utiliser)f(des)h
+(processus)f(l\351gers)0 4761 y(de)d(type)f(utilisateur)g(a-t-il)g(un)h
+(int\351r\352t)16 b(?)-100 4882 y Ff(!)-100 5002 y(!)-100
+5122 y(!)-100 5243 y(!)-100 5363 y(!)-100 5484 y(!)0
+5733 y Fl(Ronan)27 b(K)t Fk(E)t(R)o(Y)t(E)t(L)t(L)32
+b Fl(&)24 b(Alain)i(L)t Fk(E)t(R)q(OY)533 b Fl(3)p eop
+end
+%%Page: 4 4
+TeXDict begin 4 3 bop 2 84 a Fk(I)t(S)t(I)r Fl(423)2944
+b(14)24 b(jan)l(vier)h(2005)p 0 124 3825 4 v -100 428
+a Ff(!)-100 548 y(!)-100 668 y(!)-100 789 y(!)-100 909
+y(!)-100 1029 y(!)-100 1150 y(!)-100 1270 y(!)-100 1391
+y(!)-100 1511 y(!)-100 1631 y(!)-100 1752 y(!)-100 1872
+y(!)-100 1993 y(!)-100 2113 y(!)-100 2233 y(!)-100 2354
+y(!)-100 2474 y(!)-100 2594 y(!)-100 2715 y(!)-100 2835
+y(!)-100 2956 y(!)-100 3076 y(!)-100 3196 y(!)1888 5733
+y Fl(4)526 b(Ronan)27 b(K)t Fk(E)t(R)o(Y)t(E)t(L)t(L)32
+b Fl(&)24 b(Alain)j(L)t Fk(E)t(R)q(OY)p eop end
+%%Trailer
+
+userdict /end-hook known{end-hook}if
+%%EOF
+%%EndDocument
+EndInclude
+BeginInclude
+%%BeginDocument: 423_0.ps
+%!PS-Adobe-3.0
+%%BoundingBox: (atend)
+%%Creator: OpenOffice.org 1.1.3
+%%For: keryell
+%%CreationDate: Wed Jan 12 09:37:09 2005
+%%Title: 423_0.sxw
+%%LanguageLevel: 2
+%%DocumentData: Clean7Bit
+%%Pages: (atend)
+%%PageOrder: Ascend
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset PSPrint-Prolog 1.0 0
+/ISO1252Encoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quotesingle
+/parenleft /parenright /asterisk /plus /comma /hyphen /period /slash
+/zero /one /two /three /four /five /six /seven
+/eight /nine /colon /semicolon /less /equal /greater /question
+/at /A /B /C /D /E /F /G
+/H /I /J /K /L /M /N /O
+/P /Q /R /S /T /U /V /W
+/X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore
+/grave /a /b /c /d /e /f /g
+/h /i /j /k /l /m /n /o
+/p /q /r /s /t /u /v /w
+/x /y /z /braceleft /bar /braceright /asciitilde /unused
+/Euro /unused /quotesinglbase /florin /quotedblbase /ellipsis /dagger /daggerdbl
+/circumflex /perthousand /Scaron /guilsinglleft /OE /unused /Zcaron /unused
+/unused /quoteleft /quoteright /quotedblleft /quotedblright /bullet /endash /emdash
+/tilde /trademark /scaron /guilsinglright /oe /unused /zcaron /Ydieresis
+/space /exclamdown /cent /sterling /currency /yen /brokenbar /section
+/dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron
+/degree /plusminus /twosuperior /threesuperior /acute /mu /paragraph /periodcentered
+/cedilla /onesuperior /ordmasculine /guillemotright /onequarter /onehalf /threequarters /questiondown
+/Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla
+/Egrave /Eacute /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis
+/Eth /Ntilde /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply
+/Oslash /Ugrave /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls
+/agrave /aacute /acircumflex /atilde /adieresis /aring /ae /ccedilla
+/egrave /eacute /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis
+/eth /ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide
+/oslash /ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis] def
+
+/psp_definefont { exch dup findfont dup length dict begin { 1 index /FID ne
+{ def } { pop pop } ifelse } forall /Encoding 3 -1 roll def
+currentdict end exch pop definefont pop } def
+
+/pathdict dup 8 dict def load begin
+/rcmd { { currentfile 1 string readstring pop 0 get dup 32 gt { exit }
+{ pop } ifelse } loop dup 126 eq { pop exit } if 65 sub dup 16#3 and 1
+add exch dup 16#C and -2 bitshift 16#3 and 1 add exch 16#10 and 16#10
+eq 3 1 roll exch } def
+/rhex { dup 1 sub exch currentfile exch string readhexstring pop dup 0
+get dup 16#80 and 16#80 eq dup 3 1 roll { 16#7f and } if 2 index 0 3
+-1 roll put 3 1 roll 0 0 1 5 -1 roll { 2 index exch get add 256 mul }
+for 256 div exch pop exch { neg } if } def
+/xcmd { rcmd exch rhex exch rhex exch 5 -1 roll add exch 4 -1 roll add
+1 index 1 index 5 -1 roll { moveto } { lineto } ifelse } def end
+/readpath { 0 0 pathdict begin { xcmd } loop end pop pop } def
+
+systemdict /languagelevel known not {
+/xshow { exch dup length 0 1 3 -1 roll 1 sub { dup 3 index exch get
+exch 2 index exch get 1 string dup 0 4 -1 roll put currentpoint 3 -1
+roll show moveto 0 rmoveto } for pop pop } def
+/rectangle { 4 -2 roll moveto 1 index 0 rlineto 0 exch rlineto neg 0
+rlineto closepath } def
+/rectfill { rectangle fill } def
+/rectstroke { rectangle stroke } def } if
+/bshow { currentlinewidth 3 1 roll currentpoint 3 index show moveto
+setlinewidth false charpath stroke setlinewidth } def
+/bxshow { currentlinewidth 4 1 roll setlinewidth exch dup length 1 sub
+0 1 3 -1 roll { 1 string 2 index 2 index get 1 index exch 0 exch put dup
+currentpoint 3 -1 roll show moveto currentpoint 3 -1 roll false charpath
+stroke moveto 2 index exch get 0 rmoveto } for pop pop setlinewidth } def
+
+/psp_lzwfilter { currentfile /ASCII85Decode filter /LZWDecode filter } def
+/psp_ascii85filter { currentfile /ASCII85Decode filter } def
+/psp_lzwstring { psp_lzwfilter 1024 string readstring } def
+/psp_ascii85string { psp_ascii85filter 1024 string readstring } def
+/psp_imagedict {
+/psp_bitspercomponent { 3 eq { 1 }{ 8 } ifelse } def
+/psp_decodearray { [ [0 1 0 1 0 1] [0 255] [0 1] [0 255] ] exch get }
+def 7 dict dup
+/ImageType 1 put dup
+/Width 7 -1 roll put dup
+/Height 5 index put dup
+/BitsPerComponent 4 index psp_bitspercomponent put dup
+/Decode 5 -1 roll psp_decodearray put dup
+/ImageMatrix [1 0 0 1 0 0] dup 5 8 -1 roll put put dup
+/DataSource 4 -1 roll 1 eq { psp_lzwfilter } { psp_ascii85filter } ifelse put
+} def
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%
+(Times-Roman-iso1252) cvn (Times-Roman) cvn ISO1252Encoding psp_definefont
+(Helvetica-Bold-iso1252) cvn (Helvetica-Bold) cvn ISO1252Encoding psp_definefont
+(Times-Bold-iso1252) cvn (Times-Bold) cvn ISO1252Encoding psp_definefont
+%%DocumentNeededResources: font Times-Roman
+%%+ font Helvetica-Bold
+%%+ font Times-Bold
+/#copies 1 def
+<< /NumCopies null /Policies << /NumCopies 1 >> >> setpagedevice
+%%EndSetup
+%%Page: 1 1
+%%PageBoundingBox: 18 18 577 824
+%%BeginPageSetup
+%
+[{
+%%BeginFeature: *PageSize A4
+<</PageSize [595 842] /ImagingBBox null>> setpagedevice
+%%EndFeature
+} stopped cleartomark
+%%EndPageSetup
+gsave
+[0.24 0 0 -0.24 18 824] concat
+gsave
+0.90196 0.90196 0.90196 setrgbcolor
+162 1216 2007 57 rectfill
+162 1273 2007 56 rectfill
+162 1329 2007 57 rectfill
+162 1386 2007 56 rectfill
+162 1442 2007 57 rectfill
+162 1499 2007 56 rectfill
+162 1555 2007 57 rectfill
+162 1612 2007 56 rectfill
+162 1668 2007 57 rectfill
+162 1725 2007 56 rectfill
+162 1781 2007 56 rectfill
+162 1837 2007 57 rectfill
+162 1894 2007 56 rectfill
+162 1950 2007 57 rectfill
+162 2007 2007 56 rectfill
+162 2063 2007 57 rectfill
+162 2120 2007 56 rectfill
+162 2176 2007 57 rectfill
+162 2233 2007 56 rectfill
+162 2289 2007 57 rectfill
+162 2346 2007 56 rectfill
+162 2402 2007 57 rectfill
+162 2459 2007 56 rectfill
+162 2515 2007 56 rectfill
+162 2571 2007 57 rectfill
+162 2628 2007 56 rectfill
+162 2684 2007 57 rectfill
+162 2741 2007 56 rectfill
+162 2797 2007 57 rectfill
+162 2854 2007 56 rectfill
+162 2910 2007 57 rectfill
+162 2967 2007 56 rectfill
+162 3023 2007 57 rectfill
+162 208 moveto
+0 0 0 setrgbcolor
+(Times-Roman-iso1252) cvn findfont 50 -50 matrix scale makefont setfont
+<4D616A6575726520495349>
+[44 22 14 22 25 17 22 17 15 27 0]
+xshow
+162 264 moveto
+<5556322096204953492D3432332096205061727469652050726F6772616D6D6174696F6E207379
+7374E86D65>
+[35 36 24 17 24 16 16 27 15 15 24 25 23 17 24 16 28 22 18 13 14 21 17 28 17 24 25
+ 16 23 40 39 23 14 13 26 26 17 19 24 19 14 23 39 0]
+xshow
+162 321 moveto
+<436F6E7472F46C6520646520636F6E6E61697373616E636573>
+[33 25 26 14 18 26 14 23 16 25 22 17 21 25 26 25 22 13 19 19 23 24 22 22 0]
+xshow
+162 377 moveto
+<3134206A616E766965722032303034>
+[24 23 17 13 23 25 24 14 22 16 17 24 25 24 0]
+xshow
+162 614 moveto
+(Helvetica-Bold-iso1252) cvn findfont 67 -67 matrix scale makefont setfont
+<5175657374696F6E2031>
+[51 41 37 38 23 19 40 40 21 0]
+xshow
+162 698 moveto
+(Times-Roman-iso1252) cvn findfont 50 -50 matrix scale makefont setfont
+<566F75732074726F75766572657A20656E20616E6E657865206C612070616765206475206D616E
+75656C2064652072E966E972656E636520636F6E6365726E616E74206C6120666F6E6374696F6E20
+73797374656D28332920717569>
+[35 25 25 19 16 14 17 26 25 25 22 16 23 23 16 22 26 17 22 25 26 22 25 23 16 13 21
+ 17 25 21 24 20 17 25 26 16 39 23 26 25 22 14 16 25 22 17 17 23 17 23 17 23 25 22
+ 23 16 22 25 25 22 22 17 25 23 25 16 17 13 21 16 17 25 25 23 14 13 26 26 16 19 24
+ 20 13 22 40 16 25 16 17 25 24 0]
+xshow
+162 754 moveto
+<666163696C697465206C65207472617661696C2064752070726F6772616D6D6575722064E97369
+72616E74206578E9637574657220756E6520636F6D6D616E646520556E697820646972656374656D
+656E7420E020706172746972206465>
+[16 22 22 13 12 14 13 21 16 14 20 17 14 17 22 25 21 13 12 16 25 26 17 25 16 25 25
+ 16 23 39 40 22 26 18 17 25 22 20 13 17 22 26 15 17 22 25 22 22 25 14 23 18 16 26
+ 25 23 16 22 25 40 39 23 26 25 23 17 36 25 14 25 17 24 14 16 22 22 14 22 39 23 26
+ 16 16 23 16 25 22 17 14 14 17 16 25 0]
+xshow
+162 811 moveto
+<736F6E2070726F6772616D6D652E>
+[19 25 26 17 25 17 24 25 16 23 39 39 23 0]
+xshow
+162 867 moveto
+<446F6E6E657A20766F7472652076657273696F6E206465206C27696D706CE96D656E746174696F
+6E20646520636574746520666F6E6374696F6E2E2044616E7320756E65207072656D69E872652070
+617274696520766F7573>
+[36 26 26 26 22 25 16 25 25 14 17 22 17 24 22 17 18 14 25 25 17 25 22 16 15 8 14
+ 40 24 14 23 40 22 26 15 22 14 14 25 27 16 25 22 17 21 22 14 14 23 16 17 25 25 23
+ 14 13 25 26 13 16 37 23 25 21 16 26 25 23 16 25 17 23 38 14 23 17 23 16 25 22 17
+ 14 13 22 16 25 25 24 0]
+xshow
+162 924 moveto
+<696E646971756572657A206C276172636869746563747572652067E96EE972616C652028717565
+6C6C657320666F6E6374696F6E6E616C6974E973206D657474657A20766F7320656E209C75767265
+203F292E20456E73756974652C2064616E73>
+[13 25 25 13 25 24 23 16 22 23 16 14 9 23 16 23 25 14 14 22 22 14 25 17 23 16 25
+ 22 25 23 17 22 14 21 17 16 25 24 22 13 13 22 17 17 17 25 25 23 13 14 25 26 25 22
+ 13 14 14 22 20 17 39 22 15 14 23 24 16 25 24 19 17 22 26 16 38 26 26 18 24 16 22
+ 17 12 16 31 25 20 24 14 14 22 12 17 25 22 25 0]
+xshow
+162 980 moveto
+<756E65207365636F6E6465207061727469652C20766F757320646F6E6E6572657A20766F747265
+2070726F7072652076657273696F6E20647520636F646520286E6F7573206E6520766F7573206465
+6D616E646F6E7320706173>
+[25 25 23 17 19 21 22 25 25 25 23 16 25 22 17 14 13 22 12 16 25 25 25 19 16 25 26
+ 25 26 22 17 23 23 17 24 25 14 17 23 16 25 17 25 25 17 23 16 25 22 16 19 13 25 26
+ 16 25 26 17 21 25 25 22 16 17 25 25 25 20 17 25 23 16 25 25 24 20 16 25 23 39 22
+ 26 25 26 25 21 17 24 22 0]
+xshow
+162 1037 moveto
+<6427EA747265207072E963697320617520706F696E742D76697267756C65207072E873292E>
+[25 10 24 14 18 24 16 25 17 23 22 13 18 17 22 25 16 25 25 14 25 14 16 24 13 16 24
+ 25 13 20 17 25 17 22 20 16 0]
+xshow
+162 1093 moveto
+<4E6F7461203A206E6F7573206E2761766F6E7320706173206269656E20767520656E20636F7572
+7320657420656E20545020636F6D6D656E7420626C6F7175657220756E207369676E616C2C206F72
+20696C20657374207175657374696F6E>
+[36 25 14 22 17 14 16 25 26 25 20 17 26 9 23 25 25 26 20 17 24 22 19 17 24 14 22
+ 26 16 25 25 16 22 26 17 21 25 25 17 20 16 22 15 16 23 25 17 30 30 16 22 25 40 39
+ 23 26 16 17 24 14 25 25 25 22 17 16 26 26 17 19 12 25 24 22 13 11 16 25 18 16 13
+ 12 16 22 19 15 16 25 25 21 20 13 14 25 0]
+xshow
+162 1150 moveto
+<64652063656C61206963692C20656E7472652D61757472652E20536920766F757320736176657A
+20636F6D6D656E742066616972652C20696E64697175657A206C652C2073696E6F6E20636F6E7465
+6E74657A2D766F7573206465>
+[25 22 16 22 21 13 21 16 13 21 13 10 17 22 25 15 17 21 17 22 25 14 17 22 13 16 26
+ 11 16 25 25 24 20 16 19 22 24 22 22 17 22 25 39 39 23 26 17 16 17 21 14 17 21 12
+ 17 13 25 25 13 25 25 21 23 16 13 22 11 17 19 13 25 25 27 16 22 25 25 15 22 26 14
+ 22 22 17 25 25 24 20 16 25 0]
+xshow
+162 1206 moveto
+<6D656E74696F6E6E6572206C27616374696F6E2028617520626F6E20656E64726F69742C20E976
+6964656D6D656E74292E>
+[39 23 25 14 14 25 26 26 22 19 16 14 9 22 23 13 14 25 26 16 16 22 25 17 25 25 27
+ 17 22 25 26 16 25 14 14 13 16 22 25 14 24 22 40 40 22 26 15 17 0]
+xshow
+grestore grestore
+showpage
+%%PageTrailer
+
+%%Page: 2 2
+%%PageBoundingBox: 18 18 577 824
+%%BeginPageSetup
+%
+%%EndPageSetup
+gsave
+[0.24 0 0 -0.24 18 824] concat
+gsave
+0.90196 0.90196 0.90196 setrgbcolor
+162 162 2007 56 rectfill
+162 218 2007 57 rectfill
+162 275 2007 56 rectfill
+162 331 2007 56 rectfill
+162 387 2007 57 rectfill
+162 444 2007 56 rectfill
+162 500 2007 57 rectfill
+162 557 2007 56 rectfill
+162 613 2007 57 rectfill
+162 670 2007 56 rectfill
+162 726 2007 57 rectfill
+162 783 2007 56 rectfill
+162 839 2007 57 rectfill
+162 896 2007 56 rectfill
+162 952 2007 57 rectfill
+162 1009 2007 56 rectfill
+162 1065 2007 56 rectfill
+162 1121 2007 57 rectfill
+162 1178 2007 56 rectfill
+162 1234 2007 57 rectfill
+162 1291 2007 56 rectfill
+162 1347 2007 57 rectfill
+162 1404 2007 56 rectfill
+162 1460 2007 57 rectfill
+162 1517 2007 56 rectfill
+162 1573 2007 57 rectfill
+162 1630 2007 56 rectfill
+162 1686 2007 56 rectfill
+162 1742 2007 57 rectfill
+162 1799 2007 56 rectfill
+162 1855 2007 57 rectfill
+162 1912 2007 56 rectfill
+162 1968 2007 57 rectfill
+162 2025 2007 56 rectfill
+162 2081 2007 57 rectfill
+162 2138 2007 56 rectfill
+162 2194 2007 57 rectfill
+162 2251 2007 56 rectfill
+162 2307 2007 57 rectfill
+162 2364 2007 56 rectfill
+162 2420 2007 56 rectfill
+162 2476 2007 57 rectfill
+162 2533 2007 56 rectfill
+162 2589 2007 57 rectfill
+162 2646 2007 56 rectfill
+162 2702 2007 57 rectfill
+162 2759 2007 56 rectfill
+162 2815 2007 57 rectfill
+162 2872 2007 56 rectfill
+162 2928 2007 57 rectfill
+162 2985 2007 56 rectfill
+grestore grestore
+showpage
+%%PageTrailer
+
+%%Page: 3 3
+%%PageBoundingBox: 18 18 577 824
+%%BeginPageSetup
+%
+%%EndPageSetup
+gsave
+[0.24 0 0 -0.24 18 824] concat
+gsave
+162 225 moveto
+0 0 0 setrgbcolor
+(Helvetica-Bold-iso1252) cvn findfont 67 -67 matrix scale makefont setfont
+<416E6E657865>
+[46 39 41 37 38 0]
+xshow
+162 301 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<53595354454D283329202020202020202020202020202020202020202020202020202020202020
+2020202020202020204C696E75782050726F6772616D6D65722773204D616E75616C202020202020
+202020202020202020202020202020202020202020202020202020202020202053595354454D2833
+29>
+[22 29 23 24 25 37 13 21 12 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14
+ 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 25 11 21 20 21 13
+ 23 14 21 20 14 18 33 33 19 14 8 18 14 37 18 21 21 18 11 13 14 13 14 13 14 13 14
+ 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13
+ 14 13 14 22 29 22 25 25 37 13 20 0]
+xshow
+162 394 moveto
+<4E414D45>
+[29 30 37 0]
+xshow
+162 441 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 441 moveto
+<73797374656D202D20657865637574652061207368656C6C20636F6D6D616E64>
+[16 20 16 12 18 34 13 13 13 19 20 18 18 21 11 18 14 18 13 17 21 18 11 11 13 19 21
+ 33 33 19 21 0]
+xshow
+162 534 moveto
+<53594E4F50534953>
+[22 30 29 30 22 22 13 0]
+xshow
+162 581 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 581 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<23696E636C756465203C7374646C69622E683E>
+[22 12 24 19 12 23 23 20 12 25 16 14 23 12 11 23 11 23 0]
+xshow
+162 676 moveto
+<20202020202020>
+[12 12 12 12 12 12 0]
+xshow
+246 676 moveto
+<696E742073797374656D28636F6E73742063686172202A737472696E67293B>
+[11 24 13 12 16 21 16 14 19 35 14 19 21 24 16 15 12 18 23 20 16 12 21 16 13 19 11
+ 22 21 14 0]
+xshow
+162 769 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<4445534352495054494F4E>
+[30 25 23 28 28 13 23 26 14 29 0]
+xshow
+162 816 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 816 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<73797374656D2829>
+[16 21 16 14 19 35 15 0]
+xshow
+409 816 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2020657865637574657320206120636F6D6D616E642073706563696669656420696E20>
+[13 14 18 21 18 18 20 12 18 16 13 14 18 13 19 21 33 33 19 21 22 14 16 21 18 18 11
+ 13 11 18 20 13 12 20 0]
+xshow
+1022 816 moveto
+<737472696E67>
+[16 12 13 12 20 0]
+xshow
+1022 820 93 2 rectfill
+1115 816 moveto
+<2062792063616C6C696E6720>
+[13 21 20 13 19 18 11 10 11 20 19 0]
+xshow
+1304 816 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2F62696E2F7368202D63>
+[13 24 13 26 13 18 28 12 17 0]
+xshow
+1486 816 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<20>
+show
+1499 816 moveto
+<737472696E67>
+[16 12 13 12 20 0]
+xshow
+1499 820 93 2 rectfill
+1592 816 moveto
+<2C20616E642072657475726E732061667465722074686520636F6D6D616E64>
+[10 13 19 21 21 14 13 19 12 21 14 21 17 13 19 14 12 18 14 14 12 21 20 13 18 22 33
+ 33 19 21 0]
+xshow
+162 864 moveto
+<20202020202020686173206265656E20636F6D706C657465642E2020447572696E672065786563
+7574696F6E206F662074686520636F6D6D616E642C20>
+[13 14 13 14 13 14 13 21 19 17 13 21 19 19 21 14 18 21 33 21 11 19 11 19 21 10 13
+ 14 30 21 14 12 20 20 13 19 20 18 18 21 11 11 21 22 13 21 15 14 12 21 20 13 19 21
+ 33 33 19 21 21 11 0]
+xshow
+1243 864 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<53494743484C44>
+[23 17 32 31 33 28 0]
+xshow
+1441 864 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2077696C6C202062652020626C6F636B65642C2020616E642020>
+[14 29 11 11 9 13 14 21 19 13 14 21 11 21 18 20 19 20 10 13 14 18 21 22 13 0]
+xshow
+1863 864 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<534947494E54>
+[23 17 32 17 30 0]
+xshow
+2011 864 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2020616E642020202020>
+[13 14 18 21 22 13 14 13 14 0]
+xshow
+162 911 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 911 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<53494751554954>
+[24 16 34 33 31 16 0]
+xshow
+439 911 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2077696C6C2062652069676E6F7265642E>
+[13 30 10 11 9 14 21 19 13 11 20 21 21 13 19 20 0]
+xshow
+162 1004 moveto
+<52455455524E2056414C5545>
+[27 26 25 31 28 30 14 29 29 25 30 0]
+xshow
+162 1051 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 1051 moveto
+<546865202076616C75652072657475726E6564206973202D31206F6E206572726F722028652E67
+2E20666F726B206661696C6564292C20616E64207468652072657475726E20737461747573206F66
+2074686520636F6D6D616E64206F74686572776973652E202054686973206C61742D>
+[26 21 20 13 14 20 18 11 21 17 14 14 18 12 21 14 21 19 21 13 11 15 14 12 20 13 21
+ 23 13 19 14 13 22 14 13 14 18 10 20 8 14 14 21 14 20 14 13 19 11 11 18 21 13 10
+ 13 19 21 21 14 12 21 20 13 14 19 11 21 14 22 14 16 12 18 12 21 16 14 21 15 13 12
+ 22 19 14 18 21 33 33 19 22 22 13 21 13 21 19 14 29 11 17 17 10 13 14 26 21 11 16
+ 14 11 18 11 0]
+xshow
+162 1098 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 1098 moveto
+<7465722072657475726E2073746174757320697320696E2074686520666F726D61742073706563
+696669656420696E20>
+[12 18 15 13 14 18 12 21 14 22 14 16 12 18 12 21 16 14 11 15 13 12 20 14 12 21 20
+ 13 14 22 14 33 19 13 13 16 21 18 18 11 14 10 19 19 14 11 21 0]
+xshow
+1023 1098 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<77616974283229>
+[30 20 11 14 14 22 0]
+xshow
+1150 1098 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2E2020546875732C20746865206578697420636F6465206F662074686520636F6D6D616E642020
+77696C6C202062652020>
+[10 14 13 26 22 21 16 10 14 12 21 20 13 19 20 11 11 14 18 21 21 18 13 22 14 14 12
+ 21 20 13 19 21 33 33 19 21 22 14 13 30 11 10 9 14 13 21 19 14 0]
+xshow
+162 1146 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 1146 moveto
+<57455849545354415455532873746174757329>
+[40 25 30 14 25 22 25 30 25 30 22 13 16 12 18 12 20 16 0]
+xshow
+257 1150 409 2 rectfill
+666 1146 moveto
+<2E202020496E2020636173652020>
+[10 14 13 14 14 21 14 13 18 19 15 18 13 0]
+xshow
+875 1146 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2F62696E2F7368>
+[13 24 13 25 14 18 0]
+xshow
+1010 1146 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2020636F756C6420206E6F7420206265202065786563757465642C202074686520206578697420
+7374617475732077696C6C2062652074686174206F662061>
+[13 14 18 21 20 12 20 13 14 21 21 14 13 14 21 19 13 14 18 21 17 19 20 12 18 21 10
+ 13 14 12 21 20 13 14 18 20 12 11 13 17 11 19 12 20 17 13 30 10 11 9 14 21 19 13
+ 12 22 19 13 13 22 14 14 0]
+xshow
+162 1192 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 1192 moveto
+<636F6D6D616E64207468617420646F657320>
+[19 21 33 33 19 21 22 14 12 21 19 13 14 21 21 18 16 0]
+xshow
+607 1192 moveto
+<657869742831323729>
+[18 20 12 11 13 20 21 20 0]
+xshow
+607 1196 147 2 rectfill
+755 1192 moveto
+<2E>
+show
+162 1286 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 1286 moveto
+<4966207468652076616C7565206F6620>
+[14 14 14 12 21 20 13 21 18 11 20 18 13 21 15 0]
+xshow
+515 1286 moveto
+<737472696E67>
+[16 12 13 12 20 0]
+xshow
+515 1290 93 2 rectfill
+608 1286 moveto
+<20697320>
+[13 11 15 0]
+xshow
+661 1286 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<4E554C4C>
+[31 31 28 0]
+xshow
+781 1286 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2C20>
+[10 0]
+xshow
+804 1286 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<73797374656D2829>
+[16 21 15 15 18 36 14 0]
+xshow
+957 1286 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2072657475726E73206E6F6E7A65726F20696620746865207368656C6C20697320617661696C61
+626C652C20616E64207A65726F206966206E6F742E>
+[14 14 18 12 21 14 21 17 13 21 22 21 19 19 14 22 14 11 13 14 12 21 20 13 17 21 18
+ 11 11 13 11 15 14 18 21 18 10 11 19 20 11 18 9 14 18 21 22 13 19 18 14 22 13 11
+ 14 13 21 22 12 0]
+xshow
+162 1380 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 1380 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<73797374656D2829>
+[16 21 16 14 19 35 15 0]
+xshow
+409 1380 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<20646F6573206E6F742061666665637420746865207761697420737461747573206F6620616E79
+206F74686572206368696C6472656E2E>
+[13 21 21 18 17 13 22 21 13 14 18 14 14 18 19 12 13 12 22 19 14 29 18 11 11 14 16
+ 12 18 12 21 16 14 21 15 13 19 20 20 14 21 12 22 18 15 14 18 21 11 11 21 14 18 21 0]
+xshow
+162 1473 moveto
+<434F4E464F524D494E4720544F>
+[27 31 30 22 30 28 37 14 30 30 14 25 0]
+xshow
+162 1520 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 1520 moveto
+<414E534920432C20504F5349582E322C2042534420342E33>
+[30 29 23 12 13 28 11 13 23 29 23 13 29 10 20 9 13 26 23 28 14 20 10 0]
+xshow
+162 1613 moveto
+<4E4F544553>
+[29 31 25 25 0]
+xshow
+162 1660 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 1660 moveto
+<4173206D656E74696F6E65642C20>
+[30 15 14 32 19 22 12 11 21 22 18 21 11 0]
+xshow
+518 1660 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<73797374656D2829>
+[16 21 16 14 19 35 15 0]
+xshow
+670 1660 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2069676E6F72657320>
+[13 11 20 21 21 13 19 15 0]
+xshow
+818 1660 moveto
+<534947494E54>
+[22 14 29 14 30 0]
+xshow
+952 1660 moveto
+<20616E6420>
+[14 19 21 21 0]
+xshow
+1040 1660 moveto
+<53494751554954>
+[23 13 30 29 30 14 0]
+xshow
+1203 1660 moveto
+<2E202054686973206D6179206D616B652070726F6772616D7320746861742063616C6C20697420
+66726F6D2061206C6F6F702020>
+[10 14 13 26 21 12 16 13 33 18 20 14 33 18 21 17 14 21 14 20 21 13 19 32 17 13 12
+ 22 18 14 13 18 18 11 10 13 12 11 13 14 14 22 34 14 18 13 12 21 21 21 13 0]
+xshow
+162 1706 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 1706 moveto
+<756E696E7465727275707461626C652C20756E6C65737320746865792074616B65206361726520
+7468656D73656C76657320746F20636865636B20746865206578697420737461747573206F662074
+6865206368696C642E20452E672E>
+[21 21 11 22 11 19 14 14 21 21 11 19 21 12 18 10 13 21 21 11 18 17 15 14 12 21 18
+ 21 13 12 18 21 17 14 18 18 14 17 14 12 21 19 33 17 18 11 21 18 16 13 12 22 14 18
+ 21 18 18 20 13 12 22 19 14 18 20 12 11 13 16 12 19 12 20 17 13 21 15 14 12 21 20
+ 13 19 20 11 12 20 10 13 25 10 20 0]
+xshow
+162 1799 moveto
+<2020202020202020202020>
+[13 14 13 14 13 14 13 14 13 14 0]
+xshow
+311 1799 moveto
+<7768696C6528736F6D657468696E6729207B>
+[30 21 11 11 18 14 16 21 33 18 12 21 12 21 21 13 13 0]
+xshow
+162 1846 moveto
+<202020202020202020202020202020>
+[13 14 13 14 13 14 13 14 13 14 13 14 13 14 0]
+xshow
+365 1846 moveto
+<696E7420726574203D2073797374656D2822666F6F22293B>
+[12 20 13 13 14 18 13 13 28 14 15 21 16 11 19 32 14 18 14 21 22 17 14 0]
+xshow
+162 1939 moveto
+<202020202020202020202020202020>
+[13 14 13 14 13 14 13 14 13 14 13 14 13 14 0]
+xshow
+365 1939 moveto
+<696620285749465349474E414C45442872657429202626>
+[11 14 13 14 39 14 23 22 13 30 30 30 25 25 30 14 14 19 11 15 13 32 0]
+xshow
+162 1985 moveto
+<20202020202020202020202020202020202020>
+[13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14 0]
+xshow
+419 1985 moveto
+<28575445524D5349472872657429203D3D20534947494E54207C7C20575445524D534947287265
+7429203D3D20534947515549542929>
+[14 40 25 25 28 37 23 13 30 13 14 19 11 14 14 26 30 13 23 13 30 13 30 26 13 10 13
+ 14 39 26 26 27 37 22 14 30 13 14 19 11 14 14 26 30 13 22 14 29 30 30 13 26 14 0]
+xshow
+162 2032 moveto
+<2020202020202020202020202020202020202020202020>
+[13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14 13 14 0]
+xshow
+473 2032 moveto
+<627265616B3B>
+[21 14 19 18 20 0]
+xshow
+162 2078 moveto
+<2020202020202020202020>
+[13 14 13 14 13 14 13 14 13 14 0]
+xshow
+311 2078 moveto
+<7D>
+show
+162 2172 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 2172 moveto
+<446F20206E6F7420207573652020>
+[31 23 13 14 21 21 14 13 14 21 15 18 14 0]
+xshow
+502 2172 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<73797374656D2829>
+[16 21 16 14 19 35 15 0]
+xshow
+654 2172 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<202066726F6D2020612070726F6772616D20776974682073756964206F72207367696420707269
+76696C656765732C206265636175736520737472616E67652076616C75657320666F7220736F6D65>
+[13 14 14 14 21 35 13 14 18 13 21 14 21 20 14 18 33 14 29 12 11 22 13 16 21 11 20
+ 13 21 15 13 16 20 11 19 13 21 14 11 20 11 11 17 20 18 15 9 13 21 19 18 18 21 16
+ 17 14 16 12 14 19 20 20 18 13 21 18 11 20 19 15 13 14 22 14 14 16 22 32 0]
+xshow
+162 2220 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 2220 moveto
+<656E7669726F6E6D656E74207661726961626C6573206D69676874206265207573656420746F20
+737562766572742073797374656D20696E746567726974792E20205573652074686520>
+[19 21 20 11 14 21 22 33 19 21 14 13 21 18 13 11 19 21 11 18 15 14 32 11 21 21 12
+ 14 21 19 13 21 16 18 21 13 12 22 14 16 21 21 21 18 14 12 14 15 21 16 11 19 33 14
+ 11 21 12 18 20 13 11 11 21 8 14 13 30 16 18 14 12 21 20 0]
+xshow
+1530 2220 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<65786563>
+[19 22 20 0]
+xshow
+1611 2220 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2833292066616D696C79206F662066756E6374696F6E7320696E73746561642C20>
+[14 20 13 14 13 20 32 11 11 19 13 21 15 14 14 21 21 18 12 11 21 21 17 14 11 21 16
+ 12 18 19 20 10 0]
+xshow
+162 2267 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 2267 moveto
+<62757420206E6F742020>
+[21 21 13 14 13 22 21 13 14 0]
+xshow
+422 2267 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<657865636C70>
+[19 22 20 19 12 0]
+xshow
+537 2267 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<28332920206F722020>
+[13 20 14 13 14 21 14 14 0]
+xshow
+674 2267 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<657865637670>
+[19 22 20 18 21 0]
+xshow
+796 2267 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2833292E202020>
+[13 20 14 10 13 14 0]
+xshow
+894 2267 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<73797374656D2829>
+[16 21 16 14 19 35 15 0]
+xshow
+1046 2267 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<202077696C6C206E6F742C20696E20666163742C20776F726B2070726F7065726C792066726F6D
+2070726F6772616D7320776974682073756964206F722073676964>
+[13 14 29 11 11 9 13 21 22 12 11 14 11 21 13 14 18 19 11 11 13 30 21 13 20 14 21
+ 14 20 21 19 14 11 19 13 14 14 22 34 14 21 14 20 21 13 19 32 17 13 30 11 12 21 14
+ 16 20 11 20 14 20 15 14 15 20 11 0]
+xshow
+162 2315 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 2315 moveto
+<70726976696C65676573206F6E2073797374656D73206F6E20776869636820>
+[21 14 11 20 11 11 17 20 18 14 13 21 23 13 16 20 17 11 18 33 17 13 22 22 13 30 21
+ 11 19 21 0]
+xshow
+801 2315 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2F62696E2F7368>
+[13 24 13 26 13 18 0]
+xshow
+936 2315 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<20697320626173682076657273696F6E20322C2073696E6365206261736820322064726F707320
+70726976696C65676573206F6E20737461727475702E20202844656269616E2020>
+[14 11 15 13 21 19 17 22 13 21 18 14 16 11 21 21 14 20 10 13 16 11 21 18 18 13 21
+ 19 17 22 13 20 14 21 14 21 21 16 14 21 13 11 21 10 11 18 20 17 14 14 21 22 14 16
+ 12 18 14 12 21 21 10 14 13 14 31 19 20 12 18 22 13 0]
+xshow
+162 2361 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 2361 moveto
+<757365732061206D6F646966696564206261736820776869636820646F6573206E6F7420646F20
+74686973207768656E20696E766F6B65642061732073682E29>
+[21 16 18 16 13 18 14 33 21 21 12 13 12 18 20 13 21 19 16 23 13 31 20 11 19 21 13
+ 21 21 18 17 13 22 21 13 14 21 21 14 12 21 11 17 13 31 20 19 22 13 12 20 21 21 20
+ 19 20 13 19 15 14 16 22 10 0]
+xshow
+162 2454 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 2454 moveto
+<54686520636865636B20666F722074686520617661696C6162696C697479206F66202F62696E2F
+7368206973206E6F742061637475616C6C7920706572666F726D65643B20697420697320616C7761
+797320617373756D656420746F20626520617661696C61626C652E202049534F2043>
+[26 21 20 13 19 21 18 18 19 14 14 21 15 13 12 22 19 14 18 21 17 11 11 18 21 10 11
+ 11 11 19 13 22 14 14 13 22 12 23 13 18 25 14 11 15 13 21 22 13 14 18 18 12 20 18
+ 12 10 18 14 21 18 14 14 21 15 32 19 21 12 14 11 11 14 11 15 13 18 11 30 18 20 14
+ 13 18 17 15 21 33 19 21 13 12 22 14 21 19 13 18 21 18 11 11 18 20 11 18 10 13 14
+ 13 22 28 13 0]
+xshow
+162 2500 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 2500 moveto
+<7370656369666965732074686520636865636B2C2062757420504F5349582E3220737065636966
+6965732074686174207468652072657475726E207368616C6C20616C77617973206265206E6F6E2D
+7A65726F2C2073696E636520612073797374656D2020776974686F75742020746865>
+[16 21 18 18 11 14 11 17 15 14 12 21 20 13 19 21 18 18 20 9 14 21 21 13 13 23 29
+ 23 13 29 10 19 13 16 21 19 17 11 14 11 18 14 14 12 21 19 13 14 12 21 20 13 14 19
+ 11 21 14 22 14 16 21 19 11 10 14 18 11 29 18 20 14 14 21 19 13 21 22 21 14 18 19
+ 14 21 11 13 16 11 21 18 18 13 18 14 16 20 16 11 19 33 14 13 30 11 12 21 21 21 13
+ 13 14 12 21 0]
+xshow
+162 2547 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 2547 moveto
+<7368656C6C206973206E6F7420636F6E666F726D696E672C20616E642069742069732074686973
+207468617420697320696D706C656D656E7465642E>
+[17 21 18 11 11 13 11 15 14 21 21 14 13 19 21 21 14 21 15 32 12 21 20 10 13 19 21
+ 21 14 11 11 14 11 15 13 12 21 12 16 14 12 21 19 13 14 11 15 13 12 32 21 11 19 32
+ 19 21 12 19 21 0]
+xshow
+162 2641 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 2641 moveto
+<49742020697320706F737369626C6520666F7220746865207368656C6C20636F6D6D616E642074
+6F2072657475726E203132372C20736F207468617420636F6465206973206E6F7420612073757265
+20696E6469636174696F6E20746861742074686520>
+[14 12 14 13 11 15 14 21 21 16 16 11 21 11 18 13 14 22 14 14 12 21 20 13 17 21 18
+ 11 11 13 19 21 33 33 19 21 22 14 12 22 13 14 19 11 21 14 22 14 20 20 20 9 13 16
+ 22 13 12 22 19 13 13 19 21 20 18 14 11 15 13 21 22 13 14 18 13 16 21 14 18 13 12
+ 21 20 11 18 18 11 11 21 22 13 12 22 19 13 13 12 22 19 0]
+xshow
+1912 2641 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<6578656376652829>
+[19 22 19 19 21 20 15 0]
+xshow
+2065 2641 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2063616C6C>
+[13 18 18 11 0]
+xshow
+162 2687 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 2687 moveto
+<6661696C65642E>
+[14 18 11 11 19 20 0]
+xshow
+162 2780 moveto
+<53454520414C534F>
+[22 25 23 14 29 25 22 0]
+xshow
+162 2828 moveto
+<20202020202020>
+[13 14 13 14 13 14 0]
+xshow
+257 2828 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<7368>
+[17 0]
+xshow
+297 2828 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2831292C20>
+[13 20 14 10 0]
+xshow
+368 2828 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<7369676E616C>
+[17 11 21 23 21 0]
+xshow
+473 2828 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2832292C20>
+[14 20 14 10 0]
+xshow
+544 2828 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<77616974>
+[29 21 10 0]
+xshow
+617 2828 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<2832292C20>
+[14 20 14 10 0]
+xshow
+688 2828 moveto
+(Times-Bold-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<65786563>
+[20 22 19 0]
+xshow
+769 2828 moveto
+(Times-Roman-iso1252) cvn findfont 42 -42 matrix scale makefont setfont
+<283329>
+[13 20 0]
+xshow
+grestore grestore
+showpage
+%%PageTrailer
+
+%%Trailer
+%%BoundingBox: 0 0 595 842
+%%Pages: 3
+%%EOF
+%%EndDocument
+EndInclude
+
+%%Trailer
+end
+%%EOF

@@ -1,0 +1,1717 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>STP1a</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.1.2  (Linux)">
+	<META NAME="AUTHOR" CONTENT="microsoft Word 5">
+	<META NAME="CREATED" CONTENT="20000105;10140000">
+	<META NAME="CHANGED" CONTENT="20041125;1144800">
+	<META NAME="CLASSIFICATION" CONTENT="decouverte de minix">
+	<META NAME="KEYWORDS" CONTENT="SST201, decouverte, allocation de m&eacute;moire">
+	<STYLE>
+	<!--
+		@page { size: 20.96cm 29.67cm; margin-top: 2.5cm; margin-bottom: 1.9cm }
+		P { margin-left: 2.5cm; margin-right: 2.5cm; text-indent: 0cm; margin-bottom: 0.21cm; color: #000000; text-align: justify; widows: 2; orphans: 2 }
+		P.western { font-family: "Times", cursive; font-size: 12pt; so-language: fr-FR }
+		P.cjk { font-family: "Times New Roman", serif; font-size: 12pt }
+		H1 { margin-left: 3.25cm; margin-right: 2.5cm; text-indent: -0.76cm; margin-top: 0.85cm; margin-bottom: 0.42cm; color: #000000; text-align: justify; page-break-inside: avoid; widows: 2; orphans: 2 }
+		H1.western { font-family: "Helvetica", sans-serif; font-size: 14pt; so-language: fr-FR }
+		H1.cjk { font-family: "Times New Roman", serif; font-size: 14pt }
+		H1.ctl { font-family: "Arial Unicode MS"; font-size: 12pt; font-weight: medium }
+		H2 { margin-left: 3.5cm; margin-right: 2.5cm; text-indent: -1.02cm; margin-top: 0.64cm; margin-bottom: 0.32cm; color: #000000; text-align: justify; page-break-inside: avoid; widows: 2; orphans: 2 }
+		H2.western { font-family: "Helvetica", sans-serif; font-size: 14pt; so-language: fr-FR }
+		H2.cjk { font-family: "Times New Roman", serif; font-size: 14pt }
+		H2.ctl { font-family: "Arial Unicode MS"; font-size: 12pt; font-weight: medium }
+		H3 { margin-left: 3.75cm; margin-right: 2.5cm; text-indent: -1.27cm; margin-bottom: 0.21cm; color: #000000; text-align: justify; page-break-inside: avoid; widows: 2; orphans: 2 }
+		H3.western { font-family: "Times", cursive; font-size: 12pt; so-language: fr-FR }
+		H3.cjk { font-family: "Times New Roman", serif; font-size: 12pt }
+		H3.ctl { font-family: "Arial Unicode MS"; font-size: 12pt; font-weight: medium }
+		P.sdfootnote-western { margin-bottom: 0cm; font-family: "Times", cursive; font-size: 9pt; so-language: fr-FR }
+		P.sdfootnote-cjk { margin-bottom: 0cm; font-family: "Times New Roman", serif; font-size: 9pt }
+		P.sdfootnote-ctl { margin-bottom: 0cm }
+		A.sdfootnoteanc { font-size: 57% }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="de-DE" TEXT="#000000" DIR="LTR">
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+<B>	</B></P>
+<P LANG="fr-FR" STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+<B>	</B></P>
+<P LANG="fr-FR" STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+<B>			Ann&eacute;e scolaire : 	2004-2005</B></P>
+<P LANG="fr-FR" STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+ <B>			Date : 		26/11/2004</B></P>
+<P LANG="fr-FR" STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+ <B>	Module  ISI 423 :  <FONT SIZE=5>Syst&egrave;me d'exploitation <BR>
+                                         </FONT><FONT SIZE=4 STYLE="font-size: 16pt">et
+son support architectural</FONT></B></P>
+<P LANG="fr-FR" STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" ALIGN=CENTER STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+<B>TP MINIX : D&eacute;couverte de MINIX et gestion de la m&eacute;moire.</B></P>
+<P LANG="fr-FR" STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+<BR>
+</P>
+<OL>
+	<LI><H1 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">1	Introduction</H1>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Solaris
+MINIX (smx) est une version du syst&egrave;me d'exploitation MINIX
+(type *NIX) qui tourne &agrave; l'int&eacute;rieur d'un processus du
+syst&egrave;me UNIX Solaris des stations SUN. Le processus Solaris
+joue le r&ocirc;le d'une machine virtuelle (en fait MINIX utilise un
+deuxi&egrave;me processus pour des d&eacute;tails tr&egrave;s
+techniques, mais oublions). Pour l'utilisateur, MINIX est un syst&egrave;me
+d'exploitation normal. Du fait que vous avez acc&egrave;s &agrave;
+l'int&eacute;rieur de MINIX. et que vous disposez des droits du super
+utilisateur root, vous serez &agrave; la fois utilisateur normal,
+administrateur syst&egrave;me et ing&eacute;nieur syst&egrave;me
+UNIX. En particulier, il vous sera possible de modifier les fichiers
+sources du syst&egrave;me MINIX et de  le recompiler  sous Solaris.</P>
+<OL START=2>
+	<LI><H1 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">2	Installation</H1>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Vous
+avez le choix entre une installation sur votre compte <B><I>2A </I></B>ou
+en local dans <B><I>/var/tmp</I></B>. Avant d'installer minix, faites
+<FONT FACE="Courier, cursive">df</FONT><FONT SIZE=1 STYLE="font-size: 8pt"><FONT FACE="Times New Roman, serif">
+</FONT></FONT><FONT FACE="Courier, cursive">-k</FONT> pour voir le
+taux d'occupation des disques &agrave; tout hasard. Minix a besoin de
+6 M&eacute;ga octets.</P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Pour
+installer MINIX      (mettre en place quelques variables utiles)</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">- sur
+le disque  <B>2A</B>, 	vous devez taper :  	<FONT FACE="Courier, cursive">SETUP
+ MINIX </FONT>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3cm; text-indent: 0cm; margin-bottom: 0cm">
+- sur le disque  <B>/var/tmp</B>,       vous devez taper : 	<FONT FACE="Courier, cursive">SETUP
+ MINIX3 </FONT>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">      
+  <FONT FACE="Times New Roman, serif">Attention, /var/<B>tmp</B> est
+local (non sauvegard&eacute;) sur chaque station. Mais son avantage
+est qu'il y a de la place en g&eacute;n&eacute;ral...</FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3cm; text-indent: 0cm; margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3cm; text-indent: 0cm; margin-bottom: 0cm">
+L'option <FONT FACE="Courier, cursive">-v</FONT>  du SETUP, vous
+permet de voir les variables que cette commande met en place.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Dans
+le cas de <B>/var/tmp</B>, il faut qu'un r&eacute;pertoire &agrave;
+votre nom existe sous <B>/var/tmp </B>; pour cela, tapez la commande
+:</P>
+<P LANG="en-US" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2>mkdir /var/tmp/`whoami`</FONT></FONT></P>
+<P LANG="en-US" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Une
+fois ceci fait, cd $MINIX_HOME vous permettra d'aller directement &agrave;
+ce r&eacute;pertoire (emplacement o&ugrave; seront les sources et
+l'ex&eacute;cutable de <U>votre</U> MINIX).</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<BR><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Faire
+ensuite :</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT FACE="Courier, cursive">SETUP SUNPRO3</FONT>	(compilateur de
+Sun tr&egrave;s vieux mais gratuit encore utile pour compiler le
+noyau de minix lors des TPs...)</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT FACE="Courier, cursive">install_minix</FONT>	(petit programme
+qui copie les fichiers utiles)</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><I>install_minix</I>
+place une arborescence de fichiers dans le r&eacute;pertoire minix.
+Pour en savoir plus sur les SETUP et le programme <I>install_minix</I>,
+reportez-vous &agrave; l'annexe 2.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Pour
+&eacute;viter de taper les SETUP pr&eacute;c&eacute;dents &agrave;
+chaque fois qu'on se connecte on pourrait les rajouter dans son
+~/.cshrc.PERSO.</P>
+<OL START=3>
+	<LI><H1 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">3	Utilisation
+	de MINIX</H1>
+	<OL>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">3.1	Lancer
+		MINIX</H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Pour
+lancer MINIX, utilisez la commande <FONT FACE="Courier, cursive"><FONT SIZE=2>minix</FONT>&nbsp;</FONT>(auparavant
+cr&eacute;ez un sous-r&eacute;pertoire de travail chez vous, en
+dehors du r&eacute;pertoire minix, et allez dans ce r&eacute;pertoire.
+Ainsi c'est dans ce r&eacute;pertoire que seront &eacute;crits les
+fichiers par les commandes sunread/sunwrite qu'on verra par la
+suite). La commande <FONT FACE="Courier, cursive">minix</FONT> 
+lancera une session de MINIX (ayant pour nom minix) dans la fen&ecirc;tre
+texte o&ugrave; vous taperez cette commande (sur la machine o&ugrave;
+vous &ecirc;tes connect&eacute;). Ne lancez pas MINIX deux fois en
+m&ecirc;me temps. Vous pouvez, par contre, ouvrir un deuxi&egrave;me
+terminal (type xterm) sur la m&ecirc;me session MINIX en tapant
+<FONT FACE="Courier, cursive">mlogin minix</FONT> , sans oublier de
+faire le SETUP auparavant, dans une autre fen&ecirc;tre de la m&ecirc;me
+machine (o&ugrave; minix est le nom de votre session minix, cf.
+annexe 3).</P>
+<OL>
+	<OL START=2>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">3.2	Quitter
+		MINIX</H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Apr&egrave;s
+avoir un peu regard&eacute; ce nouvel OS, vous pourrez le quitter en
+tapant <FONT FACE="Courier, cursive">shutdown</FONT> depuis MINIX
+(une fois connect&eacute; en tant que root). <FONT SIZE=2><FONT FACE="Courier, cursive">shutdown</FONT></FONT>
+ferme toutes les fen&ecirc;tres MINIX ouvertes. La fermeture d'une
+fen&ecirc;tre MINIX s'effectue &agrave; l'aide de la s&eacute;quence
+de touches 'quit' en maintenant la touche Ctrl enfonc&eacute;e (c'est
+&agrave; dire Ctrl Q, Ctrl U, Ctrl I et Ctrl T ! Incroyable, non ?).</P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+Attention : ne pas fermer une fen&ecirc;tre en utilisant la  commande
+quit du menu du coin en haut &agrave; gauche de la fen&ecirc;tre
+(surtout si c'est la derni&egrave;re fen&ecirc;tre MINIX). C'est la
+commande <FONT SIZE=2><FONT FACE="Courier, cursive">shutdown</FONT></FONT>
+qui ferme proprement le syst&egrave;me MINIX).</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">	</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">En cas
+de probl&egrave;mes, vous pouvez &quot;tuer MINIX&quot; de deux
+fa&ccedil;ons&nbsp;:  &agrave; partir de Solaris en utilisant
+l'instruction <FONT FACE="Courier, cursive">kill</FONT> (&agrave;
+&eacute;viter)&nbsp;et &agrave; l'aide des touches 'Ctrl-7'
+(pr&eacute;f&eacute;rable) qui vous affichera quelques renseignements
+sur le syst&egrave;me avant de le terminer proprement. Il faut noter
+que si une fen&ecirc;tre MINIX est bloqu&eacute;e, vous avez toujours
+acc&egrave;s au syst&egrave;me &agrave; l'aide de la commande <FONT FACE="Courier, cursive">mlogin</FONT>.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+Attention, rien ne vous emp&ecirc;che de d&eacute;truire votre
+syst&egrave;me (puisque vous avez tous les droits)&nbsp;; en cas de
+probl&egrave;me, vous pourrez toujours remettre votre syst&egrave;me
+dans son &eacute;tat de base (le disque mont&eacute; &agrave; la
+racine) en tapant sous Solaris :</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+<FONT FACE="Courier, cursive">		<SPAN LANG="en-US">cp
+$MINIX/disks/root $MINIX_HOME/minix/disks/root</SPAN></FONT></P>
+<OL>
+	<OL START=3>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">3.3	Apr&egrave;s
+		une s&eacute;ance de travail 
+		</H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">En cas
+de &quot;surcharge&quot; de disques, on vous conseille d'effacer le
+r&eacute;pertoire minix (rm -rf minix) chez vous. Cela permettra &agrave;
+chacun de pouvoir travailler. 
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><U>ATTENTION</U>
+: cela signifie qu'il faut <U>sauvegarder chez vous</U>, en dehors de
+minix, <U>tous les fichiers que vous avez d&ucirc; modifier si vous
+effacez ce r&eacute;pertoire</U>. En particulier il faut le faire
+syst&eacute;matiquement si vous avez travaill&eacute; par exempl e
+dans <B>/var/tmp</B>.</P>
+<OL>
+	<OL START=4>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">3.4	Sous
+		smx  <B><FONT SIZE=2>(small unix)</FONT></B></H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Quand
+vous aurez lanc&eacute; une session MINIX, on vous demandera de vous
+connecter (login). La premi&egrave;re fois, tapez root (il n'y a pas
+de mot de passe). 
+</P>
+<OL>
+	<OL>
+		<OL>
+			<LI><H3 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">3.4.1	Root
+			et mot de passe</H3>
+		</OL>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Vous
+&ecirc;tes alors l'administrateur de votre syst&egrave;me
+d'exploitation (il est conseill&eacute; d'associer &agrave; root un
+mot de passe par la commande <FONT SIZE=2><FONT FACE="Arial, sans-serif">passwd</FONT></FONT>).</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+A partir de ce moment, vous avez &agrave; votre disposition deux
+syst&egrave;mes d'exploitation : Solaris d'une part et MINIX d'autre
+part, les fichiers de l'un sont invisibles de l'autre. Les commandes
+<FONT SIZE=2><FONT FACE="Courier, cursive">sunread</FONT></FONT> et
+<FONT SIZE=2><FONT FACE="Courier, cursive">sunwrite</FONT></FONT>
+permettent de transf&eacute;rer des fichiers d'un syst&egrave;me &agrave;
+l'autre (annexe 3).</P>
+<OL>
+	<OL>
+		<OL START=2>
+			<LI><H3 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">3.4.2	Processus
+			MINIX et processus Solaris</H3>
+		</OL>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Sous
+Solaris, faites la commande <FONT SIZE=2><FONT FACE="Courier, cursive">ps</FONT>
+<FONT FACE="Courier, cursive">-aef</FONT></FONT>. Combien de
+processus ex&eacute;cutant MINIX trouvez-vous?  Faites <FONT SIZE=2><FONT FACE="Arial, sans-serif">ps
+-axl</FONT></FONT> sous smx.  Que notez-vous?  Quels sont les
+anc&ecirc;tres de ces processus minix?</P>
+<OL>
+	<OL>
+		<OL START=3>
+			<LI><H3 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">3.4.3	Ouvrir
+			plusieurs fen&ecirc;tres sur MINIX</H3>
+		</OL>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Ouvrez
+une deuxi&egrave;me fen&ecirc;tre sous Solaris et tapez la commande 
+<FONT SIZE=2><FONT FACE="Courier, cursive">mlogin minix</FONT></FONT>.<SUP><A CLASS="sdfootnoteanc" NAME="sdfootnote1anc" HREF="#sdfootnote1sym"><SUP>1</SUP></A></SUP>
+Refaites <FONT SIZE=2><FONT FACE="Courier, cursive">ps</FONT> <FONT FACE="Courier, cursive">-aef</FONT></FONT>
+sous  Solaris.  Y-a-t-il des changements? Refaites <FONT SIZE=2><FONT FACE="Arial, sans-serif">ps
+-axl</FONT></FONT>  dans cette nouvelle fen&ecirc;tre smx.  Il y a
+bien un seul minix en fonctionnement avec 2 fen&ecirc;tres
+interpr&eacute;tant les commandes shell. Quel est le nombre maximum
+de fen&ecirc;tres que vous pouvez avoir?  Avec l'option <FONT SIZE=2><FONT FACE="Courier, cursive">-u</FONT></FONT>
+de <FONT SIZE=2><FONT FACE="Courier, cursive">ps</FONT></FONT>  vous
+pouvez avoir la liste des processus que poss&egrave;de un usager
+donn&eacute;.</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2>				ps -u rannou</FONT></FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+Attention : 
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+Il arrive souvent que des &eacute;l&egrave;ves se d&eacute;connectent
+de Solaris alors qu'ils poss&egrave;dent encore des processus qui
+tournent. C'est le cas en particulier lorsque les &eacute;l&egrave;ves
+sont mal sortis de MINIX (ou qu'ils oublient de quitter les &eacute;diteurs
+de textes)</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+Ces processus vont ralentir la station pour les coll&egrave;gues qui
+suivent., ceux-ci ne poss&eacute;dant pas les droits pour les
+d&eacute;truire. 
+</P>
+<OL>
+	<OL>
+		<OL START=4>
+			<LI><H3 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">3.4.4	Rajouter
+			un utilisateur. 
+			</H3>
+		</OL>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Vous
+disposez pour cela de la commande <FONT SIZE=2><FONT FACE="Arial, sans-serif">adduser</FONT></FONT>.
+Faites <FONT SIZE=2><FONT FACE="Arial, sans-serif">man adduser</FONT></FONT>
+pour conna&icirc;tre son fonctionnement. Regardez le fichier
+<I>/etc/passwd</I> qui contient la liste des utilisateurs et
+<I>/etc/shadow</I> pour les mots de passe (fichier illisible pour les
+simples utilisateurs). Cette commande n&eacute;cessite que le
+r&eacute;pertoire contenant le r&eacute;pertoire de l'utilisateur
+existe d&eacute;j&agrave;.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Vous
+pouvez dans un premier temps utiliser un groupe existant (<FONT SIZE=2><FONT FACE="Arial, sans-serif">other</FONT></FONT>
+par exemple).  Une fois le nouvel utilisateur introduit, connectez
+vous sous cet utilisateur (dans la m&ecirc;me fen&ecirc;tre ou mieux
+dans une autre). Associez &agrave; ce nouvel utilisateur un mot de
+passe. 
+</P>
+<OL>
+	<OL>
+		<OL START=5>
+			<LI><H3 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">3.4.5	Cr&eacute;er
+			un nouveau groupe et rajouter un utilisateur de groupe. 
+			</H3>
+		</OL>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Pour
+cela, rajoutez une ligne au fichier <FONT SIZE=2><FONT FACE="Arial, sans-serif">/etc/group</FONT></FONT>.
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Quand
+vous travaillez sous MINIX, vous avez le choix entre utiliser un des
+&eacute;diteurs de texte de MINIX 
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">	- ed,
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">	-
+elvis (une sorte de vi) 
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">	-
+uemacs (une sorte d'emacs), 
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">ou
+travailler avec un &eacute;diteur sous Solaris (emacs, textedit,
+...). 
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Dans
+ce dernier cas, comme les fichiers MINIX ne sont pas visibles sous
+Solaris, vous devrez faire usage des commandes MINIX  <FONT SIZE=2><FONT FACE="Courier, cursive">sunread</FONT></FONT>
+(pour un transfert Solaris vers MINIX d'un fichier), ou <FONT SIZE=2><FONT FACE="Courier, cursive">sunwrite</FONT></FONT>
+(pour un transfert MINIX vers Solaris). Voir annexe 3 et la commande
+<FONT SIZE=2><FONT FACE="Courier, cursive">man</FONT></FONT> sous
+MINIX.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Attention,
+pour ces deux commandes, un nom relatif de fichier Solaris d&eacute;signe
+le r&eacute;pertoire o&ugrave; vous &eacute;tiez lorsque vous avez
+lanc&eacute; la commande <FONT SIZE=2><FONT FACE="Courier, cursive">minix</FONT></FONT>.
+C'est pourquoi on vous a fait cr&eacute;er un r&eacute;pertoire
+<I>travail</I> &agrave; partir duquel vous avez lanc&eacute; MINIX
+par la commande <FONT SIZE=2><FONT FACE="Courier, cursive">minix</FONT></FONT>.</P>
+<OL>
+	<OL>
+		<OL START=6>
+			<LI><H3 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">3.4.6	Faire
+			advent.</H3>
+		</OL>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Le but
+ici est de jouer en cours au jeu d'aventure <B>adven</B>t.
+Profitez-en c'est la seule fois o&ugrave; ce sera autoris&eacute; !
+Mais apr&egrave;s tout MINIX est lui m&ecirc;me un syst&egrave;me
+d'exploitation jouet...</P>
+<OL START=4>
+	<LI><H1 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">4	Allocation
+	de m&eacute;moire</H1>
+	<OL>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">4.1	Comment
+		modifier le syst&egrave;me et reconstruire le syst&egrave;me</H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Les
+sources du syst&egrave;me qui vous concernent sont plac&eacute;es
+dans 4 r&eacute;pertoires sous Solaris dans $<FONT SIZE=2><FONT FACE="Arial, sans-serif">MINIX_HOME/src</FONT></FONT>.</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<I>- 	<B>fs </B> </I>le syst&egrave;me de gestion de fichier 
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<I>- <B>init </B> </I>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<I>- <B>kernel</B></I><B> </B> le noyau du  syst&egrave;me  MINIX</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<I>-	<B>mm</B>  la gestion de la m&eacute;moire .</I></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><I>	</I></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Vous
+avez un imprim&eacute; de quelques pages qui d&eacute;crit
+sommairement &agrave; quoi correspondent tous les fichiers <I>source</I>.
+Vous n'avez pas encore besoin de savoir beaucoup de choses.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Quand
+vous aurez modifi&eacute;, l'un quelconque des fichiers <I>source</I>,
+il suffit d'aller dans le r&eacute;pertoire
+<FONT SIZE=2><FONT FACE="Arial, sans-serif">$MINIX_HOME/minix/src/tools</FONT></FONT>
+et de faire  <FONT SIZE=2><FONT FACE="Arial, sans-serif">make image</FONT></FONT>
+ pour construire un minix ex&eacute;cutable. F&eacute;licitation !
+Vous venez peut etre de compiler le premier syst&egrave;me
+d'exploitation de votre vie...</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<OL>
+	<OL START=2>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">4.2	Allocation
+		de la m&eacute;moire</H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Pour
+commencer, vous allez regarder le r&eacute;pertoire <I>mm</I> (memory
+manager ou gestionnaire de m&eacute;moire). Il s'occupe notamment
+d'allouer et de d&eacute;sallouer la m&eacute;moire pour les
+processus en maintenant une table de l'espace m&eacute;moire
+disponible. Ceci est r&eacute;alis&eacute; dans le fichier <I>alloc.c</I>.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">MINIX
+n'utilise ni les techniques de pagination ni celles de segmentation.
+Lorsque l'on cr&eacute;e un processus sous MINIX, le gestionnaire de
+m&eacute;moire recherche un bloc de taille suffisante dans l'espace
+m&eacute;moire accord&eacute; &agrave; MINIX par le syst&egrave;me
+Solaris. Le module <FONT SIZE=2><FONT FACE="Arial, sans-serif">alloc.c</FONT></FONT>
+g&egrave;re une liste des blocs libres (<FONT SIZE=2><FONT FACE="Arial, sans-serif">hole_head</FONT></FONT>).
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">L'unit&eacute;
+de m&eacute;moire est le click (le click vaut un certain nombre
+d'octets).</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">	</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Le
+fichier <FONT SIZE=2><FONT FACE="Arial, sans-serif">alloc.c</FONT></FONT>
+contient 4 points d'entr&eacute;es :</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<SPAN LANG="en-US">- <U>phys_clicks alloc_mem</U> (phys_clicks
+<I>clicks</I>).  </SPAN>Alloue <I>clicks</I> unit&eacute;s de m&eacute;moire
+et rend comme r&eacute;sultat l'adresse du bloc.</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<SPAN LANG="en-US">- void <U>free_mem</U> (phys_clicks <I>base</I>,
+phys_clicks <I>clicks</I>). </SPAN>Lib&egrave;re un bloc de <I>clicks</I>
+unit&eacute;s situ&eacute; &agrave; l'adresse <I>base</I>.</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<SPAN LANG="en-US">- void <U>mem_init</U> (total, free). </SPAN>Effectue
+l'initalisation. A la sortie de cette fonction, la liste des blocs
+libres est constitu&eacute;e. On ne dispose pas forc&eacute;ment d'un
+seul bloc.  
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+- phys_clicks <U>max-holes</U> (). Donne la taille du plus grand
+bloc.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">	</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">L'invariant
+de ce module stipule :</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+- qu'il n'y a pas deux blocs libres contigus. A l'initialisation et &agrave;
+chaque fois qu'un bloc est lib&eacute;r&eacute;, on effectue la
+fusion (fonction interne <FONT SIZE=2><FONT FACE="Arial, sans-serif">merge</FONT></FONT>)
+des blocs contigus.</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+- que la somme espace disponible -  espace allou&eacute; reste
+constant. 
+</P>
+<OL>
+	<OL START=3>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">4.3	Regarder
+		ce qui se passe</H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Dans
+le fichier <I><FONT SIZE=2><FONT FACE="Arial, sans-serif">alloc.c</FONT></FONT></I>,
+il y a plusieurs commandes d'impression (<FONT SIZE=2><FONT FACE="Arial, sans-serif">printf</FONT></FONT>)
+comment&eacute;es ; si vous d&eacute;commentez ces lignes, et que
+vous compilez MINIX (<FONT SIZE=2><FONT FACE="Arial, sans-serif">make
+image</FONT></FONT>), vous verrez s'afficher de nombreux messages
+concernant l'allocation de m&eacute;moire (il est conseill&eacute; de
+ne pas utiliser la fen&ecirc;tre principale qui sera satur&eacute;e
+de messages, mais plut&ocirc;t de faire un <FONT SIZE=2><FONT FACE="Arial, sans-serif">mlogin</FONT></FONT>,
+il est aussi conseill&eacute; de ne pas d&eacute;commenter tout d'un
+seul coup). 
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Une
+fois connect&eacute;, vous pouvez voir l'allocation de m&eacute;moire
+pour un petit programme (<FONT FACE="Courier, cursive">mm.test1</FONT>
+par exemple) qui ne fait pas grand chose. Vous pouvez ensuite
+utiliser autre chose (<FONT FACE="Courier, cursive">mm.test2</FONT>
+par exemple) pour voir la diff&eacute;rence (vous avez les sources
+comment&eacute;es de ces deux programmes en annexe). Vous pouvez
+aussi voir le travail du gestionnaire de m&eacute;moire pour de
+simples commandes telles que <FONT FACE="Courier, cursive">ls</FONT>,
+<FONT FACE="Courier, cursive">ps </FONT>ou<FONT FACE="Courier, cursive">
+tcsh</FONT>.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Je
+vous rappelle que l'utilisation de '<FONT SIZE=2><FONT FACE="Arial, sans-serif">&amp;</FONT></FONT>'
+&agrave; la fin d'une commande la lance en t&acirc;che de fond et
+vous permet donc de lancer plusieurs programmes &agrave; la fois
+(pour les enlever, utilisez les instructions  <FONT SIZE=2><FONT FACE="Courier, cursive">ps</FONT></FONT>
+ et  <FONT SIZE=2><FONT FACE="Courier, cursive">kill</FONT></FONT>).</P>
+<OL>
+	<OL START=4>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">4.4	Pour
+		bloquer le syst&egrave;me</H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Toujours
+dans le m&ecirc;me fichier, vous avez une variable <FONT SIZE=2><FONT FACE="Arial, sans-serif">NR_HOLES</FONT></FONT>
+qui indique en combien de morceaux la m&eacute;moire libre peut se
+d&eacute;couper&nbsp;; vous pouvez la modifier  (en dessous de 6
+votre syst&egrave;me ne devrait plus se lancer, et vers 8-9 il
+devrait poser des probl&egrave;mes dans certaines conditions
+d'utilisation, regardez).</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Attention,
+quand vous modifiez des valeurs, veillez &agrave; les remettre &agrave;
+leur valeur par d&eacute;faut, votre syst&egrave;me risquerait de ne
+pas toujours appr&eacute;cier.</P>
+<OL>
+	<OL START=5>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">4.5	Etude
+		de la gestion de la m&eacute;moire <B><I><FONT SIZE=2>(si nous
+		avions plus de temps...)</FONT></I></B></H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Vous
+avez, en annexe 1, la description de plusieurs algorithmes de choix
+pour l'allocation de la m&eacute;moire&nbsp;; en modifiant la
+fonction d'allocation de la m&eacute;moire dans le fichier <I>alloc.c</I>,
+vous essaierez ces divers algorithmes et les comparerez du point de
+vue rapidit&eacute; (vous pourrez utiliser les programmes de test &agrave;
+votre disposition associ&eacute;s &agrave; la fonction <FONT FACE="Courier, cursive">time</FONT>
+par exemple) connaissant leur efficacit&eacute; respective.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Vous
+pouvez aussi acc&eacute;der &agrave; l'URL suivante pour une
+description d'algorithmes, en particulier on y d&eacute;crit le
+principe d'un algorithme utilis&eacute; dans les syst&egrave;mes
+actuels : le buddy system.:</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">http://www.cs.wisc.edu/%7ecs537-1/memory.html#core_algorithms</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Quand
+la fonction <FONT SIZE=2><FONT FACE="Arial, sans-serif">alloc_mem</FONT></FONT>
+est incapable de trouver un bloc libre, cela ne veut pas dire qu'il
+n'y a pas d'espace libre. La proportion d'espace libre sur l'espace
+total peut m&ecirc;me &ecirc;tre tr&egrave;s importante. Vous pouvoir
+imprimer cette proportion si vous le souhaitez. Cela pose la question
+: pourquoi ne pas chercher &agrave; d&eacute;placer les blocs occup&eacute;s
+(processus) quand il reste de la place, mais de fa&ccedil;on trop
+fragment&eacute;e?</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">A vous
+d'effectuer une simulation de ces algorithmes pour les comparer, vous
+pouvez &quot;extraire&quot; ces algorithmes de MINIX pour avoir plus
+de souplesse pour effectuer les tests.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Les
+bin&ocirc;mes qui ont ce travail sur l'allocation m&eacute;moire &agrave;
+r&eacute;aliser devront faire une pr&eacute;sentation de
+l'algorithmes : buddy.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<FONT SIZE=4 STYLE="font-size: 16pt"><B>Annexe 1</B></FONT></P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<FONT SIZE=4 STYLE="font-size: 16pt"><B>Algorithmes d'allocation de
+la m&eacute;moire</B></FONT></P>
+<OL>
+	<LI><P LANG="fr-FR" STYLE="text-indent: 0cm; margin-bottom: 0cm"><B>first
+	fit :</B> il prend le premier emplacement assez grand (c'est celui
+	utilis&eacute; par MINIX et c'est le plus simple).</P>
+	<LI><P LANG="fr-FR" STYLE="text-indent: 0cm; margin-bottom: 0cm"><B>next
+	fit :</B> il recommence &agrave; chercher un emplacement libre l&agrave;
+	o&ugrave; il s'&eacute;tait arr&ecirc;t&eacute; la fois pr&eacute;c&eacute;dente
+	(assez rapide dans un premier temps, mais favorable &agrave; la
+	fragmentation de la m&eacute;moire).</P>
+	<LI><P LANG="fr-FR" STYLE="text-indent: 0cm; margin-bottom: 0cm"><B>best
+	fit :</B> il cherche le plus petit bloc qui soit assez grand pour
+	l'allocation (assez lent mais un certain gain sur l'occupation de la
+	m&eacute;moire).</P>
+	<LI><P LANG="fr-FR" STYLE="text-indent: 0cm; margin-bottom: 0cm"><B>worst
+	fit :</B> il prend syst&eacute;matiquement le plus grand emplacement
+	disponible (a priori pas le plus int&eacute;ressant, car pas tr&egrave;s
+	rapide et pas trop efficace).</P>
+</OL>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<FONT SIZE=4 STYLE="font-size: 16pt"><B>Annexe 2</B></FONT></P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<FONT SIZE=4 STYLE="font-size: 16pt"><B>SETUP et programmes
+d'installation</B></FONT></P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+	<B>- SETUP MINIX :</B> ce SETUP d&eacute;finira les variables
+d'environnement <FONT SIZE=2><FONT FACE="Arial, sans-serif">MX_INCL</FONT></FONT>
+(r&eacute;pertoire include), <FONT SIZE=2><FONT FACE="Arial, sans-serif">MX_LIB</FONT></FONT>
+(les librairies propres &agrave; MINIX), <FONT SIZE=2><FONT FACE="Arial, sans-serif">MINIX</FONT></FONT>
+(le chemin des sources globales de MINIX), <FONT SIZE=2><FONT FACE="Arial, sans-serif">MINIX_HOME</FONT></FONT>
+(o&ugrave; se trouve votre r&eacute;pertoire minix) ; il modifiera
+aussi votre variable <FONT SIZE=2><FONT FACE="Arial, sans-serif">PATH</FONT></FONT>
+pour avoir acc&egrave;s aux utilitaires MINIX disponibles sous
+Solaris. Voici donc le r&eacute;sum&eacute; de ce  <FONT SIZE=2><FONT FACE="Arial, sans-serif">SETUP</FONT></FONT>
+:</P>
+<P LANG="en-US" STYLE="margin-left: 5.4cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+setenv MINIX		************</P>
+<P LANG="en-US" STYLE="margin-left: 5.4cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+setenv MX_LIB		$MINIX/lib</P>
+<P LANG="en-US" STYLE="margin-left: 5.4cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+setenv MINIX_HOME	$HOME</P>
+<P LANG="en-US" STYLE="margin-left: 5.4cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+setenv MX_INCL		$MINIX_HOME/minix/include</P>
+<P LANG="en-US" STYLE="margin-left: 5.4cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+setenv PATH			$PATH:$MINIX/bin</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<SPAN LANG="en-US">	</SPAN>Vous pouvez changer le r&eacute;pertoire
+o&ugrave; MINIX sera install&eacute; chez vous en modifiant les
+variables MINIX_HOME et MX_INCL.</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+	<B>- SETUP SUNPRO3 :</B> utilis&eacute; pour compiler le noyau de
+MINIX (compilateur cc).</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+	<B>- install_minix :</B> programme en shell qui installera chez vous
+l'arborescence de MINIX en copiant le minimum de fichiers et en
+faisant donc un maximum de liens. Il cr&eacute;e aussi un fichier
+<I>minix.config</I> type dans le r&eacute;pertoire <I>minix</I>.</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<BR><BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<FONT SIZE=4 STYLE="font-size: 16pt"><B>Annexe 3</B></FONT></P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<FONT SIZE=4 STYLE="font-size: 16pt"><B>Programmes de communication
+avec Solaris</B></FONT></P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+	<B><SPAN LANG="en-US">- minix :</SPAN></B></P>
+<P LANG="en-US" STYLE="margin-left: 5.4cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+minix [-d] [-force] [-m (none|half|full)] [config-file]</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<SPAN LANG="en-US">	</SPAN>Ce programme permet de lancer le syst&egrave;me
+d'exploitation MINIX &agrave; l'int&eacute;rieur d'un processus UNIX.
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+	Vous pouvez param&eacute;trer ce syst&egrave;me en modifiant le
+fichier <I>minix.config</I>  qui doit &ecirc;tre install&eacute; chez
+vous en m&ecirc;me temps que le reste des sources pouvant vous &ecirc;tre
+utiles (Utilisez le programme <I>install_minix</I>  &agrave; cette
+fin).</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<BR><BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+	<B>- mlogin </B>:</P>
+<P LANG="fr-FR" STYLE="margin-left: 5.4cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+mlogin hostname</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+	Ce programme permet de se connecter a un syst&egrave;me MINIX d&eacute;j&agrave;
+lanc&eacute; sur la machine. Vous devez lui passer en argument le nom
+de la session MINIX indiqu&eacute; dans le fichier <I>minix.config</I>
+(faites mlogin minix). Vous pouvez ainsi avoir plusieurs consoles
+MINIX &agrave; la fois.</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+	Pour quitter cette console, il faut taper '<FONT SIZE=2><FONT FACE="Arial, sans-serif">quit</FONT></FONT>'
+en tenant la touche Ctrl enfonc&eacute;e.</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<BR><BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+	<SPAN LANG="en-US"><B>- sunread</B> :</SPAN></P>
+<P LANG="en-US" STYLE="margin-left: 5.4cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+sunread file_Solaris &gt; file_smx</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<SPAN LANG="en-US">	</SPAN>Lit un fichier Solaris (chemin relatif &agrave;
+partir du r&eacute;pertoire de lancement de minix) et l'&eacute;crit
+dans un fichier sous MINIX ; les fichiers en C doivent &ecirc;tre
+compil&eacute;s avec <FONT FACE="Courier, cursive">mcc</FONT> pour
+pouvoir tourner sous MINIX.</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<BR><BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+	<SPAN LANG="en-US"><B>- sunwrite</B> :</SPAN></P>
+<P LANG="en-US" STYLE="margin-left: 5.4cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+sunwrite file_Solaris &lt; file_smx</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<SPAN LANG="en-US">	</SPAN>Fait le contraire de <FONT SIZE=2><FONT FACE="Arial, sans-serif">sunread</FONT></FONT>.</P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-left: 0cm; text-indent: 0cm; margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<FONT SIZE=4 STYLE="font-size: 16pt"><B>Annexe 4</B></FONT></P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<FONT SIZE=4 STYLE="font-size: 16pt"><B>Programmes de test</B></FONT></P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Un
+certain nombre de programmes de tests vous sont fournis. Ces
+programmes sont peu satisfaisants  On vous demande cependant d'en
+d&eacute;duire des compratifs.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Il
+existe 2 versions de chaque programme : une qui se termine et une qui
+entre dans une boucle infinie pour que le processus conserve toutes
+ses donn&eacute;es (en rajoutant un b au nom).</P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><B>	-
+mm.test1.c :</B></P>
+<P LANG="en-US" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2>#include &lt;stdio.h&gt;</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2>int main (int argc, char
+**argv)</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2>{</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2><I>/* Petit programme qui
+alloue juste la quantite de memoire demandee *</I></FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+ <FONT FACE="Courier, cursive"><FONT SIZE=2><I>* On doit entrer en
+parametre la quantite de memoire des</I>iree       */</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+  <FONT FACE="Courier, cursive"><FONT SIZE=2>char *tableau;</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+  <FONT FACE="Courier, cursive"><FONT SIZE=2>int taille;</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+  <FONT FACE="Courier, cursive"><FONT SIZE=2><SPAN LANG="en-US">int
+i;</SPAN></FONT></FONT></P>
+<P LANG="en-US" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+  <FONT FACE="Courier, cursive"><FONT SIZE=2>if (argc!=2)</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+  <FONT FACE="Courier, cursive"><FONT SIZE=2>{</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+    <FONT FACE="Courier, cursive"><FONT SIZE=2>fprintf (stderr,
+&quot;\nUsage : %s taille\n&quot;, argv[0]);</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+    <FONT FACE="Courier, cursive"><FONT SIZE=2>exit (0);</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+  <FONT FACE="Courier, cursive"><FONT SIZE=2>}</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+  <FONT FACE="Courier, cursive"><FONT SIZE=2>taille=atoi(argv[1]);</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+  <FONT FACE="Courier, cursive"><FONT SIZE=2>tableau=(char
+*)calloc(taille*1024,1);</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+  <FONT FACE="Courier, cursive"><FONT SIZE=2><SPAN LANG="en-US">if
+(tableau!=NULL)</SPAN></FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+     <FONT FACE="Courier, cursive"><FONT SIZE=2>fprintf </FONT></FONT>
+</P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2>(stderr,&quot;\nJ'ai
+alloue %d octets de memoire\n&quot;,     taille*1024);</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2>}</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2><B>	- mm.test2.c :</B></FONT></FONT></P>
+<P LANG="en-US" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2>#include &lt;stdio.h&gt;</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2>main()</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2>{</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2><I>/* Ce programme
+recupere le maximum de memoire jusqu'a ce qu'il ne  puisse plus. A
+n'utiliser que pour faire des tests.                          */</I></FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+    <FONT FACE="Courier, cursive"><FONT SIZE=2>int i,somme;</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+    <FONT FACE="Courier, cursive"><FONT SIZE=2>char *tab;</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+    <FONT FACE="Courier, cursive"><FONT SIZE=2>int size = 1024; </FONT></FONT>
+</P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2>/* taille de depart de
+l'allocation de base */</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+    <FONT FACE="Courier, cursive"><FONT SIZE=2><SPAN LANG="en-US">somme=0;</SPAN></FONT></FONT></P>
+<P LANG="en-US" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+    <FONT FACE="Courier, cursive"><FONT SIZE=2>for (;size&gt;1;) {</FONT></FONT></P>
+<P LANG="en-US" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+        <FONT FACE="Courier, cursive"><FONT SIZE=2>if ((tab=(char
+*)calloc(size,1)) == NULL)</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+           <FONT FACE="Courier, cursive"><FONT SIZE=2>size /= 2; </FONT></FONT>
+</P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2>/*plus de place, on
+cherche a allouer 2  fois moins*/</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+        <FONT FACE="Courier, cursive"><FONT SIZE=2>else {</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+           <FONT FACE="Courier, cursive"><FONT SIZE=2>somme=somme+size;</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+           <FONT FACE="Courier, cursive"><FONT SIZE=2>fprintf </FONT></FONT>
+</P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2>(stderr,&quot;\nCool, je
+peux allouer %d octets...,&quot;</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+ <FONT FACE="Courier, cursive"><FONT SIZE=2>		,&quot;Donc %d en
+tout.&quot;,size,somme);</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+           <FONT FACE="Courier, cursive"><FONT SIZE=2>size *=2;   </FONT></FONT>
+</P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2><I>/*Y'a de la place, on
+en veut encore plus*/</I></FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+        <FONT FACE="Courier, cursive"><FONT SIZE=2>}</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+    <FONT FACE="Courier, cursive"><FONT SIZE=2>}</FONT></FONT></P>
+<P LANG="fr-FR" ALIGN=LEFT STYLE="margin-top: 0.07cm; margin-bottom: 0cm">
+<FONT FACE="Courier, cursive"><FONT SIZE=2>}</FONT></FONT></P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><B>	-
+mm.test3.c : </B>alloue de la m&eacute;moire puis en d&eacute;salloue
+une partie; vous pouvez lui passer des param&egrave;tres indiquant la
+taille des morceaux de m&eacute;moire et le pourcentage de m&eacute;moire
+qui sera lib&eacute;r&eacute;.</P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm; page-break-before: always">
+<BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+<B>	</B></P>
+<P LANG="fr-FR" STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+<B>	</B></P>
+<P LANG="fr-FR" ALIGN=CENTER STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+<B>TP MINIX : <FONT SIZE=2>Driver de disque.</FONT></B></P>
+<P LANG="fr-FR" STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-top: 0.85cm; margin-bottom: 0.42cm; page-break-inside: avoid; page-break-after: avoid">
+<FONT FACE="New York, serif"><FONT SIZE=4><B>2.	Que va-t-on voir ICI
+?</B></FONT></FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Vous
+avez pu d&eacute;couvrir le syst&egrave;me MINIX dans le TP
+pr&eacute;c&eacute;dent&nbsp;; maintenanr, nous allons nous
+interesser &agrave; un autre probl&egrave;me des syst&egrave;mes
+d&rsquo;exploitation&nbsp;: les drivers (pilotes d'entr&eacute;es-sorties).</FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Au
+fait &agrave; quoi cela sert d'&eacute;crire un contr&ocirc;leur de
+p&eacute;riph&eacute;rique ?</FONT></P>
+<P LANG="fr-FR" STYLE="margin-top: 0.64cm; margin-bottom: 0.32cm; page-break-inside: avoid; page-break-after: avoid">
+<FONT FACE="New York, serif"><FONT SIZE=4><B>2.1.	Principe</B></FONT></FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Le
+driver sert d&rsquo;interface entre le syst&egrave;me d&rsquo;exploitation
+et un p&eacute;riph&eacute;rique quelconque. Sous MINIX, les
+p&eacute;riph&eacute;riques sont g&eacute;r&eacute;s en 2&nbsp;&eacute;tapes&nbsp;:</FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>-&nbsp;La premi&egrave;re est ind&eacute;pendante du
+p&eacute;riph&eacute;rique. Elle se situe dans le gestionnaire de
+fichiers fs et dans le &quot;kernel&quot; (fichier device.*).</FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>-&nbsp;L'autre partie en est totalement d&eacute;pendante.
+ Elle est dans le kernel (fichier sun*).  C'est le driver ou pilote
+d'entr&eacute;e-sortie. </FONT>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Ainsi,
+pour rajouter un gestionnaire, il suffit de rajouter la partie
+d&eacute;pendante en respectant les r&egrave;gles dict&eacute;es par
+la partie ind&eacute;pendante.</FONT></P>
+<P LANG="fr-FR" STYLE="margin-top: 0.64cm; margin-bottom: 0.32cm; page-break-inside: avoid; page-break-after: avoid">
+<FONT FACE="New York, serif"><FONT SIZE=4><B>2.2.	Sp&eacute;cificit&eacute;
+de MINIX</B></FONT></FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Le
+probl&egrave;me qui se pose &agrave; nous est d&ucirc; au fait que
+MINIX est construit de fa&ccedil;on particuli&egrave;re. Nous avons
+une version de MINIX qui tourne par dessus un autre OS. Nous n'avons
+pas affaire &agrave; de vrais p&eacute;riph&eacute;riques, de vrais
+interruptions mat&eacute;rielles, etc. Les p&eacute;riph&eacute;riques
+sont support&eacute;s par Solaris. C'est par exemple le r&eacute;pertoire
+MINIX/disks sous Solaris qui supporte les 3 partitions disque du
+syst&egrave;me smx (&agrave; savoir les pages du man, les binaires
+(usr/bin) et la partition root.</FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Dans
+ces circonstances, pour r&eacute;aliser un driver smx, il faut savoir
+communiquer avec Solaris en respectant des r&egrave;gles de
+communication avec Solaris. </FONT>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-top: 0.85cm; margin-bottom: 0.42cm; page-break-inside: avoid; page-break-after: avoid">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=4><B>3.	Avant de vous
+lancer dans le travail</B></FONT></FONT></P>
+<P LANG="fr-FR" STYLE="margin-top: 0.64cm; margin-bottom: 0.32cm; page-break-inside: avoid; page-break-after: avoid">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=4><B>3.1.	Un fichier
+sp&eacute;cial, qu'est-ce ? Notion de majeur et de mineur</B></FONT></FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>a) Lancer MINIX et aller voir du c&ocirc;t&eacute; du
+r&eacute;pertoire /dev de minix. Si vous faites ls -l, vous verrez
+des fichiers sp&eacute;ciaux, correspondant &agrave; des
+p&eacute;riph&eacute;riques. Il y a  deux sortes de fichiers
+sp&eacute;ciaux, les fichiers de mode bloc (la ligne d&eacute;bute
+par le caract&egrave;re b) et les fichiers de mode caract&egrave;re
+(la ligne d&eacute;bute par le caract&egrave;re c).  Dans le mode
+caract&egrave;re, le processus utilisateur interagit directement avec
+le pilote (caract&egrave;re par caract&egrave;re). Dans le mode bloc,
+il y un interm&eacute;diaire dans le syst&egrave;me qui g&egrave;re
+des tampons. C'est cet interm&eacute;diaire qui prendra la d&eacute;cision
+de vider les tampons (par exemple vers le disque) ou  de les remplir.</FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<BR><BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>Profitez pour faire un df et de regarder le minix.config
+dans votre r&eacute;pertoire minix du Sun.</FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<BR><BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>b) Faites de m&ecirc;me sous Solaris. Aller voir /dev.
+En fait, dans Solaris, les fichiers sp&eacute;ciaux ne sont pas
+directement dans /dev, mais dans /devices.  Vous verrez si vous
+cherchez bien que certains p&eacute;riph&eacute;riques (les disques
+par exemple) fournissent deux modes d'acc&egrave;s (mode bloc et mode
+caract&egrave;re ou raw).  </FONT>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>	Comment cr&eacute;er un fichier sp&eacute;cial. C'est
+la commande mknod.</FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<BR><BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>c) Tout fichier sp&eacute;cial poss&egrave;de 2 nombres,
+l'un dit majeur et l'autre dit mineur. Ces 2 nombres apparaissent
+lorsque vous faites la commande ls.  </FONT>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>	Le majeur permet de d&eacute;signer le driver. Le
+majeur sera utilis&eacute; dans le noyau comme index (aiguillage)
+dans un tableau de structure de type driver, cette structure
+contenant des pointeurs vers les fonctions interfaces du driver (voir
+dans le fichier sunfloppy.c</FONT><SUP><FONT SIZE=2><A CLASS="sdfootnoteanc" NAME="sdfootnote2anc" HREF="#sdfootnote2sym"><SUP>2</SUP></A></FONT></SUP><FONT SIZE=2>
+ l'objet f_dtab). Tous les drivers poss&egrave;dent le m&ecirc;me
+ensemble de fonctions. Il suffit de brancher un driver pour
+travailler avec lui. A vous de d&eacute;couvrir comment.</FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>	Un driver (de num&eacute;ro majeur M) peut en fait
+piloter plusieurs p&eacute;riph&eacute;riques d&eacute;signer par le
+mineur (m).  Il est pass&eacute; en param&egrave;tre &agrave;
+certaines fonctions de l'interface du driver.</FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0cm; margin-bottom: 0cm"><FONT FACE="New York, serif"><FONT SIZE=2>	</FONT></FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0cm; margin-bottom: 0cm"><FONT FACE="New York, serif"><FONT SIZE=2>Epatez
+votre bin&ocirc;me en faisant de la magie :</FONT></FONT></P>
+<UL>
+	<LI><P LANG="fr-FR" STYLE="text-indent: 0cm; margin-bottom: 0cm"><FONT FACE="Times, serif"><FONT SIZE=2><FONT FACE="New York, serif">taper
+	dans une fen&ecirc;tre minix la commande tty pour avoir le device
+	associ&eacute; &agrave; la fen&ecirc;tre, /dev/tty<I>xy</I>. Dans
+	une autre fen&ecirc;tre minix taper</FONT></FONT></FONT></P>
+</UL>
+<P LANG="fr-FR" STYLE="margin-left: 3cm; text-indent: 0cm; margin-bottom: 0cm">
+<FONT FACE="Times, serif"><FONT SIZE=2><FONT FACE="New York, serif">ls
+&gt; /dev/tty<I>xy</I></FONT></FONT></FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3cm; text-indent: 0cm; margin-bottom: 0cm; font-style: normal">
+<FONT FACE="New York, serif"><FONT SIZE=2>commentez...</FONT></FONT></P>
+<UL>
+	<LI><P LANG="fr-FR" STYLE="text-indent: 0cm; margin-bottom: 0cm; font-style: normal">
+	<FONT FACE="New York, serif"><FONT SIZE=2>Plus violent :</FONT></FONT></P>
+</UL>
+<P LANG="fr-FR" STYLE="margin-left: 3cm; text-indent: 0cm; margin-bottom: 0cm; font-style: normal">
+<FONT FACE="New York, serif"><FONT SIZE=2>cat /dev/hdx0 &gt;
+/dev/kmem</FONT></FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3cm; text-indent: 0cm; margin-bottom: 0cm; font-style: normal">
+<FONT FACE="New York, serif"><FONT SIZE=2>Philosophez sur le sens de
+la vie et les besoins de protection...</FONT></FONT></P>
+<P LANG="fr-FR" STYLE="margin-top: 0.64cm; margin-bottom: 0.32cm; page-break-inside: avoid; page-break-after: avoid">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=4><B>3.2. 	Commandes
+utiles de navigation</B></FONT></FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>On
+vous rappelle l'existence des 2 commandes de recherche :</FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>-&nbsp;d'un fichier </FONT>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 1cm; margin-right: 0cm; text-indent: -0.5cm">
+<FONT SIZE=2>find . -name alloc.c -print</FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>-&nbsp;d'une cha&icirc;ne dans un ensemble de fichiers</FONT></P>
+<P LANG="en-US" STYLE="margin-left: 1cm; margin-right: 0cm; text-indent: -0.5cm">
+<FONT SIZE=2>grep -n sys_call *</FONT></P>
+<P LANG="fr-FR" STYLE="margin-top: 0.64cm; margin-bottom: 0.32cm; page-break-inside: avoid; page-break-after: avoid">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=4><B>3.3.	Structure de
+smx</B></FONT></FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>	</FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Smx
+comporte 3 parties :</FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>-&nbsp;kernel au plus bas qui s'occupe entre autres de
+la gestion des interruptions, qui contient les pilotes de
+p&eacute;riph&eacute;riques, les outils de communications
+inter-processus (par messages) </FONT>
+</P>
+<UL>
+	<LI><P LANG="fr-FR" STYLE="text-indent: 0cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+	<FONT SIZE=2>et, au-dessus du kernel,  fs (la gestion des fichiers) </FONT>
+	</P>
+	<LI><P LANG="fr-FR" STYLE="text-indent: 0cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+	<FONT SIZE=2>et mm (la gestion de la m&eacute;moire).</FONT></P>
+</UL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-top: 0.64cm; margin-bottom: 0.32cm; page-break-inside: avoid; page-break-after: avoid">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=4><B>3.4.	Organisation
+d'une partie (kernel, mm ou fs). </B></FONT></FONT>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Elles
+sont b&acirc;ties sur le m&ecirc;me mod&egrave;le.  Regardez les
+fichiers kernel.h, fs.h, et mm.h des r&eacute;pertoires mm, fs et
+kernel de src. Ils contiennent des directives include. Vous y
+trouverez les include &quot;locaux&quot; suivants :</FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>- const.h (les constantes de la partie)</FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>- type.h (les types de la partie)</FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>- glo.h (les variables globales de la partie)</FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>- proto.h (les fonctions de l'interface de la partie)</FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Vous
+trouverez aussi des include &quot;globaux&quot; mentionnant des
+fichiers.h se trouvant dans MINIX/include (en particulier des types
+et fonctions communes aux 3 parties).</FONT></P>
+<OL START=4>
+	<LI><P LANG="fr-FR" STYLE="text-indent: 0cm; margin-top: 0.85cm; margin-bottom: 0.42cm; page-break-inside: avoid; page-break-after: avoid">
+	<FONT FACE="New York, serif"><FONT SIZE=4><B>Le travail qui nous
+	int&eacute;resse</B></FONT></FONT></P>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Nous
+allons nous inspirer dans notre travail du seul vrai gestionnaire de
+p&eacute;riph&eacute;rique existant <I>sunfloppy.c</I>. Donc, allez
+voir comment est construit un driver.</FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-top: 0.64cm; margin-bottom: 0.32cm; page-break-inside: avoid; page-break-after: avoid">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=4><B>4.1 Interface du
+pilote avec le reste du syst&egrave;me</B></FONT></FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>La
+partie d&eacute;pendante du p&eacute;riph&eacute;rique se trouve dans
+sunfloppy.c ; la partie commune &agrave; tout driver dans driver.c.</FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Une
+t&acirc;che syst&egrave;me associ&eacute;e au driver appelle la seule
+fonction publique du fichier <I>sunfloppy.c</I>  (cette fonction
+s'appelle driver_task). La fonction driver_task appelle &agrave; son
+tour la fonction driver du fichier <I>driver.c</I>  en lui passant en
+param&egrave;tre un objet structure contenant des pointeurs sur des
+fonctions priv&eacute;es de sunfloppy.c (les fonctions interface du
+driver). </FONT>
+</P>
+<P LANG="en-US" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>static struct driver f_dtab = {</FONT></P>
+<P LANG="en-US" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+    <FONT SIZE=2>f_do_name,  /* current device's name */</FONT></P>
+<P LANG="en-US" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+    <FONT SIZE=2>f_do_open,  /* open or mount */</FONT></P>
+<P LANG="en-US" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+    <FONT SIZE=2>f_do_close, /* nothing on a close */</FONT></P>
+<P LANG="en-US" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+    <FONT SIZE=2>f_do_ioctl, /* ioctl */</FONT></P>
+<P LANG="en-US" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+    <FONT SIZE=2>f_prepare,  /* prepare for I/O on a given minor
+device */</FONT></P>
+<P LANG="en-US" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+    <FONT SIZE=2>f_schedule, /* do the I/O */</FONT></P>
+<P LANG="en-US" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+    <FONT SIZE=2>f_do_finish,        /* schedule does the work, no
+need to be smart */</FONT></P>
+<P LANG="en-US" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+    <FONT SIZE=2>f_do_cleanup        /* nothing's dirty */</FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>};</FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Tout
+driver poss&egrave;de (&agrave; peu de chose pr&egrave;s) le m&ecirc;me
+ensemble de fonctions d'interface.</FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Si
+vous regarder le fichier memory.c, vous vous apercevrez que le driver
+qu'elle poss&egrave;de &eacute;galement une fonction memory_task qui
+appelle la fonction driver_task de driver.c avec &eacute;galement
+comme param&egrave;tre un objet structure contenant des pointeurs de
+fonctions. </FONT>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"> 
+</P>
+<P LANG="fr-FR" STYLE="margin-top: 0.64cm; margin-bottom: 0.32cm; page-break-inside: avoid; page-break-after: avoid">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=4><B>4.2 Si nous
+avions le temps... Modifier sunprinter.c</B></FONT></FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>C'est
+&ccedil;a qu'il faudrait faire si nous avions le temps...</FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Maintenant,
+c&rsquo;est &agrave; vous de travailler, vous devez faire un driver
+pour une imprimante (qui, je le rappelle, n'imprime pas sur une vraie
+imprimante, mais sur un fichier Solaris &quot;imprimante&quot;). Vous
+trouverez un fichier sunprinter.c &agrave; modifier. </FONT>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Avant
+de commencer voyez l'effet  des commandes :</FONT></P>
+<P LANG="en-US" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>- echo &quot;toto&quot; &gt;/dev/lp</FONT></P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<FONT SIZE=2>- lpr un_fichier_imprimable_de_smx</FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>On
+vous fournit dans le r&eacute;pertoire test de src une copie du
+fichier sunread.c o&ugrave; sont mises en &oelig;uvre les deux
+commandes sunread et sunwrite (transfert de fichiers entre Solaris et
+smx). Vous pouvez vous inspirer, ces deux commande acc&egrave;dent &agrave;
+des fichiers Solaris.</FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>La
+fonction SunOS permet d'ex&eacute;cuter &agrave; partir de smx des
+fonctions syst&egrave;mes de Solaris. Vous devez en particulier
+savoir ouvrir et fermer un fichier, savoir lire ou &eacute;crire dans
+un fichier Solaris. Sous Solaris, le manuel en ligne sur open, close,
+etc, ... est &agrave; votre disposition. Pour conna&icirc;tre la
+valeur de certaines drapeaux et modes d'ouverture de fichiers sous
+Solaris (incompatibilit&eacute; Solaris et smx), cherchez sous
+/usr/include fichier fcntl.h.</FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Vous
+verrez que la fonction f_prepare utilise des fonctions du kernel de
+smx tr&egrave;s particuli&egrave;res (set_protect, numap, lock et
+unlock) vous pouvez allez voir ce qu'elles font. Ce n'est pas tr&egrave;s
+n&eacute;cessaire. Vous pouvez les utiliser aveugl&eacute;ment. </FONT>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Vous
+devez aussi regarder la fonction driver_task de driver.c pour voir
+comment et dans quelle ordre les fonctions d'interface du driver sont
+appel&eacute;es.</FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><FONT SIZE=2>Vous
+trouverez aussi dans le r&eacute;pertoire test sous src le fichier
+lpr.c correspondant &agrave; la commande lpr. En d&eacute;tective,
+vous pouvez partir &agrave; la piste du flot de contr&ocirc;le
+partant d'un processus ex&eacute;cutant lpr et menant au driver, via
+la partie fs. Est-ce qu'un spooler est mis en &oelig;uvre?</FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm; page-break-before: always">
+<BR>
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+<B>	</B></P>
+<P LANG="fr-FR" STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" ALIGN=CENTER STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+<B>TP MINIX : <SPAN LANG="en-US">MINIX. </SPAN>Signaux UNIX.
+Ordonnancement</B></P>
+<P LANG="fr-FR" STYLE="margin-left: 1.94cm; margin-right: 2.36cm; text-indent: 0cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<OL START=5>
+	<LI><H1 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">2.	Rappels
+	de connaissance</H1>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Ici,
+nous allons nous int&eacute;resser &agrave; l'ordonnanceur, une
+partie du travail du noyau&nbsp;; celui-ci est g&eacute;r&eacute; par
+la cohabitation du timer (qui signale la fin du temps imparti &agrave;
+un processus) et par le gestionnaire des processus (qui indique le
+nouveau processus &agrave; ex&eacute;cuter).</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Le but
+du TP est aussi de s'immerger dans un gros code &eacute;crit en C,
+d'apprendre &agrave; naviguer, regarder comment est faite la
+programmation objet en C,...</P>
+<OL>
+	<OL>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">2.1.	La
+		structure de minix</H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Minix
+est une structure en 3 couches&nbsp;:</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+-	au plus bas, le noyau. Les processus qui s'y trouvent sont appel&eacute;s
+<U>t&acirc;ches</U>.</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+-	au niveau interm&eacute;diaire, les parties mm (memory management)
+et fs (file server) par exemple. Il y dans chaque partie un processus
+appel&eacute; <U>serveur</U>. 
+</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+-	au niveau le plus haut, il y a <U>les processus utilisateurs</U>. 
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Les
+processus communiquent par envoi et r&eacute;ception de messages.</P>
+<OL>
+	<OL START=2>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">2.2.	Le
+		travail &agrave; effectuer</H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">L'ordonnanceure
+suit trois niveaux de priorit&eacute; correspondant aux trois
+couches&nbsp;; il utilise le principe de Round Robin (cf. Annexe)
+pour la couche utilisateur, alors que les autres couches sont
+ex&eacute;cut&eacute;es jusqu'&agrave; &laquo; terminaison &raquo;
+(en r&eacute;alit&eacute;, mise en attente d'un message ou d'une
+interruption).</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Le but
+de ce STP sera de rajouter une couche sup&eacute;rieure (de tr&egrave;s
+faible priorit&eacute;) pour les processus qui n&eacute;cessitent
+beaucoup de temps CPU.</P>
+<OL>
+	<OL START=3>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">2.3.	Promenade
+		dans les sources</H2>
+		<OL>
+			<LI><H3 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">2.3.1.	C'est
+			quoi un signal sous UNIX? 
+			</H3>
+		</OL>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">C'est
+un moyen utilis&eacute; par UNIX pour informer un processus qu'un
+&eacute;v&eacute;nement s'est produit.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Il y a
+deux sortes d'&eacute;v&eacute;nements :</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+-&nbsp;les erreurs (division par z&eacute;ro, tentative non autoris&eacute;e
+d'ex&eacute;cuter une instruction machine, tentative non autoris&eacute;e
+d'acc&eacute;der &agrave; une certaine zone de m&eacute;moire).</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+-&nbsp;les &eacute;v&eacute;nements asynchrones (par exemple,
+l'alarme d&eacute;clench&eacute;e &agrave; chaque tic de l'horloge).</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+<BR><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+Regardez le fichier minix/include/sun/signal.h. Vous trouverez la
+liste des signaux que minix peut recevoir en provenance de Solaris.
+Ce n'est pas obligatoirement la m&ecirc;me liste que celle des
+signaux propres au syst&egrave;me smx (voir fichier
+minix/include/signal.h).</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Chaque
+processus poss&egrave;de un masque de signaux indiquant quels sont
+les signaux qu'il masque, et ceux qu'il peut traiter par un handler
+sp&eacute;cifique. 
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Pour
+rappel, c&ocirc;t&eacute; Solaris, il y a deux (et seulement deux
+processus) qui s'occupent du syst&egrave;me minix, l'un &eacute;tant
+le p&egrave;re de l'autre. C'est le processus fils qui ex&eacute;cute
+smx. Le p&egrave;re, apr&egrave;s avoir masqu&eacute; tous les
+signaux, sauf ceux d'erreur,  attend simplement que son fils se
+termine (il fera alors du nettoyage). Les &eacute;l&egrave;ves
+vraiment curieux peuvent regarder le fichier
+minix/src/Solaris/minix.c pour voir ce que fait Solaris pour lancer
+Minix.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<OL>
+	<OL>
+		<OL START=2>
+			<LI><H3 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">2.3.2.	Associer
+			un traitement &agrave; chaque signal.</H3>
+		</OL>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+Regardez maintenant le fichier minix/src/kernel/mpx.c. La fonction
+init_sun_handlers, appel&eacute;e au boot de minix, fait en sorte que
+le processus minix ex&eacute;cute la fonction SunOSsig de mpx.c  &agrave;
+chaque prise en compte d'un signal. En fait aucun signal n'est
+masqu&eacute;. 
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">La
+fonction init_sun_handlers, &agrave; l'aide de l'appel syst&egrave;me
+Solaris <I>sigaction</I>, associe &agrave; chaque signal le m&ecirc;me
+handler.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Voici
+la signature de sigaction :</P>
+<P LANG="en-US" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+int sigaction (int sigid, const struct sigaction *act, struct
+sigaction *oact);</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">La
+fonction sigaction a pour effet d'associer un nouveau traitement au
+signal de num&eacute;ro sigid et de sauvegarder l'ancien dans oact.
+En fait, la structure sigaction sp&eacute;cifie non seulement le
+handler du signal (sa_handler), mais aussi des drapeaux et les
+signaux qui restent masqu&eacute;s pendant l'ex&eacute;cution du
+handler (en effet, il y a une sorte d'exclusion mutuelle &agrave;
+assurer).</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Il y a
+apparemment un seul handler pour tous les signaux (SunOSsig). 
+Regardez cette fonction. Il n'y a qu'un seul handler,  car il y  a
+des traitements communs &agrave; chaque signal.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+Que font les appels &agrave; entering_kernel et memcpy dans le
+pr&eacute;lude de sunOSsig, ainsi que les appels &agrave; 
+lock_pick_proc et resume dans le postlude?</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">En
+fait un aiguilage interne est effectu&eacute; par sunOSsig vers le
+handler ad&eacute;quat (voir l'initialisation de vectors dans
+init_sun_handlers). Il y a 4 sous-handlers :</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+- exceptions pour tous les signaux, sauf 3</P>
+<P LANG="en-US" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+- s_call pour SIGUSR1</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+- smx_clock_handler pour SIGALARM</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+- sunio_interrupt pour SIGIO</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+Regardez les 2 plus int&eacute;ressants : smx_clock_handlers et
+s_call. Que font-ils?</P>
+<OL>
+	<OL>
+		<OL START=3>
+			<LI><H3 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">2.3.3.	L'horloge.</H3>
+		</OL>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Sur la
+piste des fonctions clock_task et clock_handler du fichier  
+minix/src/kernel/clock.c, et de la fonction interrupt de
+minix/src/kernel/proc.c. 
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+Qui fait quoi? 
+</P>
+<OL>
+	<OL>
+		<OL START=4>
+			<LI><H3 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">2.3.4.	L'ordonnanceur
+			(scheduler)</H3>
+		</OL>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm; border: 1.00pt solid #000000; padding: 0cm">
+Il y a plein de choses int&eacute;ressantes &agrave; d&eacute;couvrir
+dans ce fichier minix/src/kernel/proc.c. N'est-ce pas l&agrave; qu'il
+faut intervenir pour rajouter une seconde classe de processus
+utilisateurs?</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Le
+scheduler sert &agrave; g&eacute;rer le multit&acirc;che&nbsp;; c'est
+lui qui simule l'ex&eacute;cution en simultan&eacute; de toutes les
+requ&ecirc;tes (syst&egrave;me et utilisateur) en r&eacute;partissant
+le travail de l'unit&eacute; centrale entre les processus de smx. Il
+est confront&eacute; &agrave; plusieurs probl&egrave;mes&nbsp;:</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+- temps de r&eacute;ponse minimal pour un utilisateur (quelqu'un qui
+demande quelque chose de b&eacute;nin veut avoir une r&eacute;ponse
+quasi-imm&eacute;diate).</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+- r&eacute;partition &eacute;quitable de son temps entre les
+processus&nbsp;/&nbsp;utilisateurs (un processus ne doit pas &ecirc;tre
+laiss&eacute; de c&ocirc;t&eacute; pendant trop longtemps).</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+- utilisation maximale de l'unit&eacute; centrale (pas de temps
+d'inactivit&eacute;).</P>
+<P LANG="fr-FR" STYLE="margin-left: 3.77cm; text-indent: -0.3cm; margin-top: 0.07cm; margin-bottom: 0.04cm">
+- efficacit&eacute; maximale (maximum de choses faites par unit&eacute;
+de temps).</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Certaines
+de ces contraintes &eacute;tant contradictoires, il n'existe pas de
+solution unique mais des solutions plus appropri&eacute;es &agrave;
+certaines applications et &agrave; certaines machines. Le choix fait
+pour minix tient &agrave; sa simplicit&eacute; et &agrave; des
+caract&eacute;ristiques correctes dans tous les domaines.</P>
+<OL START=6>
+	<LI><H1 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">3.	Passons
+	aux choses s&eacute;rieuses</H1>
+	<OL>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">3.1.	Rep&eacute;rage
+		sur le terrain</H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Pour
+commencer, vous avez dans le r&eacute;pertoire <I>kernel</I>, les
+donn&eacute;es sur les listes d'attente (<I>const.h</I>), la
+fr&eacute;quence du scheduler (<FONT FACE="Courier, monospace">Millisec</FONT>
+et <FONT FACE="Courier, monospace">Sched_Rate</FONT>), ainsi que les
+m&eacute;thodes de choix du processus suivant.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">L'intervention
+sur la fr&eacute;quence du scheduler (attention &agrave; rester
+au-dessus de certaines valeurs pour garder la pr&eacute;sence du
+multit&acirc;che, cf. Annexe) permet de changer le temps imparti &agrave;
+chaque processus et donc le nombre de fois qu'il sera interrompu;
+vous pouvez essayer d'utiliser le programme <FONT FACE="Courier, monospace">sched_test1</FONT>
+(sources dans le r&eacute;pertoire<I> test</I>) avec les valeurs 10
+et 10,000  (dure environ 20-30 secondes), puis d'en mettre 2 en
+parall&egrave;le, puis de refaire la m&ecirc;me chose en mettant
+20,000ms imparties &agrave; chaque processus (afin de voir
+l'&eacute;volution du degr&eacute; de parall&eacute;lisme).</P>
+<OL>
+	<OL START=2>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">3.2.	Au
+		boulot</H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Voil&agrave;,
+vous avez les bases sur le temps partag&eacute;, une id&eacute;e de
+ce qu'il se passe sous minix, il ne vous reste plus qu'&agrave;
+modifier tout &ccedil;a pour obtenir une politique d'ordonnancement
+un peu plus &eacute;volu&eacute;e.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Donc,
+vous devez rajouter une quatri&egrave;me couche de priorit&eacute;
+plus faible avec des temps d'ex&eacute;cution plus longs (on
+utilisera aussi la m&eacute;thode Round Robin pour cette couche).
+Cette couche pourra &ecirc;tre atteinte (et quitt&eacute;e) selon une
+politique que vous pouvez choisir (une proposition est faite, mais
+vous pouvez la modifier si cela vous para&icirc;t plus int&eacute;ressant
+ou plus appropri&eacute;).</P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<OL>
+	<OL START=3>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">3.3.	Solution
+		:</H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">	Les
+processus qui utilisent enti&egrave;rement leur temps imparti verront
+leur priorit&eacute; baisser ; ceux de faible priorit&eacute; verront
+leur priorit&eacute; augmenter quand ils ne termineront pas leur
+temps. Le temps de la couche sup&eacute;rieure peut &ecirc;tre 10
+fois plus grand par exemple.</P>
+<OL START=7>
+	<LI><H1 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">4.	Un
+	dernier petit exercice</H1>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Donc,
+pour finir, et pour bien r&eacute;aliser la difficult&eacute; de
+r&eacute;aliser un syst&egrave;me &laquo; parfait &raquo;, nous
+allons retravailler sur le scheduler. En effet, ce que vous avez du
+r&eacute;aliser la fois pr&eacute;c&eacute;dente pose un probl&egrave;me
+; un processus peut se retrouver bloqu&eacute; au niveau de priorit&eacute;
+le plus faible sans &ecirc;tre jamais ex&eacute;cut&eacute;. Pour
+cela, il suffit qu'il y ait assez de processus au niveau de priorit&eacute;
+sup&eacute;rieur, le scheduler &eacute;tant toujours pris &agrave;
+100%.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Pour
+&eacute;viter ce genre de choses, on peut rajouter une r&egrave;gle&nbsp;:
+si un processus reste trop longtemps au niveau de priorit&eacute; le
+plus faible sans &ecirc;tre jamais ex&eacute;cut&eacute;, il passe au
+niveau plus prioritaire (il n'est pas tr&egrave;s bien trait&eacute;,
+mais au moins il progresse). Essayez de rajouter cette
+caract&eacute;ristique au scheduler.</P>
+<OL START=8>
+	<LI><H1 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">5.	Pour
+	aller plus loin</H1>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Il
+reste de nombreux points sur les syst&egrave;mes d'exploitation qui
+n'ont pas &eacute;t&eacute; abord&eacute;s pendant ces STPs, et vous
+pouvez en aborder certains en &eacute;tudiant smx. Il y a ci-dessous
+quelques id&eacute;es de sujets qui peuvent &ecirc;tre int&eacute;ressants
+du point de vue de minix.</P>
+<OL>
+	<OL>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm"><FONT FACE="New York, serif">5.1.	Memory
+		Manager</FONT></H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">La
+fa&ccedil;on d'allouer la m&eacute;moire a &eacute;t&eacute;
+rapidement trait&eacute;e&nbsp;; vous pouvez cependant &eacute;tudier
+d'autres choses sur l'allocation de la m&eacute;moire, que ce soit
+assez simple (telles que le 'garbage collecting' ou l'allocation par
+paquets de taille d&eacute;termin&eacute;e) ou plus compliqu&eacute;
+et demandant plus de travail (notamment le swap).</P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<OL>
+	<OL START=2>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm"><FONT FACE="New York, serif">5.2.	Kernel</FONT></H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Nous
+avons vu quelques &eacute;l&eacute;ments de celui-ci, mais les sujets
+sont tr&egrave;s vastes &agrave; son sujet&nbsp;; que ce soit des
+drivers (rapidement &eacute;tudi&eacute;s), du scheduler (il existe
+de nombreuses autres m&eacute;thodes ayant chacune ses int&eacute;r&ecirc;ts
+et ses applications), mais aussi de la gestion des messages, du
+parall&eacute;lisme (et donc de l'interblocage), etc.</P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<OL>
+	<OL START=3>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm"><FONT FACE="New York, serif">5.3.	File
+		system</FONT></H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Cette
+partie n'a pas &eacute;t&eacute; abord&eacute;e (par manque de
+temps), mais vous pouvez &eacute;galement y regarder (et modifier) la
+forme m&ecirc;me du syst&egrave;me de fichiers (notamment table des
+inodes), les m&eacute;thodes de gestion des fichiers ouverts, de
+lecture/&eacute;criture (et donc les diff&eacute;rents niveaux de
+cache)...</P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<OL>
+	<OL START=4>
+		<LI><H2 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm"><FONT FACE="New York, serif">5.4.	Le
+		r&eacute;seau</FONT></H2>
+	</OL>
+</OL>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Cette
+partie a &eacute;t&eacute; enlev&eacute;e des sources (pour en
+diminuer la taille et la complexit&eacute;), mais vous pouvez tout de
+m&ecirc;me l'&eacute;tudier, un fichier contenant les sources
+compl&egrave;tes &eacute;tant pr&eacute;sent.</P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><BR>
+</P>
+<OL START=9>
+	<LI><H1 LANG="fr-FR" CLASS="western" STYLE="text-indent: 0cm">6.	Conclusion</H1>
+</OL>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Si
+vous &ecirc;tes int&eacute;ress&eacute;s par ce syst&egrave;me, il
+existe un newsgroup et une mailing-list sur minix (&eacute;galement
+une sur smx)&nbsp;; ce syst&egrave;me peut s'installer sur tout PC (&agrave;
+partir du 8086), sur Macintosh, sur Atari et sur Amiga (ces deux
+derniers ne sont peut-&ecirc;tre pas trop &agrave; jour),...</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm; page-break-before: always">
+<BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<FONT SIZE=4 STYLE="font-size: 16pt"><B>Annexe 1</B></FONT></P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<FONT SIZE=4 STYLE="font-size: 16pt"><B>Limitation de la fr&eacute;quence
+du scheduler</B></FONT></P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Le
+scheduler change de processus tous les m temps; ce changement de
+contexte met un temps n. Il est donc naturel de ne pas trop baisser
+la valeur de m pour ne pas perdre trop de temps CPU &agrave; ces
+changements de contexte qui ne font pas avancer les requ&ecirc;tes
+des utilisateurs. Si m est peu diff&eacute;rent de n, on aura une
+efficacit&eacute; de 0,5 (tr&egrave;s moyenne) mais si  m&gt;&gt;n,
+on aura un temps d'attente inacceptable pour l'utilisateur.</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">Pour
+ce qui concerne smx (minix sous Solaris), la fr&eacute;quence de
+l'horloge simul&eacute;e a &eacute;t&eacute; baiss&eacute;e pour que
+le travail du syst&egrave;me d'exploitation &agrave; chaque tick
+horloge ne nuise pas trop &agrave; l'efficacit&eacute; de celui-ci.
+Elle est donc fix&eacute;e &agrave; 20Hz (pour la changer, il
+faudrait recompiler les librairies), ce qui vous interdit de faire
+descendre la valeur de <FONT FACE="Courier, monospace">Millisec</FONT>
+en dessous de 50 (sinon, le syst&egrave;me ne r&eacute;alise plus de
+commutation et les processus sont lanc&eacute;s jusqu'&agrave; ce
+qu'ils se terminent).</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<FONT SIZE=4 STYLE="font-size: 16pt"><B>Annexe 2</B></FONT></P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<FONT SIZE=4 STYLE="font-size: 16pt"><B>Les diff&eacute;rentes
+politiques d'agencement</B></FONT></P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">La
+m&eacute;thode la plus simple est celle de Round Robin, elle consiste
+&agrave; donner un temps n &agrave; chaque processus &agrave; tour de
+r&ocirc;le (ils sont plac&eacute;s sur une liste d'attente afin de
+pouvoir &ecirc;tre ex&eacute;cut&eacute;s quand leur tour vient); il
+faut pr&eacute;ciser que les processus sont retir&eacute;s de la
+liste d'attente quand ils se terminent, mais aussi quand ils se
+mettent en situation d'attente d'un message (que ce soit de la part
+d'un autre processus ou de la part du syst&egrave;me pour une lecture
+du disque dur par exemple).</P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">De
+nombreuses autres th&eacute;ories existent, qu'elles soient bas&eacute;es
+sur les avantages fournis pas certains syst&egrave;mes pr&eacute;vus
+&agrave; cet effet, ou simplement car les utilisateurs ne veulent pas
+tous &ecirc;tre consid&eacute;r&eacute;s de la m&ecirc;me fa&ccedil;on
+(le super-utilisateur doit-il avoir une priorit&eacute; sup&eacute;rieure
+aux autres?). Il existe, pour donner quelques exemples rapidement,
+des techniques &agrave; plusieurs couches (certaines utilisant le
+swap de la m&eacute;moire), &agrave; diverses priorit&eacute;s
+(priorit&eacute; pouvant &ecirc;tre fluctuante en fonction du temps)
+ou ex&eacute;cutant le plus court en premier (mais comment le savoir
+avant?). Le plus souvent, les solutions choisies utilisent un
+compromis de plusieurs principes en fonction du contexte
+d'utilisation.</P>
+<P LANG="fr-FR" CLASS="western" STYLE="margin-bottom: 0cm"><FONT FACE="New York, serif">	</FONT></P>
+<P LANG="fr-FR" STYLE="text-indent: 0.5cm; margin-bottom: 0cm">	  
+</P>
+<DIV ID="sdfootnote1">
+	<P LANG="fr-FR" CLASS="sdfootnote-western"><A CLASS="sdfootnotesym" NAME="sdfootnote1sym" HREF="#sdfootnote1anc">1</A>
+	Cette commande se trouve dans $MINIX_HOME/minix/bin</P>
+</DIV>
+<DIV ID="sdfootnote2">
+	<P LANG="fr-FR" CLASS="sdfootnote-western"><A CLASS="sdfootnotesym" NAME="sdfootnote2sym" HREF="#sdfootnote2anc">2</A>Ce
+	fichier n'a plus rien &agrave; voir avec les disquettes car on n'est
+	plus en 1980. Il s'agit maintenant d'un fichier contr&ocirc;lant les
+	disques en g&eacute;n&eacute;ral.</P>
+</DIV>
+<DIV TYPE=FOOTER>
+	<P LANG="fr-FR" STYLE="margin-top: 0.15cm; margin-bottom: 0cm"><FONT SIZE=2>D&eacute;partement
+	Informatique	<SDFIELD TYPE=DATETIME SDNUM="1036;1036;JJ/MM/AA">25/11/04</SDFIELD></FONT></P>
+</DIV>
+</BODY>
+</HTML>

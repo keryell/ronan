@@ -1,0 +1,202 @@
+\documentclass[a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage{french}
+\usepackage[francais]{babel}
+\usepackage{amsmath,wasysym}
+
+%\def\bibcite#1#2{}
+\usepackage[dvips]{hyperref}
+%\newcommand\htmladdnormallink[2]{\href{#1}{#2}}
+\usepackage{perso2e,LienPDF,abbrev_reactive}
+
+\input{../../bib/include.tex}
+
+\let\ifFTR=\iftrue
+\newcommand\fup[1]{$^{\text{#1}}$}
+
+\makeindex
+
+\getDollarVersion$Revision: 1.6 $
+
+\begin{document}
+
+
+\title{Page du cours IAHP de l'ISIA et du Master Recherche
+  2$^{\text{ème}}$ année informatique de Rennes 1\\
+  version \Version}
+
+\author{\href{\RacineHTML}{Ronan \textsc{Keryell}}}
+
+\maketitle
+
+\begin{itemize}
+\item Version PostScript :
+  \LienPDF{\InstallDir/index.ps}
+\item Version PDF :
+  \LienPDF{\InstallDir/index.pdf}
+\item Version HTML :
+  \LienPDF{\InstallDir/html}
+\end{itemize}
+
+
+\tableofcontents
+
+
+\section{Introduction}
+\label{sec:introduction}
+
+
+\subsection{Contexte}
+\label{sec:contexte}
+
+Ce cours constitue le module \Aiahp (Informatique À Haute Performance) de
+la \href{https://info.enstb.org/enseignement/mri}{branche brestoise} du
+\AdeainforennesI avec le module \Aiahp (ex-\Aapco, architecture
+parallélisme et compilation) et de l'\Aisia, Institut Supérieur
+d'Informatique et d'Automatique de l'École des Mines de Paris.
+
+
+\subsection{Mots-clés}
+\label{sec:mots-cles}
+
+Architecture des ordinateurs, parallélisme, optimisation de programmes,
+compilation, langages parallèles, programmation parallèle, systèmes
+embarqués.
+
+
+\subsection{Objectifs}
+\label{sec:objectifs}
+
+% Bug TeX4ht
+~
+\begin{itemize}
+\item Présentation des techniques utilisées dans les ordinateurs pour
+  atteindre les performances les plus élevées d'un point de vue
+  \begin{itemize}
+  \item architecture (parallélisme, systèmes embarqués) ;
+  \item langage ;
+  \item compilation ;
+  \item applications ;
+  \end{itemize}    
+\item utilisation industrielle des ordinateurs parallèles.
+\end{itemize}    
+    
+    
+\subsection{Prérequis}
+\label{sec:prerequis}
+
+Notions d'architecture des ordinateurs, programmation en langage C,
+\Aunix.
+
+
+\subsection{Logiciels nécessaires}
+\label{sec:logic-necess}
+
+Environnement \Aunix, \Ampi, \Aopenmp, compilateur \Afortran ou C avec
+parallélisation \Aopenmp.
+
+
+\section{Contenu}
+\label{sec:contenu}
+
+Le module est constitué de 18 heures de cours et 12 heures de travaux
+pratiques. L'emploi du temps se trouve à
+\LienPDF{https://info.enstb.org/enseignement/mri/planning}.
+
+La fiche de description du cours à l'\Aisia se trouve à :\\
+\LienPDF{http://www-isia.cma.fr/liste_cours/I\%2034\%20Informatique\%20\%E0\%20Hautes\%20Performances.pdf}
+  et la liste de tous les cours dans
+  \LienPDF{http://www-isia.cma.fr/page.php?rub=enseignements&srub=cours}.
+
+
+\subsection{Liste du contenu}
+\label{sec:liste-du-contenu}
+
+% Bug TeX4ht
+%~
+\begin{itemize}
+\item \LienPDFtexte{\InstallDir/Introduction}{Introduction} ;
+\item \LienPDFtexte{\InstallDir/Archi_Avancee}{architecture avancée et
+    parallélisme} (2 jours) :
+  \begin{itemize}
+  \item intra-processeur (pipeline, superscalaire, \Avliw, simultaneous
+    multi-threading, fonctions booléennes) ;
+  \item parallélisme inter-processeur (\Asimd, \Amimd, \Aasip, flot de
+    donnée, réseaux d'interconnexion, entrées-sorties,...) ;
+  \item vous avez dit performances ? Systèmes enfouis ou embarqués (\Asoc,
+    \Anoc,...) ;
+\end{itemize}
+\item \LienPDFtexte{\InstallDir/Optimisation_Code}{optimisation de
+    programmes séquentiels} ;
+\item programmation
+  \begin{itemize}
+  \item à parallélisme de données (\Afortran \Ahpf) ;
+  \item à parallélisme de contrôle (\Aopenmp, \Ampi) ;
+  \item \Afortran, C et langage machine ;
+\end{itemize}
+\item étude de la parallélisation d'un code de simulation sur divers
+  systèmes :
+  \begin{itemize}
+  \item parallélisation sur ordinateurs mémoire partagée (type Sun
+    multiprocesseur, Silicon Graphics) avec \Aopenmp ;
+  \item parallélisation sur système \Ampp en mode passage de message avec
+    \Ampi et cluster de \Apc \Alinux
+  \end{itemize}
+\item visite à \Amecalog : application du parallélisme aux crashes virtuels
+  de voitures : présentation
+  \begin{itemize}
+  \item des techniques de programmation des langages,
+  \item de l'application,
+  \item des machines utilisées.
+  \end{itemize}
+\end{itemize}
+
+
+\subsection{Supports de cours}
+\label{sec:supports-de-cours}
+
+Copie des ((trop !) nombreux) transparents :
+\begin{itemize}
+\item \LienPDFtexte{\InstallDir/Introduction}{introduction} ;
+\item \LienPDFtexte{\InstallDir/Archi_Avancee}{architecture avancée des
+    ordinateurs et parallélisme} ;
+\item \LienPDFtexte{\InstallDir/processeurs_multimedia}{processeurs
+    multimédia} ;
+\item \LienPDFtexte{\InstallDir/Optimisation_Code}{optimisation de
+    programmes séquentiels} ;
+\item \Aopenmp : j'utilise le tutoriel sur \Aopenmp de Tim
+  \textsc{Mattson} et Rudolf \textsc{Eigenmann} à SC'99 à
+  \LienPDF{http://www.openmp.org/presentations/index.cgi?sc99_tutorial}
+  (je visualise le PowerPoint avec \Astaroffice ou \Aopenoffice) ;
+\item programmation parallèle (\LienPDF{\InstallDir/Prog_Parallele})
+  \begin{itemize}
+  \item \Ahpf (\LienPDF{\InstallDir/HPF} de mon collègue Fabien
+    \textsc{Coelho} \LienPDF{http://www.cri.ensmp.fr/~coelho}) ;
+  \item \Ahyperc ;
+  \item \Ampi j'utilise maintenant « An Introduction to MPI Parallel
+    Programming with the Message Passing Interface » de William Gropp \&
+    Ewing Lusk
+    (\LienPDF{http://www-unix.mcs.anl.gov/mpi/tutorial/mpiintro/MPIIntro.PPT})
+    car mon cours sur \Ampi (\LienPDF{\InstallDir/MPI}) est trop gros pour
+    le temps imparti ;
+\end{itemize}
+\item des \LienPDFtexte{\InstallDir/TP}{travaux pratiques}
+  pour s'occuper quelques semaines si on veut en plus des heures
+  réglementaires. \smiley
+\end{itemize}
+
+
+\section{Enseignants}
+\label{sec:enseignants}
+
+Les cours sont assurés par Ronan \textsc{Keryell} (\Aenstbr) et Éric
+\textsc{Lequiniou} (\Amecalog).
+
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

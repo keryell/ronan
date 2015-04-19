@@ -1,0 +1,79 @@
+Vendredi 3/09/2007, 17h30.
+
+Il y aura aussi plein d'autres questions en live aux 1A.
+
+
+Question : Où trouve-t-on des processeurs de type PowerPC ?
+
+Vieux Mac intosh
+
+Éventuellement réponse de Adrien Pouille qui lève le bras si personne ne
+répond ça
+
+ainsi que :
+
+Sous forme de processeur Cell dans les PlayStation 3
+
+Éventuellement réponse de Jean Dion qui lève le bras si personne ne répond
+ça
+
+
+À T0+5mn le téléphone de Thibaud Roger sonne une première fois :
+avertissement
+
+Question : Qu'est-ce qu'un convertisseur analogique-numérique ?
+
+
+
+Question à Julien Freulon :
+
+Quel est l'intérêt d'avoir un processeur pipeliné ? (vers le transparent
+11 en gros)
+
+<faire des réponse crédibles, avec des hésitations, de la langue locale,
+:-) ...>
+
+Réponse : de pouvoir faire le travail à la chaîne et donc d'exécuter les
+instructions plus rapidement.
+
+<Vous étiez où en prépa ?>
+
+À T0+15mn le téléphone de Thibaud Roger sonne une deuxième fois :
+viré !
+
+Question à Quentin Duval :
+
+Est-ce que c'est toujours possible ?
+
+Réponse : le problème est que si on veut exécuter une instruction qui a
+besoin du résultat de l'exécution de la précédente, alors l'instruction
+courante est bloquée dans l'attente du résultat et, du coup, le processeur
+est bloqué malgré le pipeline.
+
+bravo !
+
+
+
+Entre temps 
+
+Question sans réponse à Pierre Cauchoix et 1 1A au hasard : Petit
+rappel sur le codage des nombres... Quelle est la dynamique d'un nombre
+entier naturel, par exemple en binaire de n bits (codage qui au passage a
+été décrit par Leibniz en 1703 !).
+
+<Ici je m'énerve je vire ces 2 élèves pour aller réviser leur arithmétique
+à la bibliothèque et je repose la question à l'assistance, voire d'autres
+questions jusqu'à ce que je n'ai plus de réponse spontanée aux
+questions. J'espère qu'Hermione Granger ne sera pas dans la salle. :-) >
+
+
+Ensuite je passe à l'examen en râlant sur les options informatiques en
+prépa qui ne sont pas homogènes
+
+
+Que se passe-t-il si on fait des opérations sur des entiers naturels dont
+le résultat ne loge pas ? Question à Élie Roux, qui provoque le chaos
+final : coupure lumière, effets, descente en rappel, arrêt du cours...
+
+
+

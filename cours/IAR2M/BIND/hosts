@@ -1,0 +1,268 @@
+#	$Header: /usr/local/share/conf/RIRE/etc/RCS/hosts,v 1.121 2007/08/27 10:27:46 root Exp $
+
+# To update the DNS from this file:
+# cd /usr/local/share/conf/RIRE/var/named
+# make
+# make install
+
+127.0.0.1	localhost
+
+
+# The network owning the INFO machines in 192.44.75/24.
+# Built with:
+# ypcat hosts|grep 192.44.75|sort -u
+# Don't forget to remove mailhost, loghost,... :-)
+192.44.75.10    univers.enst-bretagne.fr univers
+192.44.75.114   teutales.enst-bretagne.fr teutales
+192.44.75.115   archimede.enst-bretagne.fr archimede
+192.44.75.116   euler.enst-bretagne.fr euler
+192.44.75.121   huygens.enst-bretagne.fr huygens
+192.44.75.122   leibniz.enst-bretagne.fr leibniz
+192.44.75.126   lug.enst-bretagne.fr lug
+192.44.75.127   ossian.enst-bretagne.fr ossian
+192.44.75.128   arianrod.enst-bretagne.fr arianrod
+192.44.75.129   arthur.enst-bretagne.fr arthur
+192.44.75.130   angus.enst-bretagne.fr angus
+192.44.75.131   ogmios.enst-bretagne.fr ogmios
+192.44.75.133   artus.enst-bretagne.fr artus
+192.44.75.134   esus.enst-bretagne.fr esus
+192.44.75.135   govannon.enst-bretagne.fr govannon
+192.44.75.137   gwenhwyar.enst-bretagne.fr gwenhwyar
+192.44.75.138   gwydion.enst-bretagne.fr gwydion
+192.44.75.139   lludd.enst-bretagne.fr lludd
+192.44.75.140   hesione.enst-bretagne.fr hesione
+192.44.75.148   callisto.enst-bretagne.fr callisto
+192.44.75.161   tp-web.enst-bretagne.fr tp-web
+192.44.75.162   copernic.enst-bretagne.fr copernic
+192.44.75.167   myrddin.enst-bretagne.fr myrddin
+192.44.75.20    grace.enst-bretagne.fr grace
+192.44.75.25    aberwrach.enst-bretagne.fr aberwrach
+192.44.75.26    aberbenoit.enst-bretagne.fr aberbenoit
+192.44.75.3     epidaure.enst-bretagne.fr epidaure
+192.44.75.34    aberildut.enst-bretagne.fr aberildut
+192.44.75.37    odet.enst-bretagne.fr odet
+192.44.75.38    penfeld.enst-bretagne.fr penfeld
+192.44.75.4     titan.enst-bretagne.fr titan
+192.44.75.5     marilyn.enst-bretagne.fr marilyn
+192.44.75.56    elorn.enst-bretagne.fr elorn
+192.44.75.59    goyen.enst-bretagne.fr goyen
+192.44.75.61    aven.enst-bretagne.fr aven
+192.44.75.68    garo.enst-bretagne.fr garo
+192.44.75.80    sysiphe.enst-bretagne.fr sysiphe
+192.44.75.81    tantale.enst-bretagne.fr tantale
+192.44.75.83    llyr.enst-bretagne.fr llyr
+192.44.75.84    ceres.enst-bretagne.fr ceres
+192.44.75.85    amaethon.enst-bretagne.fr amaethon
+192.44.75.87    gavotte.enst-bretagne.fr gavotte
+192.44.75.88    fresnel.enst-bretagne.fr fresnel
+192.44.75.89    cauchy.enst-bretagne.fr cauchy
+192.44.75.91    cramer.enst-bretagne.fr cramer
+192.44.75.92    dalambert.enst-bretagne.fr dalambert
+
+# INFO :
+
+193.50.97.128   la-zone.rire	# VLAN 770 : « La zone » :-)
+#193.50.97.130	erlang.info erlang	# Ordinateur de Fabien Dagnat pour son projet autour d'Erlang
+193.50.97.130	picoforge		# Plate-forme de test de picoforge (G. Ouvradou)
+193.50.97.131	zone1.zone zone1	# Un accès DHCP dans la zone
+193.50.97.132	zone2.zone zone2	# Un accès DHCP dans la zone
+193.50.97.133	zone3.zone zone3	# Un accès DHCP dans la zone
+193.50.97.134	zone4.zone zone4	# Un accès DHCP dans la zone
+193.50.97.135	zone5.zone zone5	# Un accès DHCP dans la zone
+193.50.97.136	zone6.zone zone6	# Un accès DHCP dans la zone
+193.50.97.137	zone7.zone zone7	# Un accès DHCP dans la zone
+193.50.97.138	omega # PC Yannis Haralambous, Linux
+193.50.97.139	pascalou # PC Linux de Pascal Pucci
+#193.50.97.140	dellec.rire dellec # PC Linux pour statistiques
+193.50.97.142	bertheaume-128.rire bertheaume-128 routeur-128.rire routeur-128	# Router network 193.50.97.128/28
+193.50.97.143	broadcast.la-zone.rire # Adresse de broadcast
+
+
+193.50.97.144	recherche.info	# VLAN 771 : recherche INFO Ronan Keryell
+193.50.97.145	bertheaume-144.rire bertheaume-144 routeur-144.rire routeur-144 bertheaume.rire bertheaume	# Router network 193.50.97.144/28
+193.50.97.146	minou.info minou.lit minou www www.lit lit www.amadeus amadeus www.bibtex bibtex www.em6 em6 www.gabi gabi www.mi mi www.moodle moodle www.sauna sauna www.pcfengine pcfengine www.reactive reactive lire www.lire debian www.debian ftp.debian www.rire rire www.cryptopage cryptopage rsync.debian wiki www.wiki zope www.zope plone www.plone www.info mail smtp ntp ipp # Serveur LIT
+#193.50.97.147	plinn.info plinn zope.plinn modales www.modales www-modales sias www.sias www-sias semimage www.semimage www-semimage www.comap comap  www.iahp iahp mri www.mri dnm www.dnm mr2i www.mr2i m2ri www.m2ri lmf www.lmf kazimodal www.kazimodal g1.grid g1 # Machine AMD XP 1900+ @MAC(00:50:ba:f5:14:6d)
+193.50.97.147	ridee.info ridee zope.ridee modales www.modales www-modales sias www.sias www-sias semimage www.semimage www-semimage www.comap comap  www.hpcas hpcas www.iahp iahp mri www.mri dnm www.dnm mr2i www.mr2i m2ri www.m2ri lmf www.lmf pips www.pips doxygen.pips www.doxygen.pips kazimodal www.kazimodal		# Machine serveur de Serge
+193.50.97.148	leon.info leon.lit leon amanda.rire amanda plinn.info plinn zope.plinn essai g1.grid g1 # Amanda backup server on the LIT side
+193.50.97.149 	gwendal.info gwendal 		# Machine de Gwendal Simon
+193.50.97.150	kef.info kef			# Machine de Cyril Brulebois (stag. MR2)
+193.50.97.151	an-dro.info an-dro ad.info ad 	# Portable Compaq nw9440 de Ronan Keryell
+193.50.97.152	opteron.info opteron zope.opteron www.zope.opteron www-zope.opteron lina ldap-slave1 cama www.cama www-cama kerberos-1 svn2 # Nouvelle machine bi-opteron
+193.50.97.153	dhcp1.info dhcp1
+193.50.97.154	dhcp2.info dhcp2
+193.50.97.155	dhcp3.info dhcp3
+193.50.97.156	tp-dns.info tp-dns
+193.50.97.157	loudeac.info loudeac		# Nouvelle machine de bureau Guillaume Duc
+193.50.97.158	pei.info pei nsserver cacti svn kernel ldap ldap-master lists al2006 plonedoc monitorat nagios kerberos condor # Bi-AMD Atlon 2000 MP
+193.50.97.159	broadcast.recherche.info 	# Adresse de broadcast
+
+
+193.50.97.160	info.wifi	# VLAN 772 : WiFi IEEE802.11b ENSTBr_LIT_Public
+193.50.97.161	bertheaume-160.rire bertheaume-160 routeur-160.rire routeur-160	# Router WIFI IEEE802.11b 193.50.97.160/28
+193.50.97.162	m1.wifi m1
+193.50.97.163	m2.wifi m2
+193.50.97.164	m3.wifi m3
+193.50.97.165	m4.wifi m4
+193.50.97.166	m5.wifi m5
+193.50.97.167	m6.wifi m6
+193.50.97.168	m7.wifi m7
+193.50.97.169	m8.wifi m8
+193.50.97.170	m9.wifi m9
+193.50.97.171	m10.wifi m10
+193.50.97.172	m11.wifi m11
+193.50.97.173	m12.wifi m12
+193.50.97.174	m13.wifi m13
+193.50.97.175	broadcast.info.wifi # Adresse de broadcast
+
+
+193.50.97.176	network.sid	# VLAN 773 : SID
+193.50.97.177	bertheaume-176.rire bertheaume-176 routeur-176.rire routeur-176 router-176.rire router-176	# Router
+193.50.97.178	vauban.sid vauban
+193.50.97.179	loos.sid loos
+193.50.97.180	aalto.sid aalto
+193.50.97.181	nash.sid nash tapa.sid tapa braille.sid braille pfi-dev.sid pfi-dev wiki-sid
+193.50.97.182	gaudi.sid gaudi
+193.50.97.183	moneo.sid moneo ladapt
+193.50.97.184   eiffel.sid eiffel
+193.50.97.185   moneo1.sid moneo1
+193.50.97.186	dhcp1.sid
+193.50.97.187	dhcp2.sid
+193.50.97.188	dhcp3.sid
+193.50.97.189	dhcp4.sid
+193.50.97.190	ps3.info ps3 # PlayStation 3
+193.50.97.191	broadcast.sid # Adresse de broadcast
+
+
+193.50.97.192	network.secure		# VLAN 774 : Reseau securise
+193.50.97.193	bertheaume-192.rire bertheaume-192 routeur-192.rire routeur-192 router-192.rire router-192	# Router
+193.50.97.194	portdagnat.secure portdagnat
+193.50.97.195	portbelguidoum.secure portbelguidoum
+193.50.97.196	sec3.secure sec3
+193.50.97.197	sec4.secure sec4
+193.50.97.198	sec5.secure sec5
+193.50.97.199	sec6.secure sec6
+193.50.97.200	sec7.secure sec7
+193.50.97.201	sec8.secure sec8
+193.50.97.202	sec9.secure sec9
+193.50.97.203	sec10.secure sec10
+193.50.97.204	sec11.secure sec11
+193.50.97.205	sec12.secure sec12
+193.50.97.206	sec13.secure sec13
+193.50.97.207	broadcast.secure # Adresse de broadcast
+
+
+193.50.97.208	network.test # VLAN 775 : VServers
+193.50.97.209	bertheaume-208.rire bertheaume-208 routeur-208.rire routeur-208 router-208.rire router-208	# Router
+193.50.97.210	alpha.test
+193.50.97.211	bravo.test
+193.50.97.212	charlie.test
+193.50.97.213	delta.test
+193.50.97.214	echo.test
+193.50.97.215	foxtrott.test
+193.50.97.216	golf.test
+193.50.97.217	hotel.test
+193.50.97.218	india.test
+193.50.97.219	juliett.test
+193.50.97.220	kilo.test
+193.50.97.221	lima.test
+193.50.97.222	mike.test
+193.50.97.223	broadcast.test.network # Adresse de broadcast
+
+
+193.50.97.224	tp.info	# VLAN 776 : Le réseau de travaux pratiques
+193.50.97.225	routeur.tp.info router.tp.info bertheaume-224.rire bertheaume-224 routeur-224.rire routeur-224 router-224.rire router-224	# Router
+193.50.97.226	tp1.tp tp1	# @MAC(00:0b:db:82:7d:e0)
+193.50.97.227	tp2.tp tp2	# @MAC(00:0b:db:82:7e:1c)
+193.50.97.228	tp3.tp tp3	# @MAC(00:0b:db:82:7a:e6)
+193.50.97.229	tp4.tp tp4
+193.50.97.230	tp5.tp tp5	# @MAC(00:0b:db:82:71:e5)
+193.50.97.231	tp6.tp tp6	# @MAC(00:0b:db:82:7d:ee)
+193.50.97.232	tp7.tp tp7	# @MAC(00:0b:db:82:7d:58)
+193.50.97.233	tp8.tp tp8
+193.50.97.234	tp9.tp tp9
+193.50.97.235	tp10.tp tp10
+193.50.97.236	tp11.tp tp11
+193.50.97.237	tp12.tp tp12
+193.50.97.238	tp13.tp tp13
+193.50.97.239	broadcast.tp.info # Adresse de broadcast
+
+
+
+193.50.97.240	interconnect.rire	# VLAN 777 : The interconnexion network
+193.50.97.252	bertheaume-ext.rire bertheaume-ext routeur-ext.rire routeur-ext	router-ext.rire router-ext routeur routeur.rire router router.rire	# Router to external network
+193.50.97.254	galaxie.rire galaxie	# Router enst-bretagne.fr
+193.50.97.255	broadcast.interconnect.rire # Adresse de broadcast
+
+
+# Le VLAN d'administration du RIRE et de RéActiVE
+192.168.70.0	reactive.network # VLAN 888 : RéActiVE network:
+192.168.70.1	bertheaume1.rire bertheaume1	# Router, maintenance access, fault-tolerant machine 1 @MAC(00:60:b0:5e:4b:4c)
+#192.168.70.1	admin-video.reactive admin-video
+192.168.70.2	routeur-video.reactive routeur-video
+192.168.70.11	frehel.reactive frehel
+192.168.70.12	reactived1	reactived1-eth0
+192.168.70.20	paderborn.reactive paderborn
+192.168.70.21	pompe-video.reactive pompe-video
+192.168.70.32	passerelle.reactive passerelle
+192.168.70.41	numeriseur1.reactive numeriseur1
+192.168.70.42	numeriseur2.reactive numeriseur2
+192.168.70.65	minou.reactive # Minou côté réactive pour l'installation des routeurs tolérant la panne des... routeurs :-)
+192.168.70.66	amd2.reactive.enstb.org	amd2.reactive.enstb.org-eth0
+192.168.70.68	amd4.enstb.org	amd4.enstb.org-eth0
+192.168.70.69	amd5.enstb.org	amd5.enstb.org-eth0
+192.168.70.72	bertheaume2.rire bertheaume2	# Router, maintenance access, fault-tolerant machine 2 @MAC(00:60:b0:5e:4b:54)
+192.168.70.73	bertheaume3.rire bertheaume3	# Router, maintenance access, fault-tolerant machine 3 @MAC(00:50:04:42:27:0d) @MODEL(PIII 350 MHz)
+192.168.70.235	leon.reactive amanda.reactive # Amanda backup server on the ReActiVE side
+192.168.70.255	broadcast.reactive.network # Adresse de broadcast
+
+#H Commentaire pour hosts
+#H La machine en salle RéActiVE :
+#H le I10 *********************************************************
+#H	eth0 -> Resel
+#H	eth1 ->   
+#H	eth2 -> I11
+#H	eth3 -> I1 
+
+172.16.70.241	reactive10-eth0
+172.16.70.57	reactive10-eth1
+172.16.70.65	reactive10-eth2
+172.16.70.18	reactive10-eth3
+#H le I11 *********************************************************
+#H	eth0 -> Resel
+#H	eth1 -> I1
+#H	eth2 -> I10
+#H	eth3 -> 
+
+172.16.70.242	reactive11-eth0
+172.16.70.49	reactive11-eth1
+172.16.70.10	reactive11-eth2
+172.16.70.34	reactive11-eth3
+#H le I1 **********************************************************
+#H	eth0 -> Routeur
+#H	eth1 -> I10
+#H	eth2 -> I11
+#H	eth3 -> 
+
+192.168.70.80	reactive1-eth0
+172.16.70.1	reactive1-eth1
+172.16.70.9	reactive1-eth2
+172.16.70.17	reactive1-eth3
+#H le I3 **********************************************************
+#H	eth0 -> I1
+#H	eth1 -> Resel
+#H	eth2 -> I6
+
+172.16.70.243	reactive3	reactive3-eth0
+172.16.70.25	reactive3-eth1
+172.16.70.10	reactive3-eth2
+172.16.70.33	reactive3-eth3
+#H le I6 **********************************************************
+#H	eth0 -> Resel
+#H	eth1 -> I3
+
+172.16.70.6	reactive6	reactive6-eth1
+172.16.70.137	reactive6-eth0
+
+
+# Maisel :
+172.16.19.128	test-mcast.maisel.enst-bretagne.fr

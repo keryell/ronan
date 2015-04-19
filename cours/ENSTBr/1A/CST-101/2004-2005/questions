@@ -1,0 +1,87 @@
+Jeudi 2/09/2004, 11h.
+
+<Où trouve-t-on des processeurs de type PowerPC ?>
+
+<Qu'est-ce qu'un convertisseur analogique-numérique ?>
+
+Question à Lionel Arbey :
+Quel est l'intérêt d'avoir un processeur pipeliné ?
+
+<faire des réponse crédibles, avec des hésitations, de la langue locale,
+:-) ...>
+
+R : de pouvoir faire le travail à la chaîne et donc d'exécuter les
+instructions plus rapidement.
+
+<Vous étiez où en prépa ?>
+
+Question à Aurélien Croissant :
+Est-ce que c'est toujours possible ?
+
+R : le problème est que si on veut exécuter une instruction qui a besoin
+du résultat de l'exécution de la précédente alors l'instruction courante
+est bloquée dans l'attente du résultat et, du coup, le processeur est
+bloqué malgré le pipeline.
+
+Question sans réponse à Vincent Chabanne et Édouard Blasselle : Petit
+rappel sur le codage des nombres... Quelle est la dynamique d'un nombre
+entier naturel, par exemple en binaire de n bits (codage qui au passage a
+été décrit par Leibniz en 1703 !).
+
+<Ici je m'énerve je vire ces 2 élèves pour aller réviser leur arithmétique
+à la bibliothèque et je repose la question à l'assistance, voire d'autres
+questions jusqu'à ce que je n'ai plus de réponse spontanée aux
+questions. J'espère qu'Hermione Granger ne sera pas dans la salle. :-)
+Ensuite je passe à l'examen en râlant sur les options informatiques en
+prépa qui ne sont pas homogènes>.
+
+Que se passe-t-il si on fait des opérations sur des entiers naturels dont
+le résultat ne loge pas ?
+
+<Au passage cela me fait penser à un truc que j'expliquais à mes enfants
+au sujet des additions et des soustractions, parce qu'en primaire on leur
+apprend le comment et non le pourquoi et c'est dommage. Par exemple cela
+permet de comprendre l'usage des compléments des nombres...>
+
+
+
+Examen :
+
+<Questions d'ordre général>
+
+À quoi peut bien servir un ordinateur ?
+
+Qu'est-ce qu'un processeur ?
+
+Quels langages de programmation savez vous utiliser ?
+
+Quels processeurs savez-vous utiliser ?
+
+<Questions plus approfondies>
+
+Quelles sont les rôles de l'informatique qu'on peut attendre d'un
+téléphone portable post-moderne ?
+
+Quel est l'intérêt du codage redondant des nombres ? Par exemple en
+binaire avec d'autres chiffres que 0 et 1, du style -1, 0 et 1 ou 0 à 4,
+etc ?
+
+Comparer les avantages et inconvénients de l'arithmétique modulo avec
+le cas où on ferait les calculs modulo un nombre premier.
+<Cela vous rappellera le petit théorème de Fermat... :-) >
+
+
+Compiler un petit programme en C pour le processeur de votre choix
+int s = 0;
+int i;
+for(i = 0; i < 100; i++)
+	s = s + i
+On considérera que les variables du programme sont déjà stockées dans des
+registres.
+
+
+<Coup de fil de la pseudo-direction pour signaler la triche, exclusion de
+l'élève>
+
+<Ramassage copies au bout de 5 mn.>
+

@@ -1,0 +1,495 @@
+% Mettre la section 5 avant.
+
+% Faire section 3 h2n spécifique à Debian
+
+% Simplifier à Debian
+
+% Travailler dans /etc/bind/h2n
+
+% Jouer avec nsupdate
+
+\documentclass[a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{alltt,a4wide}
+\usepackage[backref,dvips]{hyperref}
+\usepackage[francais]{babel}
+\usepackage{times,wasysym,LienPDF}
+
+
+%% Récupère le numéro de version RCS :
+\def\getVersion Revision: #1 {\def\Version{#1}}
+\def\getDollars$#1${\getVersion#1}
+\getDollars$Revision: 1.12 $
+
+\sloppy
+
+\begin{document}
+
+\title{TP de création de serveurs de noms (DNS/BIND)}
+
+\date{25-26 octobre 2007\\
+  Version \Version}
+
+\author{Ronan \textsc{Keryell}\\
+  ---\\
+  Département Informatique\\
+  École Nationale Supérieure des Télécommunications de Bretagne}
+
+\maketitle
+
+
+\begin{abstract}
+  Ce \textsc{tp} couvre les principaux concepts de mise en place de
+  serveurs de noms et leur utilisation.
+
+  La partie compilation et installation peut être sautée si le système
+  d'exploitation fournit déjà \textsc{bind}.
+  
+
+  Cours et \textsc{tp} sont disponibles à :\\
+  \LienPDF{http://enstb.org/~keryell/cours/IAR2M/BIND}. C'est
+  pratique pour faire du couper-coller d'exemples ou de
+  commandes\footnote{Règle numéro 1 : on est informaticien par flemme...
+    \smiley}.
+  
+  Les exemples donnés sont à adapter en fonction du système d'exploitation
+  et du lieu du \textsc{tp}. Lire en avance le texte et les exemples, cela
+  peut aider.
+\end{abstract}
+
+\begin{verbatim}
+$Id: TP.tex,v 1.12 2007/10/24 21:23:07 keryell Exp keryell $
+\end{verbatim}
+
+\tableofcontents
+
+\section{Exploration de quelques domaines avec les outils d'inspection}
+
+\label{sec:inspection}
+
+
+\subsection{Outil d'interrogation}
+\label{sec:outil-dinterrogation}
+
+On s'initiera au maniement de l'outil \texttt{dig} dans la suite du
+\textsc{tp} car \texttt{nslookup} n'est plus maintenu et \texttt{host} est
+moins puissant.
+
+En ce qui concerne les déclarations administratives on interrogera les
+bases \texttt{whois}.
+
+Pour vérifier la conformité de zones entières on utilisera par exemple
+les outils :
+\begin{itemize}
+\item \LienPDF{http://zonecheck.fr} ;
+\item \LienPDF{http://www.dnsreport.com}.
+\end{itemize}
+
+
+\subsection{Outils d'analyse réseau}
+\label{sec:outils-dab}
+
+On regardera les requêtes déclenchées lors du fonctionnement de
+l'ordinateur en utilisant les outils d'audit de réseau tels que
+\texttt{tcpdump} (\LienPDF{http://www.tcpdump.org}) en mode texte ou
+\texttt{wireshark} (\LienPDF{http://www.wireshark.com}) en mode
+graphique. \texttt{tshark} est la version texte de \texttt{wireshark} avec
+une syntaxe proche de \texttt{tcpdump}.
+
+Pour \texttt{wireshark} on créera un filtre d'affichage en rajoutant la
+règle \texttt{DNS is present} pour s'y retrouver.
+
+
+\subsection{Zones à tester}
+\label{sec:zones-tester}
+
+Analyser les domaines suivants avec les outils précédents\footnote{En fait
+  à chaque \texttt{tp} il y a de moins en moins d'informations publiques,
+  donc il est probable que de nombreuses choses ne marcheront
+  plus... \frownie} :
+\begin{itemize}
+\item « \texttt{.} ». On pourra tester si les serveurs racines sont bien
+  répliqués en \emph{anycast} \textsc{bgp}, quels sont leur version ou
+  leur vrai petit nom. Faire un \texttt{traceroute} dessus ;
+\item votre fournisseur d'accès favori, vos domaines habituels et autres
+  domaines ;
+\item tester quelques uns parmi par exemple :
+  \begin{itemize}
+  \item vos domaines préférés (travail, maison...) ;
+  \item \texttt{ensmp.fr.} (étudier la glu) ;
+  \item \texttt{cri.ensmp.fr.} ;
+  \item \texttt{enstb.org.} (étudier la glu) ;
+  \item \texttt{info.enstb.org.} (surprise !) ;
+  \item \texttt{trad.org.} ;
+  \item \texttt{us.} ;
+  \item \texttt{fr.} ;
+  \item \texttt{gouv.fr.} ;
+  \item \texttt{com.} ;
+  \end{itemize}
+\item regarder le contenu de \texttt{arpa} et ses sous-domaines
+  (\texttt{in-addr}, \texttt{e164},...) ;
+\item \texttt{172.54.192.in-addr.arpa} ;
+\item étudier le \textsc{cidr} de \texttt{193.50.97} en comparant par
+  exemple \texttt{193.50.97.3} et \texttt{193.50.97.147} ;
+\item contenu de la \textsc{rbl} ? Un des serveurs de
+  \texttt{will-spam-for-food.eu.org} semble répondre au transfert de zone ;
+\item \texttt{10.in-addr.arpa} sur un serveur local et un
+  serveur racine. Pourquoi ?
+\item dépioter une \emph{lame delegation} et fournir un diagnostic.
+\end{itemize}
+
+Regarder plusieurs fois de suite un enregistrement sur un serveur faisant
+autorité et sur un autre (par exemple celui par défaut de l'école qui fait
+office de cache). Pourquoi a-t-on ce comportement ?
+
+Bien comprendre la différence fondamentale entre les données qui sont dans
+le \texttt{dns} et celles qui sont dans les bases \texttt{whois}. Quelles
+sont-elles ?
+
+
+\subsection{Étude de \texttt{resolv.conf}}
+\label{sec:etude-de-resolv.conf}
+
+Sous Solaris, on configurera le fichier pour utiliser \texttt{tcp} au lieu
+d'\texttt{udp} pour limiter les risques d'attaque (si la bibliothèque de
+résolution le permet).
+
+Mettre son domaine perso et de travail dans \texttt{search} pour se
+simplifier la vie.
+
+
+\section{Installation de BIND}
+
+Créer un répertoire pour faire le \textsc{tp}, par exemple
+\begin{verbatim}
+mkdir -p ~/TP/DNS
+cd ~/TP/DNS
+\end{verbatim}
+ou encore dans \texttt{/junk}.
+
+Si on est sous Debian ou assimilé :
+\begin{verbatim}
+aptitude update
+aptitude install bind9
+\end{verbatim}
+ou faire de même avec l'outil graphique \texttt{synaptic}.
+
+Étudier le répertoire \texttt{/etc/bind} et sauter à la section suivante.
+
+On va en profiter pour réviser l'installation d'un logiciel à partir des
+sources sous Unix. Outre l'intérêt pédagogique, cela permet d'avoir la
+version la plus fraîche.
+
+On \emph{pourrait} récupérer sur la page
+\LienPDF{http://www.isc.org/products/BIND/bind9.html} le fichier d'archive
+de la version 9.  En fait, il est plus simple et plus économique en bande
+passante réseau d'utiliser la versions déjà récupérée dans
+\texttt{/usr/local/src/Reseau/bind-9.2.0.tar.gz}
+
+Extraire les fichiers des archives dans un répertoire \texttt{bind} chez
+vous ou tout au moins là où vous trouverez de la place :
+\begin{verbatim}
+mkdir bind
+cd bind
+gtar zxvf /usr/local/src/Reseau/bind-9.2.0.tar.gz
+\end{verbatim}
+\texttt{gtar} permet de gérer les fichiers d'archivage et en l'occurrence
+« \texttt{x} » spécifie l'extraction de contenu, « \texttt{v} » indique
+que l'on veut de l'information verbeuse sur ce qui est fait et «
+\texttt{f} » précise le nom du fichier d'archive. Comme le fichier
+d'archive est comprimé (extension du fichier typiquement « \texttt{.gz} »
+ou « \texttt{.Z} » l'option « \texttt{z} » demande la décompression au
+vol, « \texttt{gtar zxvf \emph{fichier}} » est un raccourci pour «
+\texttt{gunzip -c \emph{fichier} | gtar xvf -} » où on passe par
+\texttt{stdout} de \texttt{gunzip} et \texttt{stdin} de \texttt{gtar}
+respectivement.
+
+Normalement BIND installe ses fichiers de bibliothèque et d'inclusion
+respectivement dans \texttt{/usr/local/bind/lib} et
+\texttt{/usr/local/bind/include} pour ne pas entrer en conflit avec les
+fichiers d'origine de Solaris qui sont dans \texttt{/usr} au lieu de
+\texttt{/usr/local}. Comme dans le mastère les machines clients ne peuvent
+pas écrire dans \texttt{/usr/local}\footnote{Cela causerait de toute
+  manière des conflits en écriture si toutes les machines écrivait en même
+  temps dans ce répertoire...}, les fichiers iront sur les disques locaux
+dans \texttt{/usr/bind}. Pour ce faire, lancer la compilation comme suit :
+\begin{verbatim}
+cd bind-9.2.0
+./configure --prefix=/usr
+\end{verbatim}
+Les noms de fichier par défaut ne sont pas terrible et il faut peut-être
+les revoir ?
+\begin{verbatim}
+make
+\end{verbatim}
+
+Dans ce \textsc{tp} certaines choses sont faites avec vos droits, d'autres avec le
+droit de \texttt{root}. Afin de faciliter les manipulations, il est
+conseillé d'avoir plusieurs fenêtres dont une a les droits de
+\texttt{root}. Un \texttt{su miam} permet d'être \texttt{root} localement
+sur votre machine.
+
+Dans une fenêtre sous \texttt{root} dans le même répertoire faire un
+\begin{verbatim}
+make install
+\end{verbatim}
+
+Préparer la visualisation de la documentation de configuration avec un
+\texttt{netscape} sur le fichier \texttt{doc/arm/Bv9ARM.html} ou un
+\texttt{acroread} sur\\
+\LienPDF{http://www.nominum.com/resources/documentation/Bv9ARM.pdf}.
+
+Si ce n'est pas fait, créez les répertoires manquant :
+\begin{verbatim}
+mkdir -p /usr/etc /usr/var/run
+\end{verbatim}
+et créez une clé secrète pour \texttt{rndc} avec :
+\begin{verbatim}
+rndc-confgen -a
+\end{verbatim}
+
+\section{Installation de \texttt{h2n}}
+
+Sous FreeBSD c'est simple :
+\begin{verbatim}
+portinstall h2n
+\end{verbatim}
+
+Sinon, récupérations des outils du livre \emph{DNS and BIND} de chez
+O'Reilly à l'adresse
+\LienPDF{http://examples.oreilly.com/dns4/dns.4ed.tar.Z} ou utiliser une
+version déjà récupérée dans \texttt{/usr/local/src/Reseau} le cas
+échéant.
+
+Décomprimer l'archive avec par exemple
+\begin{verbatim}
+cd ~/TP/DNS
+mkdir h2n
+cd h2n
+tar zxvf /usr/local/src/Reseau/dns.4ed.tar.Z
+\end{verbatim}
+
+Comme \texttt{h2n} est un \texttt{perl}-script il faut lui préciser
+l'emplacement exact de \texttt{perl} sur le système en modifiant
+éventuellement la première ligne du fichier \texttt{h2n}
+\begin{verbatim}
+#!/usr/bin/perl
+\end{verbatim}
+en
+\begin{verbatim}
+#!/usr/local/bin/perl
+\end{verbatim}
+le cas échéant. Sous Debian ce n'est pas la peine.
+
+Installer le nécessaire pour \texttt{h2n} avec les droits de \texttt{root}
+en exécutant
+\begin{verbatim}
+cp h2n /usr/bin
+cp h2n.man /usr/share/man/man1m/h2n.1m
+\end{verbatim}
+À adapter en fonction des coutumes du système d'exploitation.
+
+Effacer le répertoire \texttt{h2n} et son contenu avec
+\begin{verbatim}
+cd ..
+rm -rf h2n
+\end{verbatim}
+
+
+\section{Génération de fichiers de configuration}
+
+Créer un répertoire \verb|/etc/named| ou utiliser le répertoire équivalent
+standard pour votre système d'exploitation, par exemple
+\verb|/etc/bind| sous Debian et y aller.
+
+Créer une zone \texttt{\emph{mon-domaine}.com} ultra simple à la main et
+déclarez-là (dans \verb|/etc/bind/named.conf.local| sous Debian).
+
+Ensuite, faire une zone plus conséquente en utilisant \texttt{h2n}. On
+peut remplir cette zone en utilisant le fichier \texttt{/etc/hosts} des
+Mines dont une copie se trouve (peut-être...) dans \verb|~keryell/hosts|
+ou le \texttt{/etc/hosts} du RIRE et utiliser son propre fichier ensuite
+si on a du courage. Par exemple, si on veut y mettre les machines du
+réseau \texttt{10.2.16} (privé) et \texttt{193.50.97}, faire {\scriptsize
+\begin{alltt}
+h2n -v 8 -b named.conf.h2n -w -t -y -H ~keryell/hosts -d \emph{mon-domaime} -n 193.50.97 -n 10 
+\end{alltt}
+}
+histoire de ne pas écraser le vrai fichier \verb|named.conf|.
+
+Étudier la structure des fichiers générés.
+
+
+\section{Essais de \texttt{named}}
+
+Pour avoir une vue sur les (éventuels ?...) messages d'erreur, lancer dans
+une fenêtre séparée un
+\begin{verbatim}
+tail -f /var/log/syslog
+\end{verbatim}
+ou
+\begin{verbatim}
+tail -f /var/log/messages
+\end{verbatim}
+ou (Solaris)
+\begin{verbatim}
+tail -f /var/adm/messages
+\end{verbatim}
+(selon le système d'exploitation) qui aura pour effet d'afficher en
+permanence les messages du système rajoutés à ce fichier par le démon
+\texttt{syslogd}. Le mode Emacs \texttt{auto-revert-mode}\footnote{Rappel
+  : taper \texttt{M-x auto-revert-mode} pour passer par exemple dans ce
+  mode.} est bien pratique aussi pour ce faire.
+
+Tester sous les droits de \texttt{root}\footnote{Car le DNS utilise un
+  port privilégié (53) et implique que seul \texttt{root} a le droit
+  d'écouter sur ce type de ports. Voyez-vous la raison de l'existence de
+  ports privilégiés ? Cela n'existe pas sur NT... Conséquences ?} dans le
+répertoire \verb|/etc/named| l'exécution de \texttt{named} avec
+\begin{verbatim}
+named -c named.conf
+\end{verbatim}
+pour utiliser le fichier local \texttt{named.conf} au lieu de
+\texttt{/etc/named.conf} et regarder au passage les messages dans la
+fenêtre sur \texttt{/var/adm/messages}. C'est à adapter en fonction de
+votre système d'exploitation... Par exemple sous Linux/Debian un
+\begin{verbatim}
+/etc/init.d/bind9 restart
+\end{verbatim}
+fera l'affaire, mais sous Linux/RedHat c'est plutôt :
+\begin{verbatim}
+/etc/init.d/named restart
+\end{verbatim}
+
+
+Utiliser \texttt{dig} pour interroger le serveur de nom. Ne pas oublier de
+préciser qu'on utilise le serveur local et non \texttt{chailly} ou un
+autre par défaut qui serait précisé dans le \texttt{resolv.conf}.
+
+Mettre le serveur en mode trace et regarder comment sont faites les requêtes.
+
+Pour faire marcher la résolution il faut connaître au moins un serveur
+racine comme vu en cours. Si cela n'est pas fait automatiquement sur le
+système où vous êtes, installer un fichier de serveur racine
+\verb|~keryell/db.cache| dans \texttt{/etc/named}, arrêter \texttt{named}
+avec un « \texttt{rndc stop} » (NameD Control) ou un \texttt{kill} et
+relancer \texttt{named} puis réessayer avec \texttt{dig}.
+
+Étudier le contenu du cache du serveur de nom.
+
+On peut faire tourner en parallèle un \texttt{wireshark} pour voir les
+échanges protocolaires.
+
+
+\section{Utilisation définitive de \texttt{named}}
+
+Sauvegarder une copie de \texttt{/etc/resolv.conf} avant de le modifier
+pour mettre
+\begin{alltt}
+nameserver      127.0.0.1
+search          \emph{mon-domaine} ensmp.fr
+\end{alltt}
+pour chercher les noms non complètement qualifiés d'abord dans
+\emph{\texttt{mon-domaine}}\footnote{Je tiens à préciser que c'est un nom
+  symbolique que vous devez remplacer par quelque chose qui vous est
+  propre...}  puis dans \texttt{ensmp.fr}.
+
+Vérifier que \texttt{dns} apparaît en tête dans la ligne \texttt{hosts} de
+\texttt{/etc/nsswitch.conf}.
+
+Faire un \texttt{rndc restart} (puisque là on peut utiliser le fichier de
+configuration par défaut de \texttt{named}.
+
+Demander l'inscription de son domaine dans \texttt{enstb.org} et regarder
+le contenu de la zone \texttt{enstb.org} sur le serveur
+\texttt{dns2.enstb.org} pour voir comment c'est fait.
+
+Le nom de domaine mondial deviendra donc
+\texttt{\emph{mon-domaine}.enstb.org}.
+
+
+\section{Délégations et serveurs secondaires}
+
+Relire le \texttt{man} de \texttt{h2n}.
+
+Créer un(des) serveur(s) secondaire(s) de son domaine chez un (des)
+voisin(s).
+
+Vérifier que cela fonctionne depuis des machines tierces, que les
+notifications de mise à jour son bien effectuées.
+
+Créer des sous-domaines qui seront délégués chez soi et/ou chez d'autres.
+
+Essayer les \emph{stubs}.
+
+
+\section{Intranet et Extranet}
+\label{sec:intranet-et-extranet}
+
+Utiliser les vues pour limiter l'information du \textsc{dns} vers le tout
+internet.  On choisira arbitrairement les machines à mettre dans
+l'extranet et l'intranet.
+
+
+\section{Grandeur et décadence du protocole DNS}
+\label{sec:grand-et-decad}
+
+De nombreux protocoles d'Internet comme le \textsc{dns} ont été conçus à
+une époque où quand quelque chose marchait s'était déjà bien et les gens
+étaient gentils...
+
+Avec les développements d'Internet et l'augmentation des puissances des
+ordinateurs pour faire des attaques, c'est problématique... \frownie
+
+On va mettre le protocole à l'épreuve en utilisant la boîte à outil de
+démonstration \texttt{dsniff}, en particulier avec l'outil
+\texttt{dnsspoof} pour rediriger par exemple des interrogations d'un site
+\textsc{www} vers un autre. Utilisation pratique : suppression d'images de
+publicité de certains sites ! \smiley
+
+Si vous êtes sur un réseau avec un commutateur (\emph{switch}), vous ne
+voyez pas normalement passer les paquets réseaux ne vous concernant pas.
+Dans ce cas on peut utiliser en plus \texttt{macof} ou \texttt{arpspoof}
+pour détourner le trafic \textsc{ip} vers votre machine malgré le
+commutateur.
+
+Imaginer ce type d'attaque avec des mandataires (\emph{proxy}) du style de
+celui disponible à \LienPDF{http://anon.free.anonymizer.com} mais bien
+méchants qui modifieraient ou enregistreraient les contenus, avec un bug
+ou du JavaScript pour modifier la ligne affichant l'\textsc{url}
+visitée...  \frownie{} Des exemples sont donnés dans des présentations du
+\LienPDF{http://www.clusif.asso.fr}.
+
+On pourrait imaginer des attaques plus offensives avec génération de
+réponses \textsc{dns} en aveugle avec forgeage des adresses de source des
+paquets dans les réponses.
+
+Clairement cela motive à utiliser des protocoles plus sécurisés comme
+\textsc{ip}sec, \textsc{dnssec}, \textsc{ssh} et \textsc{tls} (attention
+néanmoins aux subtilités de ces 2 derniers...).
+
+
+\section{DNSSEC}
+\label{sec:dnssec}
+
+Mettre en place une délégation de votre domaine que vous allez
+authentifier fortement en déployant \textsc{dnssec}. La clé publique de
+votre domaine servira de racine ou bien demander une signature par votre
+domaine parent (\texttt{enstb.org}).
+
+
+
+\section{Remise en état}
+\label{sec:remise-en-etat}
+
+À la fin du \textsc{tp} il faudrait remettre en état
+\texttt{/etc/resolv.conf} pour que l'utilisation du \textsc{dns}
+redevienne comme auparavant.
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

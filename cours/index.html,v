@@ -1,0 +1,603 @@
+head	1.13;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.13
+date	2009.03.30.14.45.50;	author keryell;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2005.10.07.09.04.59;	author keryell;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2004.11.15.17.03.51;	author keryell;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2004.03.11.12.45.36;	author keryell;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2004.03.11.12.45.05;	author keryell;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.09.04.08.29.11;	author keryell;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.09.02.12.31.10;	author keryell;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.01.13.17.28.33;	author keryell;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.10.23.16.42.55;	author keryell;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.09.24.06.01.26;	author keryell;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2001.10.05.13.39.50;	author keryell;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2001.10.05.13.14.24;	author keryell;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2000.09.25.11.45.34;	author keryell;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.13
+log
+@Rajouté lien vers nouvelle page.
+@
+text
+@<HEAD>
+<TITLE>Mes cours</TITLE>
+</HEAD>
+
+<BODY background="http://www.cri.ensmp.fr/pips/images/logo-pips-embossed-bright-small.jpg">
+
+<b> This page is obsolete. You should go
+<a href="http://perso.telecom-bretagne.eu/ronankeryell/cours-enseignements/">
+here</a> instead...<b>
+
+<p/>
+
+<h1>Des cours que j'ai l'occasion de donner..</h1>
+
+Copyright (c) 1986-2037 by <a
+                      href="mailto:Ronan.Keryell@@cri.ensmp.fr">Ronan.Keryell@@cri.ensmp.fr</a>.
+
+This material may be distributed only subject to the terms and conditions
+set forth in the Open Publication License, v1.0 or later (the latest
+version is presently available at <a
+href="http://www.opencontent.org/openpub/">http://www.opencontent.org/openpub/</a>).
+
+<p>
+
+Si vous améliorez ces cours, merci de m'envoyer vos modifications !
+:-)
+
+
+<h2> À l'<a href="http://www.enst-bretagne.fr/">École
+Nationale Supérieure des Télécommunications de
+Bretagne</a> :
+</h2>
+
+<ul>
+
+<li> Tronc commun 1ère année : le <a href="ENSTBr/1A/CST-101">premier
+cours (pipo) de l'année</a> pour faire peur aux élèves, repris à la base
+d'un cours de Bernard Prou <pre>:-)</pre>
+</li>
+<li> <a href="http://www.enst-bretagne.fr/enseignement/ingenieur/cursus/tronc_2a/">Tronc commun 2ème année</a> : <a
+href="http://www-info.enst-bretagne.fr/enseignement_info/">formation
+informatique</a>
+<ul>
+<li> ISI-423 (ex ISI-404, ex ISI-204, ex SST-201)
+: <a href="ENSTBr/2A/Systeme">Systèmes d'exploitation et leur
+support architectural</a> 11/2004
+</ul>
+
+<li> <a href="http://www-info.enst-bretagne.fr/Option_3A/option.html">Option Informatique
+des Télécommunications</a> (3ème
+année) :
+<ul>
+<li> <a href="Mines/Securite">Sécurité réseau, Unix
+et pare-feux/<i>firewalls</i></a> (le même qu'aux Mines et IAR2M)
+ 01-02/2003
+</ul>
+
+<li> <a href="http://www-fc.enst-bretagne.fr/">Formation Continue</a> :
+<ul>
+<li> <a href="ENSTBr/FC/Administration_Unix">Administration Unix - Le cas
+de Solaris 9</a> 24-26/9/2002
+</li>
+<li> Le <a href="IAR2M/BIND">système de nommage d'Internet (DNS) et
+BIND/named</a> (2 jours, 1-2/12/2003)
+</li>
+<li> Le langage <tt>perl</tt>
+</li>
+<li> XML
+</li>
+</ul>
+
+</ul>
+
+<h2> À l'<a href="http://www.isia.cma.fr/">Institut
+Supérieur d'Informatique et d'Automatique</a> :
+</h2>
+
+Module <a
+href="http://www.lit.enstb.org/~keryell/cours/MR2/IAHP/html">IAHP</a>
+(Informatique &amp; Architectures Hautes Performances, ex-APCO).
+
+<h2> Dans le <a
+href="http://www.irisa.fr/master">Master
+Recherche Informatique de Rennes 1</a> :</h2>
+
+Module <a
+href="http://www.lit.enstb.org/~keryell/cours/MR2/IAHP/html">IAHP</a>
+(Informatique À Hautes Performances)
+
+
+<h2> Dans le mastère <a href="http://www.iar2m.ensmp.fr">IAR2M</a> de l'<a
+href="http://www.ensmp.fr">École Nationale Supérieure des Mines de
+Paris</a> :</h2>
+
+<ul>
+
+<li> Sur <a href="IAR2M/Internet">Internet</a> en général (1
+jour, 6/12/1999)
+
+<li> L'<a href="IAR2M/Administration_Unix">administration Unix et Solaris
+7 en particulier</a> (2,3 jours, 25 et 26/01/2000)
+
+<li> La <a href="Mines/Securite">sécurité sous Unix et
+Internet</a> (idem optionnaires des Mines mais avec des TPs : 2 jours,
+dont une demi-journée de TP, 7/12/1999, 9/12/1999 après-midi, 10/12/1999
+matin)
+
+<li> <a href="IAR2M/PPP">Description et mise en oeuvre de PPP et tunnel
+PPP/ssh sous Unix (Solaris 7 en particulier)</a> (1,2 jours les 27 et
+28/01/2000)
+
+<li> Le <a href="IAR2M/BIND">système de nommage d'Internet (DNS) et
+BIND/named</a> (1,5 jours, 16-17/01/2003)
+
+<li> Le <a href="IAR2M/sendmail">courrier électronique et
+sendmail</a> (2 jours, 6 et 7/01/2000)
+
+<li> Le <a href="IAR2M/Swing">Swing graphique</a> de Java (1 jour)
+
+</ul>
+
+<h2> Dans l'option <a
+href="http://www.ensmp.fr/Fr/Formation/2emeCycle/IngCivil/Options/Option-SystemesInformation.html">Systèmes
+d'Information et Ingénierie informatique</a> de l'<a
+href="http://www.ensmp.fr">École Nationale Supérieure des
+Mines de Paris</a> :</h2>
+
+<ul>
+
+<li> L'architecture des ordinateurs (2 jours)
+
+<li> La <a href="Mines/Securite">sécurité sous Unix et
+Internet </a> (idem mastère IAR2M mais sans TP : 1 jours)
+
+</ul>
+
+<hr>
+
+En général les fichiers trans_expose.pdf sont ceux en
+couleur que j'utilise lors de la présentation et les fichiers
+trans_eleves.ps sont ceux que je distribue aux élèves et
+possèdent en fait 2 transparents noir et blanc par page papier.
+
+<P>
+
+Le texte des travaux pratiques éventuels se trouve dans TP.ps et
+les corrections dans corrige_TP.ps.
+
+<P>
+
+Les transparents sont faits avec le style seminar et hyperref pour LaTeX
+et transformés en PDF via gs (version 6.01 au moins...) pour
+affichage par projecteur vidéo avec acroread en mode pleine page
+avec transition entre les pages par
+« Glitter-Right-Down ».
+
+Typiquement mon Makefile ressemble à :
+<p>
+<pre>
+all : trans.pdf
+
+bib : article.bbl
+
+#INSTALL_DIR = $(HOME)/public_html/publications/ENSTBr_INFO_2000-001
+
+install :
+	mkdir -p $(INSTALL_DIR)
+	mv article.pdf $(INSTALL_DIR)
+
+BIBLIO = $(HOME)/TeX/bib/biblio.bib
+
+LATEX=frlatex
+
+%.dvi : %.tex
+	$(LATEX) $<
+
+%.bbl : %.tex $(BIBLIO)
+	bibtex $*
+
+%.ps : %.dvi
+	dvips $< -o
+
+
+%.pdf : %.ps
+	ps2pdf $<
+
+%.bib : %.bob
+	cherche_tox $*
+
+trans.ps : trans.dvi Makefile
+	# Faire le bon choix ici :
+	# PDF :
+	dvips -O-1mm,81mm -T205mm,290mm trans.dvi -o
+	# Copie papier double :
+	#dvips -O0mm,5mm trans -o
+	# Papier :
+	#dvips -O2.5mm,3mm trans.dvi -o
+
+trans.pdf : trans.ps Makefile
+	# Faire le bon choix ici :
+	## PDF :
+	gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -g8350x5900 -sOutputFile=$@@ trans.ps
+	## Copie papier double :
+	#ps2pdf $*.ps $*.pdf
+
+%.html : %.tex
+	latex $*
+	latex $*
+	latex $*
+	latex $*
+	tex4ht $*
+	t4ht $*
+	# Corrige les "»" :
+	sed 's/&#x00BB;/\»/g' $*.html > $*.html.$$ && mv $*.html.$$ $*.html
+
+clean:
+	rm  *.aux *.dvi *.log *.los *.pdf *.ps
+</pre>
+
+</BODY>
+@
+
+
+1.12
+log
+@Changé DEA en MR2.
+@
+text
+@d7 6
+d28 1
+@
+
+
+1.11
+log
+@Mis à jour intitulé cours système et date.
+Idem IAHP.
+@
+text
+@d72 1
+a72 1
+href="http://www.lit.enstb.org/~keryell/cours/DEA/IAHP/html">IAHP</a>
+d76 2
+a77 1
+href="http://www.ifsic.univ-rennes1.fr/formation_initiale/cycle3/dea/index.php">DEA Informatique de Rennes 1</a> :</h2>
+d80 1
+a80 1
+href="http://www.lit.enstb.org/~keryell/cours/DEA/IAHP/html">IAHP</a>
+@
+
+
+1.10
+log
+@Supprimé lien vers l'ISIA qui n'était plus à jour.
+@
+text
+@d9 1
+a9 1
+Copyright (c) 1986-2003 by <a
+d37 1
+a37 2
+<li> <a
+href="http://www-info.enst-bretagne.fr/tronc_commun/isi204.html">ISI-204</a>
+d39 1
+a39 1
+support architectural</a> 01-02/2003
+d73 1
+a73 1
+(Informatique À Hautes Performances).
+@
+
+
+1.9
+log
+@Réorganisation BIND
+@
+text
+@d74 1
+a74 2
+(Informatique À Hautes Performances). Description de <a
+href="http://www-isia.cma.fr/fr/enseignement/liste_cours/I%2034%20Architectures%20multiprocesseurs.htm">ce cours</a> à l'ISIA.
+@
+
+
+1.8
+log
+@Viré le mot "FauxCours" du nom du répertoire en CST-101 ! Plus discret... :-)
+@
+text
+@d52 1
+a52 2
+<li> <a href="http://www-fc.enst-bretagne.fr/">Formation Continue</a>
+(3ème année) :
+d57 3
+a63 2
+<li> DNS
+</li>
+@
+
+
+1.7
+log
+@Rajouté faux cours.
+@
+text
+@d29 1
+a29 1
+<li> Tronc commun 1ère année : le <a href="ENSTBr/1A/FauxCours">premier
+@
+
+
+1.6
+log
+@Mis à jour.
+Rajouté cours ISI204.
+@
+text
+@d19 1
+a19 1
+Si vous am&eacute;liorez ces cours, merci de m'envoyer vos modifications !
+d22 2
+a23 2
+<h2> &Agrave; l'<a href="http://www.enst-bretagne.fr/">&Eacute;cole
+Nationale Sup&eacute;rieure des T&eacute;l&eacute;communications de
+d29 5
+a33 1
+<li> <a href="http://www.enst-bretagne.fr/enseignement/ingenieur/cursus/tronc_2a/">Tronc commun 2&egrave;me ann&eacute;e</a> : <a
+d39 1
+a39 1
+: <a href="ENSTBr/2A/Systeme">Syst&egrave;mes d'exploitation et leur
+d44 2
+a45 2
+des Télécommunications</a> (3&egrave;me
+ann&eacute;e) :
+d47 2
+a48 2
+<li> <a href="Mines/Securite">S&eacute;curit&eacute; r&eacute;seau, Unix
+et pare-feux/<i>firewalls</i></a> (le m&ecirc;me qu'aux Mines et IAR2M)
+d53 1
+a53 1
+(3&egrave;me ann&eacute;e) :
+d68 2
+a69 2
+<h2> &Agrave; l'<a href="http://www.isia.cma.fr/">Institut
+Sup&eacute;rieur d'Informatique et d'Automatique</a> :
+d85 3
+a87 2
+<h2> Dans le mast&egrave;re <a
+href="http://www.iar2m.ensmp.fr">IAR2M</a> :</h2>
+d91 1
+a91 1
+<li> Sur <a href="IAR2M/Internet">Internet</a> en g&eacute;n&eacute;ral (1
+d97 1
+a97 1
+<li> La <a href="Mines/Securite">s&eacute;curit&eacute; sous Unix et
+d106 1
+a106 1
+<li> Le <a href="IAR2M/BIND">syst&egrave;me de nommage d'Internet (DNS) et
+d109 1
+a109 1
+<li> Le <a href="IAR2M/sendmail">courrier &eacute;lectronique et
+d117 3
+a119 3
+href="http://www.ensmp.fr/Fr/Formation/2emeCycle/IngCivil/Options/Option-SystemesInformation.html">Syst&egrave;mes
+d'Information et Ing&eacute;nierie informatique</a> de l'<a
+href="http://www.ensmp.fr">&Eacute;cole Nationale Sup&eacute;rieure des
+d126 2
+a127 2
+<li> La <a href="Mines/Securite">s&eacute;curit&eacute; sous Unix et
+Internet </a> (idem mast&egrave;re IAR2M mais sans TP : 1 jours)
+d133 4
+a136 4
+En g&eacute;n&eacute;ral les fichiers trans_expose.pdf sont ceux en
+couleur que j'utilise lors de la pr&eacute;sentation et les fichiers
+trans_eleves.ps sont ceux que je distribue aux &eacute;l&egrave;ves et
+poss&egrave;dent en fait 2 transparents noir et blanc par page papier.
+d140 1
+a140 1
+Le texte des travaux pratiques &eacute;ventuels se trouve dans TP.ps et
+d146 2
+a147 2
+et transform&eacute;s en PDF via gs (version 6.01 au moins...) pour
+affichage par projecteur vid&eacute;o avec acroread en mode pleine page
+d149 1
+a149 1
+&laquo;&nbsp;Glitter-Right-Down&nbsp;&raquo;.
+d208 1
+a208 1
+	sed 's/&#x00BB;/\&raquo;/g' $*.html > $*.html.$$ && mv $*.html.$$ $*.html
+@
+
+
+1.5
+log
+@Corrigé ISIA et rajouté DEA Rennes 1.
+@
+text
+@d9 1
+a9 1
+Copyright (c) 1986-2002 by <a
+d34 3
+a36 2
+href="http://www-info.enst-bretagne.fr/enseignement_info/SST_201/">SST-201</a>
+: Syst&egrave;mes d'exploitation et leur support architectural
+d44 2
+a45 2
+et pare-feux/<i>firewalls</i></a> (le m&ecirc;me qu'aux Mines et IAR2M
+mais sans TP et sur un jour. 27 et 28/9/2000)
+d54 2
+d58 2
+d102 1
+a102 1
+BIND/named</a> (2 jours, 4 et 5/01/2000)
+@
+
+
+1.4
+log
+@Mis à jour FC Solaris.
+@
+text
+@d60 1
+a60 5
+Sup&eacute;rieur d'Informatique et d'Automatique</a> je donne un cours
+d'&laquo;&nbsp;<a
+href="http://www.isia.cma.fr/fr/enseign/program/info/a_I34.html">Architectures
+parall&egrave;les, parall&eacute;lisme, compilation et programmation
+parall&egrave;le</a>&nbsp;&raquo; :
+d63 11
+a73 2
+<ul>
+<li> Introduction
+a74 14
+<li> L'architecture avanc&eacute;e des ordinateurs et parall&eacute;lisme
+(2 jours)
+
+<li> Optimisation de codes
+
+<li> OpenMP : j'utilise le <a
+    href="http://www.openmp.org/presentations/index.cgi?sc99_tutorial">tutorial
+    sur OpenMP de Tim Mattson et Rudolf Eigenmann à SC'99</a> (je
+    visualise le PowerPoint avec StarOffice)
+
+<li> Programmation parall&egrave;le (HPF, HyperC et MPI-2 sur SP-2) (2
+    jours)
+
+</ul>
+@
+
+
+1.3
+log
+@Rajouté la FC.
+@
+text
+@d51 1
+a51 1
+de Solaris 8</a> 10-12/9/2001
+@
+
+
+1.2
+log
+@Modifs ISIA.
+@
+text
+@d9 1
+a9 1
+Copyright (c) 1986-2000 by <a
+d14 2
+a15 1
+version is presently available at http://www.opencontent.org/openpub/).
+d44 1
+a44 1
+mais sans TP et sur un jour. 27 et 28 septembre 2000)
+d47 8
+a54 1
+
+a56 13
+<h2> Dans l'option <a
+href="http://www.ensmp.fr/Fr/Formation/2emeCycle/IngCivil/Options/Option-SystemesInformation.html">Syst&egrave;mes
+d'Information et Ing&eacute;nierie informatique</a> de l'<a
+href="http://www.ensmp.fr">&Eacute;cole Nationale Sup&eacute;rieure des
+Mines de Paris</a> :</h2>
+
+<ul>
+
+<li> L'architecture des ordinateurs (2 jours)
+
+<li> La <a href="Mines/Securite">s&eacute;curit&eacute; sous Unix et
+Internet </a> (idem mast&egrave;re IAR2M mais sans TP : 1 jours)
+
+d112 15
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d64 26
+a116 17
+
+</ul>
+
+<h2> &Agrave; l'<a
+href="http://www.isia.cma.fr/">Institut Sup&eacute;rieur d'Informatique et
+d'Automatique</a> :
+</h2>
+
+<ul>
+
+<li> L'architecture avanc&eacute;e des ordinateurs et parall&eacute;lisme
+(2 jours)
+
+<li> Optimisation de codes
+
+<li> Programmation parall&egrave;le (HPF, HyperC et MPI-2 sur SP-2) (2
+jours)
+@
