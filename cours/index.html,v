@@ -1,7 +1,8 @@
 head	1.13;
 access;
 symbols;
-locks; strict;
+locks
+	keryell:1.13; strict;
 comment	@# @;
 
 
