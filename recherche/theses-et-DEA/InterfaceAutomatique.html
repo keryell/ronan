@@ -1,0 +1,129 @@
+<!DOCTYPE HTML SYSTEM "legacy.dtd">
+<html>
+<head>
+  <title>Sujet: Interfa&ccedil;age automatique de logiciels
+scientifiques</title>
+</head>
+<body>
+<h1>
+Sujet: Interfa&ccedil;age automatique de logiciels scientifiques
+</h1>
+<h2>1 Descriptif du projet&nbsp;</h2>
+R&eacute;guli&egrave;rement on demande au d&eacute;partement de
+concevoir
+une interface graphique pour un logiciel scientifique (par exemple pour
+l'IFREMER,...) et on est amen&eacute; &agrave; la faire &agrave; partir
+de
+rien, dans le meilleur des cas avec un outil WYSIMOLWYG (What You See
+Is
+More Or Less What You Get). Chaque modification dans le format des
+donn&eacute;es implique une modification profonde de l'interface, ce
+qui
+n'est pas tr&egrave;s reluisant intellectuellement.
+<p>On se propose donc ici de prendre de la hauteur en automatisant le
+processus. &Agrave; partir de la grammaire utilis&eacute;e dans le
+programme scientifique utilisant les donn&eacute;es (typiquement en
+lex/yacc pour un programme en C) on va g&eacute;n&eacute;rer un parser
+Java Jlex /CUP &agrave; partir d'un parser lui-m&ecirc;me en Jlex et
+CUP.
+&Agrave; partir de l'arbre syntaxique de la grammaire Java lex/yacc on
+va
+abstraire les donn&eacute;es et g&eacute;n&eacute;rer le programme
+source
+d'une hi&eacute;rarchie de Beans capable d'&eacute;diter ces
+donn&eacute;es avec&nbsp; un pattern MVC (mod&egrave;le, vue,
+contr&ocirc;leur) et de les remettre dans le format attendu par le
+logiciel scientifique.
+</p>
+<p>Tout l'aspect rendu physique pourra &ecirc;tre pr&eacute;cis&eacute;
+par
+sur-classage des classes g&eacute;n&eacute;r&eacute;es, par
+programmation
+ou usage d'un outil d'&eacute;dition de Beans, ou encore par la
+d&eacute;finition d'un langage de directives d&eacute;corant la
+grammaire
+initiale et contenant des ordres de placement graphique par exemple.
+</p>
+<p>On testera les concepts sur le programme de simulation de
+rivi&egrave;res
+ProSe qui est &eacute;crit en C et dont le parser est en flex/bison. On
+pourra aussi creuser l'aspect pr&eacute;sentation automatique des
+donn&eacute;es en sortie du programme, mais cela risque de demander
+plus
+de temps.
+</p>
+<p>La bonne nouvelle : des &eacute;l&egrave;ves de l'ENST Bretagne ont
+d&eacute;j&agrave; travaill&eacute; dessus (PAP et projet 3A).
+</p>
+<p>La mauvaise nouvelle : ils n'en sont pas arriv&eacute; au bout.
+</p>
+<p>Votre mission, si vous l'acceptez, est de mener &agrave; bien ce
+projet et
+de sortir victorieux malgr&eacute; les m&eacute;chantes
+difficult&eacute;s
+qui s&egrave;meront des embuches sur le parcours.
+<br>
+</p>
+<p>Ce projet sera fait en collaboration avec St&eacute;phanie Even
+(Centre
+d'Informatique G&eacute;ologique de l'&Eacute;cole des Mines de Paris)
+pour
+l'application au logiciel de simulation de rivi&egrave;re ProSe et
+Alain
+Plantec (Laboratoire Informatique de l'Universit&eacute; de Bretagne
+Occidentale) pour le couplage &agrave; un syst&egrave;me de
+sch&eacute;ma de donn&eacute;es.<br>
+</p>
+<p>Pour plus de d&eacute;tail sur le sujet : <a
+ href="http://enstb.org/%7Ekeryell/recherche/theses-et-DEA/GABI-details/">http://enstb.org/~keryell/recherche/theses-et-DEA/GABI-details</a><br>
+</p>
+<h2>2 Etapes du projet</h2>
+Terminer un syst&egrave;me g&eacute;n&eacute;rant automatiquement le
+code
+d'une interface graphique Java sous forme de Beans &agrave; partir
+d'une
+grammaire lex/yacc d&eacute;crivant les donn&eacute;es du programme.
+L'interface ainsi g&eacute;n&eacute;r&eacute;e peut &ecirc;tre soit
+sp&eacute;cialis&eacute;e par un outil d'&eacute;dition de Beans
+classique, soit par programmation et h&eacute;ritage, soit en
+&eacute;tendant la grammaire d'origine avec des instructions &agrave;
+d&eacute;finir.<br>
+Ensuite, comme on aura abstrait la mod&eacute;lisation des
+donn&eacute;es, on
+g&eacute;n&egrave;rera des traducteurs automatiques de et vers XML en
+g&eacute;n&eacute;rant les
+DTD et Xschema correspondants.<br>
+<h2>3 R&eacute;sultats attendus</h2>
+<ul>
+  <li> Un logiciel libre fonctionnel utilisant Java, des parsers ; </li>
+  <li> le tout doit &ecirc;tre sous subversion et autoconf/automake ; </li>
+  <li> une documentation exemplaire ; </li>
+  <li> faire une d&eacute;monstration avec le programme ProSe ;</li>
+  <li>la publication d'un article sur le projet.<br>
+  </li>
+</ul>
+Ce travail n&eacute;cessite des capacit&eacute;s de
+m&eacute;ta-abstraction ( :-) ) et de programmation en Java et parsers.
+Un
+soin tout particulier &agrave; la conception et &agrave; la
+documentation
+sera demand&eacute;.
+<h2>4 Autres &eacute;l&eacute;ments</h2>
+Savoir faire en compilation, g&eacute;n&eacute;ration de code, parsers,
+pretty-printers, repr&eacute;sentation abstraite, conception et
+programmation Java. Mod&eacute;lisation, programmation objet,
+compilation,
+interfaces graphiques.
+<p>Les rapports des &eacute;l&egrave;ves en PAP et 3A ayant
+travaill&eacute;
+sur le projet.
+</p>
+<p>Ordinateurs sous Linux/Debian, Emacs, entrep&ocirc;t svn.
+</p>
+<hr>Contact : <a href="http://www-info.enst-bretagne.fr/%7Ekeryell">Ronan
+Keryell - 02 98 00 14 15</a> - <a
+ href="mailto:Ronan.Keryell@enst-bretagne.fr">Ronan.Keryell@enst-bretagne.fr</a>
+<hr><code> $Header: /users/lit/keryell/ENST-Bretagne/3A/DEA/2005-2006/Sujets/RCS/InterfaceAutomatique.html,v 1.3 2005/10/10 10:29:08 keryell Exp $
+</code>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Generator" content="Microsoft Word 97">
+   <meta name="Template" content="C:\Program Files\Microsoft Office\Office\html.dot">
+   <meta name="GENERATOR" content="Mozilla/4.61 [en] (WinNT; I) [Netscape]">
+   <title>Ardoise (Travail personnel IT/ISIC 1999-2000)</title>
+<!--  Date de cr&eacute;ation : 13-07-99  -->
+<!--  Date de cr&eacute;ation : 13-07-99  -->
+<!--  Auteur : Gérald Ouvradou  -->
+<!--  Auteur : Gérald Ouvradou  -->
+<!--  Droit d'acces :  tous, exterieur -->
+<!--  Droit d'acces :  tous, exterieur -->
+<!--  Periode de validite :  -->
+<!--  Periode de validite :  -->
+<!--  Responsable administration : ?-->
+<!--  Responsable administration : ?-->
+<!--  Derniere mise a jour : -->
+<!--  Derniere mise a jour : -->
+</head>
+<body text="#000080" bgcolor="#FFFFFF" link="#800000" vlink="#808080">
+<a NAME="top"></a>
+<br>&nbsp;
+<table BORDER=0 CELLSPACING=0 WIDTH="677" >
+<tr>
+<td VALIGN=CENTER WIDTH="26%">
+<center>
+<h2>
+<img SRC="http://www.enst-bretagne.fr/resources/logos/lECw153x81.gif" NOSAVE height=81 width=153></h2></center>
+</td>
+
+<td VALIGN=CENTER ROWSPAN="2" WIDTH="74%">
+<center>
+<h2>
+Projet IT/ISIC 99-00&nbsp;</h2></center>
+
+<center>
+<h2>
+<font size=+1>Projet <font color="#009900">P12</font>&nbsp;</font></h2></center>
+
+<center>
+<h2>
+<b><font color="#009900">&laquo; Ardoise &raquo;</font></b></h2></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=CENTER WIDTH="26%">
+<center><a href="http://www-info.enst-bretagne.fr/">D&eacute;partement
+Informatique</a></center>
+</td>
+</tr>
+</table>
+
+<hr>
+<h2>
+Descriptif succinct de l'&eacute;tude</h2>
+
+<ul>
+<h3>
+Objectifs <font size=-1>(3 lignes max)</font></h3>
+<font color="#009900">Mise au point d'un ex&eacute;cutif de s&eacute;quencement,
+de reconfiguration dynamique et un driver Linux pour la machine Ardoise</font>
+<h3>
+Mots cl&eacute;s des domaines scientifique et technique concern&eacute;s</h3>
+<font color="#009900">Syst&egrave;me d'exploitation embarqu&eacute; temps
+r&eacute;el, automate, reconfiguration dynamique de FPGA.</font>
+<h3>
+Nom des encadrants</h3>
+<font color="#009900">G&eacute;rald Ouvradou, Ronan Keryell</font>
+<h3>
+Nombre d'&eacute;tudiant(s) pr&eacute;vu : <font color="#009900">1-2</font></h3>
+</ul>
+
+<h2>
+
+<hr WIDTH="100%">Contexte de l'&eacute;tude</h2>
+
+<ul>
+<h3>
+Liens avec les activit&eacute;s R&amp;D et/ou p&eacute;dagogiques du d&eacute;partement
+Informatique</h3>
+<font color="#009900">Ce travail fait partie du projet Ardoise auquel participe
+le d&eacute;partement et qui a pour but de construire la machine de traitement
+d'images et de signal Ardoise (FPGA de logique reconfigurable avec des
+m&eacute;moires externes) et son environnement de programmation.</font>
+<h3>
+Nature des enseignements du cursus des &eacute;l&egrave;ves auxquels se
+rattache l'&eacute;tude</h3>
+<font color="#009900">Syst&egrave;me d'exploitation, programmation C.</font>
+<h3>
+Particularit&eacute;s du travail et/ou comp&eacute;tences attendues de
+l'&eacute;tudiant</h3>
+<font color="#009900">Ce travail n&eacute;cessite des comp&eacute;tences
+en syst&egrave;me d'exploitation, en bidouille, voire en compilation.</font>
+<h3>
+Ce que ce travail apportera en retour &agrave; l'&eacute;tudiant</h3>
+<font color="#009900">Comp&eacute;tences en programmation syst&egrave;me
+temps r&eacute;el Linux interne.</font></ul>
+
+<h2>
+
+<hr WIDTH="100%">Descriptif d&eacute;taill&eacute; de l'&eacute;tude <font size=-1>(10
+lignes max)</font></h2>
+
+<ul><font color="#009900">Le d&eacute;partement est impliqu&eacute; dans
+le d&eacute;veloppement de l'environnement logiciel de la machine Ardoise,
+en particulier dans le syst&egrave;me de contr&ocirc;le de la machine :
+l'ex&eacute;cutif qui g&egrave;re le d&eacute;roulement des phases de calcul
+et des phases de reconfiguration dynamique des fonctionnalit&eacute;s du
+mat&eacute;riel.</font>
+<p><font color="#009900">Il s'agit donc de mettre en place les &eacute;l&eacute;ments
+suivants :</font>
+<ul>
+<li>
+<font color="#33CC00">un conducteur de mat&eacute;riel sous Linux permettant
+de faire un contr&ocirc;le fin de la machine</font></li>
+
+<li>
+<font color="#33CC00">un outil permettant de faire l'&eacute;dition de
+liens d'un programme Ardoise et de le charger dans le noyau Linux</font></li>
+
+<li>
+<font color="#33CC00">les routines permettant de charger des fichiers de
+configuration de FPGA &agrave; des zones bien d&eacute;termin&eacute;es
+d'Ardoise</font></li>
+
+<li>
+<font color="#33CC00">les routines permettant de d&eacute;marrer et contr&ocirc;ler
+des threads de gestion d'ardoise</font></li>
+
+<li>
+<font color="#33CC00">si le temps le permet &eacute;tudier une utilisation
+d'une extension de Linux temps r&eacute;el pour faire un contr&ocirc;le
+plus r&eacute;actif de la machine Ardoise</font></li>
+</ul>
+</ul>
+
+<h2>
+
+<hr WIDTH="100%">Modalit&eacute;s du travail</h2>
+
+<ul>
+<h3>
+<b><font size=+1>Voir &eacute;galement&nbsp; <i><a href="http://bscw.enst-bretagne.fr/bscw/bscw.cgi/d422216/TPE3Projet3A.htm">"Qu'est
+ce qu'un projet IT-ISIC ?"</a></i></font></b></h3>
+
+<h3>
+Ressources pour r&eacute;aliser le travail (doc, machines, logiciels,...)</h3>
+<font color="#009900">Un PC, une carte Ardoise, Linux et ses versions temps
+r&eacute;el, le site d'Ardoise.</font>
+<h3>
+Ech&eacute;ances et produits attendus (doc, logiciel, ...)</h3>
+<font color="#009900">Un syst&egrave;me fonctionnel.</font>
+<br><font color="#009900">Un documentation suffisante pour les programmeur
+d'ardoise.</font>
+<h3>
+Modalit&eacute;s d'&eacute;valuation du travail</h3>
+<font color="#66FF99">Note globale au projet.</font>
+<p>Voir&nbsp;<a href="http://bscw.enst-bretagne.fr/bscw/bscw.cgi/d396272/ModalitesEvaluationTravailPerso-V1.html">
+la fiche d'&eacute;valuation des travaux personnels IT/ISIC</a></ul>
+
+<hr>
+<dl>
+<dt>
+<font size=+1><font color="#000000">PJ-xx</font> : </font><b><font color="#009900">&laquo;
+Ardoise &raquo;</font></b></dt>
+
+<dt>
+<b>El&egrave;ve(s) ayant choisi le sujet :</b></dt>
+
+<dt>
+<b>Date de remise du plan de travail :</b></dt>
+
+<dt>
+<b>Date de remise du rapport final :</b></dt>
+
+<dt>
+<b>Date pr&eacute;visionnelle de la soutenance (sem y) :</b></dt>
+
+<dt>
+<b><a href="http://bscw.enst-bretagne.fr/bscw/bscw.cgi/d396232/FicheDeNotationTravailPersoIT-ISIC">Lien
+vers la fiche de notation du travail</a></b></dt>
+
+<dt>
+<b>Personnes ext&eacute;rieure au d&eacute;partement &agrave; informer
+de la soutenance :</b></dt>
+</dl>
+
+<hr>
+<br>&nbsp;
+<br>&nbsp;
+</body>
+</html>

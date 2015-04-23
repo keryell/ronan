@@ -1,0 +1,248 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.51 [en] (X11; I; SunOS 5.7 sun4m) [Netscape]">
+</head>
+<body background="http://www.cri.ensmp.fr/~keryell/images/etau-bleute-moyen.gif">
+
+<title>Action incitative ARP-ISIS</title>
+
+Je travaille sur les architectures reconfigurables dans le cadre de l'<a
+href="http://www-etis.ensea.fr/Francais/AxesArchi/ai/AI.html">action
+incitative Syst&egrave;mes Reconfigurables et Traitement de l'Image</a>
+inter-GdR du <a href="http://www.cnrs.fr">CNRS</a> entre <a
+href="http://www.ens-lyon.fr/LIP/ARP">ARP (Architecture, R&eacute;seaux et
+syst&egrave;mes, Parall&eacute;lisme)</a>/<a
+href="http://www.irisa.fr/arp_as">AS (Architectures
+Sp&eacute;cialis&eacute;es)</a> et <a href="http://www-isis.enst.fr">ISIS
+(Information, Signal, Images et Vision)</a> les
+<p>
+
+R&eacute;unions :
+<ul>
+<li>
+<a href="http://www.irisa.fr/arp_as/Reunion/CR_27jan99.html">27 janvier
+1999</a></li>
+<li>
+<a href="reunions/1999-07-07">7 juillet
+1999</a></li>
+</ul>
+
+Les &eacute;quipes d'ARP les plus impliqu&eacute;es :
+<ul>
+<li>
+ARMOR-RSDT
+</li>
+<li>
+GSA/LASTI
+</li>
+<li>
+Info/ENSTBr
+</li>
+<li>
+COSI/IRISA
+</li>
+</ul>
+
+Les &eacute;quipes d'ISIS les plus impliqu&eacute;es :
+<ul>
+<li>
+&agrave; compl&eacute;ter...
+</li>
+</ul>
+
+<p>Quelques liens int&eacute;ressants pour le projet :
+<ul>
+<li>
+<a href="pres0499.ps">Présentation de la machine Ardoise</a> (En format
+HTML aussi ?)</li>
+
+<li>
+<a href="Ardoise/1999-06">Description fine la machine Ardoise</a>
+(sch&eacute;mas,...)</li>
+
+<li>
+L'<a href="Applications/Segmentation">Application de segmentation d'images
+qui est cibl&eacute;e</a> (sources C, VHDL et pr&eacute;sentation)</li>
+
+<li>
+<a href="http://www-isis.enst.fr/Documents/PresentationGDR/Actions/Reconfig.html">Proposition
+originale de l'action incitative</a></li>
+
+<li>
+<a href="http://www-rocq.inria.fr/~lavarenn/ardoise/maillist.html">Liste
+de discussion du projet Ardoise</a></li>
+
+<li>
+<a href="http://www-etis.ensea.fr/~archi/TempsReel.html#Chaine">Cha&icirc;ne
+de segmentation adaptative &agrave; base de FPGA reconfigurables tr&egrave;s
+dynamiquement </a>&agrave; l'ETIS/ENSEA
+</li>
+
+<li>
+<A HREF="http://www.sciam.com/0697issue/0697villasenor.html"
+ADD_DATE="927872509" LAST_VISIT="927872494"
+LAST_MODIFIED="927872494">Scientific American: Article: Configurable
+Computing: June 1997</A>
+</li>
+
+<li>
+<a href="http://splish.ee.byu.edu/">BYU Electrical Engineering's
+Configurable Computing Laboratory</a> et le langage <a
+href="http://jhdl.ee.byu.edu">JHDL</a>, <A HREF="http://splish.ee.byu.edu/bib/bibpage.html" ADD_DATE="927873708" LAST_VISIT="927873684" LAST_MODIFIED="927873684">BYU Reconfigurable Logic Bibliography</A></li>
+
+<li>
+<A HREF="http://www.icsl.ucla.edu/Reconfigurable/reconfig.html"
+ADD_DATE="927874002" LAST_VISIT="927873977" LAST_MODIFIED="927873977">UCLA
+Dynamic Computing Home Page</A>
+</li>
+
+<li>
+<A HREF="http://www.isi.edu/asd/defacto/">DEFACTO: Design Environment for
+Adaptive Computing Technology</A>
+</li>
+
+<li>
+<A HREF="http://www.cs.berkeley.edu/Research/Projects/brass/projects.html"
+ADD_DATE="927875637" LAST_VISIT="927875577"
+LAST_MODIFIED="927875577">Berkeley Reconfigurable Architectures, Systems,
+and Software</A>
+</li>
+
+<li>
+<A HREF="http://dec.bournemouth.ac.uk/drhw_lib/" ADD_DATE="927874039"
+LAST_VISIT="927874013" LAST_MODIFIED="927874013">Bournemouth University's
+Dynamically Reconfigurable Hardware WWW Library</A>
+</li>
+
+<li>
+<A HREF="http://xputers.informatik.uni-kl.de/FAQ-Pages/FAQaFQA.html"
+ADD_DATE="927876106" LAST_VISIT="927876090"
+LAST_MODIFIED="927876090">Xputer - FAQ & FQA - Xputer Lab Kaiserslautern -
+Reconfigurable Computing with KressArray</A>
+</li>
+
+<li>
+<A HREF="http://www.ece.cmu.edu/research/piperench/" ADD_DATE="927895198"
+LAST_VISIT="927895172" LAST_MODIFIED="927895172">PipeRench Reconfigurable
+Computing Project | CMU</A>
+</li>
+
+<li>
+<A HREF="http://www.cma.ensmp.fr/jazz/" ADD_DATE="927895275"
+LAST_VISIT="930075531" LAST_MODIFIED="927895248">The Jazz home page</A>
+</li>
+
+<li>
+<A HREF="http://www.netrino.com/Articles/RCPrimer/" ADD_DATE="927872803"
+LAST_VISIT="927872709" LAST_MODIFIED="927872709">A Reconfigurable
+Computing Primer</A>
+</li>
+
+<li>
+<A HREF="http://www.acm.org/crossroads/xrds5-3/rcconcept.html"
+ADD_DATE="927894820" LAST_VISIT="927894780"
+LAST_MODIFIED="927894780">Architectures and Compilers to Support
+Reconfigurable Computing</A>
+</li>
+
+<li> <A HREF="http://maarc.usc.edu">MAARC Models, Algorithms and
+                   Architectures for Reconfigurable Computing</a>
+</li>
+
+<li> <A
+HREF="http://www.dcs.ed.ac.uk/home/rep/selfTimedFPGA/selfTimedFPGA.html">Self-Timed
+FPGA Systems</a>
+</li>
+
+<li>
+<A HREF="http://www.io.com/~guccione/HW_list.html" ADD_DATE="927723938"
+LAST_VISIT="927723892" LAST_MODIFIED="927723892">List of FPGA-based
+Computing Machines</A>
+</li>
+
+<li>
+<A HREF="http://www.io.com/~guccione/biblio.html" ADD_DATE="927873681"
+LAST_VISIT="927873659" LAST_MODIFIED="927873659">On-Line
+Bibliographies</A>
+</li>
+
+<li>
+<a href="http://www.eecs.wsu.edu/~reconfig/links.html">Reconfigurable
+Computing Related Links</a></li>
+
+<li>
+<a href="http://www.io.com/~guccione/HW_list.html">List of FPGA-based Computing Machines</a></li>
+
+<li>
+<A HREF="http://pw1.netcom.com/~optmagic/reconfigure/whatisrc.html"
+ADD_DATE="927872488" LAST_VISIT="927872477" LAST_MODIFIED="927872477">What
+Is Reconfigurable Computing?</A>
+</li>
+
+<li>
+<A HREF="http://www.eet.com/news/98/1009news/computing.html"
+ADD_DATE="927873523" LAST_VISIT="927873491"
+LAST_MODIFIED="927873491">Reconfigurable-computing engine attacks
+verification bottleneck</A>
+</li>
+
+<li>
+<a href="http://www.atmel.com/atmel/products/prod3.htm">FPGAs d'ATMEL</a>
+utilis&eacute;s dans Ardoise</li>
+
+</ul>
+
+<p>
+
+Expos&eacute;s internes :
+<ul>
+
+<li>
+&laquo; &Eacute;tat de l'art du calcul sur support reconfigurable
+dynamiquement &raquo;, 4 juin 1999 :
+<ul>
+<li>
+<a
+href="http://perso-info.enst-bretagne.fr/~ouvradou/Expo-3-06-99-V5/ppframe.htm">&Eacute;tat
+de l'art du calcul sur support reconfigurable dynamiquement</a>
+(G&eacute;rald Ouvradou)
+</li>
+
+<li>
+<a
+href="http://www.cri.ensmp.fr/~keryell/recherche/ARP-ISIS/exposes/DI-1999-06-04/Users/Lorinc/expose/index.htm">Classification
+des systèmes reconfigurables selon Virtual Computer Corporation</a> (L&ouml;rinc Antoni)
+</li>
+
+<li>
+<a
+href="http://www.cri.ensmp.fr/~keryell/recherche/ARP-ISIS/exposes/DI-1999-06-04/trans-RK.pdf">Quelques
+perspectives et éléments de R&D</a> (Ronan Keryell)
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+
+Mettre &agrave; jour la page de l'action qui a beaucoup de pages &agrave;
+compl&eacute;ter...
+
+<p>
+Les sites ISIS et ARP ne pointent pas vers la même chose pour l'action
+incitative.
+
+<p>
+
+Mettre une page vers les applications visées. On est en attente
+d'applications...
+
+<p>
+
+Rajouter des liens vers les pages des &eacute;quipes d&eacute;crivant
+leurs avancements.
+
+</body>
+</html>

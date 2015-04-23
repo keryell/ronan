@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>EPips</title>
+</head>
+<body>
+<h1>EPips : &eacute;diteur s&eacute;mantique pour infrastructure de
+transformation de programme</h1>
+<h2>Contexte</h2>
+De nombreux projets font appel &agrave; des environnements de
+transformation de programme en ing&eacute;ni&eacute;rie informatique
+logicielle ou mat&eacute;rielle : optimisation de programmes,
+parall&eacute;lisation automatique,
+r&eacute;tro-ing&eacute;ni&eacute;rie, transformation de
+mod&egrave;les, refactoring, synth&egrave;se architecturale, etc.<br>
+Ces environnements doivent combiner &agrave; la fois une interface
+(souvent graphique) avec le moteur interne et une interface de rendu du
+travail effectu&eacute; par le moteur. En plus in faut faciliter la vie
+de l'utilisateur en affichant de nombreuses informations
+s&eacute;mantiques sur les objets manipul&eacute;s par l'infrastructure
+(programmes avec des lignes de code, des variables typ&eacute;es, des
+pr&eacute;dicats...).<br>
+D'un autre c&ocirc;t&eacute; il existe des &eacute;diteurs de texte
+puissants et programmables tels qu'Emacs avec de nombreux modes
+sp&eacute;cialis&eacute;s pour traiter diff&eacute;rents types de
+textes et de donn&eacute;es (sources en diff&eacute;rents langages)
+mais aussi interagir avec des processus, des protocoles r&eacute;seaux
+(courier &eacute;lectronique...)<br>
+<h2>PIPS</h2>
+<a href="http://www.cri.ensmp.fr/pips">PIPS</a> est un environnement de
+d'analyse et de transformations de programmes d&eacute;velopp&eacute;
+&agrave; l'<a href="http://www.cri.ensmp.fr/">&Eacute;cole des Mines de
+Paris</a> qui prend en entr&eacute;e des programmes &eacute;crits en
+diff&eacute;rents dialectes de Fortran ou de C et g&eacute;n&egrave;re
+du Fortran, du C ou du SmallTalk dans des dialectes plus ou moins
+parall&egrave;les (MPI, PVM, HPF, OpenMP...). PIPS comprend de
+nombreuses phases d'analyses telles que le calcul de graphes de
+d&eacute;pendances interproc&eacute;duraux, de pr&eacute;dicats sur les
+variables enti&egrave;res des programmes, permettant de d&eacute;tecter
+certaines propri&eacute;t&eacute;s et d'appliquer des phases
+d'optimisations de programmes, de parall&eacute;lisation, etc. <br>
+L'interface utilisateur la plus expressive actuellement est une
+interface de type shell <span style="font-family: monospace;">tpips</span>
+qui est un peu brut de fonderie pour les utilisateurs lambda.
+<h2>EPips</h2>
+Il existe aussi un prototype <span style="font-family: monospace;">epips</span>
+de mode GNU/Emacs &eacute;crit en EmacsLISP avec des greffons dans PIPS
+en C et une vieille biblioth&egrave;que graphique.<br>
+Il s'agit dans ce projet, apr&egrave;s avoir fait un &eacute;tat de
+l'art du domaine et fait la synth&egrave;se du genre d'informations que
+les utilisateurs veulent avoir de d&eacute;velopper une nouvelle
+version d'EPips au dessus de <span style="font-family: monospace;">tpips</span>
+enti&egrave;rement en EmacsLISP au niveau d'Emacs 22 et en C au niveau de
+PIPS.<br>
+Le syst&egrave;me sera capable d'afficher simultan&eacute;ment de
+nombreuses informations orient&eacute;es lignes qui seront
+calcul&eacute;es ou cach&eacute;es &agrave; la demande ainsi que
+d'attacher des informations s&eacute;mantiques &agrave; tout objet
+textuel qui seront affichables par menu contectuel, bulle d'aide,
+colorisation, etc. Il faudra étudier l'interaction avec les modes natifs d'Emacs.<br>
+<h2>Bibliographie</h2>
+PIPS : <a href="http://www.cri.ensmp.fr/pips">http://www.cri.ensmp.fr/pips</a><br>
+<br>
+<span style="font-style: normal;">[ACCIJK96]</span><i>
+PIPS: a Workbench for Program Parallelization and Optimization</i><br>
+presented
+at <b>European Parallel Tool Meeting 1996 (EPTM'96)</b>, Corinne
+Ancourt, Fabien Coelho, B&eacute;atrice Creusillet, Fran&ccedil;ois
+Irigoin, Pierre Jouvelot and Ronan Keryell.<br>
+<br>
+<h2>Contact</h2>
+<p><a href="http://www-info.enst-bretagne.fr/%7Ekeryell">Ronan
+Keryell - 02 98 00 14 15</a> - <a
+ href="mailto:Ronan.Keryell@enst-bretagne.fr">Ronan.Keryell@enst-bretagne.fr</a>
+</p>
+<hr>
+<code>
+$Header: /users/lit/keryell/ENST-Bretagne/3A/DEA/2005-2006/Sujets/RCS/EPips.html,v 1.2 2005/10/10 19:44:32 keryell Exp $
+</code><br>
+</body>
+</html>

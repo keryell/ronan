@@ -1,0 +1,71 @@
+###############################################
+# definitions pour le traitement sur DSP/X-CIM
+###############################################
+
+# DSP 
+#####
+#CC  = cl30
+#LNK = lnk30
+#RM = del
+#CFLAGS = -q -g -v40 -mr -I\corekit\corelib
+#LNKFLAGS = -c
+#DEFINE_DSP = -dPAL -dTRIGERR -d_DSP_
+#LIBS_DSP = videodev.cmd
+#SRC_DSP = stat.c graph.c esiee.c videodev.c
+#PROG = videodev.out
+
+# XCIM
+######
+#DEFINE_XCIM = -d_XCIM_
+#VPE1_CORE_NAME = Pipe
+#VPE2_CORE_NAME = 
+#LICENCE_XCIM = AF00039.OXL
+#LIBS_XCIM = -l$(LICENCE_XCIM) -lxclib_sr.lib
+#CORE_XCIM = $(VPE1_CORE_NAME).obx -d$(VPE1_CORE_NAME)
+#$(VPE2_CORE_NAME).obx -d$(VPE2_CORE_NAME)
+#SRC_XCIM = xcim.c
+
+###################################################
+# definitions pour le traitement sous LINUX
+###################################################
+CC = CC
+LNK = $(CC)
+RM = rm
+
+DEFINE_UNIX = -D_UNIX_ -DDEBUG
+CFLAGS = 
+LIBS_UNIX = -lm
+SRC_UNIX = img.c
+PROG = videodev
+
+########################################
+# source pour la chaine de segmentation 
+########################################
+SRC_ALGO = deriche.c threshol.c fc.c rl.c
+
+###############################
+# definitions generiques 
+###############################
+LIBS = $(LIBS_XCIM) $(LIBS_DSP) $(LIBS_UNIX)
+DEFINE = $(DEFINE_DSP) $(DEFINE_XCIM) $(DEFINE_UNIX)
+
+SRC = $(SRC_DSP) $(SRC_XCIM) $(SRC_UNIX) $(SRC_ALGO) main.c 
+OBJ = $(SRC:.c=.o)
+
+###########
+# Cibles 
+###########
+
+.SUFFIXES: .o .c
+
+.c.o:
+	$(CC) $(CFLAGS) $(DEFINE) -c $<
+
+all: $(OBJ)
+	$(LNK) $(LNKFLAGS) $(OBJ) $(LIBS) -o $(PROG)
+ 
+clean:
+	@$(RM) *.o
+	@$(RM) *.out
+
+

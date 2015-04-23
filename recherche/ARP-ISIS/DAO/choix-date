@@ -1,0 +1,68 @@
+#! /bin/sh -- # -*- perl -*-
+
+# Ronan.Keryell@cri.ensmp.fr, 22/10/1999.
+
+# Load perl according to the $PATH:
+eval "type perl > /dev/null && exec perl -S $0 $* || echo Warning: Perl not found and thus $0 is not run! 1>&2; exit 0"
+    if $running_under_some_shell;
+#! /usr/bin/perl
+
+# Si on veut du debug :
+# $debug = 1;
+
+# L'analyseur syntaxique du pauvre sur STDIN :
+while (<>) {
+    #chomp;
+    # Essaye de trouver le nom de la personne :
+    if (/(^From: )(.*)/) {
+	$nom = $2;
+	$debug && print "Nom = $2\n";
+	if (defined $nom_deja_vu{$nom}) {
+	    printf STDERR "\nLe nom $nom a déja été vu !\n\n";
+	}
+	$nom_deja_vu{$nom} = 1;
+	next;
+    }
+    # Essaye de reconnaître une entrée du style :
+    # Semaine du 22/11/1999 au 26/11/1999 : 00110
+    # n'importe où dans une ligne :
+    if (m{Semaine du (\d+/\d+/\d+) au (\d+/\d+/\d+) : ([01]{5})}) {
+	$debug && print "Semaine du $1 au $2 : $3\n";
+	&gere_entree($nom, $1, $2, $3);
+	next;
+    }
+}
+
+if ($debug) {
+    while (($jour,$personnes_libres) = each %gens_libres) {
+	print "Pour le $jour, libre : @{$personnes_libres}\n";
+    }
+}
+
+# Trie par disponibilité décroissante :
+@disponibilites = sort { $#{$gens_libres{$b}} <=> $#{$gens_libres{$a}} } keys %gens_libres;
+
+foreach my $jour (@disponibilites) {
+    my @disponibles = @{$gens_libres{$jour}};
+    my $nombre = $#disponibles + 1;
+    my $pourcentage = 100*$nombre/$reponses{$jour};
+    print "$jour disponible $nombre personne(s) : @disponibles ($pourcentage%)\n";
+}
+
+
+# Gère une entrée décrivant une date :
+sub gere_entree {
+    my($nom, $debut_semaine, $fin_semaine, $bits_jours) = @_;
+
+    my($jour);
+    # Traite les jours de la semaine :
+    for($jour = 0; $jour <= 4; $jour++) {
+	$le_jour = $debut_semaine . "+" . $jour;
+	$reponses{$le_jour}++;
+	if (substr($bits_jours, $jour, 1) eq "1") {
+	    $debug && print $jour, " libre !\n";
+	    # Rajoute le nom de la personne à la liste des gens libre ce jour :
+	    push @{$gens_libres{$le_jour}}, $nom;
+	}
+    }
+}

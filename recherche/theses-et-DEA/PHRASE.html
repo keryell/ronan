@@ -1,0 +1,260 @@
+<!DOCTYPE HTML SYSTEM "legacy.dtd">
+<html>
+<head>
+  <title>Sujet: Séquencement des phases de reconfiguration dynamique et
+de transfert de données dans les ordinateurs reconfigurables.
+Application à la machine PHRASE</title>
+</head>
+<body>
+<h2>
+Sujet: Génération de code pour ordinateur parallèle hétérogène
+</h2>
+<p>
+Certaines applications embarquées telles que le traitement
+d'image,
+le traitement du signal ou les télécommunications
+à
+haut débit demandent de fortes puissances de calcul que seule
+une
+intégration matérielle permet d'atteindre à un
+prix
+raisonnable à condition que ce soit constuit en grande
+série.
+</p>
+<p>L'utilisation d'ordinateurs dont le matériel est configurable
+dynamiquement ou constitué d'accélérateurs matériels (cartes graphiques
+de PC qui elles-mêmes peuvent être utilisées en parallèle, style SLI de
+nVidia) permet d'atteindre un objectif intermédiaire
+intéressant : une bonne flexibilité à prix moyen
+sur
+des moyennes séries ou pour du prototypage en vraie grandeur.
+</p>
+<p>Les ordinateurs reconfigurables possèdent des composants
+(FPGA --- Field
+Programmable Gate Arrays) dont les portes logiques elles-mêmes
+peuvent
+être réorganisées par logiciel afin de constituer
+des opérateurs ciblés
+pour une application donnée telle que du traitement d'image ou
+du
+traitement du signal. Afin de rentabiliser au mieux le matériel,
+des
+reconfigurations partielles peuvent avoir lieu en cours de
+fonctionnement.
+</p>
+<p>Évidemment de telles machines n'ont d'avenir que si elles
+possèdent un environnement logiciel de co-conception
+logiciel/matériel (co-design) adéquat permettant
+d'orchestrer le système à partir de l'algorithme de
+l'application ciblée.
+</p>
+<p>Cette étude s'intéressera donc plus
+précisément à l'aspect compilation et
+à établir les relations avec d'autres domaines comme la
+parallélisation automatique afin d'ordonnancer les calculs, les
+boîtes noires matérielles et leur reprogrammation, les
+flux
+de données entre elles et les mémoires, etc.
+</p>
+<p>Nous proposons une position de stage de MR2 (ex-DEA) afin d'étudier
+et de résoudre ces problèmes sur des programmes
+réels de traitement du
+signal et de traitement d'image (chaîne de segmentation) dans le
+cadre de notre projet PHRASE au <a href="https://info.enstb.org">Département
+Informatique de
+l'École Nationale Supérieure des
+Télécommunications de
+Bretagne</a>. L'étudiant s'appuiera sur l'infrastructure de <a
+ href="http://www.cri.ensmp.fr/pips">PIPS</a> pour tester et
+réaliser un
+compilateur réorganisant le code en phases de reconfigurations
+et
+en générant le code de contrôle et de transfert.<br>
+</p>
+<p>Le projet entre dans le cadre d'une collaboration CoMap avec
+l'UBO/AS/Lester, l'ENSSAT/D2R2, les universités d'Erlangen et de
+Dresden en Allemagne et ParaDeep avec l'École des Mines de Paris et
+l'INT.<br>
+</p>
+<h2>Résumé du travail à faire</h2>
+<p>La partie compilation du projet PHRASE consiste à
+étudier la manière de générer du code pour
+PHRASE à partir d'un programme écrit le plus
+classiquement possible dans un langage impératif de haut niveau,
+à savoir avec des boucles, une mémoire globale, etc.
+C'est à dire de manière très
+éloignée de la réalité, à savoir
+qu'on aura du code de contrôle, du code pour des FPGA, du code vers des
+accélérateurs graphiques, du code de
+séquencement, des communications, etc.
+En tenant compte de l'architecture de la machine, il va falloir
+définir une méthodologie de compilation. Cette
+dernière ne sera possible, compte tenu des différentes
+facettes possibles de PHRASE, que si on se fixe un modèle de
+programmation de la machine à bas niveau indépendant des
+différentes configurations matérielles possibles. C'est
+cette architecture abstraite qui sera la cible de notre compilateur.
+Enfin, les phases de compilation se basent sur des analyses
+sémantiques de haut niveau et il semble indispensable de pouvoir
+annoter le code entré avec ces informations dans un but de
+débogage pour comprendre par exemple pourquoi telle partie du
+programme résiste à une transformation en code pour
+PHRASE et donc permettre au programmeur d'aporter si possible des
+mesures correctives.
+Dans la phase actuelle du projet nous avons défini les grandes
+lignes nécessaires pour mettre en place cette phase de
+compilation.<br>
+</p>
+<h3>Modèle d'exécution abstrait</h3>
+<p>&nbsp;Le modèle d'exécution choisi est de type
+multithread mais est orthogonal à ce qui nous intéresse
+ici, à savoir que notre compilateur doit générer
+le code de chaque thread. Nous avons donc défini le
+modèle d'exécution au sein d'une thread
+d'exécution.
+Chaque thread s'exécute sur un processeur et contrôle un
+ou plusieurs opérateurs, qui peuvent être reconfigurables
+ou non, à reconfigation éventuellement dynamique. Pour
+des raisons d'homogénéité de l'abstraction, les
+communications ne sont qu'un cas particulier d'opérateurs.
+Au niveau des réflexions actuelles les fonctionnalités
+minimales dont nous avons besoin sont les appels systèmes
+suivants :<br>
+</p>
+<ul>
+  <li>lancement du programme séquentiel sur un processeur ;</li>
+  <li>déclenchement d'un opérateur ; <br>
+  </li>
+  <li>attente de la fin d'un opérateur ; <br>
+  </li>
+  <li>envoi par le processeur d'une donnée à un
+opérateur ; <br>
+  </li>
+  <li>récupération par le processeur d'une donnée
+depuis
+un opérateur ; <br>
+  </li>
+  <li>lancement d'une phase de configuration d'un opérateur
+reconfigurable ; <br>
+  </li>
+  <li>attente de la fin d'une reconfiguration
+fin d'un processus.</li>
+</ul>
+&nbsp;La liste des appels nécessaires évoluera
+éventuellement en fonction des raffinements futurs du
+modèle d'exécution, de l'architecture et du schéma
+de compilation.
+En fait tous ces appels systèmes sont abstraits. Ils sont
+utilisés sous forme d'appels de fonctions sachant que ces
+fonctions sont interprétées différemment par les
+différents compilateurs ultérieurs de plus bas niveau en
+fonction de l'architecture cible . Ces appels de fonctions sont donc
+simplement des marqueurs dans les codes générés
+qui sont interprétés pour une exécution
+optimisée quelle que soit l'architecture cible.<br>
+<h3>Analyse des programmes</h3>
+&nbsp;La phase de compilation repose sur de nombreuses analyses
+sémantiques de haut niveau nécessaires à une bonne
+compréhension du code suivies par une application d'une
+série de transformations. Il serait hors de propos de toutes les
+redévelopper pour ce projet et nous pensons nous baser sur les
+15 ans d'efforts investis dans le projet d'atelier de compilation PIPS
+de l'école des mines de Paris [ACCIJK96].
+Les analyses et transformations nécessaires sont typiquement :
+<br>
+<ul>
+  <li>analyse de régions pour estimer les communications et les
+variables temporaires nécessaires à allouer dans le code
+et les opérateurs ;</li>
+  <li>parallélisation interprocédurale pour transformer
+le code
+en code parallèle utilisant tous les processeurs et les
+opérateurs ; <br>
+  </li>
+  <li>évaluation partielles et autres
+optimisations classiques pour accélérer les programmes et
+simplifier les opérateurs. </li>
+</ul>
+Afin de permettre de mieux comprendre la phase de compilation, on
+pourra anoter le code d'origine avec les informations produites par
+PIPS.
+<br>
+<h3>Génération de code</h3>
+La phase de génération de code repose sur des techniques
+utilisées dans le domaine des supercalculateurs [ACIK97] pour
+générer du code pour plusieurs processeurs d'une part et
+d'autre part plusieurs opérateurs par processeur d'autre part
+[FIK96].
+La parallélisation, automatique ou guidée par
+l'utilisateur grâce à des directives, permet d'exploiter
+les différents niveaux de parallélisme architectural.
+L'analyse des nids de boucles permettra d'optimiser l'usage de la
+mémoire, de générer les codes de communication
+entre processeurs et accélérateurs matériels, de
+pipeliner globalement toutes les opérations.
+Le tri sera automatiquement fait entre boucles à contrôle
+statique exécutable sur accélérateur ou FPGA et le reste qui
+s'exécutera sur le processeur scalaire.
+En fin de chaîne on aura donc 3 sorties :
+le code de contrôle sur processeur scalaire ;
+les codes pour accélérateur et FPGA avec des pretty-printers adaptés
+aux
+autres outils respectifs du projet ;
+des informations de placement et de configuration des
+accélérateurs matériels.
+<a href="http://www.cri.ensmp.fr/pips">PIPS</a> est un environnement de
+compilation et de parallélisation qui permet de tester et
+intégrer
+rapidement de nouvelles techniques de compilation, d'optimisation et de
+parallélisation, tel qu'un compilateur HPF. PIPS est
+développé par le <a href="http://www.cri.ensmp.fr/">Centre
+de Recherche en Informatique de l'École des Mines de Paris</a>
+qui
+a acquis une réputation mondiale dans le cadre de la
+parallélisation
+interprocédurale basée sur des analyses
+sémantiques.
+<p>Bibliographie :<br>
+<a
+ href="http://www.lit.enstb.org/%7Ekeryell/eleves/ENSTBr/2002-2003/DEA/Ferrand/">http://enstb.org/~keryell/eleves/ENSTBr/2002-2003/DEA/Ferrand</a><span
+ style="text-decoration: underline;"></span><br>
+</p>
+<p style="text-indent: 0.62cm; margin-bottom: 0cm;" align="justify">[BC01]
+Youcef BOUCHEBABA and Fabien COELHO. Buffered tiling for sequences of
+loop nests. Colp01 2001. <a
+ href="http://cri.ensmp.fr/classement/doc/A-326.ps">http://cri.ensmp.fr/classement/doc/A-326.ps</a><br>
+</p>
+<p style="text-indent: 0.62cm; margin-bottom: 0cm;" align="justify"> </p>
+<p style="text-indent: 0.62cm; margin-bottom: 0cm;" align="justify"><span
+ style="font-style: normal;">[ACCIJK96]</span><i>
+PIPS: a Workbench for Program Parallelization and Optimization</i><br>
+presented
+at <b>European Parallel Tool Meeting 1996 (EPTM'96)</b>, Corinne
+Ancourt, Fabien Coelho, Béatrice Creusillet, François
+Irigoin, Pierre Jouvelot and Ronan Keryell.</p>
+<p style="text-indent: 0.62cm; margin-bottom: 0cm; font-style: normal;"
+ align="justify">[ACIK97]
+Corinne Ancourt, Fabien Coelho, François Irigoin, and
+Ronan Keryell. A linear algebra framework for static HPF code
+distribution. Scientific Programming, 6(1)&nbsp;:3-27, Spring 1997.
+Special Issue -- High Performance Fortran Comes of Age.<a
+ href="http://cri.ensmp.fr/classement/doc/A-278.ps">http://cri.ensmp.fr/classement/doc/A-278.ps</a></p>
+<p style="text-indent: 0.62cm; margin-bottom: 0cm;" align="justify">[FIK96]
+Pierre Fiorini, François Irigoin, and Ronan Keryell.
+Modèle
+de compilation d'hpf pour la machine mimd à bancs mémoire
+et réseau distribué programmable phénix. In
+RenPar'8, mai 1996. <a href="http://www.cri.ensmp.fr/doc/A-283.ps.gz">http://cri.ensmp.fr/</a><a
+ href="http://cri.ensmp.fr/classement/doc/A-278.ps">classement/</a><a
+ href="http://cri.ensmp.fr/classement/doc/A-283.ps.gz">doc/A-283.ps.gz</a>.</p>
+<a href="http://www.cri.ensmp.fr/%7Ekeryell/recherche/ARP-ISIS">http://cri.ensmp.fr/~keryell/recherche/ARP-ISIS</a>
+<p>Contact : <a href="http://www-info.enst-bretagne.fr/%7Ekeryell">Ronan
+Keryell - 02 98 00 14 15</a> - <a
+ href="mailto:Ronan.Keryell@enst-bretagne.fr">Ronan.Keryell@enst-bretagne.fr</a>
+</p>
+<hr>
+<code>
+$Header: /users/lit/keryell/ENST-Bretagne/3A/DEA/2005-2006/Sujets/RCS/PHRASE.html,v 1.8 2005/10/10 09:58:20 keryell Exp $
+</code>
+</body>
+</html>

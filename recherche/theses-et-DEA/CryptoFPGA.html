@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>CryptoFPGA</title>
+</head>
+<body>
+<h1>CryptoFPGA</h1>
+<h2>Contexte</h2>
+Les circuits logiques (re)configurables (FPGA) sont de plus
+employ&eacute;s dans les syst&egrave;mes &eacute;lectroniques pour leur
+facilit&eacute; de mise en &#339;uvre (mise au point,
+&eacute;volutivit&eacute; des fonctionnalit&eacute;s...) &agrave; des
+co&ucirc;ts raisonnables dans le cas de petites ou moyennes
+s&eacute;ries.<br>
+N&eacute;anmoins cela pose un probl&egrave;me de
+propri&eacute;t&eacute; intellectuelle dans la mesure o&ugrave; la
+configuration de cette partie &eacute;lectronique est contenue dans une
+m&eacute;moire annexe qui est t&eacute;l&eacute;charg&eacute;e au
+d&eacute;marrage du syst&egrave;me et qui peut &ecirc;tre
+r&eacute;cup&eacute;r&eacute;e dans le cadre d'espionnage industriel.
+Un ing&eacute;nieur ind&eacute;licat voulant d&eacute;tourner un projet
+a &agrave; sa disposition tout le n&eacute;cessaire : le circuit
+imprim&eacute; qui lui permet d'avoir le sch&eacute;ma, le code des
+processeurs qu'il peut d&eacute;sassembler et, en ce qui nous concerne
+particuli&egrave;rement ici, la configuration des FPGA qui donne
+acc&egrave;s au contenu des circuits logiques.<br>
+On voit clairement les implications &eacute;conomiques que peuvent
+avoir de tels actes vues les d&eacute;penses importantes de R&amp;D
+qu'a pu demander le projet initial...<br>
+<h2>CryptoPage</h2>
+La confidentialit&eacute; des programmes ex&eacute;cut&eacute;s et des
+donn&eacute;es informatiques qui circulent&nbsp; sur la carte peut
+&ecirc;tre consid&eacute;r&eacute;e comme garantie gr&acirc;ce &agrave;
+des concepts de processeurs s&eacute;curis&eacute;s tels que CryptoPage
+(<a href="https://info.enstb.org/projets/cryptopage">https://info.enstb.org/projets/cryptopage</a>)
+qui utilise du chiffrement fort entre les caches internes des
+processeurs et les bus externes associ&eacute;s &agrave; une
+authentification globale de la m&eacute;moire emp&ecirc;chant des
+attaques actives (par rejeu en particulier).<br>
+<br>
+<h2>Le projet CryptoFPGA</h2>
+Le c&#339;ur de ce projet consiste &agrave; &eacute;tendre ces
+m&eacute;canisme au cadre des FPGA en rajoutant un m&eacute;canisme de
+chiffrement fort au niveau de la m&eacute;moire de configuration de la
+logique. Il y a d&eacute;j&agrave; sur le march&eacute; de tels FPGA
+mais ils ne permettent pas une mise &agrave; jour incr&eacute;mentale
+d'une partie de la logique (reconfiguration dynamique en particulier). <br>
+Il faudrait aussi concevoir un syst&egrave;me &agrave; base de
+chiffrement asym&eacute;trique (cl&eacute;s publiques) capable de
+diffuser des mises &agrave; jour des configurations depuis par exemple
+un site Internet central vers tous les clients de l'application sans
+avoir &agrave; g&eacute;rer autant de cl&eacute;s de chiffrement qu'il
+y a de FPGA utilisateurs. <br>
+Le syst&egrave;me devra &ecirc;tre robuste pour pouvoir r&eacute;sister
+&agrave; des attaques actives (r&eacute;sister &agrave; des
+reconfigurations partielles sauvages pour essayer de faire sortir des
+secrets du FPGA par exemple).<br>
+<h2>Travail &agrave; effectuer</h2>
+Dans le cadre de ce stage de MR2, il s'agira, apr&egrave;s une
+bibliographie pouss&eacute;e dans le domaine, de&nbsp; d&eacute;finir
+les besoins et les moyens permettant de concevoir des cartes
+&eacute;lectroniques et SoC (Systems on Chip) permettant de garantir
+une bonne confidentialit&eacute; des informations et de la
+propri&eacute;t&eacute; intellectuelle.<br>
+<h2>Contact</h2>
+Ronan Keryell : <a href="http://enstb.org/%7Ekeryell">http://enstb.org/~keryell</a><br>
+<br>
+<hr>
+<code> $Header: /users/lit/keryell/ENST-Bretagne/3A/DEA/2005-2006/Sujets/RCS/CryptoFPGA.html,v 1.1 2005/10/10 11:05:43 keryell Exp $
+</code>
+</body>
+</html>

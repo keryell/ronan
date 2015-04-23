@@ -1,0 +1,1154 @@
+*****************************************************
+TMS320C3x/4x COFF Linker        Version 4.70
+*****************************************************
+Sun Jun 20 05:18:46 1999
+
+OUTPUT FILE NAME:   <videodev.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 0031d8a3
+
+
+MEMORY CONFIGURATION
+
+           name     origin    length      used    attributes    fill
+         --------  --------  ---------  --------  ----------  --------
+         RAM0      002ff800  000000400  00000000     RWIX      
+         RAM1      002ffc00  000000400  00000000     RWIX      
+         LocalRAM  00300000  000100000  00060dc7     RWIX      
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.vector    0    00300000    00000040     UNINITIALIZED
+                  00300000    00000040     prts40.lib : intvars.obj (.vector)
+
+.cinit     0    00300040    0000a170     
+                  00300040    00000012     stat.obj (.cinit)
+                  00300052    0000003d     graph.obj (.cinit)
+                  0030008f    00009c45     esiee.obj (.cinit)
+                  00309cd4    00000031     videodev.obj (.cinit)
+                  00309d05    00000005     deriche.obj (.cinit)
+                  00309d0a    00000003     fc.obj (.cinit)
+                  00309d0d    00000003     rl.obj (.cinit)
+                  00309d10    00000079     main.obj (.cinit)
+                  00309d89    00000003     pace.lib : errno.obj (.cinit)
+                  00309d8c    00000006              : exit.obj (.cinit)
+                  00309d92    00000009              : exp.obj (.cinit)
+                  00309d9b    00000008              : startup.obj (.cinit)
+                  00309da3    00000003              : start.obj (.cinit)
+                  00309da6    00000003     tops.lib : read.obj (.cinit)
+                  00309da9    00000003              : close.obj (.cinit)
+                  00309dac    00000004              : flhandls.obj (.cinit)
+                  00309db0    00000003              : open.obj (.cinit)
+                  00309db3    00000003              : write.obj (.cinit)
+                  00309db6    0000000a              : topenlnk.obj (.cinit)
+                  00309dc0    00000003              : printf.obj (.cinit)
+                  00309dc3    00000003              : scanf.obj (.cinit)
+                  00309dc6    0000004b              : stdfiles.obj (.cinit)
+                  00309e11    00000017              : fileops.obj (.cinit)
+                  00309e28    00000003              : filedoalloc.obj (.cinit)
+                  00309e2b    00000003              : iovsprintf.obj (.cinit)
+                  00309e2e    00000015              : strops.obj (.cinit)
+                  00309e43    00000003              : iofopen.obj (.cinit)
+                  00309e46    00000007              : iofclose.obj (.cinit)
+                  00309e4d    0000001a              : iovfscanf.obj (.cinit)
+                  00309e67    00000004              : ioungetc.obj (.cinit)
+                  00309e6b    00000003              : iovsscanf.obj (.cinit)
+                  00309e6e    0000001d              : iovfprintf.obj (.cinit)
+                  00309e8b    00000006              : ioperror.obj (.cinit)
+                  00309e91    00000006              : cleanup.obj (.cinit)
+                  00309e97    00000003              : lseek.obj (.cinit)
+                  00309e9a    00000003              : fstat.obj (.cinit)
+                  00309e9d    00000004              : genops.obj (.cinit)
+                  00309ea1    00000028              : iopadn.obj (.cinit)
+                  00309ec9    00000004              : iofprintf.obj (.cinit)
+                  00309ecd    0000008d     trig.lib : t_debug.obj (.cinit)
+                  00309f5a    00000005              : t_font.obj (.cinit)
+                  00309f5f    00000007              : t_font2.obj (.cinit)
+                  00309f66    00000003              : t_gc.obj (.cinit)
+                  00309f69    00000005              : t_clut.obj (.cinit)
+                  00309f6e    00000007              : font.obj (.cinit)
+                  00309f75    00000005              : initwin.obj (.cinit)
+                  00309f7a    00000003              : 32to32.obj (.cinit)
+                  00309f7d    00000009              : 32to8.obj (.cinit)
+                  00309f86    00000006              : clr2d.obj (.cinit)
+                  00309f8c    00000005              : line.obj (.cinit)
+                  00309f91    00000005              : pixel.obj (.cinit)
+                  00309f96    00000004              : t_clip2D.obj (.cinit)
+                  00309f9a    00000008     tdm435.lib : default.obj (.cinit)
+                  00309fa2    00000003                : capture.obj (.cinit)
+                  00309fa5    0000000e                : register.obj (.cinit)
+                  00309fb3    00000003                : ints.obj (.cinit)
+                  00309fb6    0000000a                : tdm435.obj (.cinit)
+                  00309fc0    00000066                : regaddrs.obj (.cinit)
+                  0030a026    00000003     prts40.lib : rst_vect.obj (.cinit)
+                  0030a029    00000003                : set_ivtp.obj (.cinit)
+                  0030a02c    00000003                : set_vect.obj (.cinit)
+                  0030a02f    00000005                : alarm.obj (.cinit)
+                  0030a034    00000008                : rec_msg.obj (.cinit)
+                  0030a03c    00000009                : send_msg.obj (.cinit)
+                  0030a045    00000003                : t_read.obj (.cinit)
+                  0030a048    00000003                : t_start.obj (.cinit)
+                  0030a04b    00000003                : t_stop.obj (.cinit)
+                  0030a04e    00000005                : chk_dma.obj (.cinit)
+                  0030a053    00000103     pace.lib : ctype.obj (.cinit)
+                  0030a156    0000000a              : memory.obj (.cinit)
+                  0030a160    00000003              : strerror.obj (.cinit)
+                  0030a163    00000019              : strtod.obj (.cinit)
+                  0030a17c    00000004              : strtol.obj (.cinit)
+                  0030a180    00000003              : isxxx.obj (.cinit)
+                  0030a183    0000000d              : pow.obj (.cinit)
+                  0030a190    0000000b     comport.lib : comport.obj (.cinit)
+                  0030a19b    00000004                 : inicport.obj (.cinit)
+                  0030a19f    0000000c                 : c40.obj (.cinit)
+                  0030a1ab    00000004     tops.lib : fgetc.obj (.cinit)
+                  0030a1af    00000001     --HOLE-- [fill = 00000000]
+
+.const     0    0030a1b0    00000b57     
+                  0030a1b0    00000042     stat.obj (.const)
+                  0030a1f2    0000013a     graph.obj (.const)
+                  0030a32c    00000107     videodev.obj (.const)
+                  0030a433    000004df     main.obj (.const)
+                  0030a912    00000002     pace.lib : startup.obj (.const)
+                  0030a914    00000004     tops.lib : topenlnk.obj (.const)
+                  0030a918    00000006              : iovfscanf.obj (.const)
+                  0030a91e    00000040              : iovfprintf.obj (.const)
+                  0030a95e    00000009              : ioperror.obj (.const)
+                  0030a967    0000033d     trig.lib : t_debug.obj (.const)
+                  0030aca4    0000000a              : t_font.obj (.const)
+                  0030acae    00000017              : t_font2.obj (.const)
+                  0030acc5    0000001b              : font.obj (.const)
+                  0030ace0    00000006              : 32to32.obj (.const)
+                  0030ace6    00000006              : 32to8.obj (.const)
+                  0030acec    0000000d     pace.lib : strerror.obj (.const)
+                  0030acf9    00000008     comport.lib : comport.obj (.const)
+                  0030ad01    00000006                 : c40.obj (.const)
+
+.stack     0    0030ad07    00004000     UNINITIALIZED
+                  0030ad07    00000000     pace.lib : boot.obj (.stack)
+
+.data      0    0030ed07    00000106     
+                  0030ed07    00000000     stat.obj (.data)
+                  0030ed07    00000000     pace.lib : atoi.obj (.data)
+                  0030ed07    00000000     tops.lib : fprintf.obj (.data)
+                  0030ed07    00000000              : fgetc.obj (.data)
+                  0030ed07    00000000              : getenv.obj (.data)
+                  0030ed07    00000000     comport.lib : c40.obj (.data)
+                  0030ed07    00000000                 : inicport.obj (.data)
+                  0030ed07    00000000                 : comport.obj (.data)
+                  0030ed07    00000000     pace.lib : frexp30.obj (.data)
+                  0030ed07    00000000              : pow.obj (.data)
+                  0030ed07    00000000              : memcpy.obj (.data)
+                  0030ed07    00000000              : isxxx.obj (.data)
+                  0030ed07    00000000              : toxxx.obj (.data)
+                  0030ed07    00000000              : strtoul.obj (.data)
+                  0030ed07    00000000              : strtol.obj (.data)
+                  0030ed07    00000000              : strtod.obj (.data)
+                  0030ed07    00000000              : strerror.obj (.data)
+                  0030ed07    00000000              : memory.obj (.data)
+                  0030ed07    00000000              : memmov.obj (.data)
+                  0030ed07    00000000              : ctype.obj (.data)
+                  0030ed07    00000000              : atof.obj (.data)
+                  0030ed07    00000000              : modu.obj (.data)
+                  0030ed07    00000000              : modi.obj (.data)
+                  0030ed07    00000000              : modf30.obj (.data)
+                  0030ed07    00000000     prts40.lib : dmavars.obj (.data)
+                  0030ed07    00000000                : cpvars.obj (.data)
+                  0030ed07    00000000                : chk_dma.obj (.data)
+                  0030ed07    00000000                : die_set.obj (.data)
+                  0030ed07    00000000                : t_stop.obj (.data)
+                  0030ed07    00000000                : t_start.obj (.data)
+                  0030ed07    00000000                : t_read.obj (.data)
+                  0030ed07    00000000                : send_msg.obj (.data)
+                  0030ed07    00000000                : rec_msg.obj (.data)
+                  0030ed07    00000000                : intvars.obj (.data)
+                  0030ed07    00000000                : int_ivtp.obj (.data)
+                  0030ed07    00000000                : alarm.obj (.data)
+                  0030ed07    00000000                : set_vect.obj (.data)
+                  0030ed07    00000000                : set_ivtp.obj (.data)
+                  0030ed07    00000000                : set_iie.obj (.data)
+                  0030ed07    00000000                : rst_vect.obj (.data)
+                  0030ed07    00000000                : rst_iie.obj (.data)
+                  0030ed07    00000000     tdm435.lib : regaddrs.obj (.data)
+                  0030ed07    00000000                : c40reg.obj (.data)
+                  0030ed07    00000000                : tdm435.obj (.data)
+                  0030ed07    00000000                : ints.obj (.data)
+                  0030ed07    00000000                : d_new.obj (.data)
+                  0030ed07    00000000                : register.obj (.data)
+                  0030ed07    00000000                : capture.obj (.data)
+                  0030ed07    00000000                : default.obj (.data)
+                  0030ed07    00000000                : display.obj (.data)
+                  0030ed07    00000000     trig.lib : t_util1.obj (.data)
+                  0030ed07    00000000              : t_clip2D.obj (.data)
+                  0030ed07    00000000              : pixel.obj (.data)
+                  0030ed07    00000000              : line.obj (.data)
+                  0030ed07    00000000              : t_line.obj (.data)
+                  0030ed07    00000000              : clr2d.obj (.data)
+                  0030ed07    00000000              : 32to8.obj (.data)
+                  0030ed07    00000000              : 32to32.obj (.data)
+                  0030ed07    00000000              : gc_font.obj (.data)
+                  0030ed07    00000000              : freefont.obj (.data)
+                  0030ed07    00000000              : initwin.obj (.data)
+                  0030ed07    00000000              : initdisp.obj (.data)
+                  0030ed07    00000000              : rect.obj (.data)
+                  0030ed07    00000000              : font2.obj (.data)
+                  0030ed07    00000000              : font.obj (.data)
+                  0030ed07    00000000              : t_new.obj (.data)
+                  0030ed07    00000000              : t_capt.obj (.data)
+                  0030ed07    00000000              : t_gc2.obj (.data)
+                  0030ed07    00000000              : t_disp.obj (.data)
+                  0030ed07    00000000              : t_clut.obj (.data)
+                  0030ed07    00000000              : t_win2.obj (.data)
+                  0030ed07    00000000              : t_rect.obj (.data)
+                  0030ed07    00000000              : t_gc.obj (.data)
+                  0030ed07    00000000              : t_font2.obj (.data)
+                  0030ed07    00000000              : t_font.obj (.data)
+                  0030ed07    00000000              : t_debug.obj (.data)
+                  0030ed07    00000000     tops.lib : iofprintf.obj (.data)
+                  0030ed07    00000000              : iopadn.obj (.data)
+                  0030ed07    00000000              : genops.obj (.data)
+                  0030ed07    00000000              : isatty.obj (.data)
+                  0030ed07    00000000              : fstat.obj (.data)
+                  0030ed07    00000000              : lseek.obj (.data)
+                  0030ed07    00000000              : cleanup.obj (.data)
+                  0030ed07    00000000              : iostrerror.obj (.data)
+                  0030ed07    00000000              : ioperror.obj (.data)
+                  0030ed07    00000000              : iovfprintf.obj (.data)
+                  0030ed07    00000000              : iovsscanf.obj (.data)
+                  0030ed07    00000000              : ioungetc.obj (.data)
+                  0030ed07    00000000              : iovfscanf.obj (.data)
+                  0030ed07    00000000              : iofclose.obj (.data)
+                  0030ed07    00000000              : iofopen.obj (.data)
+                  0030ed07    00000000              : strops.obj (.data)
+                  0030ed07    00000000              : iovsprintf.obj (.data)
+                  0030ed07    00000000              : filedoalloc.obj (.data)
+                  0030ed07    00000000              : ioprims.obj (.data)
+                  0030ed07    00000000              : fileops.obj (.data)
+                  0030ed07    00000000              : stdfiles.obj (.data)
+                  0030ed07    00000000              : exitterm.obj (.data)
+                  0030ed07    00000000              : fopen.obj (.data)
+                  0030ed07    00000000              : sprintf.obj (.data)
+                  0030ed07    00000000              : fclose.obj (.data)
+                  0030ed07    00000000              : perror.obj (.data)
+                  0030ed07    00000000              : fscanf.obj (.data)
+                  0030ed07    00000000              : scanf.obj (.data)
+                  0030ed07    00000000              : sscanf.obj (.data)
+                  0030ed07    00000000              : printf.obj (.data)
+                  0030ed07    00000000              : topenlnk.obj (.data)
+                  0030ed07    00000000              : unpack.obj (.data)
+                  0030ed07    00000000              : pack.obj (.data)
+                  0030ed07    00000000              : write.obj (.data)
+                  0030ed07    00000000              : open.obj (.data)
+                  0030ed07    00000000              : flhandls.obj (.data)
+                  0030ed07    00000000              : close.obj (.data)
+                  0030ed07    00000000              : read.obj (.data)
+                  0030ed07    00000000     pace.lib : strspn.obj (.data)
+                  0030ed07    00000000              : strcspn.obj (.data)
+                  0030ed07    00000000              : strtok.obj (.data)
+                  0030ed07    00000000              : ldexp30.obj (.data)
+                  0030ed07    00000000              : start.obj (.data)
+                  0030ed07    00000000              : startup.obj (.data)
+                  0030ed07    00000000              : strcpy.obj (.data)
+                  0030ed07    00000000              : strcat.obj (.data)
+                  0030ed07    00000000              : exp.obj (.data)
+                  0030ed07    00000000              : exit.obj (.data)
+                  0030ed07    00000000              : errno.obj (.data)
+                  0030ed07    00000000              : sqrt30.obj (.data)
+                  0030ed07    00000000              : invf.obj (.data)
+                  0030ed07    00000000              : divu.obj (.data)
+                  0030ed07    00000000              : divi.obj (.data)
+                  0030ed07    00000000     main.obj (.data)
+                  0030ed07    00000000     rl.obj (.data)
+                  0030ed07    00000000     fc.obj (.data)
+                  0030ed07    00000000     threshol.obj (.data)
+                  0030ed07    00000000     deriche.obj (.data)
+                  0030ed07    00000000     videodev.obj (.data)
+                  0030ed07    00000000     esiee.obj (.data)
+                  0030ed07    00000000     graph.obj (.data)
+                  0030ed07    00000106     pace.lib : boot.obj (.data)
+
+.bss       0    00310000    0000c81e     UNINITIALIZED
+                  00310000    00000073     stat.obj (.bss)
+                  00310073    00000000     pace.lib : atoi.obj (.bss)
+                  00310073    00000000     tops.lib : fprintf.obj (.bss)
+                  00310073    00000000              : getenv.obj (.bss)
+                  00310073    00000000     pace.lib : frexp30.obj (.bss)
+                  00310073    00000000              : memcpy.obj (.bss)
+                  00310073    00000000              : toxxx.obj (.bss)
+                  00310073    00000000              : strtoul.obj (.bss)
+                  00310073    00000000              : memmov.obj (.bss)
+                  00310073    00000000              : atof.obj (.bss)
+                  00310073    00000000              : modu.obj (.bss)
+                  00310073    00000000              : modi.obj (.bss)
+                  00310073    00000000              : modf30.obj (.bss)
+                  00310073    00000000     prts40.lib : die_set.obj (.bss)
+                  00310073    00000000                : intvars.obj (.bss)
+                  00310073    00000000                : set_iie.obj (.bss)
+                  00310073    00000000                : rst_iie.obj (.bss)
+                  00310073    00000000     tdm435.lib : c40reg.obj (.bss)
+                  00310073    00000000                : d_new.obj (.bss)
+                  00310073    00000000                : display.obj (.bss)
+                  00310073    00000000     trig.lib : t_util1.obj (.bss)
+                  00310073    00000000              : t_line.obj (.bss)
+                  00310073    00000000              : gc_font.obj (.bss)
+                  00310073    00000000              : freefont.obj (.bss)
+                  00310073    00000000              : initdisp.obj (.bss)
+                  00310073    00000000              : rect.obj (.bss)
+                  00310073    00000000              : font2.obj (.bss)
+                  00310073    00000000              : t_new.obj (.bss)
+                  00310073    00000000              : t_capt.obj (.bss)
+                  00310073    00000000              : t_gc2.obj (.bss)
+                  00310073    00000000              : t_disp.obj (.bss)
+                  00310073    00000000              : t_win2.obj (.bss)
+                  00310073    00000000              : t_rect.obj (.bss)
+                  00310073    00000000     tops.lib : isatty.obj (.bss)
+                  00310073    00000000              : iostrerror.obj (.bss)
+                  00310073    00000000              : ioprims.obj (.bss)
+                  00310073    00000000              : exitterm.obj (.bss)
+                  00310073    00000000              : fopen.obj (.bss)
+                  00310073    00000000              : sprintf.obj (.bss)
+                  00310073    00000000              : fclose.obj (.bss)
+                  00310073    00000000              : perror.obj (.bss)
+                  00310073    00000000              : fscanf.obj (.bss)
+                  00310073    00000000              : sscanf.obj (.bss)
+                  00310073    00000000              : unpack.obj (.bss)
+                  00310073    00000000              : pack.obj (.bss)
+                  00310073    00000000     pace.lib : strspn.obj (.bss)
+                  00310073    00000000              : strcspn.obj (.bss)
+                  00310073    00000000              : ldexp30.obj (.bss)
+                  00310073    00000000              : strcpy.obj (.bss)
+                  00310073    00000000              : strcat.obj (.bss)
+                  00310073    00000000              : sqrt30.obj (.bss)
+                  00310073    00000000              : invf.obj (.bss)
+                  00310073    00000000              : divu.obj (.bss)
+                  00310073    00000000              : divi.obj (.bss)
+                  00310073    00000000              : boot.obj (.bss)
+                  00310073    00000000     threshol.obj (.bss)
+                  00310073    00000040     graph.obj (.bss)
+                  003100b3    00009c41     esiee.obj (.bss)
+                  00319cf4    00000023     videodev.obj (.bss)
+                  00319d17    00000003     deriche.obj (.bss)
+                  00319d1a    00001001     fc.obj (.bss)
+                  0031ad1b    00001001     rl.obj (.bss)
+                  0031bd1c    000000b4     main.obj (.bss)
+                  0031bdd0    00000001     pace.lib : errno.obj (.bss)
+                  0031bdd1    00000022              : exit.obj (.bss)
+                  0031bdf3    00000007              : exp.obj (.bss)
+                  0031bdfa    00000048              : startup.obj (.bss)
+                  0031be42    00000001              : start.obj (.bss)
+                  0031be43    00000001              : strtok.obj (.bss)
+                  0031be44    00000001     tops.lib : read.obj (.bss)
+                  0031be45    00000001              : close.obj (.bss)
+                  0031be46    00000016              : flhandls.obj (.bss)
+                  0031be5c    00000001              : open.obj (.bss)
+                  0031be5d    00000001              : write.obj (.bss)
+                  0031be5e    00000004              : topenlnk.obj (.bss)
+                  0031be62    00000001              : printf.obj (.bss)
+                  0031be63    00000001              : scanf.obj (.bss)
+                  0031be64    00000043              : stdfiles.obj (.bss)
+                  0031bea7    00000013              : fileops.obj (.bss)
+                  0031beba    00000001              : filedoalloc.obj (.bss)
+                  0031bebb    00000001              : iovsprintf.obj (.bss)
+                  0031bebc    00000011              : strops.obj (.bss)
+                  0031becd    00000001              : iofopen.obj (.bss)
+                  0031bece    00000005              : iofclose.obj (.bss)
+                  0031bed3    00000016              : iovfscanf.obj (.bss)
+                  0031bee9    00000002              : ioungetc.obj (.bss)
+                  0031beeb    00000001              : iovsscanf.obj (.bss)
+                  0031beec    00000019              : iovfprintf.obj (.bss)
+                  0031bf05    00000004              : ioperror.obj (.bss)
+                  0031bf09    00000002              : cleanup.obj (.bss)
+                  0031bf0b    00000001              : lseek.obj (.bss)
+                  0031bf0c    00000001              : fstat.obj (.bss)
+                  0031bf0d    00000002              : genops.obj (.bss)
+                  0031bf0f    00000022              : iopadn.obj (.bss)
+                  0031bf31    00000002              : iofprintf.obj (.bss)
+                  0031bf33    00000081     trig.lib : t_debug.obj (.bss)
+                  0031bfb4    00000003              : t_font.obj (.bss)
+                  0031bfb7    00000005              : t_font2.obj (.bss)
+                  0031bfbc    00000001              : t_gc.obj (.bss)
+                  0031bfbd    00000003              : t_clut.obj (.bss)
+                  0031bfc0    00000005              : font.obj (.bss)
+                  0031bfc5    00000003              : initwin.obj (.bss)
+                  0031bfc8    00000001              : 32to32.obj (.bss)
+                  0031bfc9    00000007              : 32to8.obj (.bss)
+                  0031bfd0    00000004              : clr2d.obj (.bss)
+                  0031bfd4    00000003              : line.obj (.bss)
+                  0031bfd7    00000003              : pixel.obj (.bss)
+                  0031bfda    00000202              : t_clip2D.obj (.bss)
+                  0031c1dc    00000006     tdm435.lib : default.obj (.bss)
+                  0031c1e2    00000001                : capture.obj (.bss)
+                  0031c1e3    00000008                : register.obj (.bss)
+                  0031c1eb    00000001                : ints.obj (.bss)
+                  0031c1ec    00000438                : tdm435.obj (.bss)
+                  0031c624    00000022                : regaddrs.obj (.bss)
+                  0031c646    00000001     prts40.lib : rst_vect.obj (.bss)
+                  0031c647    00000001                : set_ivtp.obj (.bss)
+                  0031c648    00000001                : set_vect.obj (.bss)
+                  0031c649    00000003                : alarm.obj (.bss)
+                  0031c64c    0000002d                : int_ivtp.obj (.bss)
+                  0031c679    00000006                : rec_msg.obj (.bss)
+                  0031c67f    00000007                : send_msg.obj (.bss)
+                  0031c686    00000001                : t_read.obj (.bss)
+                  0031c687    00000001                : t_start.obj (.bss)
+                  0031c688    00000001                : t_stop.obj (.bss)
+                  0031c689    00000003                : chk_dma.obj (.bss)
+                  0031c68c    00000006                : cpvars.obj (.bss)
+                  0031c692    00000054                : dmavars.obj (.bss)
+                  0031c6e6    00000101     pace.lib : ctype.obj (.bss)
+                  0031c7e7    00000004              : memory.obj (.bss)
+                  0031c7eb    00000001              : strerror.obj (.bss)
+                  0031c7ec    00000013              : strtod.obj (.bss)
+                  0031c7ff    00000002              : strtol.obj (.bss)
+                  0031c801    00000001              : isxxx.obj (.bss)
+                  0031c802    0000000b              : pow.obj (.bss)
+                  0031c80d    00000005     comport.lib : comport.obj (.bss)
+                  0031c812    00000002                 : inicport.obj (.bss)
+                  0031c814    00000008                 : c40.obj (.bss)
+                  0031c81c    00000002     tops.lib : fgetc.obj (.bss)
+
+.text      0    0031c81e    0000579c     
+                  0031c81e    0000009b     stat.obj (.text)
+                  0031c8b9    00000000     comport.lib : inicport.obj (.text)
+                  0031c8b9    00000000     pace.lib : ctype.obj (.text)
+                  0031c8b9    00000000     prts40.lib : dmavars.obj (.text)
+                  0031c8b9    00000000                : cpvars.obj (.text)
+                  0031c8b9    00000000                : intvars.obj (.text)
+                  0031c8b9    00000000                : int_ivtp.obj (.text)
+                  0031c8b9    00000000     tdm435.lib : regaddrs.obj (.text)
+                  0031c8b9    00000000     tops.lib : stdfiles.obj (.text)
+                  0031c8b9    00000000     pace.lib : errno.obj (.text)
+                  0031c8b9    00000561     graph.obj (.text)
+                  0031ce1a    00000033     esiee.obj (.text)
+                  0031ce4d    00000206     videodev.obj (.text)
+                  0031d053    000001db     deriche.obj (.text)
+                  0031d22e    0000008a     threshol.obj (.text)
+                  0031d2b8    0000027d     fc.obj (.text)
+                  0031d535    000000b1     rl.obj (.text)
+                  0031d5e6    000002bd     main.obj (.text)
+                  0031d8a3    00000030     pace.lib : boot.obj (.text)
+                  0031d8d3    00000024              : divi.obj (.text)
+                  0031d8f7    00000032              : divu.obj (.text)
+                  0031d929    0000000a              : invf.obj (.text)
+                  0031d933    00000015              : sqrt30.obj (.text)
+                  0031d948    0000002b              : exit.obj (.text)
+                  0031d973    00000031              : exp.obj (.text)
+                  0031d9a4    0000000c              : strcat.obj (.text)
+                  0031d9b0    00000009              : strcpy.obj (.text)
+                  0031d9b9    00000035              : startup.obj (.text)
+                  0031d9ee    0000000e              : start.obj (.text)
+                  0031d9fc    00000016              : ldexp30.obj (.text)
+                  0031da12    00000020              : strtok.obj (.text)
+                  0031da32    00000011              : strcspn.obj (.text)
+                  0031da43    00000010              : strspn.obj (.text)
+                  0031da53    00000062     tops.lib : read.obj (.text)
+                  0031dab5    0000002a              : close.obj (.text)
+                  0031dadf    00000046              : flhandls.obj (.text)
+                  0031db25    00000039              : open.obj (.text)
+                  0031db5e    00000060              : write.obj (.text)
+                  0031dbbe    00000156              : pack.obj (.text)
+                  0031dd14    0000014a              : unpack.obj (.text)
+                  0031de5e    0000004b              : topenlnk.obj (.text)
+                  0031dea9    0000000d              : printf.obj (.text)
+                  0031deb6    0000000c              : sscanf.obj (.text)
+                  0031dec2    0000000e              : scanf.obj (.text)
+                  0031ded0    0000000d              : fscanf.obj (.text)
+                  0031dedd    00000002              : perror.obj (.text)
+                  0031dedf    00000002              : fclose.obj (.text)
+                  0031dee1    0000000c              : sprintf.obj (.text)
+                  0031deed    00000002              : fopen.obj (.text)
+                  0031deef    0000001d              : exitterm.obj (.text)
+                  0031df0c    000002e2              : fileops.obj (.text)
+                  0031e1ee    0000000a              : ioprims.obj (.text)
+                  0031e1f8    00000031              : filedoalloc.obj (.text)
+                  0031e229    0000002a              : iovsprintf.obj (.text)
+                  0031e253    00000111              : strops.obj (.text)
+                  0031e364    00000025              : iofopen.obj (.text)
+                  0031e389    00000022              : iofclose.obj (.text)
+                  0031e3ab    00000340              : iovfscanf.obj (.text)
+                  0031e6eb    0000000f              : ioungetc.obj (.text)
+                  0031e6fa    0000001f              : iovsscanf.obj (.text)
+                  0031e719    00000459              : iovfprintf.obj (.text)
+                  0031eb72    0000001c              : ioperror.obj (.text)
+                  0031eb8e    00000002              : iostrerror.obj (.text)
+                  0031eb90    00000004              : cleanup.obj (.text)
+                  0031eb94    00000034              : lseek.obj (.text)
+                  0031ebc8    0000004c              : fstat.obj (.text)
+                  0031ec14    00000020              : isatty.obj (.text)
+                  0031ec34    00000357              : genops.obj (.text)
+                  0031ef8b    0000003d              : iopadn.obj (.text)
+                  0031efc8    00000014              : iofprintf.obj (.text)
+                  0031efdc    0000001c     trig.lib : t_debug.obj (.text)
+                  0031eff8    0000013c              : t_font.obj (.text)
+                  0031f134    00000200              : t_font2.obj (.text)
+                  0031f334    00000096              : t_gc.obj (.text)
+                  0031f3ca    000000f8              : t_rect.obj (.text)
+                  0031f4c2    0000009c              : t_win2.obj (.text)
+                  0031f55e    000001dc              : t_clut.obj (.text)
+                  0031f73a    000000f4              : t_disp.obj (.text)
+                  0031f82e    00000093              : t_gc2.obj (.text)
+                  0031f8c1    00000038              : t_capt.obj (.text)
+                  0031f8f9    00000012              : t_new.obj (.text)
+                  0031f90b    00000244              : font.obj (.text)
+                  0031fb4f    000001c3              : font2.obj (.text)
+                  0031fd12    00000032              : rect.obj (.text)
+                  0031fd44    00000025              : initdisp.obj (.text)
+                  0031fd69    000000bc              : initwin.obj (.text)
+                  0031fe25    00000015              : freefont.obj (.text)
+                  0031fe3a    00000020              : gc_font.obj (.text)
+                  0031fe5a    0000007c              : 32to32.obj (.text)
+                  0031fed6    0000038b              : 32to8.obj (.text)
+                  00320261    0000006d              : clr2d.obj (.text)
+                  003202ce    00000131              : t_line.obj (.text)
+                  003203ff    0000038e              : line.obj (.text)
+                  0032078d    000000dd              : pixel.obj (.text)
+                  0032086a    0000032f              : t_clip2D.obj (.text)
+                  00320b99    000000d9              : t_util1.obj (.text)
+                  00320c72    0000000e     tdm435.lib : display.obj (.text)
+                  00320c80    0000048d                : default.obj (.text)
+                  0032110d    0000020a                : capture.obj (.text)
+                  00321317    00000203                : register.obj (.text)
+                  0032151a    00000018                : d_new.obj (.text)
+                  00321532    00000030                : ints.obj (.text)
+                  00321562    000002df                : tdm435.obj (.text)
+                  00321841    00000006                : c40reg.obj (.text)
+                  00321847    00000005     prts40.lib : rst_iie.obj (.text)
+                  0032184c    00000008                : rst_vect.obj (.text)
+                  00321854    00000005                : set_iie.obj (.text)
+                  00321859    00000007                : set_ivtp.obj (.text)
+                  00321860    00000009                : set_vect.obj (.text)
+                  00321869    0000000d                : alarm.obj (.text)
+                  00321876    00000034                : rec_msg.obj (.text)
+                  003218aa    0000003b                : send_msg.obj (.text)
+                  003218e5    00000004                : t_read.obj (.text)
+                  003218e9    00000006                : t_start.obj (.text)
+                  003218ef    00000007                : t_stop.obj (.text)
+                  003218f6    00000023                : die_set.obj (.text)
+                  00321919    0000000e                : chk_dma.obj (.text)
+                  00321927    0000000b     pace.lib : modf30.obj (.text)
+                  00321932    00000021              : modi.obj (.text)
+                  00321953    00000029              : modu.obj (.text)
+                  0032197c    00000003              : atof.obj (.text)
+                  0032197f    00000016              : memmov.obj (.text)
+                  00321995    0000017c              : memory.obj (.text)
+                  00321b11    00000002              : strerror.obj (.text)
+                  00321b13    00000093              : strtod.obj (.text)
+                  00321ba6    00000098              : strtol.obj (.text)
+                  00321c3e    00000081              : strtoul.obj (.text)
+                  00321cbf    00000010              : toxxx.obj (.text)
+                  00321ccf    00000031              : isxxx.obj (.text)
+                  00321d00    0000000d              : memcpy.obj (.text)
+                  00321d0d    000000b4              : pow.obj (.text)
+                  00321dc1    00000011              : frexp30.obj (.text)
+                  00321dd2    0000011e     comport.lib : comport.obj (.text)
+                  00321ef0    0000005e                 : c40.obj (.text)
+                  00321f4e    0000001d     tops.lib : getenv.obj (.text)
+                  00321f6b    00000015              : fgetc.obj (.text)
+                  00321f80    0000000c              : fprintf.obj (.text)
+                  00321f8c    0000002e     pace.lib : atoi.obj (.text)
+
+.sysmem    0    00321fba    00040000     UNINITIALIZED
+                  00321fba    00000001     pace.lib : memory.obj (.sysmem)
+
+
+GLOBAL SYMBOLS
+
+address  name                             address  name
+-------- ----                             -------- ----
+00310000 .bss                             00004000 __STACK_SIZE
+0030ed07 .data                            00040000 __SYSMEM_SIZE
+0031c81e .text                            00300000 __vector
+0031d8d3 DIV_I40                          00300040 cinit
+0031d8f7 DIV_U40                          0030ad07 __stack
+0031d929 INV_F40                          0030ed07 .data
+00321932 MOD_I40                          0030ed08 __params
+00321953 MOD_U40                          0030ee0d edata
+0031bd1e _Alpha                           00310000 _CLOCK_PER_SEC
+0031d0a7 _BidouilleNico                   00310000 .bss
+00310000 _CLOCK_PER_SEC                   00310001 _Stat
+0031d10a _Deriche                         00310007 _nb_frame_out
+0031d27f _Double_Threshold                00310008 _msg_stat
+00319cf6 _EDRAM_addr                      0031006c _nb_frame_in
+0031bd1d _HighLevel                       0031006d _clock_1s
+0031bd1f _ImageIN                         00310073 _scr_width
+0031bd51 _ImageOUT                        00310074 _scr_height
+0031bd1c _LowLevel                        00310088 _frame
+0031d053 _Normalisation                   00310089 _big_font
+00310001 _Stat                            0031008a _overlay
+0031bd87 _TCC                             0031008b _font_gc
+0031bd84 _TCapture                        0031008c _display
+0031c62d _TDM435_32_overlay_adr           0031008d _blue
+0031c626 _TDM435_32_vram_adr_a            0031008e _red
+0031c627 _TDM435_32_vram_adr_b            0031008f _big_font_gc
+0031c62c _TDM435_8_overlay_adr            00310090 _green
+0031c624 _TDM435_8_vram_adr_a             00310091 _font
+0031c625 _TDM435_8_vram_adr_b             00310092 _black
+0031c63f _TDM435_AV9110                   003100b3 _logo_esiee
+0031c630 _TDM435_BT252_adr                00319cf5 _frame_addr
+0031c632 _TDM435_BT252_commd              00319cf6 _EDRAM_addr
+0031c631 _TDM435_BT252_d_pal              00319cf7 _frame_height
+0031c633 _TDM435_BT261_adr                00319cf8 _frame_width
+0031c634 _TDM435_BT261_d_pal              00319cf9 _stride
+0031c63b _TDM435_BT477_commd              0031bd1c _LowLevel
+0031c63a _TDM435_BT477_d_ovl              0031bd1d _HighLevel
+0031c636 _TDM435_BT477_d_pal              0031bd1e _Alpha
+0031c637 _TDM435_BT477_r_msk              0031bd1f _ImageIN
+0031c63c _TDM435_BT477_r_ovl              0031bd51 _ImageOUT
+0031c638 _TDM435_BT477_r_pal              0031bd83 _TSave
+0031c639 _TDM435_BT477_w_ovl              0031bd84 _TCapture
+0031c635 _TDM435_BT477_w_pal              0031bd85 _TDer
+0031c63d _TDM435_LM1882_A                 0031bd86 _TSeuil
+0031c63e _TDM435_LM1882_B                 0031bd87 _TCC
+0031c640 _TDM435_VCAPTURE_1               0031bd88 _TER
+0031c641 _TDM435_VCAPTURE_2               0031bd89 _Ttiming
+0031c645 _TDM435_VCOMMAND                 0031bdd0 _errno
+0031c644 _TDM435_VCONTROL                 0031bdfb __idrom
+0031c642 _TDM435_VDISPLAY_1               0031bdfc __node_number
+0031c643 _TDM435_VDISPLAY_2               0031bdfd __boot_chan
+0031c62f _TDM435_overlay_col              0031be3e __broadcast_mask
+0031c62e _TDM435_overlay_mask             0031be42 __gTerminator
+0031c62a _TDM435_vram_col_a               0031be46 _fdtab
+0031c62b _TDM435_vram_col_b               0031be5e _gTopsMsg
+0031c628 _TDM435_vram_mask_a              0031be64 __IO_stdin_
+0031c629 _TDM435_vram_mask_b              0031be7a __IO_stdout_
+0031bd85 _TDer                            0031be90 __IO_stderr_
+0031bd88 _TER                             0031bea6 __IO_list_all
+0031bd83 _TSave                           0031bea7 __IO_file_jumps
+0031bd86 _TSeuil                          0031bebc __IO_str_jumps
+0031bd89 _Ttiming                         0031bf09 __IO_cleanup_registration_needed
+0031ee7c __IO_adjust_column               0031bf33 _sw_debug
+0031bf09 __IO_cleanup_registration_needed 0031bf34 _sw_trace
+0031e1f4 __IO_close                       0031bf35 _sw_error
+0031ee21 __IO_default_doallocate          0031bf36 _sw_mem
+0031ee45 __IO_default_finish              0031c624 _TDM435_8_vram_adr_a
+0031ef2f __IO_default_pbackfail           0031c625 _TDM435_8_vram_adr_b
+0031ef87 __IO_default_read                0031c626 _TDM435_32_vram_adr_a
+0031ee1d __IO_default_seekpos             0031c627 _TDM435_32_vram_adr_b
+0031ee59 __IO_default_seekoff             0031c628 _TDM435_vram_mask_a
+0031ef83 __IO_default_seek                0031c629 _TDM435_vram_mask_b
+0031edf1 __IO_default_setbuf              0031c62a _TDM435_vram_col_a
+0031ef85 __IO_default_stat                0031c62b _TDM435_vram_col_b
+0031ee43 __IO_default_sync                0031c62c _TDM435_8_overlay_adr
+0031ed6d __IO_default_underflow           0031c62d _TDM435_32_overlay_adr
+0031ef89 __IO_default_write               0031c62e _TDM435_overlay_mask
+0031edae __IO_default_xsgetn              0031c62f _TDM435_overlay_col
+0031ed6f __IO_default_xsputn              0031c630 _TDM435_BT252_adr
+0031dfd9 __IO_do_write                    0031c631 _TDM435_BT252_d_pal
+0031ed5b __IO_doallocbuf                  0031c632 _TDM435_BT252_commd
+0031e389 __IO_fclose                      0031c633 _TDM435_BT261_adr
+0031df9b __IO_file_attach                 0031c634 _TDM435_BT261_d_pal
+0031df14 __IO_file_close_it               0031c635 _TDM435_BT477_w_pal
+0031e161 __IO_file_close                  0031c636 _TDM435_BT477_d_pal
+0031e1f8 __IO_file_doallocate             0031c637 _TDM435_BT477_r_msk
+0031df40 __IO_file_finish                 0031c638 _TDM435_BT477_r_pal
+0031df49 __IO_file_fopen                  0031c639 _TDM435_BT477_w_ovl
+0031df0c __IO_file_init                   0031c63a _TDM435_BT477_d_ovl
+0031bea7 __IO_file_jumps                  0031c63b _TDM435_BT477_commd
+0031e058 __IO_file_overflow               0031c63c _TDM435_BT477_r_ovl
+0031e156 __IO_file_read                   0031c63d _TDM435_LM1882_A
+0031e0c1 __IO_file_seekoff                0031c63e _TDM435_LM1882_B
+0031e15b __IO_file_seek                   0031c63f _TDM435_AV9110
+0031dfc4 __IO_file_setbuf                 0031c640 _TDM435_VCAPTURE_1
+0031e15e __IO_file_stat                   0031c641 _TDM435_VCAPTURE_2
+0031e0a2 __IO_file_sync                   0031c642 _TDM435_VDISPLAY_1
+0031e01f __IO_file_underflow              0031c643 _TDM435_VDISPLAY_2
+0031e164 __IO_file_write                  0031c644 _TDM435_VCONTROL
+0031e186 __IO_file_xsputn                 0031c645 _TDM435_VCOMMAND
+0031eeaa __IO_flush_all_linebuffered      0031c64c _int_vect_buf
+0031ee97 __IO_flush_all                   0031c678 _ivtp_buf
+0031e364 __IO_fopen                       0031c68c _msg_size
+0031efc8 __IO_fprintf                     0031c692 _auto_tab
+0031ec9f __IO_free_backup_area            0031c6e6 __ctypes_
+0031e1f6 __IO_fstat                       0031c812 _comport_init_list
+0031ee8d __IO_get_column                  0031c81e _inc_nb_frame_in
+0031eebb __IO_init_marker                 0031c81e .text
+0031ee32 __IO_init                        0031c81e end
+0031ec52 __IO_least_marker                0031c82f _print_stat
+0031ec49 __IO_link_in                     0031c85a _frame_stat
+0031bea6 __IO_list_all                    0031c868 _start_stat
+0031e1f2 __IO_lseek                       0031c884 _stop_stat
+0031eeeb __IO_marker_delta                0031c891 _set_stat
+0031eee5 __IO_marker_difference           0031c89c _sync_stat
+0031ef22 __IO_nobackup_pbackfail          0031c8b9 _print_centered
+0031ef8b __IO_padn                        0031c900 _print_right
+0031eb72 __IO_perror                      0031c94e _draw_banner
+0031e1ee __IO_read                        0031c959 _draw_title
+0031eed2 __IO_remove_marker               0031c966 _draw_presentation
+0031eefd __IO_seekmark                    0031c975 _update
+0031ee78 __IO_set_column                  0031c9a7 _load
+0031ed3e __IO_setb                        0031ca84 _init_graphic
+0031edaa __IO_sgetn                       0031cbc4 _clr_target
+0031ee5b __IO_sputbackc                   0031cbe2 _start_capture
+0031be90 __IO_stderr_                     0031cbf3 _stop_capture
+0031be64 __IO_stdin_                      0031cc03 _display_VRAM_B
+0031be7a __IO_stdout_                     0031cc14 _capture_single_frame
+0031e30d __IO_str_count                   0031cc57 _draw_frame
+0031e356 __IO_str_finish                  0031cc96 _half_left_screenshot_2_file
+0031e284 __IO_str_init_readonly           0031cced _write_frame_2_file
+0031e253 __IO_str_init_static             0031cd42 _write_result_2_file
+0031bebc __IO_str_jumps                   0031cd90 _write_screen_2_file
+0031e28d __IO_str_overflow                0031cdc0 _read_frame_from_file
+0031e34e __IO_str_pbackfail               0031ce1a _draw_logo_esiee
+0031e313 __IO_str_seekoff                 0031ce4d _bench_start
+0031e2f5 __IO_str_underflow               0031ce59 _bench_read
+0031eb8e __IO_strerror                    0031ce6d _bench_print
+0031ee6b __IO_sungetc                     0031ce7f _do_video_copy_EDRAM
+0031ec6c __IO_switch_to_backup_area       0031cecf _do_video_dma_comport
+0031ec7a __IO_switch_to_get_mode          0031cf02 _do_video_commport
+0031ec5e __IO_switch_to_main_get_area     0031cf3f _do_video_reverse
+0031ede9 __IO_sync                        0031cf71 _do_video_mirror
+0031ec34 __IO_un_link                     0031cfb8 _do_segmentation
+0031e6eb __IO_ungetc                      0031d053 _Normalisation
+0031ef1d __IO_unsave_markers              0031d0a7 _BidouilleNico
+0031e771 __IO_vfprintf                    0031d10a _Deriche
+0031e3ab __IO_vfscanf                     0031d22e _create_border
+0031e229 __IO_vsprintf                    0031d27f _Double_Threshold
+0031e6fa __IO_vsscanf                     0031d2b8 _connect
+0031e1f0 __IO_write                       0031d300 _contour_closing
+00004000 __STACK_SIZE                     0031d535 _region_labelling
+00040000 __SYSMEM_SIZE                    0031d5e6 _print_menu
+0031de9b __TOPSCloseLink                  0031d62e _change_values
+0031de5e __TOPSInitLink                   0031d85b _main
+0031de78 __TOPSOpenLink                   0031d8a3 _c_int00
+0031e9e3 ___cvt_double                    0031d8d3 DIV_I40
+0031ecac ___overflow                      0031d8f7 DIV_U40
+0031ecb0 ___underflow                     0031d929 INV_F40
+0031bdfd __boot_chan                      0031d933 _sqrt
+0031be3e __broadcast_mask                 0031d948 _exit
+0031c6e6 __ctypes_                        0031d95b _atexit
+0031be42 __gTerminator                    0031d970 _abort
+0031bdfb __idrom                          0031d973 _exp
+0031bdfc __node_number                    0031d9a4 _strcat
+0031d9ee __pace_start                     0031d9b0 _strcpy
+0030ed08 __params                         0031d9b9 __start
+0030ad07 __stack                          0031d9ee __pace_start
+0031d9b9 __start                          0031d9fc _ldexp
+00321fba __sys_memory                     0031da12 _strtok
+0031efdc __t_check_rv                     0031da32 _strcspn
+00300000 __vector                         0031da43 _strspn
+0031d970 _abort                           0031da53 _read
+00321869 _alarm                           0031dab5 _close
+0031dadf _alloc_file_handle               0031dadf _alloc_file_handle
+0031d95b _atexit                          0031daf7 _free_file_handle
+0032197c _atof                            0031daff _realloc_file_handle
+00321f8c _atoi                            0031db0c _lookup_file_handle
+00321fb8 _atol                            0031db25 _open
+0031c692 _auto_tab                        0031db5e _write
+0031ce6d _bench_print                     0031dbbe _pack_string
+0031ce59 _bench_read                      0031dbf1 _pack_word
+0031ce4d _bench_start                     0031dc37 _pack_int
+0031008f _big_font_gc                     0031dc7d _pack_short
+00310089 _big_font                        0031dcc4 _pack_char
+00310092 _black                           0031dcf7 _tops_flush
+0031008d _blue                            0031dd14 _unpack_string
+00321aca _bmalloc                         0031dd4b _unpack_word
+00321f3b _c40_comport_init                0031dd90 _unpack_int
+0031d8a3 _c_int00                         0031ddd5 _unpack_short
+00321a14 _calloc                          0031de1a _unpack_char
+0031cc14 _capture_single_frame            0031de5e __TOPSInitLink
+0031d62e _change_values                   0031de78 __TOPSOpenLink
+00321919 _chk_dma                         0031de9b __TOPSCloseLink
+0031006d _clock_1s                        0031dea9 _printf
+0031dab5 _close                           0031deb6 _sscanf
+0031cbc4 _clr_target                      0031dec2 _scanf
+00321e9c _comport_close                   0031ded0 _fscanf
+0031c812 _comport_init_list               0031dedd _perror
+00321e50 _comport_open                    0031dedf _fclose
+00321ed2 _comport_read_word               0031dee1 _sprintf
+00321eb1 _comport_read                    0031deed _fopen
+00321ee7 _comport_reset                   0031deef _tops_terminate
+00321ebc _comport_write                   0031df04 _exit_terminate
+00321ec7 _comport_write48                 0031df0c __IO_file_init
+00321ed8 _comport_write_word              0031df14 __IO_file_close_it
+0031d2b8 _connect                         0031df40 __IO_file_finish
+0031d300 _contour_closing                 0031df49 __IO_file_fopen
+0031d22e _create_border                   0031df9b __IO_file_attach
+003202bd _d_clr2D_32                      0031dfc4 __IO_file_setbuf
+00320261 _d_clr2D_8                       0031dfd9 __IO_do_write
+00321732 _d_clr_disp_TDM435_frame         0031e01f __IO_file_underflow
+0032177a _d_clr_disp_TDM435_overlay       0031e058 __IO_file_overflow
+00321769 _d_clr_display_frame             0031e0a2 __IO_file_sync
+003217a6 _d_clr_display_overlay           0031e0c1 __IO_file_seekoff
+0031fb21 _d_cp_letter                     0031e156 __IO_file_read
+0031fab3 _d_draw_letter                   0031e15b __IO_file_seek
+003203ff _d_draw_line_bres_x              0031e15e __IO_file_stat
+00320532 _d_draw_line_bres_y              0031e161 __IO_file_close
+00320667 _d_draw_line_horizontal          0031e164 __IO_file_write
+003206e5 _d_draw_line_vertical            0031e186 __IO_file_xsputn
+00320765 _d_draw_line                     0031e1ee __IO_read
+00320809 _d_draw_pixel32                  0031e1f0 __IO_write
+00320856 _d_draw_pixel                    0031e1f2 __IO_lseek
+003207c7 _d_draw_pixel8                   0031e1f4 __IO_close
+0032084a _d_draw_pixel_col                0031e1f6 __IO_fstat
+0031fd12 _d_fill_rect                     0031e1f8 __IO_file_doallocate
+00320c72 _d_free_display                  0031e229 __IO_vsprintf
+0031fde6 _d_free_window                   0031e253 __IO_str_init_static
+0032113f _d_get_capture_frame             0031e284 __IO_str_init_readonly
+00321843 _d_get_iif                       0031e28d __IO_str_overflow
+00321845 _d_iack                          0031e2f5 __IO_str_underflow
+0032160a _d_init_disp_TDM435              0031e30d __IO_str_count
+003216ec _d_init_display                  0031e313 __IO_str_seekoff
+0031fdc4 _d_init_frame                    0031e34e __IO_str_pbackfail
+00321532 _d_init_ints                     0031e356 __IO_str_finish
+0031fa42 _d_init_letter                   0031e364 __IO_fopen
+0031fd9c _d_init_overlay                  0031e389 __IO_fclose
+0031fd69 _d_init_window                   0031e3ab __IO_vfscanf
+003215df _d_install_TDM435_capture_clut   0031e6eb __IO_ungetc
+0032158f _d_install_TDM435_frame_clut     0031e6fa __IO_vsscanf
+00321562 _d_install_TDM435_ovl_clut       0031e771 __IO_vfprintf
+003215f9 _d_install_capture_clut          0031e9e3 ___cvt_double
+003215bd _d_install_clut                  0031eb72 __IO_perror
+003215ce _d_install_ovl_clut              0031eb8e __IO_strerror
+00321368 _d_load_AV9110_reg               0031eb94 _lseek
+003214b5 _d_load_BT252_pal                0031ebc8 _fstat
+003214ce _d_load_BT252_reg                0031ec14 _isatty
+003214f2 _d_load_BT261_reg                0031ec34 __IO_un_link
+00321461 _d_load_BT477_ovl                0031ec49 __IO_link_in
+0032148a _d_load_BT477_pal                0031ec52 __IO_least_marker
+00321317 _d_load_LM1882_reg               0031ec5e __IO_switch_to_main_get_area
+00321391 _d_load_VCAPTURE_reg             0031ec6c __IO_switch_to_backup_area
+003213f9 _d_load_VDISPLAY_reg             0031ec7a __IO_switch_to_get_mode
+0031f9dd _d_load_font                     0031ec9f __IO_free_backup_area
+0031fe5a _d_mv2D_32to32                   0031ecac ___overflow
+003200a6 _d_mv2D_32to8_and                0031ecb0 ___underflow
+00320025 _d_mv2D_32to8_norm               0031ed3e __IO_setb
+0032022f _d_mv2D_32to8                    0031ed5b __IO_doallocbuf
+0031ff7f _d_mv2D_32to8_nval               0031ed6d __IO_default_underflow
+00320120 _d_mv2D_32to8_or                 0031ed6f __IO_default_xsputn
+0031feea _d_mv2D_32to8_val                0031edaa __IO_sgetn
+00320189 _d_mv2D_32to8_xor                0031edae __IO_default_xsgetn
+0032151a _d_new_display                   0031ede9 __IO_sync
+0031fed6 _d_pack32                        0031edf1 __IO_default_setbuf
+003207ba _d_read_pixel32                  0031ee1d __IO_default_seekpos
+0032078d _d_read_pixel8                   0031ee21 __IO_default_doallocate
+00320832 _d_read_pixel                    0031ee32 __IO_init
+0031f9c9 _d_read_vdata                    0031ee43 __IO_default_sync
+0031f95f _d_read_vdispatch                0031ee45 __IO_default_finish
+0031f90b _d_read_vhdr                     0031ee59 __IO_default_seekoff
+0031fc77 _d_refx_letter                   0031ee5b __IO_sputbackc
+0031fc3d _d_refy_letter                   0031ee6b __IO_sungetc
+0031fba6 _d_rot180_letter                 0031ee78 __IO_set_column
+0031fbe5 _d_rot270_letter                 0031ee7c __IO_adjust_column
+0031fb4f _d_rot90_letter                  0031ee8d __IO_get_column
+0031fcaf _d_scale_letter                  0031ee97 __IO_flush_all
+003212fb _d_select_capture_sync           0031eeaa __IO_flush_all_linebuffered
+003212db _d_select_capture_video          0031eebb __IO_init_marker
+00321090 _d_set_capture_NTSC              0031eed2 __IO_remove_marker
+00320f15 _d_set_capture_PAL               0031eee5 __IO_marker_difference
+00321169 _d_set_capture_disable           0031eeeb __IO_marker_delta
+00321151 _d_set_capture_enable            0031eefd __IO_seekmark
+0032110d _d_set_capture_frame             0031ef1d __IO_unsave_markers
+00321188 _d_set_capture_interlace         0031ef22 __IO_nobackup_pbackfail
+003212c8 _d_set_capture_range             0031ef2f __IO_default_pbackfail
+003211f8 _d_set_capture_window            0031ef83 __IO_default_seek
+003216f9 _d_set_disp_TDM435_frame         0031ef85 __IO_default_stat
+00320de6 _d_set_display_1K                0031ef87 __IO_default_read
+00321038 _d_set_display_NTSC              0031ef89 __IO_default_write
+00320e62 _d_set_display_PAL               0031ef8b __IO_padn
+00320c80 _d_set_display_VGA               0031efc8 __IO_fprintf
+003217cf _d_set_display_disable           0031efdc __t_check_rv
+003217b7 _d_set_display_enable            0031eff8 _t_init_font
+00321722 _d_set_display_frame             0031f060 _t_load_font
+00321817 _d_set_display_interlace         0031f07e _t_set_font_color
+00320d32 _d_set_display_superVGA          0031f0a2 _t_get_font_color
+00321841 _d_set_iif                       0031f0ae _t_get_font_txt_box
+0031fa8d _d_set_letter_color              0031f10b _t_get_font_txt_delta
+003217ff _d_set_overlay_disable           0031f134 _t_draw_str_spc
+003217e7 _d_set_overlay_enable            0031f209 _t_draw_str
+003212b1 _d_swap_capture_field            0031f20f _t_draw_char
+00321830 _d_wait_Vsync                    0031f22a _t_draw_int
+0032184c _deinstall_int_vector            0031f245 _t_draw_double
+0031cc03 _display_VRAM_B                  0031f26a _t_set_font_rotate
+0031008c _display                         0031f2ac _t_set_font_reflect
+003218f6 _dma_sync_set                    0031f2d9 _t_set_font_scale
+0031cfb8 _do_segmentation                 0031f2fe _t_get_font_reflect
+0031cf02 _do_video_commport               0031f30a _t_get_font_rotate
+0031ce7f _do_video_copy_EDRAM             0031f312 _t_get_font_scale
+0031cecf _do_video_dma_comport            0031f31e _t_set_font_user
+0031cf71 _do_video_mirror                 0031f322 _t_get_font_user
+0031cf3f _do_video_reverse                0031f32b _t_get_font_status
+0031c94e _draw_banner                     0031f334 _t_init_gc
+0031cc57 _draw_frame                      0031f347 _t_set_gc_draw_color
+0031ce1a _draw_logo_esiee                 0031f34a _t_get_gc_draw_color
+0031c966 _draw_presentation               0031f356 _t_set_gc_draw_mode
+0031c959 _draw_title                      0031f359 _t_get_gc_draw_mode
+0031bdd0 _errno                           0031f361 _t_set_gc_txt_spc
+0031df04 _exit_terminate                  0031f365 _t_get_gc_txt_spc
+0031d948 _exit                            0031f371 _t_set_gc_txt_mode
+0031d973 _exp                             0031f374 _t_get_gc_txt_mode
+0031dedf _fclose                          0031f37c _t_set_gc_txt_orientation
+0031be46 _fdtab                           0031f37f _t_get_gc_txt_orientation
+00321f6b _fgetc                           0031f387 _t_set_gc_user
+0031008b _font_gc                         0031f38a _t_get_gc_status
+00310091 _font                            0031f392 _t_get_gc_user
+0031deed _fopen                           0031f39a _t_set_gc_bezier_control
+00321f80 _fprintf                         0031f3a9 _t_get_gc_bezier_control
+00319cf7 _frame_height                    0031f3b5 _t_set_gc_font
+00319cf8 _frame_width                     0031f3b8 _t_get_gc_font
+00319cf5 _frame_addr                      0031f3bf _t_free_gc
+0031c85a _frame_stat                      0031f3ca _t_clip2D_rect
+00310088 _frame                           0031f402 _t_draw_rect_noclip
+00321a7c _free                            0031f457 _t_draw_rect
+0031daf7 _free_file_handle                0031f478 _t_fill_rect_noclip
+00321dc1 _frexp                           0031f4a1 _t_fill_rect
+0031ded0 _fscanf                          0031f4c2 _t_get_window
+0031ebc8 _fstat                           0031f4e8 _t_get_window_status
+0031be5e _gTopsMsg                        0031f4ef _t_set_window_user
+00321f4e _getenv                          0031f4f2 _t_get_window_user
+00310090 _green                           0031f4f9 _t_set_window_txt_cursor
+0031cc96 _half_left_screenshot_2_file     0031f507 _t_get_window_txt_cursor
+0031c81e _inc_nb_frame_in                 0031f513 _t_set_window_grap_cursor
+0031ca84 _init_graphic                    0031f521 _t_get_window_grap_cursor
+00321860 _install_int_vector              0031f52d _t_set_window_color
+0031c64c _int_vect_buf                    0031f530 _t_get_window_color
+00321ccf _isalnum                         0031f537 _t_get_window_clut
+00321cd3 _isalpha                         0031f53e _t_set_window_clut
+00321cd7 _isascii                         0031f541 _t_rm_window_clut
+0031ec14 _isatty                          0031f544 _t_get_window_addr
+00321cdb _iscntrl                         0031f55e _t_chk_clut_range
+00321cdf _isdigit                         0031f57f _t_init_clut_color
+00321ce3 _isgraph                         0031f5a6 _t_init_clut_rgb
+00321ce7 _islower                         0031f5d0 _t_init_grey_clut
+00321ceb _isprint                         0031f5f7 _t_init_red_clut
+00321cf0 _ispunct                         0031f61a _t_init_green_clut
+00321cf4 _isspace                         0031f63e _t_init_blue_clut
+00321cf8 _isupper                         0031f662 _t_init_pseudo_clut
+00321cfc _isxdigit                        0031f690 _t_set_clut_rgb
+0031c678 _ivtp_buf                        0031f6af _t_get_clut_rgb
+0031d9fc _ldexp                           0031f6ce _t_set_clut_color
+0031c9a7 _load                            0031f6e9 _t_get_clut_color
+003100b3 _logo_esiee                      0031f6fb _t_get_clut_status
+0031db0c _lookup_file_handle              0031f707 _t_get_clut_user
+0031eb94 _lseek                           0031f713 _t_set_clut_user
+0031d85b _main                            0031f71b _t_install_clut
+003219e5 _malloc                          0031f723 _t_install_ovl_clut
+00321d00 _memcpy                          0031f72b _t_install_capture_clut
+0032197f _memmove                         0031f733 _t_free_clut
+003219de _minit                           0031f73a _t_set_display
+00321927 _modf                            0031f74b _t_set_display_VGA
+0031c68c _msg_size                        0031f759 _t_set_display_superVGA
+00310008 _msg_stat                        0031f767 _t_set_display_1K
+0031006c _nb_frame_in                     0031f774 _t_set_display_PAL
+00310007 _nb_frame_out                    0031f782 _t_set_display_NTSC
+0031db25 _open                            0031f790 _t_get_display
+0031008a _overlay                         0031f7af _t_get_display_status
+0031dcc4 _pack_char                       0031f7ba _t_set_display_frame
+0031dc37 _pack_int                        0031f7cc _t_get_display_frame
+0031dc7d _pack_short                      0031f7d7 _t_get_display_overlay
+0031dbbe _pack_string                     0031f7e2 _t_free_display
+0031dbf1 _pack_word                       0031f7ea _t_clr_display_frame
+0031dedd _perror                          0031f7f8 _t_clr_display_overlay
+00321d0d _pow                             0031f806 _t_set_display_enable
+0031c8b9 _print_centered                  0031f80e _t_set_display_disable
+0031d5e6 _print_menu                      0031f816 _t_set_overlay_enable
+0031c900 _print_right                     0031f81e _t_set_overlay_disable
+0031c82f _print_stat                      0031f826 _t_wait_Vsync
+0031dea9 _printf                          0031f82e _t_load_gc_font
+0031da53 _read                            0031f849 _t_free_gc_font
+0031cdc0 _read_frame_from_file            0031f856 _t_get_gc_font_txt_box
+0031daff _realloc_file_handle             0031f863 _t_get_gc_font_txt_delta
+00321a24 _realloc                         0031f870 _t_set_gc_font_rotate
+00321876 _receive_msg                     0031f879 _t_set_gc_font_reflect
+0031008e _red                             0031f882 _t_set_gc_font_scale
+0031d535 _region_labelling                0031f88b _t_get_gc_font_reflect
+00321847 _reset_iie                       0031f894 _t_get_gc_font_rotate
+0031dec2 _scanf                           0031f89d _t_get_gc_font_scale
+00310074 _scr_height                      0031f8a6 _t_set_gc_font_user
+00310073 _scr_width                       0031f8af _t_get_gc_font_user
+003218aa _send_msg                        0031f8b8 _t_get_gc_font_status
+00321854 _set_iie                         0031f8c1 _t_set_capture_frame
+00321859 _set_ivtp                        0031f8c9 _t_get_capture_frame
+0031c891 _set_stat                        0031f8d1 _t_set_capture_disable
+0031dee1 _sprintf                         0031f8d9 _t_set_capture_enable
+0031d933 _sqrt                            0031f8e1 _t_set_capture_interlace
+0031deb6 _sscanf                          0031f8e9 _t_swap_capture_field
+0031cbe2 _start_capture                   0031f8f1 _t_set_capture_range
+0031c868 _start_stat                      0031f8f9 _t_new_display
+0031cbf3 _stop_capture                    0031f8fb _t_new_gc
+0031c884 _stop_stat                       0031f8ff _t_new_window
+0031d9a4 _strcat                          0031f903 _t_new_clut
+0031d9b0 _strcpy                          0031f907 _t_new_font
+0031da32 _strcspn                         0031f90b _d_read_vhdr
+00321b11 _strerror                        0031f95f _d_read_vdispatch
+00319cf9 _stride                          0031f9c9 _d_read_vdata
+0031da43 _strspn                          0031f9dd _d_load_font
+00321b13 _strtod                          0031fa42 _d_init_letter
+0031da12 _strtok                          0031fa8d _d_set_letter_color
+00321ba6 _strtol                          0031fab3 _d_draw_letter
+00321c3e _strtoul                         0031fb21 _d_cp_letter
+0031bf33 _sw_debug                        0031fb4f _d_rot90_letter
+0031bf35 _sw_error                        0031fba6 _d_rot180_letter
+0031bf36 _sw_mem                          0031fbe5 _d_rot270_letter
+0031bf34 _sw_trace                        0031fc3d _d_refy_letter
+0031c89c _sync_stat                       0031fc77 _d_refx_letter
+00320b99 _t_calc_grad                     0031fcaf _d_scale_letter
+00320be3 _t_calc_intersect_grad           0031fd12 _d_fill_rect
+00320c2a _t_calc_intersect_line           0031fd44 _t_init_display
+00320bcf _t_calc_midpoint                 0031fd69 _d_init_window
+0031f55e _t_chk_clut_range                0031fd9c _d_init_overlay
+00320892 _t_clip2D_line                   0031fdc4 _d_init_frame
+00320b5c _t_clip2D_poly                   0031fde6 _d_free_window
+0031f3ca _t_clip2D_rect                   0031fdfd _t_init_window
+0031f7ea _t_clr_display_frame             0031fe01 _t_init_frame
+0031f7f8 _t_clr_display_overlay           0031fe05 _t_init_overlay
+0031f20f _t_draw_char                     0031fe09 _t_free_window
+0031f245 _t_draw_double                   0031fe25 _t_free_font
+0031f22a _t_draw_int                      0031fe3a _t_set_gc_txt_color
+003202ce _t_draw_line_bres_x              0031fe44 _t_get_gc_txt_color
+0032031e _t_draw_line_bres_y              0031fe5a _d_mv2D_32to32
+003203e1 _t_draw_line                     0031fed6 _d_pack32
+0032036f _t_draw_line_horizontal          0031feea _d_mv2D_32to8_val
+003203bd _t_draw_line_noclip              0031ff7f _d_mv2D_32to8_nval
+00320396 _t_draw_line_vertical            00320025 _d_mv2D_32to8_norm
+0031f457 _t_draw_rect                     003200a6 _d_mv2D_32to8_and
+0031f402 _t_draw_rect_noclip              00320120 _d_mv2D_32to8_or
+0031f134 _t_draw_str_spc                  00320189 _d_mv2D_32to8_xor
+0031f209 _t_draw_str                      0032022f _d_mv2D_32to8
+0031f478 _t_fill_rect_noclip              00320261 _d_clr2D_8
+0031f4a1 _t_fill_rect                     003202bd _d_clr2D_32
+0031f733 _t_free_clut                     003202ce _t_draw_line_bres_x
+0031f7e2 _t_free_display                  0032031e _t_draw_line_bres_y
+0031fe25 _t_free_font                     0032036f _t_draw_line_horizontal
+0031f849 _t_free_gc_font                  00320396 _t_draw_line_vertical
+0031f3bf _t_free_gc                       003203bd _t_draw_line_noclip
+0031fe09 _t_free_window                   003203e1 _t_draw_line
+0031f8c9 _t_get_capture_frame             003203ff _d_draw_line_bres_x
+0031f6e9 _t_get_clut_color                00320532 _d_draw_line_bres_y
+0031f6af _t_get_clut_rgb                  00320667 _d_draw_line_horizontal
+0031f6fb _t_get_clut_status               003206e5 _d_draw_line_vertical
+0031f707 _t_get_clut_user                 00320765 _d_draw_line
+0031f7cc _t_get_display_frame             0032078d _d_read_pixel8
+0031f7d7 _t_get_display_overlay           003207ba _d_read_pixel32
+0031f790 _t_get_display                   003207c7 _d_draw_pixel8
+0031f7af _t_get_display_status            00320809 _d_draw_pixel32
+0031f0a2 _t_get_font_color                00320832 _d_read_pixel
+0031f2fe _t_get_font_reflect              0032084a _d_draw_pixel_col
+0031f30a _t_get_font_rotate               00320856 _d_draw_pixel
+0031f312 _t_get_font_scale                00320892 _t_clip2D_line
+0031f32b _t_get_font_status               00320b5c _t_clip2D_poly
+0031f0ae _t_get_font_txt_box              00320b99 _t_calc_grad
+0031f10b _t_get_font_txt_delta            00320bcf _t_calc_midpoint
+0031f322 _t_get_font_user                 00320be3 _t_calc_intersect_grad
+0031f3a9 _t_get_gc_bezier_control         00320c2a _t_calc_intersect_line
+0031f34a _t_get_gc_draw_color             00320c72 _d_free_display
+0031f359 _t_get_gc_draw_mode              00320c80 _d_set_display_VGA
+0031f88b _t_get_gc_font_reflect           00320d32 _d_set_display_superVGA
+0031f894 _t_get_gc_font_rotate            00320de6 _d_set_display_1K
+0031f89d _t_get_gc_font_scale             00320e62 _d_set_display_PAL
+0031f8b8 _t_get_gc_font_status            00320f15 _d_set_capture_PAL
+0031f856 _t_get_gc_font_txt_box           00321038 _d_set_display_NTSC
+0031f3b8 _t_get_gc_font                   00321090 _d_set_capture_NTSC
+0031f863 _t_get_gc_font_txt_delta         0032110d _d_set_capture_frame
+0031f8af _t_get_gc_font_user              0032113f _d_get_capture_frame
+0031f38a _t_get_gc_status                 00321151 _d_set_capture_enable
+0031fe44 _t_get_gc_txt_color              00321169 _d_set_capture_disable
+0031f374 _t_get_gc_txt_mode               00321188 _d_set_capture_interlace
+0031f37f _t_get_gc_txt_orientation        003211f8 _d_set_capture_window
+0031f365 _t_get_gc_txt_spc                003212b1 _d_swap_capture_field
+0031f392 _t_get_gc_user                   003212c8 _d_set_capture_range
+0031f544 _t_get_window_addr               003212db _d_select_capture_video
+0031f537 _t_get_window_clut               003212fb _d_select_capture_sync
+0031f530 _t_get_window_color              00321317 _d_load_LM1882_reg
+0031f521 _t_get_window_grap_cursor        00321368 _d_load_AV9110_reg
+0031f4e8 _t_get_window_status             00321391 _d_load_VCAPTURE_reg
+0031f507 _t_get_window_txt_cursor         003213f9 _d_load_VDISPLAY_reg
+0031f4f2 _t_get_window_user               00321461 _d_load_BT477_ovl
+0031f4c2 _t_get_window                    0032148a _d_load_BT477_pal
+0031f63e _t_init_blue_clut                003214b5 _d_load_BT252_pal
+0031f57f _t_init_clut_color               003214ce _d_load_BT252_reg
+0031f5a6 _t_init_clut_rgb                 003214f2 _d_load_BT261_reg
+0031fd44 _t_init_display                  0032151a _d_new_display
+0031eff8 _t_init_font                     00321532 _d_init_ints
+0031fe01 _t_init_frame                    00321541 _t_wait_display_vblank
+0031f334 _t_init_gc                       00321549 _t_wait_capture_vblank
+0031f61a _t_init_green_clut               00321554 _t_wait_capture_hblank
+0031f5d0 _t_init_grey_clut                0032155b _t_wait_display_hblank
+0031fe05 _t_init_overlay                  00321562 _d_install_TDM435_ovl_clut
+0031f662 _t_init_pseudo_clut              0032158f _d_install_TDM435_frame_clut
+0031f5f7 _t_init_red_clut                 003215bd _d_install_clut
+0031fdfd _t_init_window                   003215ce _d_install_ovl_clut
+0031f72b _t_install_capture_clut          003215df _d_install_TDM435_capture_clut
+0031f71b _t_install_clut                  003215f9 _d_install_capture_clut
+0031f723 _t_install_ovl_clut              0032160a _d_init_disp_TDM435
+0031f060 _t_load_font                     003216ec _d_init_display
+0031f82e _t_load_gc_font                  003216f9 _d_set_disp_TDM435_frame
+0031f903 _t_new_clut                      00321722 _d_set_display_frame
+0031f8f9 _t_new_display                   00321732 _d_clr_disp_TDM435_frame
+0031f907 _t_new_font                      00321769 _d_clr_display_frame
+0031f8fb _t_new_gc                        0032177a _d_clr_disp_TDM435_overlay
+0031f8ff _t_new_window                    003217a6 _d_clr_display_overlay
+0031f541 _t_rm_window_clut                003217b7 _d_set_display_enable
+0031f8d1 _t_set_capture_disable           003217cf _d_set_display_disable
+0031f8d9 _t_set_capture_enable            003217e7 _d_set_overlay_enable
+0031f8c1 _t_set_capture_frame             003217ff _d_set_overlay_disable
+0031f8e1 _t_set_capture_interlace         00321817 _d_set_display_interlace
+0031f8f1 _t_set_capture_range             00321830 _d_wait_Vsync
+0031f6ce _t_set_clut_color                00321841 _d_set_iif
+0031f690 _t_set_clut_rgb                  00321843 _d_get_iif
+0031f713 _t_set_clut_user                 00321845 _d_iack
+0031f767 _t_set_display_1K                00321847 _reset_iie
+0031f782 _t_set_display_NTSC              0032184c _deinstall_int_vector
+0031f774 _t_set_display_PAL               00321854 _set_iie
+0031f74b _t_set_display_VGA               00321859 _set_ivtp
+0031f80e _t_set_display_disable           00321860 _install_int_vector
+0031f73a _t_set_display                   00321869 _alarm
+0031f806 _t_set_display_enable            00321876 _receive_msg
+0031f7ba _t_set_display_frame             003218aa _send_msg
+0031f759 _t_set_display_superVGA          003218e5 _time_read
+0031f07e _t_set_font_color                003218e9 _time_start
+0031f2ac _t_set_font_reflect              003218ef _time_stop
+0031f26a _t_set_font_rotate               003218f6 _dma_sync_set
+0031f2d9 _t_set_font_scale                00321919 _chk_dma
+0031f31e _t_set_font_user                 00321927 _modf
+0031f39a _t_set_gc_bezier_control         00321932 MOD_I40
+0031f347 _t_set_gc_draw_color             00321953 MOD_U40
+0031f356 _t_set_gc_draw_mode              0032197c _atof
+0031f879 _t_set_gc_font_reflect           0032197f _memmove
+0031f882 _t_set_gc_font_scale             003219de _minit
+0031f8a6 _t_set_gc_font_user              003219e5 _malloc
+0031f870 _t_set_gc_font_rotate            00321a14 _calloc
+0031f3b5 _t_set_gc_font                   00321a24 _realloc
+0031fe3a _t_set_gc_txt_color              00321a7c _free
+0031f371 _t_set_gc_txt_mode               00321aca _bmalloc
+0031f37c _t_set_gc_txt_orientation        00321b11 _strerror
+0031f361 _t_set_gc_txt_spc                00321b13 _strtod
+0031f387 _t_set_gc_user                   00321ba6 _strtol
+0031f81e _t_set_overlay_disable           00321c3e _strtoul
+0031f816 _t_set_overlay_enable            00321cbf _tolower
+0031f53e _t_set_window_clut               00321cc6 _toupper
+0031f52d _t_set_window_color              00321ccd _toascii
+0031f513 _t_set_window_grap_cursor        00321ccf _isalnum
+0031f4f9 _t_set_window_txt_cursor         00321cd3 _isalpha
+0031f4ef _t_set_window_user               00321cd7 _isascii
+0031f8e9 _t_swap_capture_field            00321cdb _iscntrl
+0031f826 _t_wait_Vsync                    00321cdf _isdigit
+00321554 _t_wait_capture_hblank           00321ce3 _isgraph
+00321549 _t_wait_capture_vblank           00321ce7 _islower
+0032155b _t_wait_display_hblank           00321ceb _isprint
+00321541 _t_wait_display_vblank           00321cf0 _ispunct
+003218e5 _time_read                       00321cf4 _isspace
+003218e9 _time_start                      00321cf8 _isupper
+003218ef _time_stop                       00321cfc _isxdigit
+00321ccd _toascii                         00321d00 _memcpy
+00321cbf _tolower                         00321d0d _pow
+0031dcf7 _tops_flush                      00321dc1 _frexp
+0031deef _tops_terminate                  00321e50 _comport_open
+00321cc6 _toupper                         00321e9c _comport_close
+0031de1a _unpack_char                     00321eb1 _comport_read
+0031dd90 _unpack_int                      00321ebc _comport_write
+0031ddd5 _unpack_short                    00321ec7 _comport_write48
+0031dd14 _unpack_string                   00321ed2 _comport_read_word
+0031dd4b _unpack_word                     00321ed8 _comport_write_word
+0031c975 _update                          00321ee7 _comport_reset
+0031cced _write_frame_2_file              00321f3b _c40_comport_init
+0031cd42 _write_result_2_file             00321f4e _getenv
+0031cd90 _write_screen_2_file             00321f6b _fgetc
+0031db5e _write                           00321f80 _fprintf
+00300040 cinit                            00321f8c _atoi
+0030ee0d edata                            00321fb8 _atol
+0031c81e end                              00321fba etext
+00321fba etext                            00321fba __sys_memory
+
+[593 symbols]

@@ -1,0 +1,136 @@
+<!DOCTYPE HTML SYSTEM "legacy.dtd">
+<html>
+<head>
+  <title>Sujet: Optimisation et parall&eacute;lisation de code pour
+processeurs &agrave; instructions SIMD &laquo; multim&eacute;dia &raquo;</title>
+</head>
+<body>
+<h2> Sujet: SAC - Optimisation et parall&eacute;lisation de code pour
+processeurs &agrave;
+instructions SIMD &laquo; multim&eacute;dia &raquo;
+</h2>
+<p>
+L'apparition d'une nouvelle g&eacute;n&eacute;ration de
+microprocesseurs et de DSP
+int&eacute;grant des instructions parall&egrave;les &laquo; &agrave; la
+SIMD &raquo; tels que le mode MMX
+ou SSE3 des processeurs Intel ou VIS de Sun permet une
+am&eacute;lioration des
+performances pour les applications graphiques et multim&eacute;dia qui
+sont &agrave;
+l'origine de leur apparition mais aussi en
+t&eacute;l&eacute;communication, en traitement d'image, en traitement
+du
+signal (radar et sonar), dans le domaine de la simulation et du calcul
+scientifique. L'int&eacute;r&ecirc;t de cette nouvelle technique est
+d'ordre &eacute;conomique
+car elle appara&icirc;t dans tous les types d'ordinateur (&agrave; base
+de
+microprocesseurs) et peut permettre d'&eacute;viter l'utilisation
+d'acc&eacute;l&eacute;rateurs
+mat&eacute;riels sp&eacute;cialis&eacute;s co&ucirc;teux.
+</p>
+<p>Malheureusement, l'utilisation de ces nouvelles instructions
+n&eacute;cessite la
+parall&eacute;lisation des applications avec un grain tr&egrave;s fin
+et la
+r&eacute;organisation des structures de donn&eacute;es, en plus de la
+parall&eacute;lisation
+multi-processeur qui peut &ecirc;tre n&eacute;cessaire pour des raisons
+de
+performance. L'utilisation de cette technique est donc pour l'instant
+r&eacute;serv&eacute;e &agrave; des biblioth&egrave;ques &eacute;crites
+en assembleur par les constructeurs
+de microprocesseurs et quelques programmeurs tr&egrave;s avertis. De
+nouvelles m&eacute;thodes de compilation sont n&eacute;cessaires pour
+permettre un
+d&eacute;veloppement rapide de ces techniques pour les applications
+plus
+g&eacute;n&eacute;rales mais surtout dans le domaine des
+t&eacute;l&eacute;communications ou de grandes quantit&eacute;s de
+donn&eacute;es doivent &ecirc;tre manipul&eacute;es rapidement.
+</p>
+<p>Nous proposons une position de stage de MR2 (ex-DEA)
+afin d'&eacute;tudier
+et de r&eacute;soudre ces probl&egrave;mes sur des programmes
+r&eacute;els de traitement du
+signal dans le cadre de notre <a
+ href="http://www-info.enst-bretagne.fr">D&eacute;partement
+Informatique de
+l'&Eacute;cole Nationale Sup&eacute;rieure des
+T&eacute;l&eacute;communications de
+Bretagne</a>. L'&eacute;tudiant s'appuiera sur l'infrastructure de <a
+ href="http://www.cri.ensmp.fr/pips">PIPS</a> pour tester et
+r&eacute;aliser un
+compilateur restructurant le code afin de permettre l'utilisation de
+cette
+nouvelle classe d'instructions des microprocesseurs modernes en
+continuant le travail le travail de <a
+ href="DEA+de+Fran%E7ois+Ferrandhttp://www.lit.enstb.org/%7Ekeryell/eleves/ENSTBr/2002-2003/DEA/Ferrand">DEA
+de Fran&ccedil;ois Ferrand en 2002-2003</a>. On s'int&eacute;ressera
+aux restructurations des donn&eacute;es de haut niveau en se basant sur
+des techniques utilisant l'alg&egrave;bre lin&eacute;aire telle que
+dans [ACIK97]. L'id&eacute;e sera de compacter les structures de
+donn&eacute;es et restructurer le code en cons&eacute;quence afin
+qu'une ex&eacute;cution efficace soit possible.<br>
+</p>
+<p><a href="http://www.cri.ensmp.fr/pips">PIPS</a> est un environnement
+de
+compilation et de parall&eacute;lisation qui permet de tester et
+int&eacute;grer
+rapidement de nouvelles techniques de compilation, d'optimisation et de
+parall&eacute;lisation, tel qu'un compilateur HPF. PIPS est
+d&eacute;velopp&eacute; par le <a href="http://www.cri.ensmp.fr/">Centre
+de Recherche en Informatique de l'&Eacute;cole des Mines de Paris</a>
+qui
+a acquis une r&eacute;putation mondiale dans le cadre de la
+parall&eacute;lisation
+interproc&eacute;durale bas&eacute;e sur des analyses
+s&eacute;mantiques.</p>
+<p>L'&Eacute;cole des Mines est ausi impliqu&eacute;e dans le
+d&eacute;veloppement du compilateur <span style="font-weight: bold;">gcc</span>
+avec le rajout de phase d'optimisation et de parall&eacute;lisation
+automatique. Ce stage s'impliquera aussi dans les discussions autour de
+ces d&eacute;veloppement afin de mutualiser les r&eacute;flexions.<br>
+</p>
+<p style="text-indent: 0.62cm; margin-bottom: 0cm;" align="justify">Bibliographie
+:<br>
+<a href="http://www-suif.stanford.edu/suifconf/suifconf2/papers/21.ps">http://www-suif.stanford.edu/suifconf/suifconf2/papers/21.ps</a><br>
+<a
+ href="http://enstb.org/%7Ekeryell/eleves/ENSTBr/2002-2003/DEA/Ferrand/">http://enstb.org/~keryell/eleves/ENSTBr/2002-2003/DEA/Ferrand</a><span
+ style="text-decoration: underline;"><br>
+</span><a href="http://cri.ensmp.fr/classement/doc/A-278.ps"></a>[BC01]
+Youcef BOUCHEBABA and Fabien COELHO. Buffered tiling for sequences of
+loop nests. Colp01 2001. </p>
+<p style="text-indent: 0.62cm; margin-bottom: 0cm;" align="justify"> </p>
+<p style="text-indent: 0.62cm; margin-bottom: 0cm;" align="justify"><span
+ style="font-style: normal;">[ACCIJK96]</span><i>
+PIPS: a Workbench for Program Parallelization and Optimization</i><br>
+presented
+at <b>European Parallel Tool Meeting 1996 (EPTM'96)</b>, Corinne
+Ancourt, Fabien Coelho, B&eacute;atrice Creusillet, Fran&ccedil;ois
+Irigoin, Pierre Jouvelot and Ronan Keryell.</p>
+<p style="text-indent: 0.62cm; margin-bottom: 0cm; font-style: normal;"
+ align="justify">[ACIK97]
+Corinne Ancourt, Fabien Coelho, Fran&ccedil;ois Irigoin, and
+Ronan Keryell. A linear algebra framework for static HPF code
+distribution. Scientific Programming, 6(1)&nbsp;:3&#8211;27, Spring 1997.
+Special Issue &#8212; High Performance Fortran Comes of Age.<a
+ href="http://cri.ensmp.fr/classement/doc/A-278.ps">http://cri.ensmp.fr/classement/doc/A-278.ps</a></p>
+<p style="text-indent: 0.62cm; margin-bottom: 0cm;" align="justify">[FIK96]
+Pierre Fiorini, Fran&ccedil;ois Irigoin, and Ronan Keryell.
+Mod&egrave;le
+de compilation d'hpf pour la machine mimd &agrave; bancs m&eacute;moire
+et r&eacute;seau distribu&eacute; programmable ph&eacute;nix. In
+RenPar'8, mai 1996. <a
+ href="http://cri.ensmp.fr/classement/doc/A-283.ps.gz">http://cri.ensmp.fr/classement/doc/A-283.ps.gz</a>.</p>
+<p><br>
+Contact : <a href="http://www-info.enst-bretagne.fr/%7Ekeryell">Ronan
+Keryell - 02 98 00 14 15</a> - <a
+ href="mailto:Ronan.Keryell@enst-bretagne.fr">Ronan.Keryell@enst-bretagne.fr</a>
+</p>
+<hr><code>
+$Header: /users/lit/keryell/ENST-Bretagne/3A/DEA/2005-2006/Sujets/RCS/SAC.html,v 1.6 2005/10/10 09:08:23 keryell Exp $
+</code>
+</body>
+</html>

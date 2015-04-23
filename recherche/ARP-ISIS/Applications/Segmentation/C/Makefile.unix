@@ -1,0 +1,41 @@
+#######################################################
+# definitions pour le traitement sous systeme UNIX :-))
+#######################################################
+CC = aCC
+LNK = $(CC)
+
+DEFINE = -D_UNIX_ 
+#-DDEBUG
+CFLAGS = 
+LIBS = -lm
+SRC_UNIX = img.c
+PROG = videodev
+
+##################################################
+# source des algos pour la chaine de segmentation 
+##################################################
+SRC_ALGO = deriche.c threshol.c fc.c rl.c norme.c
+
+###############################
+# definitions generiques 
+###############################
+
+SRC = $(SRC_UNIX) $(SRC_ALGO) benchmark.c main.c 
+OBJ = $(SRC:.c=.o)
+
+###########
+# Cibles 
+###########
+
+.SUFFIXES: .o .c
+
+.c.o:
+	$(CC) $(CFLAGS) $(DEFINE) -c $<
+
+all: $(OBJ)
+	$(LNK) $(LNKFLAGS) $(OBJ) $(LIBS) -o $(PROG)
+ 
+clean:
+	@rm *.o *.out core
+
+

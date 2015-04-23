@@ -1,0 +1,56 @@
+###############################################
+# definitions pour le traitement sur DSP/X-CIM
+###############################################
+
+
+# DSP / compilation sous DOS ( beurk... )
+#########################################
+CC  = cl30
+LNK = lnk30
+RM = del
+CFLAGS = -q -g -v40 -mr -I\corekit\corelib
+LNKFLAGS = -c
+DEFINE_DSP = -dPAL -dTRIGERR -d_DSP_
+LIBS = dsp_xcim.cmd
+SRC_DSP = stat.c graph.c esiee.c videodev.c
+PROG = videodev.out
+
+# XCIM
+######
+DEFINE_XCIM = -d_XCIM_
+VPE1_CORE_NAME = Pipe
+#VPE2_CORE_NAME = 
+#CORE_XCIM = $(VPE1_CORE_NAME).obx -d$(VPE1_CORE_NAME)
+#$(VPE2_CORE_NAME).obx -d$(VPE2_CORE_NAME)
+SRC_XCIM = xcim.c
+
+########################################
+# source pour la chaine de segmentation 
+########################################
+SRC_ALGO = deriche.c threshol.c fc.c rl.c norme.c
+
+###############################
+# definitions generiques 
+###############################
+DEFINE = $(DEFINE_DSP) $(DEFINE_XCIM)
+
+SRC = $(SRC_DSP) $(SRC_XCIM) $(SRC_ALGO) main.c 
+OBJ = $(SRC:.c=.obj)
+
+###########
+# Cibles 
+###########
+
+.SUFFIXES: c obj
+
+.c.obj:
+	$(CC) $(CFLAGS) $(DEFINE) -c $< $*.obj
+
+all: $(OBJ)
+	$(LNK) $(LNKFLAGS) $(OBJ) $(LIBS) -o $(PROG)
+ 
+clean:
+	@$(RM) *.obj
+	@$(RM) *.out
+
+

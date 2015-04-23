@@ -1,0 +1,127 @@
+This is TeX, Version 3.14159 (Web2C 7.3beta4) (format=latex 1999.2.14)  27 AUG 1999 12:44
+**./images.tex
+(./images.tex
+LaTeX2e <1998/06/01>
+Babel <v3.6j> and hyphenation patterns for american, french, german, ngerman, n
+ohyphenation, loaded.
+
+(/usr/local/teTeX/share/texmf/tex/latex/base/article.cls
+Document Class: article 1998/05/05 v1.3y Standard LaTeX document class
+(/usr/local/teTeX/share/texmf/tex/latex/base/size11.clo
+File: size11.clo 1998/05/05 v1.3y Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (/usr/local/teTeX/share/texmf/tex/latex/misc/fullpage.sty
+Style Option FULLPAGE Version 2 as of 15 Dec 1988
+) (/usr/local/teTeX/share/texmf/tex/latex/base/inputenc.sty beta test version
+Package: inputenc 1998/03/05 v0.97 Input encoding file (test version: still lia
+ble to change)
+(/usr/local/teTeX/share/texmf/tex/latex/base/latin1.def
+File: latin1.def 1998/03/05 v0.97 Input encoding file (test version: still liab
+le to change)
+)) (/usr/local/teTeX/share/texmf/tex/latex/base/fontenc.sty
+Package: fontenc 1998/06/12 v1.9p Standard LaTeX package
+(/usr/local/teTeX/share/texmf/tex/latex/base/t1enc.def
+File: t1enc.def 1998/06/12 v1.9p Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 81.
+)) (/usr/local/teTeX/share/texmf/tex/latex/latex2html/html.sty
+Package: html 1999/03/12 v1.37 hypertext commands for latex2html (nd, hws, rrm)
+
+\c@lpart=\count87
+\c@lchapter=\count88
+\c@chapter=\count89
+\c@lsection=\count90
+\c@lsubsection=\count91
+\c@lsubsubsection=\count92
+\c@lparagraph=\count93
+\c@lsubparagraph=\count94
+\c@lsubsubparagraph=\count95
+\ptrfile=\write3
+) (/usr/local/teTeX/share/texmf/tex/generic/babel/babel.sty
+Package: babel 1998/03/24 v3.6j The Babel package
+(/usr/local/teTeX/share/texmf/tex/generic/babel/frenchb.ldf
+File: frenchb.ldf 1997/01/11 v1.2a French support from the babel system
+(/usr/local/teTeX/share/texmf/tex/generic/babel/babel.def
+File: babel.def 1998/03/24 v3.6j Babel common definitions
+\babel@savecnt=\count96
+\U@D=\dimen103
+)
+Package babel Info: Making : an active character on input line 160.
+Package babel Info: Making ; an active character on input line 161.
+Package babel Info: Making ! an active character on input line 162.
+Package babel Info: Making ? an active character on input line 163.
+)) (/usr/local/teTeX/share/texmf/tex/latex/graphics/color.sty
+Package: color 1998/05/27 v1.0g Standard LaTeX Color (DPC)
+(/usr/local/teTeX/share/texmf/tex/latex/config/color.cfg)
+Package color Info: Driver file: dvips.def on input line 130.
+(/usr/local/teTeX/share/texmf/tex/latex/graphics/dvips.def
+File: dvips.def 1998/05/03 v3.0f Driver-dependant file (DPC,SPQR)
+) (/usr/local/teTeX/share/texmf/tex/latex/graphics/dvipsnam.def
+File: dvipsnam.def 1998/05/03 v3.0f Driver-dependant file (DPC,SPQR)
+))
+\sizebox=\box26
+\lthtmlwrite=\write4
+(images.aux)
+\openout1 = `images.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 100.
+LaTeX Font Info:    ... okay on input line 100.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 100.
+LaTeX Font Info:    ... okay on input line 100.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 100.
+LaTeX Font Info:    ... okay on input line 100.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 100.
+LaTeX Font Info:    ... okay on input line 100.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 100.
+LaTeX Font Info:    ... okay on input line 100.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 100.
+LaTeX Font Info:    ... okay on input line 100.
+
+latex2htmlLength hsize=349.0pt
+
+latex2htmlLength vsize=673.20255pt
+
+latex2htmlLength hoffset=0.0pt
+
+latex2htmlLength voffset=0.0pt
+
+latex2htmlLength topmargin=0.0pt
+
+latex2htmlLength topskip=0.00003pt
+
+latex2htmlLength headheight=0.0pt
+
+latex2htmlLength headsep=0.0pt
+
+latex2htmlLength parskip=0.0pt plus 1.0pt
+
+latex2htmlLength oddsidemargin=0.0pt
+
+latex2htmlLength evensidemargin=0.0pt
+
+l2hSize :tex2html_nomath_inline182:4.71341pt::0.0pt::9.01065pt.
+[1
+
+
+
+] (images.aux) ) 
+Here is how much of TeX's memory you used:
+ 1217 strings out of 61437
+ 14839 string characters out of 1197281
+ 60961 words of memory out of 2630001
+ 4189 multiletter control sequences out of 10000+0
+ 4709 words of font info for 16 fonts, out of 200000 for 1000
+ 15 hyphenation exceptions out of 1000
+ 22i,5n,21p,182b,216s stack positions out of 300i,100n,500p,30000b,4000s
+
+Output written on images.dvi (1 page, 340 bytes).
