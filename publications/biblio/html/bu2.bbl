@@ -64,9 +64,8 @@ Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
   architecture with memory encryption, integrity and information leakage
   protection.}
 \newblock \emph{Journal in Computer Virology}, \sepname{} 2007.
-\newblock \LienPDF{http://index-of.co.uk/virii/I/Improving virus protection
-  with an efficient secure architecture with memory encryption, integrity and
-  information leakage protection.pdf}.
+\newblock
+  \LienPDF{http://ronan.keryell.fr/publications/articles/2007/JiCV/CryptoPage-JiCV.pdf}.
 
 \bibitem{SympA:2008:CryptoPage_verif}
 Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
