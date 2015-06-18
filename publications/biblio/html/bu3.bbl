@@ -21,8 +21,7 @@ Ronan \textsc{Keryell}.
 \newblock \emph{\capitalize\bblin{}} \emph{Journée de rencontre des
   utilisateurs du pôle de calcul intensif pour la mer}. IFREMER, \octname{}
   2006.
-\newblock
-  \LienPDF{http://enstb.org/~keryell/publications/exposes/2006/IFREMER}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/exposes/2006/IFREMER}.
 
 \bibitem{EVD97}
 Ronan \textsc{Keryell}.
@@ -30,8 +29,7 @@ Ronan \textsc{Keryell}.
   de Compilation\indexbib{ processeur!multimédia!compilation}.}
 \newblock \emph{\capitalize\bblin{}} \emph{Séminaire Environnements Virtuels
   Distribués'97}, \decname{} 1997.
-\newblock
-  \LienPDF{http://enstb.org/~keryell/publications/exposes/1997/EVD1997}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/exposes/1997/EVD1997}.
 
 \bibitem{LaVillette:calculateurs}
 Ronan \textsc{Keryell}.
@@ -93,7 +91,7 @@ Ronan \textsc{Keryell}.
   \`a Base de Processeurs {RISC} --- Concepts, Etude et R\'ealisation}.
 \newblock \nouvellethese, Laboratoire d'Informatique de l'Ecole Normale
   Sup\'erieure --- Universit\'e Paris XI, \octname{} 1992.
-\newblock \LienPDF{http://enstb.org/~keryell/publications/these}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/these}.
 
 \bibitem{controle_SIMD}
 Ronan \textsc{Keryell}.
@@ -127,7 +125,7 @@ Philippe \textsc{Hoogvorst}, Ronan \textsc{Keryell}, Philippe \textsc{Matherat}
 \newblock \bbltechreport{} 91-5, Laboratoire d'Informatique de l'\'Ecole
   Normale Sup\'erieure, \aprname{} 1991.
 \newblock
-  \urlprefix\url{http://enstb.org/~keryell/publications/conf/1991/PARLE/liens-91-5.US.ps}.
+  \urlprefix\url{http://ronan.keryell.fr/publications/conf/1991/PARLE/liens-91-5.US.ps}.
 
 \bibitem{POMP_luminy}
 Ronan \textsc{Keryell}, Philippe \textsc{Matherat} \bbland{} Nicolas

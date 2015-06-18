@@ -149,7 +149,7 @@ Jean-Christophe~Le \textsc{Lann}, Bernard \textsc{Pottier}, Matthieu
   Reconfigurable SoC}}.
 \newblock \bbltechreport{}, \textsc{ENST} Bretagne, \mayname{} 2007.
 \newblock
-  \LienPDF{http://enstb.org/~keryell/publications/rapports/2007/CommeEngineSoC}.
+  \LienPDF{http://ronan.keryell.fr/publications/rapports/2007/CommeEngineSoC/article.pdf}.
 
 \bibitem{ReCoSoC:CoMAP}
 Frank \textsc{Hannig}, Hritam \textsc{Dutta}, Alexey \textsc{Kupriyanov},
@@ -160,7 +160,7 @@ Frank \textsc{Hannig}, Hritam \textsc{Dutta}, Alexey \textsc{Kupriyanov},
   Architectures.}
 \newblock \emph{\capitalize\bblin{}} \emph{ReCoSoC'05}. Montpellier, France,
   \junname{} 2005.
-\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2005/ReCoSoC}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/conf/2005/ReCoSoC}.
 
 \bibitem{SAMOS4:PHRASE}
 Joël \textsc{Cambonie}, Sylvain \textsc{Guérin}, Ronan \textsc{Keryell}, Loïc
@@ -182,7 +182,7 @@ Sylvain \textsc{Guérin}, Ronan \textsc{Keryell} \bbland{} Bernt \textsc{Weber}.
   Nationale Supérieure des Télécommunications de Bretagne, France, \aprname{}
   2004.
 \newblock
-  \LienPDF{http://enstb.org/~keryell/publications/rapports/2004/PHRASE/toReconfig}.
+  \LienPDF{http://ronan.keryell.fr/publications/rapports/2004/PHRASE/toReconfig}.
 
 \bibitem{ProSe:TR:2004}
 Stéphanie \textsc{Even}, Ronan \textsc{Keryell}, Nicolas \textsc{Flipo}
@@ -210,7 +210,7 @@ Laura \textsc{{Barrero Sastre}}, Fabien \textsc{Dagnat}, Emmanuel~Donin
 \newblock \enquote{Bib{\TeX}++: Toward Higher-order Bib{\TeX}ing.}
 \newblock \emph{\capitalize\bblin{}} \emph{EuroTeX'2003 -- 14th European TeX
   Conference}. ENST Bretagne, France, \junname{} 2003.
-\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2003/EuroTeX}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/conf/2003/EuroTeX}.
 
 \bibitem{WAPATV01-pips}
 Thi Viet~Nga \textsc{Nguyen}, François \textsc{Irigoin}, Corinne

@@ -111,7 +111,7 @@ Sebastien \textsc{Varrette}, Guillaume \textsc{Duc}, Ronan \textsc{Keryell},
   Safe Computations in Distributed and Potentially Corrupted Environments}}.
 \newblock \bbltechreport{}, \textsc{ENST} Bretagne, \junname{} 2006.
 \newblock
-  \LienPDF{http://enstb.org/~keryell/publications/rapports/2006/SAFESCALE}.
+  \LienPDF{http://ronan.keryell.fr/publications/rapports/2006/SAFESCALE}.
 
 \bibitem{ENSTB:2006:secure_process_CryptoPage}
 Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
@@ -127,7 +127,7 @@ Guillaume \textsc{Duc}, Ronan \textsc{Keryell} \bbland{} Cédric
 \newblock \enquote{CryptoPage : support matériel pour cryptoprocessus.}
 \newblock \emph{Techniques et Sciences Informatiques}, \textbf{24/6},
   \bblpages{} 667--701, 2005.
-\newblock \LienPDF{http://enstb.org/~keryell/publications/articles/2005/TSI}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/articles/2005/TSI}.
 
 \bibitem{SympA2005:CryptoPage}
 Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
@@ -136,7 +136,7 @@ Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
 \newblock \emph{\capitalize\bblin{}} \emph{Symposium en Architecture de
   Machines (SympA'2005)}, \bblpages{} 61--72. Le Croisic, presqu'île de
   Guérande, France, \aprname{} 2005.
-\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2005/SympA}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/conf/2005/SympA}.
 
 \bibitem{ENSTB:2004:Linux_CryptoPage}
 Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
@@ -154,7 +154,7 @@ Guillaume \textsc{Duc}, Ronan \textsc{Keryell} \bbland{} Cédric
 \newblock \bbltechreport{} ENSTBr/INFO/RR/2004-?, Laboratoire Informatique \&
   Télécommunications, École Nationale Supérieure des Télécommunications de
   Bretagne, France, \augname{} 2004.
-\newblock \LienPDF{http://enstb.org/~keryell/publications/rapports/2004/TSI}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/rapports/2004/TSI}.
 
 \bibitem{rapport:spec_OpenSmartCard}
 Sylvain \textsc{Guilley}, Philippe \textsc{Hoogvorst}, Ronan \textsc{Keryell},
@@ -171,7 +171,7 @@ Cédric \textsc{Lauradoux} \bbland{} Ronan \textsc{Keryell}.
 \newblock \emph{\capitalize\bblin{}} \emph{Symposium en Architecture et
   Adéquation Algorithme Architecture (SympAAA'2003)}, \bblpages{} 314--321. La
   Colle sur Loup, France, \octname{} 2003.
-\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2003/SympAAA}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/conf/2003/SympAAA}.
 
 \bibitem{EUROSEC2001-cryptopage}
 Ronan \textsc{Keryell}.
@@ -187,8 +187,7 @@ Ronan \textsc{Keryell}.
 \newblock \enquote{CryptoPage-1 : vers la fin du piratage informatique ?}
 \newblock \emph{\capitalize\bblin{}} \emph{Symposium d'Architecture (SympA'6)},
   \bblpages{} 35--44. Besançon, France, \junname{} 2000.
-\newblock
-  \LienPDF{http://enstb.org/~keryell/publications/ENSTBr_INFO_2000-001}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/ENSTBr_INFO_2000-001}.
 
 \bibitem{brevet-cryptopage-2000}
 Ronan \textsc{Keryell}.
@@ -196,6 +195,6 @@ Ronan \textsc{Keryell}.
 \newblock Demande de brevet français 00 07891, École Nationale Supérieure des
   Télécommunications de Bretagne, \junname{} 2000.
 \newblock
-  \LienPDF{http://enstb.org/~keryell/publications/brevets/2000/CryptoPage-1}.
+  \LienPDF{http://ronan.keryell.fr/publications/brevets/2000/CryptoPage-1}.
 
 \end{thebibliography}
