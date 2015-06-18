@@ -23,7 +23,7 @@ Claude \textsc{Duvallet}, Ronan \textsc{Keryell}, Sylvain \textsc{Guérin},
 \newblock \emph{\capitalize\bblin{}} \emph{RenPar'15 -- 15èmes Rencontres
   Francophones en Parallélisme}, \bblpages{} 223--226. La Colle sur Loup,
   France, \octname{} 2003.
-\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2003/RenPar}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/conf/2003/RenPar}.
 
 \bibitem{ENSTBr:ReActiVE}
 Claude \textsc{Duvallet}, Ronan \textsc{Keryell}, Sylvain \textsc{Guérin},
@@ -32,6 +32,6 @@ Claude \textsc{Duvallet}, Ronan \textsc{Keryell}, Sylvain \textsc{Guérin},
   {IP} using a layer model}.
 \newblock \bbltechreport{}, \textsc{ENST} Bretagne, \octname{} 2003.
 \newblock
-  \LienPDF{http://enstb.org/~keryell/publications/rapports/2003/ReActiVE}.
+  \LienPDF{http://ronan.keryell.fr/publications/rapports/2003/ReActiVE}.
 
 \end{thebibliography}

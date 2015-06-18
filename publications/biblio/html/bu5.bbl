@@ -25,7 +25,7 @@ Mahmoud \textsc{Ghorbel}, Maria-Teresa \textsc{Segarra}, Jérome
   Conference on Computers Helping People with Special Needs}, \bblvolume{}
   3118. Lecture Notes in Computer Science, Springer-Verlag, Paris, France,
   \julname{} 2004.
-\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2004/ICCHP2004}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/conf/2004/ICCHP2004}.
 
 \bibitem{ICOST2003:ametsa}
 Maria-Teresa \textsc{Segarra}, André \textsc{Thépaut}, Ronan \textsc{Keryell},
@@ -34,7 +34,7 @@ Maria-Teresa \textsc{Segarra}, André \textsc{Thépaut}, Ronan \textsc{Keryell},
 \newblock \enquote{Ametsa : a Generic Home Control System Based on {UPnP}.}
 \newblock \emph{\capitalize\bblin{}} \emph{ICOST2003}. Paris, France,
   \sepname{} 2003.
-\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2003/ICOST}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/conf/2003/ICOST}.
 
 \bibitem{SETIT2003:ametsa}
 Maria-Teresa \textsc{Segarra}, Ronan \textsc{Keryell}, Arantzazu
@@ -43,6 +43,6 @@ Maria-Teresa \textsc{Segarra}, Ronan \textsc{Keryell}, Arantzazu
   domestique générique fondé sur {UPnP}.}
 \newblock \emph{\capitalize\bblin{}} \emph{SETIT2003}. Sousse, Tunisie,
   \marname{} 2003.
-\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2003/SETIT}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/conf/2003/SETIT}.
 
 \end{thebibliography}

@@ -21,7 +21,7 @@ Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
   informatiques sécurisées et de confiance.}}
 \newblock \emph{\capitalize\bblin{}} \emph{CE\&SAR'2008 (Computer \&
   Electronics Security Applications Rendez-vous)}, \decname{} 2008.
-\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2008/CESAR}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/conf/2008/CESAR}.
 
 \bibitem{Lavoisier2008:systemes_repartis_en_action:8}
 Christophe \textsc{C{\'e}rin}, Jean-Christophe \textsc{Dubacq}, Thomas
@@ -47,7 +47,7 @@ Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
   combinant chiffrement, intégrité mémoire et protection contre les fuites
   d'informations (version étendue)}}.
 \newblock \bbltechreport{}, \textsc{ENST} Bretagne, \augname{} 2008.
-\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2008/TSI}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/conf/2008/TSI}.
 
 \bibitem{SGS2008:SAFESCALE}
 Sebastien \textsc{Varrette}, Jean-Louis \textsc{Roch}, Guillaume \textsc{Duc}
@@ -56,7 +56,7 @@ Sebastien \textsc{Varrette}, Jean-Louis \textsc{Roch}, Guillaume \textsc{Duc}
   Safe Computations in Distributed and Potentially Corrupted Environments.}}
 \newblock \emph{\capitalize\bblin{}} \emph{Workshop on Secure, trusted,
   manageable and controllable Grid Services (SGS'2008)}, \augname{} 2008.
-\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2008/SGS}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications/conf/2008/SGS}.
 
 \bibitem{JoCV2008:CryptoPage}
 Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
@@ -74,7 +74,7 @@ Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
   système d'exploitation de confiance.}}
 \newblock \emph{\capitalize\bblin{}} \emph{Symposium en Architecture de
   Machines (\textsc{SympA}'2008)}, \febname{} 2008.
-\newblock \LienPDF{http://enstb.org/~keryell/publications/conf/2008/SympA}.
+\newblock \LienPDF{http://ronan.keryell.fr/publications//2008/SympA}.
 
 \bibitem{SSTIC2007:CryptoPage}
 Guillaume \textsc{Duc} \bbland{} Ronan \textsc{Keryell}.
