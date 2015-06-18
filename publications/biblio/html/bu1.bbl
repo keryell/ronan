@@ -228,7 +228,8 @@ Corinne \textsc{Ancourt}, Fabien \textsc{Coelho}, Fran\c{c}ois \textsc{Irigoin}
   Distribution.}
 \newblock \emph{Scientific Programming}, \textbf{6}(1), \bblpages{} 3--27,
   Spring 1997.
-\newblock Special Issue --- High Performance Fortran Comes of Age.
+\newblock Special Issue --- High Performance Fortran Comes of Age
+  \LienPDF{http://downloads.hindawi.com/journals/sp/1997/195689.pdf}.
 
 \bibitem{CPC96:pips:adding_dead_code_elimination}
 Corinne \textsc{Ancourt}, Fabien \textsc{Coelho}, B\'eatrice
